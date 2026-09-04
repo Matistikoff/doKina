@@ -7,11 +7,11 @@ const UNMATCHED_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 async function readCache(cachePath) {
   try {
     const cache = JSON.parse(await readFile(cachePath, "utf8"));
-    return cache?.version === 2 && cache.entries ? cache : { version: 2, entries: {} };
+    return cache?.version === 3 && cache.entries ? cache : { version: 3, entries: {} };
   } catch (error) {
-    if (error.code === "ENOENT") return { version: 2, entries: {} };
+    if (error.code === "ENOENT") return { version: 3, entries: {} };
     console.warn(`OMDb cache could not be read: ${error.message}`);
-    return { version: 2, entries: {} };
+    return { version: 3, entries: {} };
   }
 }
 
@@ -71,7 +71,71 @@ async function omdbRequest(parameters, apiKey) {
   return response.json();
 }
 
-async function fetchEntry(movie, previous, apiKey, request, fetchedAt) {
+async function wikidataRequest(parameters) {
+  const url = new URL("https://www.wikidata.org/w/api.php");
+  url.search = new URLSearchParams({ format: "json", origin: "*", ...parameters });
+  const response = await fetch(url, {
+    headers: {
+      Accept: "application/json",
+      "User-Agent": "doKina.sk schedule aggregator (+https://github.com/)",
+    },
+    signal: AbortSignal.timeout(15_000),
+  });
+  if (!response.ok) throw new Error(`Wikidata returned ${response.status} ${response.statusText}`);
+  return response.json();
+}
+
+function comparableTitle(value = "") {
+  return value.normalize("NFKD")
+    .replace(/[\u0300-\u036f]/gu, "")
+    .toLocaleLowerCase("sk")
+    .replace(/[^a-z0-9]+/gu, " ")
+    .trim();
+}
+
+function claimValue(entity, property) {
+  return (entity?.claims?.[property] || [])
+    .map((claim) => claim?.mainsnak?.datavalue?.value)
+    .filter(Boolean);
+}
+
+async function resolveWikidataImdbId(movie, request) {
+  const expectedTitle = comparableTitle(movie.title);
+  const expectedYear = Number(movie.releaseYear) || null;
+
+  for (const language of ["sk", "cs"]) {
+    const searchPayload = await request({
+      action: "wbsearchentities",
+      search: movie.title,
+      language,
+      type: "item",
+      limit: "8",
+    });
+    if (searchPayload?.error) throw new Error(`Wikidata: ${searchPayload.error.info || searchPayload.error.code}`);
+    const ids = (searchPayload?.search || [])
+      .filter((result) => comparableTitle(result.match?.text || result.label) === expectedTitle)
+      .map((result) => result.id);
+    if (ids.length === 0) continue;
+
+    const entitiesPayload = await request({
+      action: "wbgetentities",
+      ids: ids.join("|"),
+      props: "claims",
+    });
+    if (entitiesPayload?.error) throw new Error(`Wikidata: ${entitiesPayload.error.info || entitiesPayload.error.code}`);
+    const candidates = Object.values(entitiesPayload?.entities || {}).flatMap((entity) => {
+      const imdbIds = claimValue(entity, "P345").filter((value) => /^tt\d+$/.test(value));
+      const years = claimValue(entity, "P577").map((value) => Number(String(value.time || "").slice(1, 5))).filter(Number.isFinite);
+      if (expectedYear && (years.length === 0 || !years.some((year) => Math.abs(year - expectedYear) <= 1))) return [];
+      return imdbIds;
+    });
+    const unique = [...new Set(candidates)];
+    if (unique.length === 1) return unique[0];
+  }
+  return null;
+}
+
+async function fetchEntry(movie, previous, apiKey, request, wikiRequest, fetchedAt) {
   if (previous?.imdbId) {
     const payload = await request({ i: previous.imdbId }, apiKey);
     assertServiceAvailable(payload);
@@ -90,6 +154,13 @@ async function fetchEntry(movie, previous, apiKey, request, fetchedAt) {
     const entry = normalizedResult(payload, fetchedAt);
     if (entry.imdbId) return entry;
   }
+
+  const wikidataImdbId = await resolveWikidataImdbId(movie, wikiRequest);
+  if (wikidataImdbId) {
+    const payload = await request({ i: wikidataImdbId }, apiKey);
+    assertServiceAvailable(payload);
+    return normalizedResult(payload, fetchedAt);
+  }
   return { fetchedAt };
 }
 
@@ -99,6 +170,7 @@ export async function enrichMoviesWithOmdb(movies, options = {}) {
 
   const cachePath = options.cachePath || ".cache/omdb.json";
   const request = options.request || omdbRequest;
+  const wikiRequest = options.wikidataRequest || wikidataRequest;
   const now = options.now || new Date();
   const fetchedAt = now.toISOString();
   const cache = await readCache(cachePath);
@@ -111,7 +183,7 @@ export async function enrichMoviesWithOmdb(movies, options = {}) {
       const previous = cache.entries[movie.id];
       if (isFresh(previous, now)) continue;
       try {
-        cache.entries[movie.id] = await fetchEntry(movie, previous, apiKey, request, fetchedAt);
+        cache.entries[movie.id] = await fetchEntry(movie, previous, apiKey, request, wikiRequest, fetchedAt);
       } catch (error) {
         console.warn(`OMDb enrichment failed for “${movie.title}”: ${error.message}`);
       }

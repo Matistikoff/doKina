@@ -12,6 +12,19 @@ function bookingId(url) {
   return new URL(url).searchParams.get("id");
 }
 
+export function parseCinemawareDetails(html) {
+  const $ = cheerio.load(html);
+  const details = $(".film-platno-right").first();
+  const originalTitle = cleanTitle(details.find("p").first().find("b").text());
+  const durationMinutes = Number(details.text().match(/Dĺžka:\s*(\d{1,3})\s*min/iu)?.[1]) || null;
+  const genres = details.find("p").filter((_, item) => /Žáner:/iu.test($(item).text())).first().text()
+    .replace(/^.*?Žáner:\s*/iu, "")
+    .split(/\s*[•·]\s*/u)
+    .map(collapseWhitespace)
+    .filter(Boolean);
+  return { originalTitle: originalTitle || null, durationMinutes, genres };
+}
+
 export function parseCinemawareTable(html, cinema, options = {}) {
   const sourceId = cinema.sourceId;
   const baseUrl = options.baseUrl || cinema.url;
@@ -83,5 +96,22 @@ export function parseCinemawareTable(html, cinema, options = {}) {
 
 export async function fetchCinemawareTable(cinema, programUrl) {
   const html = await (await fetchWithRetry(programUrl)).text();
-  return parseCinemawareTable(html, cinema, { baseUrl: programUrl });
+  const result = parseCinemawareTable(html, cinema, { baseUrl: programUrl });
+  result.movies = await Promise.all(result.movies.map(async (movie) => {
+    if (!movie.detailUrl) return movie;
+    try {
+      const detailsHtml = await (await fetchWithRetry(movie.detailUrl)).text();
+      const details = parseCinemawareDetails(detailsHtml);
+      return {
+        ...movie,
+        originalTitle: details.originalTitle && details.originalTitle !== movie.title ? details.originalTitle : null,
+        durationMinutes: details.durationMinutes,
+        genres: details.genres,
+      };
+    } catch (error) {
+      console.warn(`${cinema.name} details unavailable for “${movie.title}”: ${error.message}`);
+      return movie;
+    }
+  }));
+  return result;
 }

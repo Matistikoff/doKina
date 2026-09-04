@@ -72,6 +72,7 @@ export function parseNostalgia(html) {
   const screenings = [];
   for (const event of eventMap.values()) {
     const title = cleanTitle(slovak(event.names));
+    const englishTitle = cleanTitle(event.names?.en || "");
     if (!title) continue;
     const showId = event.showId || event.show?.id;
     const id = movieId(title);
@@ -85,7 +86,7 @@ export function parseNostalgia(html) {
         source: "kino-nostalgia",
         externalId: showId ? String(showId) : null,
         title,
-        originalTitle: null,
+        originalTitle: englishTitle && englishTitle !== title ? englishTitle : null,
         releaseYear: null,
         durationMinutes: null,
         ageRating: ageText.match(/\b(\d{1,2})\b/u)?.[1] || null,

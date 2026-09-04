@@ -60,3 +60,40 @@ test("keeps a stale cached rating when the OMDb quota is unavailable", async () 
   assert.equal(enriched[0].imdbId, "tt0133093");
   assert.equal(enriched[0].imdbRating, 8.7);
 });
+
+test("resolves an exact localized title through Wikidata", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "dokina-omdb-"));
+  const cachePath = join(directory, "omdb.json");
+  const movies = [{ id: "movie-auta-2006", title: "Autá", releaseYear: "2006" }];
+  const request = async (parameters) => {
+    if (parameters.t) return { Response: "False", Error: "Movie not found!" };
+    assert.equal(parameters.i, "tt0317219");
+    return { Response: "True", imdbID: "tt0317219", imdbRating: "7.3", imdbVotes: "510,000" };
+  };
+  const wikidataRequest = async (parameters) => {
+    if (parameters.action === "wbsearchentities") {
+      return { search: [{ id: "Q182153", match: { text: "Autá" } }] };
+    }
+    return {
+      entities: {
+        Q182153: {
+          claims: {
+            P345: [{ mainsnak: { datavalue: { value: "tt0317219" } } }],
+            P577: [{ mainsnak: { datavalue: { value: { time: "+2006-06-09T00:00:00Z" } } } }],
+          },
+        },
+      },
+    };
+  };
+
+  const enriched = await enrichMoviesWithOmdb(movies, {
+    apiKey: "test",
+    cachePath,
+    request,
+    wikidataRequest,
+    now: new Date("2026-09-04T10:00:00.000Z"),
+  });
+
+  assert.equal(enriched[0].imdbId, "tt0317219");
+  assert.equal(enriched[0].imdbRating, 7.3);
+});

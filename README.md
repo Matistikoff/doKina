@@ -48,7 +48,9 @@ zapnutie pridaj GitHub Actions secret `OMDB_API_KEY`. Bez neho scraper aj web
 fungujú ďalej, iba nezobrazia hodnotenia. Bezplatný OMDb kľúč má denný limit
 1 000 požiadaviek a jeho obsah je dostupný pod licenciou CC BY-NC 4.0.
 Pri filmoch Cinema City sa na presné párovanie používa aj anglická verzia
-verejných dát kina, preto fungujú aj slovenské preklady názvov.
+verejných dát kina. Kino Mladosť a Kino Film Europe sa dopĺňajú z detailu filmu.
+Ak zdroj originálny názov neposkytne, presná zhoda slovenského alebo českého
+názvu a roku sa cez Wikidata prevedie na IMDb ID.
 
 Token potrebuje oprávnenie nasadiť Cloudflare Worker. Projekt sa nasadzuje ako Cloudflare Worker so statickými assets z priečinka `dist/`.
 
