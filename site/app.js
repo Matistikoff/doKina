@@ -1,19 +1,23 @@
 const state = {
   program: null,
-  selectedDate: null,
+  selectedPeriod: "week",
   selectedCinemas: new Set(),
+  selectedGenre: "all",
+  sortBy: "rating",
 };
 
 const elements = {
   allCinemasButton: document.querySelector("#all-cinemas-button"),
   cinemaFilter: document.querySelector("#cinema-filter"),
-  dateFilter: document.querySelector("#date-filter"),
   freshness: document.querySelector("#freshness"),
+  genreFilter: document.querySelector("#genre-filter"),
   movieGrid: document.querySelector("#movie-grid"),
+  periodFilter: document.querySelector("#period-filter"),
+  resetFiltersButton: document.querySelector("#reset-filters-button"),
   resultCount: document.querySelector("#result-count"),
-  selectedDateLabel: document.querySelector("#selected-date-label"),
+  selectedPeriodLabel: document.querySelector("#selected-period-label"),
+  sortFilter: document.querySelector("#sort-filter"),
   template: document.querySelector("#movie-card-template"),
-  todayButton: document.querySelector("#today-button"),
 };
 
 const dateKey = (value) => value.slice(0, 10);
@@ -40,11 +44,6 @@ function formatDay(date, style = "short") {
   return new Intl.DateTimeFormat("sk-SK", { weekday: "short" }).format(parsed).replace(".", "");
 }
 
-function formatDateNumber(date) {
-  return new Intl.DateTimeFormat("sk-SK", { day: "numeric", month: "numeric" })
-    .format(new Date(`${date}T12:00:00`));
-}
-
 function formatUpdated(value) {
   return new Intl.DateTimeFormat("sk-SK", {
     timeZone: "Europe/Bratislava",
@@ -59,36 +58,59 @@ function cinemaName(cinema) {
   return cinema.shortName || cinema.name.replace("Cinema City ", "");
 }
 
-function renderDates() {
-  const dates = [...new Set(state.program.screenings.map((screening) => dateKey(screening.startsAt)))].sort();
+function addDays(date, amount) {
+  const value = new Date(`${date}T12:00:00`);
+  value.setDate(value.getDate() + amount);
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Bratislava",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(value);
+}
+
+function availableDateBounds() {
+  const dates = state.program.screenings.map((screening) => dateKey(screening.startsAt)).sort();
   const today = localToday();
+  const start = dates.find((date) => date >= today) || dates[0];
+  return { start, end: dates.at(-1) };
+}
 
-  if (!state.selectedDate || !dates.includes(state.selectedDate)) {
-    state.selectedDate = dates.includes(today) ? today : dates[0];
+function periodBounds() {
+  const { start, end } = availableDateBounds();
+  if (state.selectedPeriod === "today") return { start, end: start };
+  if (state.selectedPeriod === "week") return { start, end: addDays(start, 6) };
+  if (state.selectedPeriod === "fortnight") return { start, end: addDays(start, 13) };
+  return { start, end };
+}
+
+function periodLabel() {
+  const { start, end } = periodBounds();
+  if (state.selectedPeriod === "today") return start === localToday() ? "Dnes" : formatDay(start, "long");
+  if (state.selectedPeriod === "week") return "Najbližších 7 dní";
+  if (state.selectedPeriod === "fortnight") return "Najbližších 14 dní";
+  return `Celý program · ${formatDay(start, "long")} – ${formatDay(end, "long")}`;
+}
+
+function renderPeriods() {
+  for (const button of elements.periodFilter.querySelectorAll("[data-period]")) {
+    const isActive = button.dataset.period === state.selectedPeriod;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
   }
+}
 
-  elements.dateFilter.replaceChildren(...dates.slice(0, 14).map((date) => {
-    const button = document.createElement("button");
-    const label = date === today ? "Dnes" : formatDay(date);
-    button.type = "button";
-    button.className = `date-chip${date === state.selectedDate ? " is-active" : ""}`;
-    button.dataset.date = date;
-    button.setAttribute("aria-pressed", String(date === state.selectedDate));
-    button.innerHTML = `<span class="day-name">${label}</span><span class="day-number">${formatDateNumber(date)}</span>`;
-    button.addEventListener("click", () => {
-      state.selectedDate = date;
-      renderDates();
-      renderProgram();
-    });
-    return button;
-  }));
+function renderGenres() {
+  const genres = [...new Set(state.program.movies.flatMap((movie) => movie.genres || []))]
+    .sort((a, b) => a.localeCompare(b, "sk"));
+  elements.genreFilter.replaceChildren(
+    new Option("Všetky žánre", "all"),
+    ...genres.map((genre) => new Option(genre, genre)),
+  );
+  elements.genreFilter.value = genres.includes(state.selectedGenre) ? state.selectedGenre : "all";
 }
 
 function renderCinemas() {
-  if (state.selectedCinemas.size === 0) {
-    state.program.cinemas.forEach((cinema) => state.selectedCinemas.add(cinema.id));
-  }
-
   elements.cinemaFilter.replaceChildren(...state.program.cinemas.map((cinema) => {
     const button = document.createElement("button");
     button.type = "button";
@@ -127,6 +149,16 @@ function groupByCinema(screenings) {
   for (const screening of screenings) {
     if (!groups.has(screening.cinemaId)) groups.set(screening.cinemaId, []);
     groups.get(screening.cinemaId).push(screening);
+  }
+  return groups;
+}
+
+function groupByDate(screenings) {
+  const groups = new Map();
+  for (const screening of screenings) {
+    const date = dateKey(screening.startsAt);
+    if (!groups.has(date)) groups.set(date, []);
+    groups.get(date).push(screening);
   }
   return groups;
 }
@@ -178,19 +210,29 @@ function renderMovie(movie, screenings, cinemaMap) {
     imdbRating.setAttribute("aria-label", `${movie.title}: IMDb hodnotenie ${movie.imdbRating.toFixed(1)} z 10`);
   }
 
-  const byCinema = groupByCinema(screenings.sort((a, b) => a.startsAt.localeCompare(b.startsAt)));
+  const byDate = groupByDate(screenings.sort((a, b) => a.startsAt.localeCompare(b.startsAt)));
 
-  for (const [cinemaId, cinemaScreenings] of byCinema) {
-    const group = document.createElement("div");
-    group.className = "showtime-group";
-    const label = document.createElement("span");
-    label.className = "cinema-name";
-    label.textContent = cinemaName(cinemaMap.get(cinemaId));
-    const times = document.createElement("div");
-    times.className = "showtimes";
-    times.replaceChildren(...cinemaScreenings.map(showtimeElement));
-    group.append(label, times);
-    groupsRoot.append(group);
+  for (const [date, dateScreenings] of byDate) {
+    const day = document.createElement("section");
+    day.className = "showtime-day";
+    const heading = document.createElement("h4");
+    heading.className = "showtime-date";
+    heading.textContent = date === localToday() ? "Dnes" : formatDay(date, "long");
+    day.append(heading);
+
+    for (const [cinemaId, cinemaScreenings] of groupByCinema(dateScreenings)) {
+      const group = document.createElement("div");
+      group.className = "showtime-group";
+      const label = document.createElement("span");
+      label.className = "cinema-name";
+      label.textContent = cinemaName(cinemaMap.get(cinemaId));
+      const times = document.createElement("div");
+      times.className = "showtimes";
+      times.replaceChildren(...cinemaScreenings.map(showtimeElement));
+      group.append(label, times);
+      day.append(group);
+    }
+    groupsRoot.append(day);
   }
 
   card.dataset.movieId = movie.id;
@@ -200,22 +242,24 @@ function renderMovie(movie, screenings, cinemaMap) {
 function renderProgram() {
   const movieMap = new Map(state.program.movies.map((movie) => [movie.id, movie]));
   const cinemaMap = new Map(state.program.cinemas.map((cinema) => [cinema.id, cinema]));
-  const visible = state.program.screenings.filter((screening) => (
-    dateKey(screening.startsAt) === state.selectedDate
-    && state.selectedCinemas.has(screening.cinemaId)
-  ));
+  const { start, end } = periodBounds();
+  const moviesInGenre = new Set(state.program.movies
+    .filter((movie) => state.selectedGenre === "all" || movie.genres?.includes(state.selectedGenre))
+    .map((movie) => movie.id));
+  const visible = state.program.screenings.filter((screening) => {
+    const date = dateKey(screening.startsAt);
+    return date >= start && date <= end
+      && state.selectedCinemas.has(screening.cinemaId)
+      && moviesInGenre.has(screening.movieId);
+  });
   const grouped = groupScreenings(visible);
-  const today = localToday();
-
-  elements.selectedDateLabel.textContent = state.selectedDate === today
-    ? `Dnes · ${formatDay(state.selectedDate, "long")}`
-    : formatDay(state.selectedDate, "long");
+  elements.selectedPeriodLabel.textContent = periodLabel();
   elements.resultCount.textContent = `${grouped.size} ${grouped.size === 1 ? "film" : grouped.size < 5 ? "filmy" : "filmov"} · ${visible.length} predstavení`;
 
   if (visible.length === 0) {
     elements.movieGrid.innerHTML = `
       <div class="empty-state">
-        <div><h3>Na tento výber nič nehrá</h3><p>Skús iný dátum alebo zapni ďalšie kino.</p></div>
+        <div><h3>Tomuto výberu nič nezodpovedá</h3><p>Skús dlhšie obdobie, iný žáner alebo zapni ďalšie kino.</p></div>
       </div>`;
     return;
   }
@@ -224,6 +268,17 @@ function renderProgram() {
     .map(([movieId, screenings]) => ({ movie: movieMap.get(movieId), screenings }))
     .filter(({ movie }) => movie)
     .sort((a, b) => {
+      if (state.sortBy === "rating") {
+        const ratingA = Number.isFinite(a.movie.imdbRating) ? a.movie.imdbRating : -1;
+        const ratingB = Number.isFinite(b.movie.imdbRating) ? b.movie.imdbRating : -1;
+        return ratingB - ratingA || a.movie.title.localeCompare(b.movie.title, "sk");
+      }
+      if (state.sortBy === "year") {
+        const yearA = Number.parseInt(a.movie.releaseYear, 10) || 0;
+        const yearB = Number.parseInt(b.movie.releaseYear, 10) || 0;
+        return yearB - yearA || a.movie.title.localeCompare(b.movie.title, "sk");
+      }
+      if (state.sortBy === "title") return a.movie.title.localeCompare(b.movie.title, "sk");
       const firstA = a.screenings.map((item) => item.startsAt).sort()[0];
       const firstB = b.screenings.map((item) => item.startsAt).sort()[0];
       return firstA.localeCompare(firstB) || a.movie.title.localeCompare(b.movie.title, "sk");
@@ -256,41 +311,44 @@ function registerProgramTool() {
   const context = document.modelContext;
   if (!context?.registerTool) return;
 
-  const availableDates = new Set(state.program.screenings.map((screening) => dateKey(screening.startsAt)));
   const availableCinemas = new Set(state.program.cinemas.map((cinema) => cinema.id));
+  const availableGenres = new Set(state.program.movies.flatMap((movie) => movie.genres || []));
 
   try {
     void Promise.resolve(context.registerTool({
       name: "filter_program",
       title: "Filtrovať program kín",
-      description: "Zmení viditeľný program na vybraný dátum a zoznam bratislavských kín.",
+      description: "Filtruje filmy, ktoré práve hrajú, podľa obdobia, kín a žánru a zmení ich poradie.",
       inputSchema: {
         type: "object",
         properties: {
-          date: { type: "string", description: "Dátum vo formáte YYYY-MM-DD." },
+          period: { type: "string", enum: ["today", "week", "fortnight", "all"], description: "Zobrazené obdobie." },
           cinemaIds: {
             type: "array",
             items: { type: "string", enum: [...availableCinemas] },
             description: "ID kín, ktoré majú zostať viditeľné."
-          }
+          },
+          genre: { type: "string", enum: ["all", ...availableGenres], description: "Vybraný žáner alebo all." },
+          sortBy: { type: "string", enum: ["rating", "year", "soonest", "title"], description: "Spôsob zoradenia filmov." }
         },
         additionalProperties: false
       },
       annotations: { readOnlyHint: false, untrustedContentHint: false },
       execute(input = {}) {
-        if (input.date !== undefined && !availableDates.has(input.date)) {
-          throw new Error("Vybraný dátum nie je v aktuálnom programe.");
-        }
         if (input.cinemaIds !== undefined && (!Array.isArray(input.cinemaIds) || input.cinemaIds.some((id) => !availableCinemas.has(id)))) {
           throw new Error("Zoznam obsahuje neznáme kino.");
         }
-        if (input.date) state.selectedDate = input.date;
+        if (input.genre !== undefined && input.genre !== "all" && !availableGenres.has(input.genre)) throw new Error("Neznámy žáner.");
+        if (input.period) state.selectedPeriod = input.period;
         if (input.cinemaIds) state.selectedCinemas = new Set(input.cinemaIds);
-        renderDates();
+        if (input.genre) state.selectedGenre = input.genre;
+        if (input.sortBy) state.sortBy = input.sortBy;
+        elements.genreFilter.value = state.selectedGenre;
+        elements.sortFilter.value = state.sortBy;
+        renderPeriods();
         renderCinemas();
         renderProgram();
-        const count = state.program.screenings.filter((screening) => dateKey(screening.startsAt) === state.selectedDate && state.selectedCinemas.has(screening.cinemaId)).length;
-        return { date: state.selectedDate, cinemaIds: [...state.selectedCinemas], screeningCount: count };
+        return { period: state.selectedPeriod, cinemaIds: [...state.selectedCinemas], genre: state.selectedGenre, sortBy: state.sortBy };
       }
     })).catch((error) => console.warn("Program tool registration failed", error));
   } catch (error) {
@@ -303,8 +361,10 @@ async function init() {
     const response = await fetch("/program.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     state.program = await response.json();
+    state.selectedCinemas = new Set(state.program.cinemas.map((cinema) => cinema.id));
     renderFreshness();
-    renderDates();
+    renderPeriods();
+    renderGenres();
     renderCinemas();
     renderProgram();
     registerProgramTool();
@@ -319,11 +379,33 @@ async function init() {
   }
 }
 
-elements.todayButton.addEventListener("click", () => {
-  const today = localToday();
-  const dates = new Set(state.program.screenings.map((screening) => dateKey(screening.startsAt)));
-  state.selectedDate = dates.has(today) ? today : [...dates].sort()[0];
-  renderDates();
+elements.periodFilter.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-period]");
+  if (!button) return;
+  state.selectedPeriod = button.dataset.period;
+  renderPeriods();
+  renderProgram();
+});
+
+elements.genreFilter.addEventListener("change", () => {
+  state.selectedGenre = elements.genreFilter.value;
+  renderProgram();
+});
+
+elements.sortFilter.addEventListener("change", () => {
+  state.sortBy = elements.sortFilter.value;
+  renderProgram();
+});
+
+elements.resetFiltersButton.addEventListener("click", () => {
+  state.selectedPeriod = "week";
+  state.selectedGenre = "all";
+  state.sortBy = "rating";
+  state.selectedCinemas = new Set(state.program.cinemas.map((cinema) => cinema.id));
+  elements.genreFilter.value = "all";
+  elements.sortFilter.value = "rating";
+  renderPeriods();
+  renderCinemas();
   renderProgram();
 });
 

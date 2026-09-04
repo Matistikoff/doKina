@@ -192,8 +192,8 @@ h1 {
   top: 12px;
   z-index: 20;
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr);
-  gap: 32px;
+  grid-template-columns: minmax(250px, 0.8fr) minmax(320px, 1.25fr) minmax(290px, 0.95fr);
+  gap: 26px;
   padding: 22px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-lg);
@@ -228,7 +228,7 @@ h1 {
   text-underline-offset: 3px;
 }
 
-.date-strip,
+.period-filter,
 .cinema-filter {
   display: flex;
   gap: 8px;
@@ -236,12 +236,12 @@ h1 {
   scrollbar-width: none;
 }
 
-.date-strip::-webkit-scrollbar,
+.period-filter::-webkit-scrollbar,
 .cinema-filter::-webkit-scrollbar {
   display: none;
 }
 
-.date-chip,
+.period-chip,
 .cinema-chip {
   flex: 0 0 auto;
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -251,51 +251,33 @@ h1 {
   transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
-.date-chip:hover,
+.period-chip:hover,
 .cinema-chip:hover {
   border-color: rgba(255, 255, 255, 0.45);
   transform: translateY(-1px);
 }
 
-.date-chip:focus-visible,
+.period-chip:focus-visible,
 .cinema-chip:focus-visible,
+.select-field select:focus-visible,
 .showtime:focus-visible,
 .text-button:focus-visible {
   outline: 3px solid var(--lime);
   outline-offset: 3px;
 }
 
-.date-chip {
-  min-width: 74px;
-  padding: 10px 12px;
-  border-radius: 13px;
-  text-align: left;
+.period-chip {
+  min-height: 39px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 780;
+  white-space: nowrap;
 }
 
-.date-chip span {
-  display: block;
-}
-
-.date-chip .day-name {
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 0.68rem;
-  font-weight: 750;
-  text-transform: uppercase;
-}
-
-.date-chip .day-number {
-  margin-top: 3px;
-  font-size: 1rem;
-  font-weight: 850;
-}
-
-.date-chip.is-active {
+.period-chip.is-active {
   border-color: var(--accent);
   background: var(--accent);
-}
-
-.date-chip.is-active .day-name {
-  color: rgba(255, 255, 255, 0.78);
 }
 
 .cinema-filter {
@@ -314,6 +296,40 @@ h1 {
   border-color: var(--lime);
   background: var(--lime);
   color: #202515;
+}
+
+.select-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 8px;
+}
+
+.select-field {
+  position: relative;
+  min-width: 0;
+}
+
+.select-field > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.select-field select {
+  width: 100%;
+  min-height: 39px;
+  padding: 8px 32px 8px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  background: #30302e;
+  color: white;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 750;
 }
 
 .program {
@@ -487,7 +503,28 @@ h3 {
 
 .showtime-groups {
   display: grid;
-  gap: 12px;
+  gap: 17px;
+}
+
+.showtime-day {
+  display: grid;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.showtime-day:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.showtime-date {
+  margin: 0 0 2px;
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 850;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
 }
 
 .showtime-group {
@@ -615,8 +652,13 @@ footer p {
   .filters {
     position: relative;
     top: auto;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 22px;
+  }
+
+  .cinema-filter-wrap {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 
   .movie-grid {
@@ -651,6 +693,12 @@ footer p {
     margin-inline: -4px;
     padding: 18px;
     border-radius: 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .cinema-filter-wrap {
+    grid-column: auto;
+    grid-row: auto;
   }
 
   .program {

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#151515">
-    <meta name="description" content="Program bratislavských kín na jednom mieste. Multiplexy aj mestské a klubové kiná.">
-    <meta property="og:title" content="doKina.sk — Bratislava dnes hrá">
-    <meta property="og:description" content="Vyber si dátum, kino a predstavenie. Program bratislavských kín prehľadne na jednom mieste.">
+    <meta name="description" content="Filmy, ktoré práve hrajú v Bratislave. Porovnaj ich podľa IMDb hodnotenia, roku a žánru.">
+    <meta property="og:title" content="doKina.sk — Vyber si najlepší film v kinách">
+    <meta property="og:description" content="Všetky filmy, ktoré práve hrajú v Bratislave. Zoraď ich podľa hodnotenia a filtruj podľa žánru či kina.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="/og.png">
-    <title>doKina.sk — Bratislava dnes hrá</title>
+    <title>doKina.sk — Najlepšie filmy, ktoré práve hrajú</title>
     <link rel="stylesheet" href="/styles.css">
     <script type="module" src="/app.js"></script>
   </head>
@@ -21,15 +21,15 @@
         <span class="brand-mark" aria-hidden="true"></span>
         <span>doKina<span>.sk</span></span>
       </a>
-      <p class="header-note">Bratislava dnes hrá</p>
+      <p class="header-note">Bratislava práve hrá</p>
     </header>
 
     <main>
       <section class="intro" aria-labelledby="page-title">
         <div>
-          <p class="eyebrow">Program kín na jednom mieste</p>
-          <h1 id="page-title">Čo si pozrieme?</h1>
-          <p class="intro-copy">Lumière, Aupark, Eurovea aj POLUS. Bez preklikávania, bez chaosu.</p>
+          <p class="eyebrow">Čo sa oplatí vidieť v kine</p>
+          <h1 id="page-title">Vyber si dobrý film.</h1>
+          <p class="intro-copy">Všetky filmy, ktoré práve hrajú v Bratislave. Porovnaj hodnotenia, žánre a termíny bez preklikávania medzi kinami.</p>
         </div>
         <div class="freshness" id="freshness" aria-live="polite">
           <span class="status-dot" aria-hidden="true"></span>
@@ -38,12 +38,16 @@
       </section>
 
       <section class="filters" aria-label="Filtrovanie programu">
-        <div class="filter-group">
+        <div class="filter-group period-filter-wrap">
           <div class="filter-heading">
-            <span>Dátum</span>
-            <button class="text-button" id="today-button" type="button">Späť na dnes</button>
+            <span>Obdobie</span>
           </div>
-          <div class="date-strip" id="date-filter" role="group" aria-label="Vyber dátum"></div>
+          <div class="period-filter" id="period-filter" role="group" aria-label="Vyber obdobie">
+            <button class="period-chip" type="button" data-period="today">Dnes</button>
+            <button class="period-chip" type="button" data-period="week">7 dní</button>
+            <button class="period-chip" type="button" data-period="fortnight">14 dní</button>
+            <button class="period-chip" type="button" data-period="all">Celý program</button>
+          </div>
         </div>
 
         <div class="filter-group cinema-filter-wrap">
@@ -53,13 +57,37 @@
           </div>
           <div class="cinema-filter" id="cinema-filter" role="group" aria-label="Vyber kiná"></div>
         </div>
+
+        <div class="filter-group discovery-filter-wrap">
+          <div class="filter-heading">
+            <span>Objavuj</span>
+            <button class="text-button" id="reset-filters-button" type="button">Obnoviť filtre</button>
+          </div>
+          <div class="select-filters">
+            <label class="select-field">
+              <span>Žáner</span>
+              <select id="genre-filter">
+                <option value="all">Všetky žánre</option>
+              </select>
+            </label>
+            <label class="select-field">
+              <span>Zoradiť</span>
+              <select id="sort-filter">
+                <option value="rating">Najlepšie hodnotené</option>
+                <option value="year">Najnovšie filmy</option>
+                <option value="soonest">Najbližšie predstavenie</option>
+                <option value="title">Podľa názvu</option>
+              </select>
+            </label>
+          </div>
+        </div>
       </section>
 
       <section class="program" id="program" aria-labelledby="program-heading">
         <div class="program-heading-row">
           <div>
-            <p class="eyebrow" id="selected-date-label">Dnes</p>
-            <h2 id="program-heading">Filmy a predstavenia</h2>
+            <p class="eyebrow" id="selected-period-label">Najbližších 7 dní</p>
+            <h2 id="program-heading">Filmy, ktoré práve hrajú</h2>
           </div>
           <p class="result-count" id="result-count" aria-live="polite"></p>
         </div>
