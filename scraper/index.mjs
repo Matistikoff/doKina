@@ -3,12 +3,13 @@ import { dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { CINEMAS, OUTPUT_PATH, TIMEZONE } from "./config.mjs";
 import { validateProgram } from "./schema.mjs";
-import { fetchCinemaCity } from "./sources/cinema-city.mjs";
 import { fetchLumiere } from "./sources/kino-lumiere.mjs";
 import { fetchFilmEurope } from "./sources/kino-film-europe.mjs";
 import { fetchLuky } from "./sources/kino-luky.mjs";
 import { fetchMladost } from "./sources/kino-mladost.mjs";
 import { fetchNostalgia } from "./sources/kino-nostalgia.mjs";
+import { fetchEdison } from "./sources/edison-filmhub.mjs";
+import { fetchNovaCvernovka } from "./sources/nova-cvernovka.mjs";
 import { localDateKey } from "./utils.mjs";
 import { enrichMoviesWithOmdb } from "./omdb.mjs";
 
@@ -52,18 +53,15 @@ export function assembleProgram(results, generatedAt = new Date().toISOString(),
 
 async function main() {
   const today = localDateKey();
-  const cinemaCityCinemas = CINEMAS.filter((cinema) => cinema.sourceId === "cinema-city");
   console.log(`Fetching schedules from ${today}…`);
   const jobs = [
     { sourceId: "kino-lumiere", promise: fetchLumiere({ referenceDate: today }) },
-    ...cinemaCityCinemas.map((cinema) => ({
-      sourceId: "cinema-city",
-      promise: fetchCinemaCity(cinema, { today, daysAhead: 10 }),
-    })),
     { sourceId: "kino-film-europe", promise: fetchFilmEurope() },
     { sourceId: "kino-mladost", promise: fetchMladost() },
     { sourceId: "kino-luky", promise: fetchLuky() },
     { sourceId: "kino-nostalgia", promise: fetchNostalgia() },
+    { sourceId: "edison-filmhub", promise: fetchEdison({ referenceDate: today }) },
+    { sourceId: "nova-cvernovka", promise: fetchNovaCvernovka() },
   ];
   const settled = await Promise.allSettled(jobs.map((job) => job.promise));
   const results = [];

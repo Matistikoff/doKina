@@ -1,16 +1,17 @@
 # doKina.sk
 
-Jednoduchý prehľad filmových predstavení v bratislavských kinách. Spája program Kina Lumière, Cinema City, Kina Film Europe, Kina Mladosť, Kina Lúky a Kina Nostalgia do jedného normalizovaného súboru `program.json`.
+Jednoduchý prehľad filmových predstavení v bratislavských kinách. Spája program Kina Lumière, Kina Film Europe, Kina Mladosť, Kina Lúky, Kina Nostalgia, Edison Filmhub Bratislava a Novej Cvernovky do jedného normalizovaného súboru `program.json`.
 
 Frontend je čisté HTML, CSS a JavaScript. Node.js sa používa iba na získanie dát, testy a lokálny server.
 
 ## Zdroje dát
 
-- **Cinema City:** verejný JSON endpoint používaný webom Cinema City.
 - **Kino Lumière:** slovenský a anglický HTML program; zhodujú sa podľa stabilného ID filmu, aby sa anglický názov dal použiť na vyhľadanie IMDb.
-- **Kino Film Europe a Kino Mladosť:** HTML programové tabuľky systému Cinemaware.
+- **Kino Film Europe a Kino Nostalgia:** štruktúrované dáta programu vložené vo verejných stránkach kín.
+- **Kino Mladosť:** HTML programová tabuľka systému Cinemaware.
 - **Kino Lúky:** verejný zoznam filmových podujatí Kultúrnych zariadení Petržalky.
-- **Kino Nostalgia:** štruktúrované dáta programu vložené vo verejnej stránke kina.
+- **Edison Filmhub Bratislava:** slovenský HTML program a oficiálna anglická lokalizácia, z ktorej sa dopĺňajú anglické názvy; filmové metadáta sa čítajú zo schema.org dát na detailoch filmov.
+- **Nová Cvernovka:** verejný zoznam podujatí filtrovaný na filmy a ich detailové stránky; anglický názov sa doplní, keď ho oficiálna anglická lokalizácia naozaj poskytuje.
 
 Scraper pristupuje iba k verejným programovým stránkam, používa časové limity a obmedzený počet opakovaní. Zlyhanie jedného zdroja sa zaznamená do `program.json` a neblokuje aktualizáciu ostatných kín; ak zlyhajú všetky zdroje, starý program zostane zachovaný.
 
@@ -47,8 +48,7 @@ Voliteľné IMDb hodnotenia sa získavajú cez OMDb a ukladajú do cache. Na ich
 zapnutie pridaj GitHub Actions secret `OMDB_API_KEY`. Bez neho scraper aj web
 fungujú ďalej, iba nezobrazia hodnotenia. Bezplatný OMDb kľúč má denný limit
 1 000 požiadaviek a jeho obsah je dostupný pod licenciou CC BY-NC 4.0.
-Pri filmoch Cinema City sa na presné párovanie používa aj anglická verzia
-verejných dát kina. Kino Mladosť a Kino Film Europe sa dopĺňajú z detailu filmu.
+Kino Mladosť sa dopĺňa z detailu filmu.
 Ak zdroj originálny názov neposkytne, presná zhoda slovenského alebo českého
 názvu a roku sa cez Wikidata prevedie na IMDb ID.
 Pri Lumière sa najskôr skúsi anglický názov z oficiálnej anglickej verzie programu;

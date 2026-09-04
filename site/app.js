@@ -61,7 +61,7 @@ function formatUpdated(value) {
 }
 
 function cinemaName(cinema) {
-  return cinema.shortName || cinema.name.replace("Cinema City ", "");
+  return cinema.shortName || cinema.name;
 }
 
 function addDays(date, amount) {

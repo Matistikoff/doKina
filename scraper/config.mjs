@@ -11,35 +11,11 @@ export const CINEMAS = [
     url: "https://www.kino-lumiere.sk/",
   },
   {
-    id: "cc-aupark",
-    sourceId: "cinema-city",
-    externalId: "1010",
-    name: "Cinema City Aupark",
-    shortName: "Aupark",
-    url: "https://www.cinemacity.sk/cinemas/aupark/1010",
-  },
-  {
-    id: "cc-eurovea",
-    sourceId: "cinema-city",
-    externalId: "1012",
-    name: "Cinema City Eurovea",
-    shortName: "Eurovea",
-    url: "https://www.cinemacity.sk/cinemas/eurovea/1012",
-  },
-  {
-    id: "cc-polus",
-    sourceId: "cinema-city",
-    externalId: "1011",
-    name: "Cinema City POLUS",
-    shortName: "POLUS",
-    url: "https://www.cinemacity.sk/cinemas/polus/1011",
-  },
-  {
     id: "film-europe",
     sourceId: "kino-film-europe",
     name: "Kino Film Europe",
     shortName: "Film Europe",
-    url: "https://cinevitaj.filmeurope.sk/",
+    url: "https://www.kfe.sk/",
   },
   {
     id: "mladost",
@@ -62,12 +38,30 @@ export const CINEMAS = [
     shortName: "Nostalgia",
     url: "https://www.nostalgia.sk/",
   },
+  {
+    id: "edison-filmhub",
+    sourceId: "edison-filmhub",
+    name: "Edison Filmhub Bratislava",
+    shortName: "Edison Filmhub",
+    url: "https://edisonfilmhub.sk/",
+  },
+  {
+    id: "nova-cvernovka",
+    sourceId: "nova-cvernovka",
+    name: "Nová Cvernovka",
+    shortName: "Nová Cvernovka",
+    url: "https://novacvernovka.eu/program",
+  },
 ];
 
-export const CINEMA_CITY_API = "https://www.cinemacity.sk/sk/data-api-service/v1/quickbook/10105";
 export const LUMIERE_PROGRAM_URL = "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-19175";
 export const LUMIERE_PROGRAM_EN_URL = `${LUMIERE_PROGRAM_URL}/jazyk-en_GB`;
-export const FILM_EUROPE_PROGRAM_URL = "https://cinevitaj.filmeurope.sk/";
+export const FILM_EUROPE_PROGRAM_URL = "https://www.kfe.sk/cely-program";
 export const MLADOST_PROGRAM_URL = "https://www.kinomladost.sk/";
 export const LUKY_PROGRAM_URL = "https://www.kzp.sk/podujatia/kino?place=80";
 export const NOSTALGIA_PROGRAM_URL = "https://www.nostalgia.sk/";
+export const EDISON_PROGRAM_URL = "https://edisonfilmhub.sk/program";
+export const EDISON_EN_URL = "https://edisonfilmhub.sk/en";
+export const EDISON_PROGRAM_EN_URL = "https://edisonfilmhub.sk/programme";
+export const NOVA_CVERNOVKA_PROGRAM_URL = "https://novacvernovka.eu/program";
+export const NOVA_CVERNOVKA_PROGRAM_EN_URL = `${NOVA_CVERNOVKA_PROGRAM_URL}?lang=en`;

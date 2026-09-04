@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
 import { NOSTALGIA_PROGRAM_URL } from "../config.mjs";
-import { cleanTitle, fetchWithRetry, languageDetails, movieId } from "../utils.mjs";
+import { cleanTitle, fetchBrowserHtml, languageDetails, movieId } from "../utils.mjs";
 
 function decodeFlightData(html) {
   const $ = cheerio.load(html);
@@ -58,7 +58,12 @@ function slovak(value) {
   return value?.sk || value?.en || Object.values(value || {}).find(Boolean) || null;
 }
 
-export function parseNostalgia(html) {
+export function parseEntradioEvents(html, {
+  cinemaId,
+  sourceId,
+  programUrl,
+  cinemaName,
+}) {
   const eventMap = new Map();
   for (const events of extractJsonArrays(decodeFlightData(html), "events")) {
     for (const event of events) {
@@ -83,7 +88,7 @@ export function parseNostalgia(html) {
     if (!moviesById.has(id)) {
       moviesById.set(id, {
         id,
-        source: "kino-nostalgia",
+        source: sourceId,
         externalId: showId ? String(showId) : null,
         title,
         originalTitle: englishTitle && englishTitle !== title ? englishTitle : null,
@@ -92,18 +97,18 @@ export function parseNostalgia(html) {
         ageRating: ageText.match(/\b(\d{1,2})\b/u)?.[1] || null,
         genres: [],
         posterUrl,
-        detailUrl: showId ? new URL(`/film/${showId}`, NOSTALGIA_PROGRAM_URL).href : null,
+        detailUrl: showId ? new URL(`/film/${showId}`, programUrl).href : null,
       });
     }
 
     const formatText = slovak(event.formatAbbreviationTranslated) || slovak(event.formatTranslated) || "";
     const available = event.availableSeatsCount;
     screenings.push({
-      id: `kino-nostalgia-${event.id}`,
-      source: "kino-nostalgia",
+      id: `${sourceId}-${event.id}`,
+      source: sourceId,
       externalId: String(event.id),
       movieId: id,
-      cinemaId: "nostalgia",
+      cinemaId,
       startsAt: event.startsAt,
       auditorium: event.auditorium?.name || null,
       format: formatText ? [formatText.replace(/\s+projekcia$/iu, "")] : [],
@@ -115,11 +120,19 @@ export function parseNostalgia(html) {
     });
   }
 
-  if (screenings.length === 0) throw new Error("Kino Nostalgia page contained no recognizable screenings");
+  if (screenings.length === 0) throw new Error(`${cinemaName} page contained no recognizable screenings`);
   return { movies: [...moviesById.values()], screenings };
 }
 
+export function parseNostalgia(html) {
+  return parseEntradioEvents(html, {
+    cinemaId: "nostalgia",
+    sourceId: "kino-nostalgia",
+    programUrl: NOSTALGIA_PROGRAM_URL,
+    cinemaName: "Kino Nostalgia",
+  });
+}
+
 export async function fetchNostalgia() {
-  const html = await (await fetchWithRetry(NOSTALGIA_PROGRAM_URL)).text();
-  return parseNostalgia(html);
+  return parseNostalgia(await fetchBrowserHtml(NOSTALGIA_PROGRAM_URL));
 }

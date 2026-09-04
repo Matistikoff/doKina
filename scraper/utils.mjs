@@ -1,4 +1,17 @@
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import { TIMEZONE } from "./config.mjs";
+
+const execFileAsync = promisify(execFile);
+const BROWSER_HEADERS = {
+  Accept: "text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8",
+  "Accept-Language": "sk-SK,sk;q=0.9,en;q=0.8",
+  "Sec-Fetch-Dest": "document",
+  "Sec-Fetch-Mode": "navigate",
+  "Sec-Fetch-Site": "none",
+  "Upgrade-Insecure-Requests": "1",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+};
 
 export function collapseWhitespace(value = "") {
   return value.replace(/\s+/g, " ").trim();
@@ -94,8 +107,7 @@ export async function fetchWithRetry(url, options = {}) {
         ...fetchOptions,
         signal: controller.signal,
         headers: {
-          Accept: "text/html,application/json;q=0.9,*/*;q=0.8",
-          "User-Agent": "doKina.sk schedule aggregator (+https://github.com/)",
+          ...BROWSER_HEADERS,
           ...fetchOptions.headers,
         },
       });
@@ -110,4 +122,29 @@ export async function fetchWithRetry(url, options = {}) {
   }
 
   throw new Error(`Fetch failed for ${url}: ${lastError?.message || lastError}`);
+}
+
+export async function fetchBrowserHtml(url, options = {}) {
+  try {
+    return await (await fetchWithRetry(url, options)).text();
+  } catch (fetchError) {
+    const timeoutSeconds = Math.ceil((options.timeoutMs || 15_000) / 1000);
+    const headerArgs = Object.entries(BROWSER_HEADERS).flatMap(([name, value]) => ["--header", `${name}: ${value}`]);
+    try {
+      const { stdout } = await execFileAsync("curl", [
+        "--fail-with-body",
+        "--location",
+        "--silent",
+        "--show-error",
+        "--max-time",
+        String(timeoutSeconds),
+        ...headerArgs,
+        url,
+      ], { encoding: "utf8", maxBuffer: 10 * 1024 * 1024 });
+      return stdout;
+    } catch (curlError) {
+      const detail = curlError.stderr?.trim() || curlError.message;
+      throw new Error(`${fetchError.message}; browser-compatible fallback failed: ${detail}`);
+    }
+  }
 }
