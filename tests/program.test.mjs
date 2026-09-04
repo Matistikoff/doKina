@@ -13,6 +13,7 @@ test("assembles deterministic data and merges matching films", () => {
   assert.deepEqual(program.movies[0].genres, ["Dráma"]);
   assert.equal(program.movies[0].posterUrl, "poster.jpg");
   assert.deepEqual(program.screenings.map((item) => item.id), ["a-1", "a-2"]);
+  assert.equal(program.sources.length, 6);
 });
 
 test("schema validation rejects dangling movie references", () => {

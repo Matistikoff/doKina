@@ -69,6 +69,16 @@ export function movieId(title, year) {
   return `movie-${slug(title)}${year ? `-${year}` : ""}`;
 }
 
+export function languageDetails(value = "") {
+  const text = collapseWhitespace(value).toLocaleLowerCase("sk");
+  const languages = { original: [], dubbed: [], voiceover: [], subtitles: [] };
+  if (/slovensk(?:ý|y) dabing|\bsd\b/u.test(text)) languages.dubbed.push("sk");
+  if (/česk(?:ý|y) dabing|\bčd\b/u.test(text)) languages.dubbed.push("cs");
+  if (/slovensk(?:é|e) titulky|\bst\b/u.test(text)) languages.subtitles.push("sk");
+  if (/česk(?:é|e) titulky|\bčt\b/u.test(text)) languages.subtitles.push("cs");
+  return languages;
+}
+
 export async function fetchWithRetry(url, options = {}) {
   const { attempts = 3, timeoutMs = 15_000, ...fetchOptions } = options;
   let lastError;

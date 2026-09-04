@@ -1,6 +1,6 @@
 # doKina.sk
 
-Jednoduchý prehľad filmových predstavení v bratislavských kinách. Spája program Kina Lumière a všetkých troch bratislavských kín Cinema City do jedného normalizovaného súboru `program.json`.
+Jednoduchý prehľad filmových predstavení v bratislavských kinách. Spája program Kina Lumière, Cinema City, Kina Film Europe, Kina Mladosť, Kina Lúky a Kina Nostalgia do jedného normalizovaného súboru `program.json`.
 
 Frontend je čisté HTML, CSS a JavaScript. Node.js sa používa iba na získanie dát, testy a lokálny server.
 
@@ -8,8 +8,11 @@ Frontend je čisté HTML, CSS a JavaScript. Node.js sa používa iba na získani
 
 - **Cinema City:** verejný JSON endpoint používaný webom Cinema City.
 - **Kino Lumière:** HTML kompletného programu; stránka neposkytuje štruktúrovaný JSON program.
+- **Kino Film Europe a Kino Mladosť:** HTML programové tabuľky systému Cinemaware.
+- **Kino Lúky:** verejný zoznam filmových podujatí Kultúrnych zariadení Petržalky.
+- **Kino Nostalgia:** štruktúrované dáta programu vložené vo verejnej stránke kina.
 
-Scraper pristupuje iba k verejným programovým stránkam, používa časové limity a obmedzený počet opakovaní. Ak niektorý zdroj zlyhá, proces skončí chybou a staré funkčné nasadenie zostane online.
+Scraper pristupuje iba k verejným programovým stránkam, používa časové limity a obmedzený počet opakovaní. Zlyhanie jedného zdroja sa zaznamená do `program.json` a neblokuje aktualizáciu ostatných kín; ak zlyhajú všetky zdroje, starý program zostane zachovaný.
 
 ## Lokálne spustenie
 

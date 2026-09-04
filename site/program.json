@@ -1,17 +1,39 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-04T08:45:53.829Z",
+  "generatedAt": "2026-09-04T09:54:07.785Z",
   "timezone": "Europe/Bratislava",
   "sources": [
     {
       "id": "kino-lumiere",
       "status": "ok",
-      "fetchedAt": "2026-09-04T08:45:53.829Z"
+      "fetchedAt": "2026-09-04T09:54:07.785Z"
     },
     {
       "id": "cinema-city",
       "status": "ok",
-      "fetchedAt": "2026-09-04T08:45:53.829Z"
+      "fetchedAt": "2026-09-04T09:54:07.785Z"
+    },
+    {
+      "id": "kino-film-europe",
+      "status": "error",
+      "fetchedAt": "2026-09-04T09:54:07.785Z",
+      "error": "Fetch failed for https://cinevitaj.filmeurope.sk/: fetch failed"
+    },
+    {
+      "id": "kino-mladost",
+      "status": "ok",
+      "fetchedAt": "2026-09-04T09:54:07.785Z"
+    },
+    {
+      "id": "kino-luky",
+      "status": "ok",
+      "fetchedAt": "2026-09-04T09:54:07.785Z"
+    },
+    {
+      "id": "kino-nostalgia",
+      "status": "error",
+      "fetchedAt": "2026-09-04T09:54:07.785Z",
+      "error": "Fetch failed for https://www.nostalgia.sk/: 429 Too Many Requests"
     }
   ],
   "cinemas": [
@@ -38,6 +60,30 @@
       "name": "Cinema City POLUS",
       "shortName": "POLUS",
       "url": "https://www.cinemacity.sk/cinemas/polus/1011"
+    },
+    {
+      "id": "film-europe",
+      "name": "Kino Film Europe",
+      "shortName": "Film Europe",
+      "url": "https://cinevitaj.filmeurope.sk/"
+    },
+    {
+      "id": "mladost",
+      "name": "Kino Mladosť",
+      "shortName": "Mladosť",
+      "url": "https://www.kinomladost.sk/"
+    },
+    {
+      "id": "luky",
+      "name": "Kino Lúky",
+      "shortName": "Lúky",
+      "url": "https://www.kzp.sk/podujatia/kino?place=80"
+    },
+    {
+      "id": "nostalgia",
+      "name": "Kino Nostalgia Nivy",
+      "shortName": "Nostalgia",
+      "url": "https://www.nostalgia.sk/"
     }
   ],
   "movies": [
@@ -53,6 +99,19 @@
       "genres": [],
       "posterUrl": null,
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-836694"
+    },
+    {
+      "id": "movie-20-vyrocie-filmu-wholetrain-beseda-s-reziserom-2006",
+      "source": "kino-luky",
+      "externalId": "20-vyrocie-filmu-wholetrain-beseda-s-reziserom",
+      "title": "20. VÝROČIE FILMU WHOLETRAIN + beseda s režisérom",
+      "originalTitle": null,
+      "releaseYear": "2006",
+      "durationMinutes": 82,
+      "ageRating": "12",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/1787568716-8-400-300-wholetrainuvodweb.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/20-vyrocie-filmu-wholetrain-beseda-s-reziserom?place=80"
     },
     {
       "id": "movie-6-gramov-2026",
@@ -125,6 +184,19 @@
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-826743"
     },
     {
+      "id": "movie-auta-2006",
+      "source": "kino-luky",
+      "externalId": "kino-pre-deti-auta-2",
+      "title": "AUTÁ",
+      "originalTitle": null,
+      "releaseYear": "2006",
+      "durationMinutes": 117,
+      "ageRating": null,
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1786970157-8-400-300-auta_WEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/kino-pre-deti-auta-2?place=80"
+    },
+    {
       "id": "movie-auta-20-vyrocie-2006",
       "source": "cinema-city",
       "externalId": "2077s3i1",
@@ -169,6 +241,19 @@
       ],
       "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/3677D3R3.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837782"
+    },
+    {
+      "id": "movie-bardotky",
+      "source": "kino-mladost",
+      "externalId": "836562",
+      "title": "BARDOTKY",
+      "originalTitle": null,
+      "releaseYear": null,
+      "durationMinutes": null,
+      "ageRating": "12",
+      "genres": [],
+      "posterUrl": null,
+      "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-836562"
     },
     {
       "id": "movie-bethlehem-kudumba-unit-2026",
@@ -245,6 +330,32 @@
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838107"
     },
     {
+      "id": "movie-cudzinec",
+      "source": "kino-mladost",
+      "externalId": "838463",
+      "title": "CUDZINEC",
+      "originalTitle": null,
+      "releaseYear": null,
+      "durationMinutes": null,
+      "ageRating": "15",
+      "genres": [],
+      "posterUrl": null,
+      "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-838463"
+    },
+    {
+      "id": "movie-dievca-v-oblakoch-2026",
+      "source": "kino-luky",
+      "externalId": "kino-pre-deti-dievca-v-oblakoch-1",
+      "title": "DIEVČA V OBLAKOCH",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 90,
+      "ageRating": "7",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787136533-8-400-300-DIEVCAVOBLAKOCHUVODWEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/kino-pre-deti-dievca-v-oblakoch-1?place=80"
+    },
+    {
       "id": "movie-dokonaly-den-2026",
       "source": "cinema-city",
       "externalId": "0202d2x1",
@@ -259,6 +370,71 @@
       ],
       "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/0202D2X1.jpg",
       "detailUrl": "https://www.cinemacity.sk/films/dokonaly-den/0202d2x1"
+    },
+    {
+      "id": "movie-dokonaly-den",
+      "source": "kino-mladost",
+      "externalId": "838473",
+      "title": "DOKONALÝ DEŇ",
+      "originalTitle": null,
+      "releaseYear": null,
+      "durationMinutes": null,
+      "ageRating": "12",
+      "genres": [],
+      "posterUrl": null,
+      "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-838473"
+    },
+    {
+      "id": "movie-domaca-uroda-kavej-2-2026",
+      "source": "kino-luky",
+      "externalId": "domaca-uroda-kavej-2-6",
+      "title": "Domáca úroda: KAVEJ 2",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 109,
+      "ageRating": "12",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_07/kino_7/1782256197-8-400-300-KAVEJUVODWEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/domaca-uroda-kavej-2-6?place=80"
+    },
+    {
+      "id": "movie-domaca-uroda-kuko-drobcek-a-ratafak-znovu-zasahuju-2026",
+      "source": "kino-luky",
+      "externalId": "domaca-uroda-kuko-drobcek-a-ratafak-znovu-zasahuju-fk-1",
+      "title": "Domáca úroda: KUKO, DROBČEK A RAŤAFÁK ZNOVU ZASAHUJÚ",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 70,
+      "ageRating": "12",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_08/kino/1783336579-8-400-300-kuku_still.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/domaca-uroda-kuko-drobcek-a-ratafak-znovu-zasahuju-fk-1?place=80"
+    },
+    {
+      "id": "movie-domaca-uroda-laska-2026",
+      "source": "kino-luky",
+      "externalId": "domaca-uroda-laska-fk",
+      "title": "Domáca úroda: LÁSKA",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 101,
+      "ageRating": "15",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787145677-8-400-300-laskaWEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/domaca-uroda-laska-fk?place=80"
+    },
+    {
+      "id": "movie-domaca-uroda-milovnik-nie-bojovnik-2026",
+      "source": "kino-luky",
+      "externalId": "domaca-uroda-milovnik-nie-bojovnik-fk-1",
+      "title": "Domáca úroda: MILOVNÍK, NIE BOJOVNÍK",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 108,
+      "ageRating": "15",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787136058-8-400-300-milovnikbojovnikUVODWEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/domaca-uroda-milovnik-nie-bojovnik-fk-1?place=80"
     },
     {
       "id": "movie-draha-neznama-1980",
@@ -339,6 +515,19 @@
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-821451"
     },
     {
+      "id": "movie-hlavicka",
+      "source": "kino-mladost",
+      "externalId": "838475",
+      "title": "HLAVIČKA",
+      "originalTitle": null,
+      "releaseYear": null,
+      "durationMinutes": null,
+      "ageRating": "7",
+      "genres": [],
+      "posterUrl": null,
+      "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-838475"
+    },
+    {
       "id": "movie-chungking-express-narodeninovy-special-1994",
       "source": "kino-lumiere",
       "externalId": "838702",
@@ -412,6 +601,19 @@
       ],
       "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/6329S2X1.jpg",
       "detailUrl": "https://www.cinemacity.sk/films/kavej-2/6329s2x1"
+    },
+    {
+      "id": "movie-kojoti-vs-smejdi-2026",
+      "source": "kino-luky",
+      "externalId": "kino-pre-deti-kojoti-vs-smejdi",
+      "title": "KOJOTI VS. ŠMEJDI",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 100,
+      "ageRating": "12",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787232125-8-400-300-kojoti.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/kino-pre-deti-kojoti-vs-smejdi?place=80"
     },
     {
       "id": "movie-koncert-pre-pozostalych-restaurovana-klasika-sk-1976",
@@ -517,6 +719,32 @@
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-833527"
     },
     {
+      "id": "movie-liecive-ucinky-sebaklamu",
+      "source": "kino-mladost",
+      "externalId": "838482",
+      "title": "LIEČIVÉ ÚČINKY SEBAKLAMU",
+      "originalTitle": null,
+      "releaseYear": null,
+      "durationMinutes": null,
+      "ageRating": "15",
+      "genres": [],
+      "posterUrl": null,
+      "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-838482"
+    },
+    {
+      "id": "movie-liecive-ucinky-sebaklamu-2026",
+      "source": "kino-luky",
+      "externalId": "klenoty-zanroveho-filmu-liecive-ucinky-sebaklamu",
+      "title": "LIEČIVÉ ÚČINKY SEBAKLAMU",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 93,
+      "ageRating": "15",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787230839-8-400-300-ucinkysebaklamuWEBUVOD.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/klenoty-zanroveho-filmu-liecive-ucinky-sebaklamu?place=80"
+    },
+    {
       "id": "movie-magicka-posadnutost-2-2026",
       "source": "kino-lumiere",
       "externalId": "838982",
@@ -532,6 +760,19 @@
       ],
       "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/8220S2R.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838982"
+    },
+    {
+      "id": "movie-magicka-posadnutost-2",
+      "source": "kino-mladost",
+      "externalId": "838492",
+      "title": "MAGICKÁ POSADNUTOSŤ 2",
+      "originalTitle": null,
+      "releaseYear": null,
+      "durationMinutes": null,
+      "ageRating": "12",
+      "genres": [],
+      "posterUrl": null,
+      "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-838492"
     },
     {
       "id": "movie-mala-sestra-2025",
@@ -707,10 +948,10 @@
       "title": "Oasis: Don't Look Back in Anger",
       "originalTitle": "Oasis: Don't Look Back in Anger",
       "releaseYear": "2026",
-      "durationMinutes": null,
-      "ageRating": null,
+      "durationMinutes": 121,
+      "ageRating": "15",
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787135185-8-400-300-osisUVODWEB.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838694"
     },
     {
@@ -728,6 +969,45 @@
       ],
       "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/7268S2R.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-835570"
+    },
+    {
+      "id": "movie-odyssea",
+      "source": "kino-mladost",
+      "externalId": "835883",
+      "title": "ODYSSEA",
+      "originalTitle": null,
+      "releaseYear": null,
+      "durationMinutes": null,
+      "ageRating": "15",
+      "genres": [],
+      "posterUrl": null,
+      "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-835883"
+    },
+    {
+      "id": "movie-odyssea-2026",
+      "source": "kino-luky",
+      "externalId": "klenoty-zanroveho-filmu-odyssea-8",
+      "title": "ODYSSEA",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 172,
+      "ageRating": "15",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_07/kino_7/1782255287-8-400-300-ODYSEA_WEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/klenoty-zanroveho-filmu-odyssea-8?place=80"
+    },
+    {
+      "id": "movie-opusteny-2026",
+      "source": "kino-luky",
+      "externalId": "ozveny-svetovych-festivalov-opusteny-2",
+      "title": "OPUSTENÝ",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 100,
+      "ageRating": "12",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787144033-8-400-300-opusteny.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/ozveny-svetovych-festivalov-opusteny-2?place=80"
     },
     {
       "id": "movie-osem-noh-a-milion-followerov-2026",
@@ -840,6 +1120,32 @@
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-835586"
     },
     {
+      "id": "movie-pramen",
+      "source": "kino-mladost",
+      "externalId": "836097",
+      "title": "PRAMEŇ",
+      "originalTitle": null,
+      "releaseYear": null,
+      "durationMinutes": null,
+      "ageRating": "12",
+      "genres": [],
+      "posterUrl": null,
+      "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-836097"
+    },
+    {
+      "id": "movie-preco-by-sme-sa-nezabili-2026",
+      "source": "kino-luky",
+      "externalId": "klenoty-zanroveho-filmu-preco-by-sme-sa-nezabili",
+      "title": "PREČO BY SME SA NEZABILI",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": null,
+      "ageRating": "12",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787518275-8-400-300-precobyUVOD.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/klenoty-zanroveho-filmu-preco-by-sme-sa-nezabili?place=80"
+    },
+    {
       "id": "movie-princezna-kozmolesba-2025",
       "source": "kino-lumiere",
       "externalId": "810156",
@@ -903,10 +1209,10 @@
       "title": "Psie hviezdy",
       "originalTitle": "Dog Stars",
       "releaseYear": "2026",
-      "durationMinutes": null,
-      "ageRating": null,
+      "durationMinutes": 100,
+      "ageRating": "15",
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_07/kino_7/1782337635-8-400-300-dogstarsWEBB.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838518"
     },
     {
@@ -921,6 +1227,19 @@
       "genres": [],
       "posterUrl": null,
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838686"
+    },
+    {
+      "id": "movie-resident-evil-2026",
+      "source": "kino-luky",
+      "externalId": "klenoty-zanroveho-filmu-resident-evil",
+      "title": "RESIDENT EVIL",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 90,
+      "ageRating": "18",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787234393-8-400-300-residentUVODobrazok.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/klenoty-zanroveho-filmu-resident-evil?place=80"
     },
     {
       "id": "movie-rose-2026",
@@ -962,16 +1281,29 @@
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839254"
     },
     {
+      "id": "movie-samuraj-a-vazen-2026",
+      "source": "kino-luky",
+      "externalId": "ozveny-svetovych-festivalov-samuraj-a-vaezen-1",
+      "title": "SAMURAJ A VÄZEŇ",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 147,
+      "ageRating": "15",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787142873-8-400-300-2samurajavazanUVODWEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/ozveny-svetovych-festivalov-samuraj-a-vaezen-1?place=80"
+    },
+    {
       "id": "movie-sex-a-smrt-v-kempe-miasma-2026",
       "source": "kino-lumiere",
       "externalId": "835612",
       "title": "Sex a smrť v kempe Miasma",
       "originalTitle": "Teenage Sex and Death at Camp Miasma",
       "releaseYear": "2026",
-      "durationMinutes": null,
-      "ageRating": null,
+      "durationMinutes": 112,
+      "ageRating": "18",
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787143398-8-400-300-vkempeUVODWEB.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-835612"
     },
     {
@@ -1107,6 +1439,19 @@
       "detailUrl": "https://www.cinemacity.sk/films/tajomstvo-dzungle/0176o2sx1"
     },
     {
+      "id": "movie-tajomstvo-krystalovej-planety-2026",
+      "source": "kino-luky",
+      "externalId": "kino-pre-deti-tajomstvo-krystalovej-planety-2",
+      "title": "TAJOMSTVO KRYŠTÁĽOVEJ PLANÉTY",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 97,
+      "ageRating": "7",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1786968570-8-400-300-tajomstvokristalovejplanetyWEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/kino-pre-deti-tajomstvo-krystalovej-planety-2?place=80"
+    },
+    {
       "id": "movie-tajomstvo-sykoriek-2025",
       "source": "cinema-city",
       "externalId": "6093s2r1",
@@ -1123,6 +1468,19 @@
       "detailUrl": "https://www.cinemacity.sk/films/tajomstvo-sykoriek/6093s2r1"
     },
     {
+      "id": "movie-tajomstvo-sykoriek",
+      "source": "kino-mladost",
+      "externalId": "837479",
+      "title": "TAJOMSTVO SÝKORIEK",
+      "originalTitle": null,
+      "releaseYear": null,
+      "durationMinutes": null,
+      "ageRating": "7",
+      "genres": [],
+      "posterUrl": null,
+      "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-837479"
+    },
+    {
       "id": "movie-tom-a-jerry-magicky-kompas-2025",
       "source": "cinema-city",
       "externalId": "8136s2r",
@@ -1137,6 +1495,19 @@
       ],
       "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/8136S2R.jpg",
       "detailUrl": "https://www.cinemacity.sk/films/tom-a-jerry-magicky-kompas/8136s2r"
+    },
+    {
+      "id": "movie-tony-2026",
+      "source": "kino-luky",
+      "externalId": "klenoty-zanroveho-filmu-tony-1",
+      "title": "TONY",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 106,
+      "ageRating": "15",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787125862-8-400-300-3tonyuvodWEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/klenoty-zanroveho-filmu-tony-1?place=80"
     },
     {
       "id": "movie-toy-story-5-pribeh-hraciek-2026",
@@ -1195,6 +1566,32 @@
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837119"
     },
     {
+      "id": "movie-utajene-poklady-dj-ahmet-2025",
+      "source": "kino-luky",
+      "externalId": "utajene-poklady-dj-ahmet-fk",
+      "title": "UTAJENÉ POKLADY: DJ AHMET",
+      "originalTitle": null,
+      "releaseYear": "2025",
+      "durationMinutes": 99,
+      "ageRating": "12",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2025_10/KINO/1758725317-8-400-300-djahmetweb.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/utajene-poklady-dj-ahmet-fk?place=80"
+    },
+    {
+      "id": "movie-v-srdci-divociny-2026",
+      "source": "kino-luky",
+      "externalId": "klenoty-zanroveho-filmu-v-srdci-divociny",
+      "title": "V SRDCI DIVOČINY",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 101,
+      "ageRating": "12",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787517477-8-400-300-vsrdcidivUVODWEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/klenoty-zanroveho-filmu-v-srdci-divociny?place=80"
+    },
+    {
       "id": "movie-vaiana-2026",
       "source": "cinema-city",
       "externalId": "1808s2r",
@@ -1224,6 +1621,58 @@
       ],
       "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/6699O2SX1.jpg",
       "detailUrl": "https://www.cinemacity.sk/films/vzbura/6699o2sx1"
+    },
+    {
+      "id": "movie-wellness-vikend",
+      "source": "kino-mladost",
+      "externalId": "838498",
+      "title": "WELLNESS VÍKEND",
+      "originalTitle": null,
+      "releaseYear": null,
+      "durationMinutes": null,
+      "ageRating": "15",
+      "genres": [],
+      "posterUrl": null,
+      "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-838498"
+    },
+    {
+      "id": "movie-wellness-vikend-2026",
+      "source": "kino-luky",
+      "externalId": "klenoty-zanroveho-filmu-wellness-vikend",
+      "title": "WELLNESS VÍKEND",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 97,
+      "ageRating": "15",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787229857-8-400-300-welnesUVODWEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/klenoty-zanroveho-filmu-wellness-vikend?place=80"
+    },
+    {
+      "id": "movie-zabudnuty-ostrov-2026",
+      "source": "kino-luky",
+      "externalId": "kino-pre-deti-zabudnuty-ostrov",
+      "title": "ZABUDNUTÝ OSTROV",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 109,
+      "ageRating": "7",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787516807-8-400-300-zabudnutyostrovUVODWEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/kino-pre-deti-zabudnuty-ostrov?place=80"
+    },
+    {
+      "id": "movie-zapas-storocia-2026",
+      "source": "kino-luky",
+      "externalId": "ozveny-svetovych-festivalov-zapas-storocia-fk-2",
+      "title": "ZÁPAS STOROČIA",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 91,
+      "ageRating": "12",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787137010-8-400-300-zapasstorociaUVODWEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/ozveny-svetovych-festivalov-zapas-storocia-fk-2?place=80"
     },
     {
       "id": "movie-zmluva-s-diablom-restaurovana-klasika-sk-1967",
@@ -1317,7 +1766,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9905,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96623?lang=sk"
     },
     {
@@ -2508,7 +2957,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9933,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96682?lang=sk"
     },
     {
@@ -2588,7 +3037,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9669,
+      "availabilityRatio": 0.9558,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96209?lang=sk"
     },
     {
@@ -2823,7 +3272,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9883,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96570?lang=sk"
     },
     {
@@ -2972,7 +3421,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9825,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95690?lang=sk"
     },
     {
@@ -3299,6 +3748,28 @@
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96592?lang=sk"
     },
     {
+      "id": "kino-mladost-6d2202597d56dbf27ecc731df9080084f59d788d21ac95b8a6e6bae5",
+      "source": "kino-mladost",
+      "externalId": "6d2202597d56dbf27ecc731df9080084f59d788d21ac95b8a6e6bae5",
+      "movieId": "movie-pramen",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-04T17:15:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "6,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=6d2202597d56dbf27ecc731df9080084f59d788d21ac95b8a6e6bae5"
+    },
+    {
       "id": "cinema-city-1012-96467",
       "source": "cinema-city",
       "externalId": "96467",
@@ -3346,7 +3817,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9848,
+      "availabilityRatio": 0.9646,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96706?lang=sk"
     },
     {
@@ -3423,7 +3894,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9747,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96026?lang=sk"
     },
     {
@@ -4166,6 +4637,50 @@
       "soldOut": false,
       "availabilityRatio": 0.9913,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95696?lang=sk"
+    },
+    {
+      "id": "kino-luky-6a841ab6b56efddda74dd2bb",
+      "source": "kino-luky",
+      "externalId": "6a841ab6b56efddda74dd2bb",
+      "movieId": "movie-cudzinec-2025",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-04T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "cs"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a841ab6b56efddda74dd2bb/?lang=sk_SK"
+    },
+    {
+      "id": "kino-mladost-811a373265908501211d773b5e9ce26a1b9d105c23c2aadc58e2576f",
+      "source": "kino-mladost",
+      "externalId": "811a373265908501211d773b5e9ce26a1b9d105c23c2aadc58e2576f",
+      "movieId": "movie-dokonaly-den",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-04T19:00:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "7,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=811a373265908501211d773b5e9ce26a1b9d105c23c2aadc58e2576f"
     },
     {
       "id": "cinema-city-1012-96471",
@@ -4937,7 +5452,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9899,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96710?lang=sk"
     },
     {
@@ -5121,7 +5636,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9664,
+      "availabilityRatio": 0.9496,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96304?lang=sk"
     },
     {
@@ -7673,6 +8188,30 @@
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95632?lang=sk"
     },
     {
+      "id": "kino-mladost-e6448db8392b45879ad4072e83f05635f6dabf46b387c9cf4cf6a9cc",
+      "source": "kino-mladost",
+      "externalId": "e6448db8392b45879ad4072e83f05635f6dabf46b387c9cf4cf6a9cc",
+      "movieId": "movie-tajomstvo-sykoriek",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-05T15:45:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [
+          "cs"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "5,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=e6448db8392b45879ad4072e83f05635f6dabf46b387c9cf4cf6a9cc"
+    },
+    {
       "id": "cinema-city-1012-95918",
       "source": "cinema-city",
       "externalId": "95918",
@@ -8151,6 +8690,28 @@
       "soldOut": false,
       "availabilityRatio": 1,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96720?lang=sk"
+    },
+    {
+      "id": "kino-mladost-9dd03362c7e9a312837e1a96ab4036cf173a604ff25710e7c2ef472d",
+      "source": "kino-mladost",
+      "externalId": "9dd03362c7e9a312837e1a96ab4036cf173a604ff25710e7c2ef472d",
+      "movieId": "movie-dokonaly-den",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-05T17:15:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "7,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=9dd03362c7e9a312837e1a96ab4036cf173a604ff25710e7c2ef472d"
     },
     {
       "id": "cinema-city-1010-96229",
@@ -8735,7 +9296,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.6409,
+      "availabilityRatio": 0.6354,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96216?lang=sk"
     },
     {
@@ -8962,6 +9523,28 @@
       "soldOut": false,
       "availabilityRatio": 0.9913,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95624?lang=sk"
+    },
+    {
+      "id": "kino-mladost-a1f25ddb87f23bbb139608886466b52e35c4917a881d20aba8e11f21",
+      "source": "kino-mladost",
+      "externalId": "a1f25ddb87f23bbb139608886466b52e35c4917a881d20aba8e11f21",
+      "movieId": "movie-bardotky",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-05T19:00:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "7,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=a1f25ddb87f23bbb139608886466b52e35c4917a881d20aba8e11f21"
     },
     {
       "id": "cinema-city-1010-96329",
@@ -11852,7 +12435,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9829,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96064?lang=sk"
     },
     {
@@ -12118,6 +12701,28 @@
       "soldOut": false,
       "availabilityRatio": 1,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95658?lang=sk"
+    },
+    {
+      "id": "kino-luky-6a841cbfb56efddda7509467",
+      "source": "kino-luky",
+      "externalId": "6a841cbfb56efddda7509467",
+      "movieId": "movie-tajomstvo-krystalovej-planety-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-06T15:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [
+          "sk"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a841cbfb56efddda7509467/?lang=sk_SK"
     },
     {
       "id": "cinema-city-1012-96684",
@@ -12881,6 +13486,48 @@
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95663?lang=sk"
     },
     {
+      "id": "kino-luky-6a841e9bb56efddda752e191",
+      "source": "kino-luky",
+      "externalId": "6a841e9bb56efddda752e191",
+      "movieId": "movie-dokonaly-den-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-06T17:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a841e9bb56efddda752e191/?lang=sk_SK"
+    },
+    {
+      "id": "kino-mladost-50eb730237dc2bbb96f0014a2f8caa2efa11d8a285aed9e71c7909e5",
+      "source": "kino-mladost",
+      "externalId": "50eb730237dc2bbb96f0014a2f8caa2efa11d8a285aed9e71c7909e5",
+      "movieId": "movie-bardotky",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-06T17:00:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "7,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=50eb730237dc2bbb96f0014a2f8caa2efa11d8a285aed9e71c7909e5"
+    },
+    {
       "id": "cinema-city-1012-96593",
       "source": "cinema-city",
       "externalId": "96593",
@@ -13641,6 +14288,28 @@
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96547?lang=sk"
     },
     {
+      "id": "kino-mladost-c3019c7a7cc686b068e82b0491ca36b9974dc6819e02e621c7a32314",
+      "source": "kino-mladost",
+      "externalId": "c3019c7a7cc686b068e82b0491ca36b9974dc6819e02e621c7a32314",
+      "movieId": "movie-dokonaly-den",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-06T18:45:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "7,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=c3019c7a7cc686b068e82b0491ca36b9974dc6819e02e621c7a32314"
+    },
+    {
       "id": "cinema-city-1012-96611",
       "source": "cinema-city",
       "externalId": "96611",
@@ -13692,6 +14361,28 @@
       "soldOut": false,
       "availabilityRatio": 1,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95678?lang=sk"
+    },
+    {
+      "id": "kino-luky-6a9a7e6733759cc0a52782e0",
+      "source": "kino-luky",
+      "externalId": "6a9a7e6733759cc0a52782e0",
+      "movieId": "movie-20-vyrocie-filmu-wholetrain-beseda-s-reziserom-2006",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-06T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "sk"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a9a7e6733759cc0a52782e0/"
     },
     {
       "id": "cinema-city-1010-96330",
@@ -17157,6 +17848,30 @@
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=7382afab9fad6f63eea4466172f5a9be12c78b812a0de7c3d6577959"
     },
     {
+      "id": "kino-mladost-ac0a4be53ed8bc0b98d4714df28df90d24269ef106c1b36abcf0ee65",
+      "source": "kino-mladost",
+      "externalId": "ac0a4be53ed8bc0b98d4714df28df90d24269ef106c1b36abcf0ee65",
+      "movieId": "movie-odyssea",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-07T18:15:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [
+          "sk"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "7,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=ac0a4be53ed8bc0b98d4714df28df90d24269ef106c1b36abcf0ee65"
+    },
+    {
       "id": "cinema-city-1010-96325",
       "source": "cinema-city",
       "externalId": "96325",
@@ -20330,6 +21045,28 @@
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96543?lang=sk"
     },
     {
+      "id": "kino-mladost-10d52510c3ea35424ecd0f89d16075e6de7fc3570f9a983e50782559",
+      "source": "kino-mladost",
+      "externalId": "10d52510c3ea35424ecd0f89d16075e6de7fc3570f9a983e50782559",
+      "movieId": "movie-bardotky",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-08T16:45:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "7,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=10d52510c3ea35424ecd0f89d16075e6de7fc3570f9a983e50782559"
+    },
+    {
       "id": "cinema-city-1010-96344",
       "source": "cinema-city",
       "externalId": "96344",
@@ -20862,7 +21599,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9857,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96514?lang=sk"
     },
     {
@@ -21165,6 +21902,30 @@
       "soldOut": false,
       "availabilityRatio": 1,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95808?lang=sk"
+    },
+    {
+      "id": "kino-mladost-38ace05bfcde554f8d4c953b3a3c066b2247d8fc3c77015122aecaa2",
+      "source": "kino-mladost",
+      "externalId": "38ace05bfcde554f8d4c953b3a3c066b2247d8fc3c77015122aecaa2",
+      "movieId": "movie-cudzinec",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-08T18:30:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "cs"
+        ]
+      },
+      "price": "7,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=38ace05bfcde554f8d4c953b3a3c066b2247d8fc3c77015122aecaa2"
     },
     {
       "id": "cinema-city-1012-96549",
@@ -21519,6 +22280,28 @@
       "soldOut": false,
       "availabilityRatio": 1,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95766?lang=sk"
+    },
+    {
+      "id": "kino-luky-6a8425dbb56efddda75c5698",
+      "source": "kino-luky",
+      "externalId": "6a8425dbb56efddda75c5698",
+      "movieId": "movie-osem-noh-a-milion-followerov-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-08T20:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "cs"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a8425dbb56efddda75c5698/?lang=sk_SK"
     },
     {
       "id": "kino-lumiere-5569384",
@@ -23911,7 +24694,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9677,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96013?lang=sk"
     },
     {
@@ -24143,6 +24926,28 @@
       "soldOut": false,
       "availabilityRatio": 1,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95821?lang=sk"
+    },
+    {
+      "id": "kino-mladost-063f3ca33924294a308b87a94d72a3b0b4b1421215536ecca070dea0",
+      "source": "kino-mladost",
+      "externalId": "063f3ca33924294a308b87a94d72a3b0b4b1421215536ecca070dea0",
+      "movieId": "movie-dokonaly-den",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-09T17:00:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "7,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=063f3ca33924294a308b87a94d72a3b0b4b1421215536ecca070dea0"
     },
     {
       "id": "cinema-city-1012-96470",
@@ -24956,6 +25761,28 @@
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96550?lang=sk"
     },
     {
+      "id": "kino-mladost-6e9b826408208a9de440087da20a85b8f4e5d1a88adad2fd9368cf38",
+      "source": "kino-mladost",
+      "externalId": "6e9b826408208a9de440087da20a85b8f4e5d1a88adad2fd9368cf38",
+      "movieId": "movie-bardotky",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-09T18:45:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "7,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=6e9b826408208a9de440087da20a85b8f4e5d1a88adad2fd9368cf38"
+    },
+    {
       "id": "cinema-city-1012-95835",
       "source": "cinema-city",
       "externalId": "95835",
@@ -25007,6 +25834,28 @@
       "soldOut": false,
       "availabilityRatio": 1,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95788?lang=sk"
+    },
+    {
+      "id": "kino-luky-6a8426c2b56efddda75d36ed",
+      "source": "kino-luky",
+      "externalId": "6a8426c2b56efddda75d36ed",
+      "movieId": "movie-psie-hviezdy-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-09T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "sk"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a8426c2b56efddda75d36ed/?lang=sk_SK"
     },
     {
       "id": "cinema-city-1012-96474",
@@ -26044,6 +26893,28 @@
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=b6b05ad87e41b9aa3edf1716fd2405ff64369d3c0ffc919bbdfab907"
     },
     {
+      "id": "kino-mladost-9643777908e1bf25dd2439c65ca65ef2b445373ea2ce702f526da216",
+      "source": "kino-mladost",
+      "externalId": "9643777908e1bf25dd2439c65ca65ef2b445373ea2ce702f526da216",
+      "movieId": "movie-liecive-ucinky-sebaklamu",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-10T17:30:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "7,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=9643777908e1bf25dd2439c65ca65ef2b445373ea2ce702f526da216"
+    },
+    {
       "id": "kino-lumiere-5569345",
       "source": "kino-lumiere",
       "externalId": "5569345",
@@ -26108,6 +26979,52 @@
       "soldOut": false,
       "availabilityRatio": null,
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=7e35269db60ba75828ab1eba2e0937d8c14869cc818974929164aa03"
+    },
+    {
+      "id": "kino-luky-6a842791b56efddda75e0b06",
+      "source": "kino-luky",
+      "externalId": "6a842791b56efddda75e0b06",
+      "movieId": "movie-magicka-posadnutost-2-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-10T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "sk"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a842791b56efddda75e0b06/?lang=sk_SK"
+    },
+    {
+      "id": "kino-mladost-86c6cc543b7aca7f9990695853b36f00ffce095470f60b7f77bb49ac",
+      "source": "kino-mladost",
+      "externalId": "86c6cc543b7aca7f9990695853b36f00ffce095470f60b7f77bb49ac",
+      "movieId": "movie-wellness-vikend",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-10T19:15:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [
+          "cs"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "7,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=86c6cc543b7aca7f9990695853b36f00ffce095470f60b7f77bb49ac"
     },
     {
       "id": "kino-lumiere-5569396",
@@ -26220,6 +27137,30 @@
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=f3bb8253a0b5c78d40e25410e0889b2aa0155e59836082515ee852c5"
     },
     {
+      "id": "kino-mladost-4d30cbfd012e19f028257e59a0c9a7c7683376cea3f89cb43b1dd21f",
+      "source": "kino-mladost",
+      "externalId": "4d30cbfd012e19f028257e59a0c9a7c7683376cea3f89cb43b1dd21f",
+      "movieId": "movie-hlavicka",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-11T17:20:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [
+          "sk"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "6,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=4d30cbfd012e19f028257e59a0c9a7c7683376cea3f89cb43b1dd21f"
+    },
+    {
       "id": "kino-lumiere-5569444",
       "source": "kino-lumiere",
       "externalId": "5569444",
@@ -26262,6 +27203,52 @@
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=0f67c8516c742187b78dafe802fc036b1eea636c20a6bcca23a63a1e"
     },
     {
+      "id": "kino-luky-6a8433c40e38efd5581557e4",
+      "source": "kino-luky",
+      "externalId": "6a8433c40e38efd5581557e4",
+      "movieId": "movie-tony-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-11T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "cs"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a8433c40e38efd5581557e4/?lang=sk_SK"
+    },
+    {
+      "id": "kino-mladost-d8cf4773c005d7766509ac15d2ab08e0dd9b0db225c75f28f3c066a9",
+      "source": "kino-mladost",
+      "externalId": "d8cf4773c005d7766509ac15d2ab08e0dd9b0db225c75f28f3c066a9",
+      "movieId": "movie-magicka-posadnutost-2",
+      "cinemaId": "mladost",
+      "startsAt": "2026-09-11T19:00:00+02:00",
+      "auditorium": "Kinosála",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "sk"
+        ]
+      },
+      "price": "7,00 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=d8cf4773c005d7766509ac15d2ab08e0dd9b0db225c75f28f3c066a9"
+    },
+    {
       "id": "kino-lumiere-5563480",
       "source": "kino-lumiere",
       "externalId": "5563480",
@@ -26282,6 +27269,72 @@
       "soldOut": false,
       "availabilityRatio": null,
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=eaea07d37f589646d9e512b92ace3241ed12a9d2efbe1dce1ae5ab28"
+    },
+    {
+      "id": "kino-luky-6a84364db56efddda775cfcc",
+      "source": "kino-luky",
+      "externalId": "6a84364db56efddda775cfcc",
+      "movieId": "movie-dievca-v-oblakoch-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-12T15:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [
+          "sk"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a84364db56efddda775cfcc/?lang=sk_SK"
+    },
+    {
+      "id": "kino-luky-6a854f54e35902df847edc90",
+      "source": "kino-luky",
+      "externalId": "6a854f54e35902df847edc90",
+      "movieId": "movie-wellness-vikend-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-12T17:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [
+          "cs"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a854f54e35902df847edc90/?lang=sk_SK"
+    },
+    {
+      "id": "kino-luky-6a8552dde35902df8481536f",
+      "source": "kino-luky",
+      "externalId": "6a8552dde35902df8481536f",
+      "movieId": "movie-oasis-don-t-look-back-in-anger-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-12T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "sk"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a8552dde35902df8481536f/?lang=sk_SK"
     },
     {
       "id": "kino-lumiere-5569447",
@@ -26306,6 +27359,28 @@
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=e1921bd4a3719d6d44ded70483e122efc979639d1b9406d6403e542a"
     },
     {
+      "id": "kino-luky-6a85563fe35902df8483b168",
+      "source": "kino-luky",
+      "externalId": "6a85563fe35902df8483b168",
+      "movieId": "movie-auta-2006",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-13T15:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [
+          "sk"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a85563fe35902df8483b168/?lang=sk_SK"
+    },
+    {
       "id": "kino-lumiere-5563519",
       "source": "kino-lumiere",
       "externalId": "5563519",
@@ -26328,6 +27403,26 @@
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=f3a2acb629020d5f4ba457227adab3fa759bc7cbaa67032219b0618f"
     },
     {
+      "id": "kino-luky-6a855a6fe35902df8486d558",
+      "source": "kino-luky",
+      "externalId": "6a855a6fe35902df8486d558",
+      "movieId": "movie-liecive-ucinky-sebaklamu-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-13T17:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a855a6fe35902df8486d558/?lang=sk_SK"
+    },
+    {
       "id": "kino-lumiere-5569450",
       "source": "kino-lumiere",
       "externalId": "5569450",
@@ -26348,6 +27443,28 @@
       "soldOut": false,
       "availabilityRatio": null,
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=ee9c2aff0aab9af33a87ebaa479f8cd35c50ef34d959bcfebfc93581"
+    },
+    {
+      "id": "kino-luky-6a855c95777a8904d1aa8f12",
+      "source": "kino-luky",
+      "externalId": "6a855c95777a8904d1aa8f12",
+      "movieId": "movie-spider-man-novy-den-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-13T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [
+          "sk"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a855c95777a8904d1aa8f12/?lang=sk_SK"
     },
     {
       "id": "kino-lumiere-5563522",
@@ -26480,6 +27597,26 @@
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=49723d459fb730b84e88787d9ffd9e38ace536a1cf7e17827a7df1d3"
     },
     {
+      "id": "kino-luky-6a855cea777a8904d1ab4fec",
+      "source": "kino-luky",
+      "externalId": "6a855cea777a8904d1ab4fec",
+      "movieId": "movie-domaca-uroda-kavej-2-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-15T20:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a855cea777a8904d1ab4fec/?lang=sk_SK"
+    },
+    {
       "id": "kino-lumiere-5563564",
       "source": "kino-lumiere",
       "externalId": "5563564",
@@ -26545,6 +27682,28 @@
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=1566e64dd62d1742c64fc2a8d507f809424aab98e471f7cd413c0975"
     },
     {
+      "id": "kino-luky-6a855df4777a8904d1ac94b1",
+      "source": "kino-luky",
+      "externalId": "6a855df4777a8904d1ac94b1",
+      "movieId": "movie-sex-a-smrt-v-kempe-miasma-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-16T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "cs"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a855df4777a8904d1ac94b1/?lang=sk_SK"
+    },
+    {
       "id": "kino-lumiere-5544175",
       "source": "kino-lumiere",
       "externalId": "5544175",
@@ -26586,6 +27745,26 @@
       "soldOut": false,
       "availabilityRatio": null,
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=7d3493f047c84b7a8e7d8210be06a1705a1dde7a18e0823befd3d267"
+    },
+    {
+      "id": "kino-luky-6a856204777a8904d1b14a67",
+      "source": "kino-luky",
+      "externalId": "6a856204777a8904d1b14a67",
+      "movieId": "movie-domaca-uroda-milovnik-nie-bojovnik-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-17T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a856204777a8904d1b14a67/?lang=sk_SK"
     },
     {
       "id": "kino-lumiere-5563567",
@@ -26696,6 +27875,28 @@
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=85f8849d70a90b18aacade904dae65d29d73f5091528530249396f30"
     },
     {
+      "id": "kino-luky-6a856673e35902df8492bdf9",
+      "source": "kino-luky",
+      "externalId": "6a856673e35902df8492bdf9",
+      "movieId": "movie-kojoti-vs-smejdi-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-20T15:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [
+          "cs"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a856673e35902df8492bdf9/?lang=sk_SK"
+    },
+    {
       "id": "kino-lumiere-5563525",
       "source": "kino-lumiere",
       "externalId": "5563525",
@@ -26714,6 +27915,50 @@
       "soldOut": false,
       "availabilityRatio": null,
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=d68accad536c765f9dd01165631d0e40fc43be247328ab15a6145091"
+    },
+    {
+      "id": "kino-luky-6a856959777a8904d1b97927",
+      "source": "kino-luky",
+      "externalId": "6a856959777a8904d1b97927",
+      "movieId": "movie-opusteny-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-20T17:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "cs"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a856959777a8904d1b97927/?lang=sk_SK"
+    },
+    {
+      "id": "kino-luky-6a856b56e35902df8496844f",
+      "source": "kino-luky",
+      "externalId": "6a856b56e35902df8496844f",
+      "movieId": "movie-resident-evil-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-20T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "sk"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a856b56e35902df8496844f/?lang=sk_SK"
     },
     {
       "id": "kino-lumiere-5563528",
@@ -26780,6 +28025,26 @@
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=c692fe0622898700864a8e8f07b058e7749e963e1ed9c474f2437a62"
     },
     {
+      "id": "kino-luky-6a856c45777a8904d1bcc8b3",
+      "source": "kino-luky",
+      "externalId": "6a856c45777a8904d1bcc8b3",
+      "movieId": "movie-domaca-uroda-kuko-drobcek-a-ratafak-znovu-zasahuju-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-22T20:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a856c45777a8904d1bcc8b3/?lang=sk_SK"
+    },
+    {
       "id": "kino-lumiere-5563570",
       "source": "kino-lumiere",
       "externalId": "5563570",
@@ -26842,6 +28107,26 @@
       "soldOut": false,
       "availabilityRatio": null,
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=963f03d4efba6a55c4da42aa088668fdbe0a41d598425a0d2985fe9f"
+    },
+    {
+      "id": "kino-luky-6a85762ae35902df84a179be",
+      "source": "kino-luky",
+      "externalId": "6a85762ae35902df84a179be",
+      "movieId": "movie-domaca-uroda-laska-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-24T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a85762ae35902df84a179be/?lang=sk_SK"
     },
     {
       "id": "kino-lumiere-5563573",
@@ -26909,6 +28194,72 @@
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=60f84ba1e10976dc3a61ba4ebacdcbd857a50e980310a1668dd404bc"
     },
     {
+      "id": "kino-luky-6a857d48e35902df84a9be0b",
+      "source": "kino-luky",
+      "externalId": "6a857d48e35902df84a9be0b",
+      "movieId": "movie-zabudnuty-ostrov-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-26T15:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [
+          "sk"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a857d48e35902df84a9be0b/?lang=sk_SK"
+    },
+    {
+      "id": "kino-luky-6a857e6de35902df84aab026",
+      "source": "kino-luky",
+      "externalId": "6a857e6de35902df84aab026",
+      "movieId": "movie-zapas-storocia-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-26T17:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "cs"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a857e6de35902df84aab026/?lang=sk_SK"
+    },
+    {
+      "id": "kino-luky-6a858009e35902df84ac3c62",
+      "source": "kino-luky",
+      "externalId": "6a858009e35902df84ac3c62",
+      "movieId": "movie-samuraj-a-vazen-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-26T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "cs"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a858009e35902df84ac3c62/?lang=sk_SK"
+    },
+    {
       "id": "kino-lumiere-5563531",
       "source": "kino-lumiere",
       "externalId": "5563531",
@@ -26929,6 +28280,28 @@
       "soldOut": false,
       "availabilityRatio": null,
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=0628d63d85acf3984d87911b52034a1a028b87ce5435b25a463b2e2e"
+    },
+    {
+      "id": "kino-luky-6a858428777a8904d1d9b0f8",
+      "source": "kino-luky",
+      "externalId": "6a858428777a8904d1d9b0f8",
+      "movieId": "movie-v-srdci-divociny-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-27T20:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "sk"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a858428777a8904d1d9b0f8/?lang=sk_SK"
     },
     {
       "id": "kino-lumiere-5563534",
@@ -26975,6 +28348,26 @@
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=e6105219bbbc6f41765248b3e807d111968b7618e31c15706285d311"
     },
     {
+      "id": "kino-luky-6a8582d9777a8904d1d77fa2",
+      "source": "kino-luky",
+      "externalId": "6a8582d9777a8904d1d77fa2",
+      "movieId": "movie-preco-by-sme-sa-nezabili-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-29T20:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a8582d9777a8904d1d77fa2/?lang=sk_SK"
+    },
+    {
       "id": "kino-lumiere-5570761",
       "source": "kino-lumiere",
       "externalId": "5570761",
@@ -26997,6 +28390,28 @@
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=9fa708bb795813f3665935ef55788ba564e91bfdf86b4edc70be8246"
     },
     {
+      "id": "kino-luky-6a856ce7777a8904d1bd89bb",
+      "source": "kino-luky",
+      "externalId": "6a856ce7777a8904d1bd89bb",
+      "movieId": "movie-odyssea-2026",
+      "cinemaId": "luky",
+      "startsAt": "2026-09-30T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "sk"
+        ]
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/6a856ce7777a8904d1bd89bb/?lang=sk_SK"
+    },
+    {
       "id": "kino-lumiere-5568928",
       "source": "kino-lumiere",
       "externalId": "5568928",
@@ -27017,6 +28432,26 @@
       "soldOut": false,
       "availabilityRatio": null,
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=50ab5ef28f7cfc731b3088bd6420eeefd6bbccbaa0de2d5aa33e8bf4"
+    },
+    {
+      "id": "kino-luky-69bba6f747421ea21dcfdb42",
+      "source": "kino-luky",
+      "externalId": "69bba6f747421ea21dcfdb42",
+      "movieId": "movie-utajene-poklady-dj-ahmet-2025",
+      "cinemaId": "luky",
+      "startsAt": "2026-10-07T19:00:00+02:00",
+      "auditorium": "Dom kultúry Lúky",
+      "format": [],
+      "languages": {
+        "original": [],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://podujatia.kzp.sk/event-detail/69bba6f747421ea21dcfdb42/?lang=sk_SK"
     },
     {
       "id": "kino-lumiere-5563468",

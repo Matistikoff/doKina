@@ -5,8 +5,8 @@ export function validateProgram(program) {
   if (program?.schemaVersion !== 1) errors.push("schemaVersion must be 1");
   if (!isString(program?.generatedAt) || Number.isNaN(Date.parse(program.generatedAt))) errors.push("generatedAt must be an ISO date");
   if (program?.timezone !== "Europe/Bratislava") errors.push("timezone must be Europe/Bratislava");
-  if (!Array.isArray(program?.sources) || program.sources.length < 2) errors.push("sources must include both providers");
-  if (!Array.isArray(program?.cinemas) || program.cinemas.length < 4) errors.push("cinemas must include Lumière and three Cinema City locations");
+  if (!Array.isArray(program?.sources) || program.sources.length < 2) errors.push("sources must include the configured providers");
+  if (!Array.isArray(program?.cinemas) || program.cinemas.length < 4) errors.push("cinemas must include the configured locations");
   if (!Array.isArray(program?.movies)) errors.push("movies must be an array");
   if (!Array.isArray(program?.screenings)) errors.push("screenings must be an array");
 

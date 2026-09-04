@@ -5,6 +5,10 @@ import { CINEMAS, OUTPUT_PATH, TIMEZONE } from "./config.mjs";
 import { validateProgram } from "./schema.mjs";
 import { fetchCinemaCity } from "./sources/cinema-city.mjs";
 import { fetchLumiere } from "./sources/kino-lumiere.mjs";
+import { fetchFilmEurope } from "./sources/kino-film-europe.mjs";
+import { fetchLuky } from "./sources/kino-luky.mjs";
+import { fetchMladost } from "./sources/kino-mladost.mjs";
+import { fetchNostalgia } from "./sources/kino-nostalgia.mjs";
 import { localDateKey } from "./utils.mjs";
 
 function prefer(current, incoming) {
@@ -19,7 +23,7 @@ function prefer(current, incoming) {
   return result;
 }
 
-export function assembleProgram(results, generatedAt = new Date().toISOString()) {
+export function assembleProgram(results, generatedAt = new Date().toISOString(), sources = null) {
   const movieMap = new Map();
   const screeningMap = new Map();
   for (const result of results) {
@@ -37,10 +41,8 @@ export function assembleProgram(results, generatedAt = new Date().toISOString())
     schemaVersion: 1,
     generatedAt,
     timezone: TIMEZONE,
-    sources: [
-      { id: "kino-lumiere", status: "ok", fetchedAt: generatedAt },
-      { id: "cinema-city", status: "ok", fetchedAt: generatedAt },
-    ],
+    sources: sources || [...new Set(CINEMAS.map((cinema) => cinema.sourceId))]
+      .map((id) => ({ id, status: "ok", fetchedAt: generatedAt })),
     cinemas: CINEMAS.map(({ externalId: _externalId, sourceId: _sourceId, ...cinema }) => cinema),
     movies,
     screenings,
@@ -51,11 +53,38 @@ async function main() {
   const today = localDateKey();
   const cinemaCityCinemas = CINEMAS.filter((cinema) => cinema.sourceId === "cinema-city");
   console.log(`Fetching schedules from ${today}…`);
-  const results = await Promise.all([
-    fetchLumiere({ referenceDate: today }),
-    ...cinemaCityCinemas.map((cinema) => fetchCinemaCity(cinema, { today, daysAhead: 10 })),
-  ]);
-  const program = assembleProgram(results);
+  const jobs = [
+    { sourceId: "kino-lumiere", promise: fetchLumiere({ referenceDate: today }) },
+    ...cinemaCityCinemas.map((cinema) => ({
+      sourceId: "cinema-city",
+      promise: fetchCinemaCity(cinema, { today, daysAhead: 10 }),
+    })),
+    { sourceId: "kino-film-europe", promise: fetchFilmEurope() },
+    { sourceId: "kino-mladost", promise: fetchMladost() },
+    { sourceId: "kino-luky", promise: fetchLuky() },
+    { sourceId: "kino-nostalgia", promise: fetchNostalgia() },
+  ];
+  const settled = await Promise.allSettled(jobs.map((job) => job.promise));
+  const results = [];
+  const sourceErrors = new Map();
+  settled.forEach((result, index) => {
+    if (result.status === "fulfilled") results.push(result.value);
+    else {
+      const sourceId = jobs[index].sourceId;
+      sourceErrors.set(sourceId, result.reason?.message || String(result.reason));
+      console.error(`${sourceId}: ${sourceErrors.get(sourceId)}`);
+    }
+  });
+  if (results.length === 0) throw new Error("Every cinema source failed; keeping the previous programme");
+
+  const generatedAt = new Date().toISOString();
+  const sources = [...new Set(CINEMAS.map((cinema) => cinema.sourceId))].map((id) => ({
+    id,
+    status: sourceErrors.has(id) ? "error" : "ok",
+    fetchedAt: generatedAt,
+    ...(sourceErrors.has(id) ? { error: sourceErrors.get(id) } : {}),
+  }));
+  const program = assembleProgram(results, generatedAt, sources);
   const output = fileURLToPath(OUTPUT_PATH);
   const temporary = `${output}.tmp`;
   await mkdir(dirname(output), { recursive: true });
