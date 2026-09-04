@@ -1,6 +1,6 @@
 const state = {
   program: null,
-  selectedPeriod: "week",
+  selectedPeriod: "all",
   selectedCinemas: new Set(),
   selectedGenre: "all",
   sortBy: "rating",
@@ -321,6 +321,11 @@ function renderProgram() {
         const yearB = Number.parseInt(b.movie.releaseYear, 10) || 0;
         return yearB - yearA || a.movie.title.localeCompare(b.movie.title, "sk");
       }
+      if (state.sortBy === "year-oldest") {
+        const yearA = Number.parseInt(a.movie.releaseYear, 10) || Number.MAX_SAFE_INTEGER;
+        const yearB = Number.parseInt(b.movie.releaseYear, 10) || Number.MAX_SAFE_INTEGER;
+        return yearA - yearB || a.movie.title.localeCompare(b.movie.title, "sk");
+      }
       if (state.sortBy === "title") return a.movie.title.localeCompare(b.movie.title, "sk");
       const firstA = a.screenings.map((item) => item.startsAt).sort()[0];
       const firstB = b.screenings.map((item) => item.startsAt).sort()[0];
@@ -372,7 +377,7 @@ function registerProgramTool() {
             description: "ID kín, ktoré majú zostať viditeľné."
           },
           genre: { type: "string", enum: ["all", ...availableGenres], description: "Vybraný žáner alebo all." },
-          sortBy: { type: "string", enum: ["rating", "year", "soonest", "title"], description: "Spôsob zoradenia filmov." }
+          sortBy: { type: "string", enum: ["rating", "year", "year-oldest", "soonest", "title"], description: "Spôsob zoradenia filmov." }
         },
         additionalProperties: false
       },
@@ -441,7 +446,7 @@ elements.sortFilter.addEventListener("change", () => {
 });
 
 elements.resetFiltersButton.addEventListener("click", () => {
-  state.selectedPeriod = "week";
+  state.selectedPeriod = "all";
   state.selectedGenre = "all";
   state.sortBy = "rating";
   state.selectedCinemas = new Set(state.program.cinemas.map((cinema) => cinema.id));
