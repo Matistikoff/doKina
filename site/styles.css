@@ -1,17 +1,17 @@
 :root {
   color-scheme: light;
-  --ink: #13212b;
-  --ink-soft: #5d6a70;
-  --paper: #f2f0ea;
-  --paper-deep: #e4e1d9;
-  --card: #faf9f5;
-  --line: rgba(19, 33, 43, 0.17);
-  --accent: #bd5b39;
-  --accent-deep: #8f3f28;
-  --accent-soft: #ead4c7;
-  --lime: #b9d8d1;
-  --navy: #172b36;
-  --shadow: 0 16px 34px rgba(19, 33, 43, 0.1);
+  --ink: #183238;
+  --ink-soft: #64706a;
+  --paper: #ebe8d5;
+  --paper-deep: #d8d4bc;
+  --card: #f7f3df;
+  --line: rgba(24, 50, 56, 0.18);
+  --accent: #d5aa18;
+  --accent-deep: #855b20;
+  --accent-soft: #eedb8d;
+  --lime: #a8c3aa;
+  --navy: #183238;
+  --shadow: 0 16px 34px rgba(24, 50, 56, 0.12);
   --radius-lg: 8px;
   --radius-md: 5px;
   --max-width: 1240px;
@@ -29,7 +29,7 @@ body {
   margin: 0;
   min-width: 320px;
   background:
-    linear-gradient(90deg, rgba(19, 33, 43, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 50, 56, 0.04) 1px, transparent 1px),
     var(--paper);
   background-size: 48px 100%;
   color: var(--ink);
@@ -67,10 +67,24 @@ a {
 }
 
 .site-header,
-main,
+.intro,
 footer {
   width: min(calc(100% - 40px), var(--max-width));
   margin-inline: auto;
+}
+
+main {
+  width: min(calc(100% - 40px), var(--max-width));
+  margin-inline: auto;
+}
+
+.hero-shell {
+  min-height: min(620px, 76vh);
+  color: white;
+  background:
+    linear-gradient(90deg, rgba(11, 28, 31, 0.38) 0%, rgba(11, 28, 31, 0.08) 50%, rgba(11, 28, 31, 0.34) 100%),
+    linear-gradient(0deg, rgba(11, 28, 31, 0.7) 0%, transparent 56%),
+    url("/hero-wallpaper.jpg") center 42% / cover no-repeat;
 }
 
 .site-header {
@@ -78,14 +92,14 @@ footer {
   align-items: center;
   justify-content: space-between;
   min-height: 84px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
   gap: 11px;
-  color: var(--ink);
+  color: white;
   font-size: 1.1rem;
   font-weight: 850;
   letter-spacing: -0.045em;
@@ -101,7 +115,7 @@ footer {
   position: relative;
   width: 24px;
   height: 24px;
-  border: 7px solid var(--ink);
+  border: 7px solid white;
   border-radius: 50%;
 }
 
@@ -118,7 +132,7 @@ footer {
 
 .header-note {
   margin: 0;
-  color: var(--ink-soft);
+  color: rgba(255, 255, 255, 0.72);
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -127,8 +141,11 @@ footer {
 
 .intro {
   display: flex;
+  min-height: min(536px, calc(76vh - 84px));
+  flex-direction: column;
+  align-items: stretch;
   justify-content: flex-end;
-  padding: 28px 0 24px;
+  padding: 44px 0 38px;
 }
 
 .eyebrow {
@@ -157,10 +174,11 @@ h3,
 h1 {
   max-width: 760px;
   margin: 0;
-  font-size: clamp(3rem, 8vw, 7.7rem);
-  font-weight: 900;
-  letter-spacing: -0.075em;
-  line-height: 0.86;
+  color: white;
+  font-size: clamp(3.4rem, 8vw, 7rem);
+  font-weight: 600;
+  letter-spacing: -0.065em;
+  line-height: 0.9;
 }
 
 .intro-copy {
@@ -175,8 +193,8 @@ h1 {
   display: flex;
   align-items: center;
   gap: 9px;
-  margin-bottom: 8px;
-  color: var(--ink-soft);
+  margin: 0 0 14px;
+  color: rgba(255, 255, 255, 0.74);
   font-size: 0.86rem;
   white-space: nowrap;
 }
@@ -196,19 +214,20 @@ h1 {
 }
 
 .filters {
-  position: sticky;
-  top: 12px;
+  position: relative;
+  top: auto;
   z-index: 20;
   display: grid;
   grid-template-columns: minmax(250px, 0.8fr) minmax(320px, 1.25fr) minmax(290px, 0.95fr);
   gap: 26px;
   padding: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: var(--radius-lg);
-  background: rgba(23, 43, 54, 0.975);
+  background: rgba(16, 40, 43, 0.5);
   color: white;
-  box-shadow: 0 12px 32px rgba(19, 33, 43, 0.18);
-  backdrop-filter: blur(18px);
+  box-shadow: 0 16px 44px rgba(8, 24, 26, 0.24);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
 }
 
 .filter-heading {
@@ -242,6 +261,11 @@ h1 {
   gap: 8px;
   overflow-x: auto;
   scrollbar-width: none;
+}
+
+.period-filter {
+  flex-wrap: wrap;
+  overflow: visible;
 }
 
 .period-filter::-webkit-scrollbar,
@@ -278,7 +302,7 @@ h1 {
 
 .period-chip {
   min-height: 39px;
-  padding: 9px 12px;
+  padding: 9px 9px;
   border-radius: 3px;
   font-size: 0.76rem;
   font-weight: 780;
@@ -305,7 +329,7 @@ h1 {
 .cinema-chip[aria-pressed="true"] {
   border-color: var(--lime);
   background: var(--lime);
-  color: #202515;
+  color: #293014;
 }
 
 .select-filters {
@@ -412,7 +436,7 @@ h2 {
   place-items: center;
   background:
     linear-gradient(145deg, transparent 0 45%, rgba(255,255,255,.2) 45% 52%, transparent 52%),
-    linear-gradient(160deg, #ef715e, #ae2b25);
+    linear-gradient(160deg, #d7b735, #28545a);
 }
 
 .poster-fallback span {
@@ -461,7 +485,7 @@ h2 {
   padding: 6px 8px;
   border-radius: 3px;
   background: rgba(24, 24, 23, 0.9);
-  color: #f5c518;
+  color: #f1c931;
   font-size: 0.68rem;
   font-weight: 850;
   text-decoration: none;
@@ -761,6 +785,7 @@ footer p {
 
 @media (max-width: 620px) {
   .site-header,
+  .intro,
   main,
   footer {
     width: min(calc(100% - 24px), var(--max-width));
@@ -775,11 +800,17 @@ footer p {
   }
 
   .intro {
-    padding: 44px 0 34px;
+    min-height: 690px;
+    padding: 40px 0 24px;
   }
 
   h1 {
-    font-size: clamp(3rem, 17vw, 5rem);
+    font-size: clamp(3rem, 15vw, 4.8rem);
+  }
+
+  .hero-shell {
+    min-height: 758px;
+    background-position: 58% center;
   }
 
   .filters {

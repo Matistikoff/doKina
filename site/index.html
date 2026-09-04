@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#172b36">
+    <meta name="theme-color" content="#183238">
     <meta name="description" content="Filmy, ktoré práve hrajú v Bratislave. Porovnaj ich podľa IMDb hodnotenia, roku a žánru.">
     <meta property="og:title" content="doKina.sk — Vyber si najlepší film v kinách">
     <meta property="og:description" content="Všetky filmy, ktoré práve hrajú v Bratislave. Zoraď ich podľa hodnotenia a filtruj podľa žánru či kina.">
@@ -19,68 +19,70 @@
   <body>
     <a class="skip-link" href="#program">Preskočiť na program</a>
 
-    <header class="site-header">
-      <a class="brand" href="/" aria-label="doKina.sk — domov">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>doKina<span>.sk</span></span>
-      </a>
-      <p class="header-note">Bratislava práve hrá</p>
-    </header>
+    <div class="hero-shell">
+      <header class="site-header">
+        <a class="brand" href="/" aria-label="doKina.sk — domov">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>doKina<span>.sk</span></span>
+        </a>
+        <p class="header-note">Bratislava práve hrá</p>
+      </header>
 
-    <main>
-      <section class="intro" aria-label="Aktuálnosť programu">
+      <section class="intro" aria-label="Filmový program Bratislavy">
         <div class="freshness" id="freshness" aria-live="polite">
           <span class="status-dot" aria-hidden="true"></span>
           <span>Načítavam aktuálny program…</span>
         </div>
+        <section class="filters" aria-label="Filtrovanie programu">
+          <div class="filter-group period-filter-wrap">
+            <div class="filter-heading">
+              <span>Obdobie</span>
+            </div>
+            <div class="period-filter" id="period-filter" role="group" aria-label="Vyber obdobie">
+              <button class="period-chip" type="button" data-period="today">Dnes</button>
+              <button class="period-chip" type="button" data-period="week">7 dní</button>
+              <button class="period-chip" type="button" data-period="fortnight">14 dní</button>
+              <button class="period-chip" type="button" data-period="all">Celý program</button>
+            </div>
+          </div>
+
+          <div class="filter-group cinema-filter-wrap">
+            <div class="filter-heading">
+              <span>Kino</span>
+              <button class="text-button" id="all-cinemas-button" type="button">Vybrať všetky</button>
+            </div>
+            <div class="cinema-filter" id="cinema-filter" role="group" aria-label="Vyber kiná"></div>
+          </div>
+
+          <div class="filter-group discovery-filter-wrap">
+            <div class="filter-heading">
+              <span>Objavuj</span>
+              <button class="text-button" id="reset-filters-button" type="button">Obnoviť filtre</button>
+            </div>
+            <div class="select-filters">
+              <label class="select-field">
+                <span>Žáner</span>
+                <select id="genre-filter">
+                  <option value="all">Všetky žánre</option>
+                </select>
+              </label>
+              <label class="select-field">
+                <span>Zoradiť</span>
+                <select id="sort-filter">
+                  <option value="rating">Najlepšie hodnotené</option>
+                  <option value="year">Najnovšie filmy</option>
+                  <option value="year-oldest">Najstaršie filmy</option>
+                  <option value="soonest">Najbližšie predstavenie</option>
+                  <option value="title">Podľa názvu</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </section>
       </section>
+    </div>
 
-      <section class="filters" aria-label="Filtrovanie programu">
-        <div class="filter-group period-filter-wrap">
-          <div class="filter-heading">
-            <span>Obdobie</span>
-          </div>
-          <div class="period-filter" id="period-filter" role="group" aria-label="Vyber obdobie">
-            <button class="period-chip" type="button" data-period="today">Dnes</button>
-            <button class="period-chip" type="button" data-period="week">7 dní</button>
-            <button class="period-chip" type="button" data-period="fortnight">14 dní</button>
-            <button class="period-chip" type="button" data-period="all">Celý program</button>
-          </div>
-        </div>
-
-        <div class="filter-group cinema-filter-wrap">
-          <div class="filter-heading">
-            <span>Kino</span>
-            <button class="text-button" id="all-cinemas-button" type="button">Vybrať všetky</button>
-          </div>
-          <div class="cinema-filter" id="cinema-filter" role="group" aria-label="Vyber kiná"></div>
-        </div>
-
-        <div class="filter-group discovery-filter-wrap">
-          <div class="filter-heading">
-            <span>Objavuj</span>
-            <button class="text-button" id="reset-filters-button" type="button">Obnoviť filtre</button>
-          </div>
-          <div class="select-filters">
-            <label class="select-field">
-              <span>Žáner</span>
-              <select id="genre-filter">
-                <option value="all">Všetky žánre</option>
-              </select>
-            </label>
-            <label class="select-field">
-              <span>Zoradiť</span>
-              <select id="sort-filter">
-                <option value="rating">Najlepšie hodnotené</option>
-                <option value="year">Najnovšie filmy</option>
-                <option value="year-oldest">Najstaršie filmy</option>
-                <option value="soonest">Najbližšie predstavenie</option>
-                <option value="title">Podľa názvu</option>
-              </select>
-            </label>
-          </div>
-        </div>
-      </section>
+    <main>
 
       <section class="program" id="program" aria-labelledby="program-heading">
         <div class="program-heading-row">
