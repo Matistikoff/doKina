@@ -53,6 +53,8 @@ export function cleanTitle(value) {
     .replace(/\s*\|\s*(novinka|SENior kino|BABY kino|deťom|Filmotéka).*$/iu, "")
     .replace(/\s*\[[^\]]+\]\s*$/u, "")
     .replace(/\s*\(\s*\d+(?:[.,]\d+)?(?:\s*\/\s*\d+(?:[.,]\d+)?)?\s*€\s*\)\s*$/u, "")
+    .replace(/\s*\(\s*\d+(?:st|nd|rd|th|\.)?\s*(?:výročie|anniversary)\s*\)\s*$/iu, "")
+    .replace(/\s+UKR\s*$/iu, "")
     .trim();
 }
 

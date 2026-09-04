@@ -47,6 +47,8 @@ Voliteľné IMDb hodnotenia sa získavajú cez OMDb a ukladajú do cache. Na ich
 zapnutie pridaj GitHub Actions secret `OMDB_API_KEY`. Bez neho scraper aj web
 fungujú ďalej, iba nezobrazia hodnotenia. Bezplatný OMDb kľúč má denný limit
 1 000 požiadaviek a jeho obsah je dostupný pod licenciou CC BY-NC 4.0.
+Pri filmoch Cinema City sa na presné párovanie používa aj anglická verzia
+verejných dát kina, preto fungujú aj slovenské preklady názvov.
 
 Token potrebuje oprávnenie nasadiť Cloudflare Worker. Projekt sa nasadzuje ako Cloudflare Worker so statickými assets z priečinka `dist/`.
 

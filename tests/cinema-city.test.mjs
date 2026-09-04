@@ -31,3 +31,31 @@ test("parses Cinema City JSON into normalized movies and screenings", () => {
 test("rejects an unexpected Cinema City response", () => {
   assert.throws(() => parseCinemaCity({}, cinema), /Unexpected Cinema City response/);
 });
+
+test("uses English Cinema City titles and removes presentation labels", () => {
+  const payload = structuredClone(fixture);
+  payload.body.films[0].id = "2077s3i1";
+  payload.body.films[0].name = "Autá (20. výročie)";
+  payload.body.films[0].releaseYear = "2006";
+  payload.body.events[0].filmId = "2077s3i1";
+
+  const result = parseCinemaCity(payload, cinema, new Map([["2077s3i1", "Cars (20th anniversary)"]]));
+
+  assert.equal(result.movies[0].id, "movie-auta-2006");
+  assert.equal(result.movies[0].title, "Autá");
+  assert.equal(result.movies[0].originalTitle, "Cars");
+  assert.equal(result.screenings[0].movieId, "movie-auta-2006");
+});
+
+test("normalizes language suffixes while retaining the original English title", () => {
+  const payload = structuredClone(fixture);
+  payload.body.films[0].id = "8085s2r1";
+  payload.body.films[0].name = "Spider-Man: Nový deň UKR";
+  payload.body.events[0].filmId = "8085s2r1";
+
+  const result = parseCinemaCity(payload, cinema, new Map([["8085s2r1", "Spider-Man: Brand New Day UKR"]]));
+
+  assert.equal(result.movies[0].title, "Spider-Man: Nový deň");
+  assert.equal(result.movies[0].originalTitle, "Spider-Man: Brand New Day");
+  assert.equal(result.screenings[0].movieId, "movie-spider-man-novy-den-2026");
+});

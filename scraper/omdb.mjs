@@ -7,11 +7,11 @@ const UNMATCHED_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 async function readCache(cachePath) {
   try {
     const cache = JSON.parse(await readFile(cachePath, "utf8"));
-    return cache?.version === 1 && cache.entries ? cache : { version: 1, entries: {} };
+    return cache?.version === 2 && cache.entries ? cache : { version: 2, entries: {} };
   } catch (error) {
-    if (error.code === "ENOENT") return { version: 1, entries: {} };
+    if (error.code === "ENOENT") return { version: 2, entries: {} };
     console.warn(`OMDb cache could not be read: ${error.message}`);
-    return { version: 1, entries: {} };
+    return { version: 2, entries: {} };
   }
 }
 
