@@ -1,38 +1,38 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-04T09:54:07.785Z",
+  "generatedAt": "2026-09-04T13:17:35.908Z",
   "timezone": "Europe/Bratislava",
   "sources": [
     {
       "id": "kino-lumiere",
       "status": "ok",
-      "fetchedAt": "2026-09-04T09:54:07.785Z"
+      "fetchedAt": "2026-09-04T13:17:35.908Z"
     },
     {
       "id": "cinema-city",
       "status": "ok",
-      "fetchedAt": "2026-09-04T09:54:07.785Z"
+      "fetchedAt": "2026-09-04T13:17:35.908Z"
     },
     {
       "id": "kino-film-europe",
       "status": "error",
-      "fetchedAt": "2026-09-04T09:54:07.785Z",
+      "fetchedAt": "2026-09-04T13:17:35.908Z",
       "error": "Fetch failed for https://cinevitaj.filmeurope.sk/: fetch failed"
     },
     {
       "id": "kino-mladost",
       "status": "ok",
-      "fetchedAt": "2026-09-04T09:54:07.785Z"
+      "fetchedAt": "2026-09-04T13:17:35.908Z"
     },
     {
       "id": "kino-luky",
       "status": "ok",
-      "fetchedAt": "2026-09-04T09:54:07.785Z"
+      "fetchedAt": "2026-09-04T13:17:35.908Z"
     },
     {
       "id": "kino-nostalgia",
       "status": "error",
-      "fetchedAt": "2026-09-04T09:54:07.785Z",
+      "fetchedAt": "2026-09-04T13:17:35.908Z",
       "error": "Fetch failed for https://www.nostalgia.sk/: 429 Too Many Requests"
     }
   ],
@@ -92,12 +92,20 @@
       "source": "kino-lumiere",
       "externalId": "836694",
       "title": "20. storočie (Novecento)",
+      "englishTitle": "20. storočie (Novecento)",
       "originalTitle": "Novecento",
       "releaseYear": "1976",
-      "durationMinutes": null,
+      "directors": [
+        "Bernardo Bertolucci"
+      ],
+      "durationMinutes": 317,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Vojnový",
+        "Historický",
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/f/3/f33691be-8689-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-836694"
     },
     {
@@ -118,7 +126,7 @@
       "source": "cinema-city",
       "externalId": "0222s2i1",
       "title": "6 gramov",
-      "originalTitle": null,
+      "originalTitle": "6 gramů",
       "releaseYear": "2026",
       "durationMinutes": 90,
       "ageRating": "15+",
@@ -133,12 +141,18 @@
       "source": "kino-lumiere",
       "externalId": "626424",
       "title": "Aftersun",
+      "englishTitle": "Aftersun",
       "originalTitle": "Aftersun",
       "releaseYear": "2022",
-      "durationMinutes": null,
+      "directors": [
+        "Charlotte Wells"
+      ],
+      "durationMinutes": 98,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/7/5/75a50a1a-0b7c-11ee-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-626424"
     },
     {
@@ -146,12 +160,16 @@
       "source": "kino-lumiere",
       "externalId": "839120",
       "title": "Ako štvaná zver",
+      "englishTitle": "Ako štvaná zver",
       "originalTitle": "La Traque",
       "releaseYear": "1975",
-      "durationMinutes": null,
+      "directors": [
+        "Serge R. Leroy"
+      ],
+      "durationMinutes": 94,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/8/1/81d1fe81-a6c1-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839120"
     },
     {
@@ -159,15 +177,20 @@
       "source": "kino-lumiere",
       "externalId": "837426",
       "title": "Americký sen",
+      "englishTitle": "Americký sen",
       "originalTitle": "Le Réve Américain",
       "releaseYear": "2026",
+      "directors": [
+        "Anthony Marciano"
+      ],
       "durationMinutes": 122,
       "ageRating": "12+",
       "genres": [
         "Komédia",
+        "Životopisný",
         "Športový"
       ],
-      "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/3607S3X1.jpg",
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/d/c/dc9b6a30-94b2-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837426"
     },
     {
@@ -175,33 +198,28 @@
       "source": "kino-lumiere",
       "externalId": "826743",
       "title": "Arco",
+      "englishTitle": "Arco",
       "originalTitle": "Arco",
       "releaseYear": "2025",
-      "durationMinutes": null,
+      "directors": [
+        "Ugo Bienvenu"
+      ],
+      "durationMinutes": 88,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Rodinný",
+        "Animovaný",
+        "Dobrodružný"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/9/f/9f5e1c1f-2e8a-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-826743"
     },
     {
       "id": "movie-auta-2006",
-      "source": "kino-luky",
-      "externalId": "kino-pre-deti-auta-2",
-      "title": "AUTÁ",
-      "originalTitle": null,
-      "releaseYear": "2006",
-      "durationMinutes": 117,
-      "ageRating": null,
-      "genres": [],
-      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1786970157-8-400-300-auta_WEB.jpg",
-      "detailUrl": "https://www.kzp.sk/podujatie/kino-pre-deti-auta-2?place=80"
-    },
-    {
-      "id": "movie-auta-20-vyrocie-2006",
       "source": "cinema-city",
       "externalId": "2077s3i1",
-      "title": "Autá (20. výročie)",
-      "originalTitle": null,
+      "title": "Autá",
+      "originalTitle": "Cars",
       "releaseYear": "2006",
       "durationMinutes": 116,
       "ageRating": "MP",
@@ -219,12 +237,16 @@
       "source": "kino-lumiere",
       "externalId": "468180",
       "title": "Balada o Narajame | Výročia 100: Šóhei Imamura",
+      "englishTitle": "Balada o Narajame",
       "originalTitle": "Narayama bushiko",
       "releaseYear": "1983",
-      "durationMinutes": null,
+      "directors": [
+        "Shohei Imamura"
+      ],
+      "durationMinutes": 124,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/8/d/8d246071-a6c0-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-468180"
     },
     {
@@ -232,14 +254,18 @@
       "source": "kino-lumiere",
       "externalId": "837782",
       "title": "Bardotky",
+      "englishTitle": "Bardotky",
       "originalTitle": "Bardotky",
       "releaseYear": "2026",
+      "directors": [
+        "Hana Hendrychová"
+      ],
       "durationMinutes": 88,
       "ageRating": "12+",
       "genres": [
         "Komédia"
       ],
-      "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/3677D3R3.jpg",
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/e/6/e6c6ebf8-9a47-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837782"
     },
     {
@@ -247,11 +273,13 @@
       "source": "kino-mladost",
       "externalId": "836562",
       "title": "BARDOTKY",
-      "originalTitle": null,
+      "originalTitle": "Bardotky",
       "releaseYear": null,
-      "durationMinutes": null,
+      "durationMinutes": 88,
       "ageRating": "12",
-      "genres": [],
+      "genres": [
+        "Komédia"
+      ],
       "posterUrl": null,
       "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-836562"
     },
@@ -276,15 +304,20 @@
       "source": "kino-lumiere",
       "externalId": "837192",
       "title": "Bojovník",
+      "englishTitle": "Bojovník",
       "originalTitle": "Bojovník",
       "releaseYear": "2026",
+      "directors": [
+        "Vojtěch Frič",
+        "Tomáš Dianiška"
+      ],
       "durationMinutes": 123,
       "ageRating": "15+",
       "genres": [
         "Dráma",
         "Športový"
       ],
-      "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/7842D3X1.jpg",
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/9/5/9523af65-8fe1-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837192"
     },
     {
@@ -292,12 +325,20 @@
       "source": "kino-lumiere",
       "externalId": "837192",
       "title": "Bojovník | Kino bez bariér",
+      "englishTitle": "Bojovník",
       "originalTitle": "Bojovník",
       "releaseYear": "2026",
-      "durationMinutes": null,
+      "directors": [
+        "Vojtěch Frič",
+        "Tomáš Dianiška"
+      ],
+      "durationMinutes": 123,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dráma",
+        "Športový"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/9/5/9523af65-8fe1-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837192"
     },
     {
@@ -305,12 +346,16 @@
       "source": "kino-lumiere",
       "externalId": "814028",
       "title": "Bugonia",
+      "englishTitle": "Bugonia",
       "originalTitle": "Bugonia",
       "releaseYear": "2025",
-      "durationMinutes": null,
+      "directors": [
+        "Yorgos Lanthimos"
+      ],
+      "durationMinutes": 118,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/e/6/e62a8cc0-b3e7-11f0-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-814028"
     },
     {
@@ -318,15 +363,19 @@
       "source": "kino-lumiere",
       "externalId": "838107",
       "title": "Cudzinec",
+      "englishTitle": "Cudzinec",
       "originalTitle": "L'Étranger",
       "releaseYear": "2025",
+      "directors": [
+        "François Ozon"
+      ],
       "durationMinutes": 120,
       "ageRating": "15+",
       "genres": [
         "Krimi",
         "Dráma"
       ],
-      "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/0029O2SX1.jpg",
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/0/2/023028df-9d39-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838107"
     },
     {
@@ -334,11 +383,14 @@
       "source": "kino-mladost",
       "externalId": "838463",
       "title": "CUDZINEC",
-      "originalTitle": null,
+      "originalTitle": "L'Étranger",
       "releaseYear": null,
-      "durationMinutes": null,
+      "durationMinutes": 120,
       "ageRating": "15",
-      "genres": [],
+      "genres": [
+        "Dráma",
+        "Krimi"
+      ],
       "posterUrl": null,
       "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-838463"
     },
@@ -360,7 +412,7 @@
       "source": "cinema-city",
       "externalId": "0202d2x1",
       "title": "Dokonalý deň",
-      "originalTitle": null,
+      "originalTitle": "Dokonalý den",
       "releaseYear": "2026",
       "durationMinutes": 89,
       "ageRating": "12+",
@@ -376,11 +428,14 @@
       "source": "kino-mladost",
       "externalId": "838473",
       "title": "DOKONALÝ DEŇ",
-      "originalTitle": null,
+      "originalTitle": "Dokonalý den",
       "releaseYear": null,
-      "durationMinutes": null,
+      "durationMinutes": 90,
       "ageRating": "12",
-      "genres": [],
+      "genres": [
+        "Romantický",
+        "Komédia"
+      ],
       "posterUrl": null,
       "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-838473"
     },
@@ -441,12 +496,16 @@
       "source": "kino-lumiere",
       "externalId": "839262",
       "title": "Drahá neznáma",
+      "englishTitle": "Drahá neznáma",
       "originalTitle": "Chère inconnue",
       "releaseYear": "1980",
-      "durationMinutes": null,
+      "directors": [
+        "Moshé Mizrahi"
+      ],
+      "durationMinutes": 97,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/5/d/5dc33308-a7a0-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839262"
     },
     {
@@ -454,12 +513,21 @@
       "source": "kino-lumiere",
       "externalId": "838986",
       "title": "Dunaj",
+      "englishTitle": "Dunaj",
       "originalTitle": "Dunaj",
       "releaseYear": "1982",
-      "durationMinutes": null,
+      "directors": [
+        "Štefan Uher",
+        "Ladislav Kudelka",
+        "Štefan Kamenický",
+        "Andrej Kristín"
+      ],
+      "durationMinutes": 103,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Pásmo krátkych filmov"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/5/9/59c94d80-a555-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838986"
     },
     {
@@ -467,12 +535,18 @@
       "source": "kino-lumiere",
       "externalId": "839124",
       "title": "Francúzova milenka | Výročia 100: Karel Reisz",
+      "englishTitle": "Francúzova milenka",
       "originalTitle": "The French Lieutenant's Woman",
       "releaseYear": "1981",
-      "durationMinutes": null,
+      "directors": [
+        "Karel Reisz"
+      ],
+      "durationMinutes": 119,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/3/a/3a90b1ff-a6c4-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839124"
     },
     {
@@ -480,12 +554,19 @@
       "source": "kino-lumiere",
       "externalId": "836523",
       "title": "Frida Kahlo | Príbehy umenia",
+      "englishTitle": "Frida Kahlo",
       "originalTitle": "Frida Kahlo",
       "releaseYear": "2020",
-      "durationMinutes": null,
+      "directors": [
+        "Ali Ray"
+      ],
+      "durationMinutes": 102,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dokument",
+        "Dokumentárny"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/a/3/a37534e9-84ea-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-836523"
     },
     {
@@ -493,12 +574,18 @@
       "source": "kino-lumiere",
       "externalId": "226242",
       "title": "Gauguin | Príbehy umenia",
+      "englishTitle": "Gauguin",
       "originalTitle": "Gauguin - Voyage de Tahiti",
       "releaseYear": "2017",
-      "durationMinutes": null,
+      "directors": [
+        "Edouard Deluc"
+      ],
+      "durationMinutes": 102,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Životopisný"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/1/4/14bf1b94-2c3e-11e8-8e7d-000c29a578f8.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-226242"
     },
     {
@@ -506,12 +593,16 @@
       "source": "kino-lumiere",
       "externalId": "821451",
       "title": "Hamnet",
+      "englishTitle": "Hamnet",
       "originalTitle": "Hamnet",
       "releaseYear": "2025",
-      "durationMinutes": null,
+      "directors": [
+        "Chloé Zhao"
+      ],
+      "durationMinutes": 125,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/f/b/fb6d0302-f12b-11f0-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-821451"
     },
     {
@@ -519,11 +610,14 @@
       "source": "kino-mladost",
       "externalId": "838475",
       "title": "HLAVIČKA",
-      "originalTitle": null,
+      "originalTitle": "Glavonja",
       "releaseYear": null,
-      "durationMinutes": null,
+      "durationMinutes": 83,
       "ageRating": "7",
-      "genres": [],
+      "genres": [
+        "Rodinný",
+        "Dobrodružný"
+      ],
       "posterUrl": null,
       "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-838475"
     },
@@ -532,12 +626,19 @@
       "source": "kino-lumiere",
       "externalId": "838702",
       "title": "Chungking Express | Narodeninový špeciál",
+      "englishTitle": "Chungking Express",
       "originalTitle": "Chóngqìng Sēnlín",
       "releaseYear": "1994",
-      "durationMinutes": null,
+      "directors": [
+        "Kar-wai Wong"
+      ],
+      "durationMinutes": 102,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dráma",
+        "Mysteriózny"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/8/e/8efcab00-a138-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838702"
     },
     {
@@ -562,7 +663,7 @@
       "source": "cinema-city",
       "externalId": "8183s2r",
       "title": "Insidious: Sú medzi námi",
-      "originalTitle": null,
+      "originalTitle": "Insidious: Out of the Further",
       "releaseYear": "2026",
       "durationMinutes": 110,
       "ageRating": "18+",
@@ -620,12 +721,18 @@
       "source": "kino-lumiere",
       "externalId": "487109",
       "title": "Koncert pre pozostalých | Reštaurovaná klasika SK",
+      "englishTitle": "Koncert pre pozostalých",
       "originalTitle": "Koncert pre pozostalých",
       "releaseYear": "1976",
-      "durationMinutes": null,
+      "directors": [
+        "Dušan Trančík"
+      ],
+      "durationMinutes": 86,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/d/7/d7eb6a54-a841-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-487109"
     },
     {
@@ -633,12 +740,18 @@
       "source": "kino-lumiere",
       "externalId": "839114",
       "title": "Kronika vopred ohlásenej smrti | Výročia 100: Irena Papas",
+      "englishTitle": "Kronika vopred ohlásenej smrti",
       "originalTitle": "Cronaca di una morte annunciata",
       "releaseYear": "1987",
-      "durationMinutes": null,
+      "directors": [
+        "Francesco Rosi"
+      ],
+      "durationMinutes": 105,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/9/e/9e672670-a6bc-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839114"
     },
     {
@@ -646,14 +759,19 @@
       "source": "kino-lumiere",
       "externalId": "837039",
       "title": "Kuko, Drobček & Raťafák znovu zasahujú",
+      "englishTitle": "Kuko, Drobček & Raťafák znovu zasahujú",
       "originalTitle": "Kuko, Drobček & Raťafák znovu zasahujú",
       "releaseYear": "2026",
+      "directors": [
+        "Andrej Kolenčík",
+        "Juro Šlauka"
+      ],
       "durationMinutes": 70,
       "ageRating": "12+",
       "genres": [
         "Komédia"
       ],
-      "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/6162D2I1.jpg",
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/0/8/0850f163-8b42-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837039"
     },
     {
@@ -661,7 +779,7 @@
       "source": "cinema-city",
       "externalId": "8464s2r",
       "title": "Kuzma",
-      "originalTitle": null,
+      "originalTitle": "Kuzma: Fearlessly Cheerful",
       "releaseYear": "2026",
       "durationMinutes": 133,
       "ageRating": "12+",
@@ -677,7 +795,7 @@
       "source": "cinema-city",
       "externalId": "7760d2ss1",
       "title": "Labková patrola: Dinosaurí film",
-      "originalTitle": null,
+      "originalTitle": "Paw Patrol: The Dino Movie",
       "releaseYear": "2026",
       "durationMinutes": 88,
       "ageRating": "MP",
@@ -695,7 +813,7 @@
       "source": "cinema-city",
       "externalId": "0202d2i1",
       "title": "Letný koncert André Rieu 2026: Viva Maastricht!",
-      "originalTitle": null,
+      "originalTitle": "André Rieu’s 2026 Summer Concert: Viva Maastricht!",
       "releaseYear": "2026",
       "durationMinutes": 178,
       "ageRating": "MP",
@@ -710,12 +828,16 @@
       "source": "kino-lumiere",
       "externalId": "833527",
       "title": "Leto, keď som všetkých stratil",
+      "englishTitle": "Leto, keď som všetkých stratil",
       "originalTitle": "Leto, keď som všetkých stratil",
       "releaseYear": "2026",
-      "durationMinutes": null,
+      "directors": [
+        "Dávid Tibor Durdjak"
+      ],
+      "durationMinutes": 73,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/3/c/3cc97bc3-5902-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-833527"
     },
     {
@@ -723,11 +845,14 @@
       "source": "kino-mladost",
       "externalId": "838482",
       "title": "LIEČIVÉ ÚČINKY SEBAKLAMU",
-      "originalTitle": null,
+      "originalTitle": "Léčivé účinky sebeklamu",
       "releaseYear": null,
-      "durationMinutes": null,
+      "durationMinutes": 93,
       "ageRating": "15",
-      "genres": [],
+      "genres": [
+        "Komédia",
+        "Dráma"
+      ],
       "posterUrl": null,
       "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-838482"
     },
@@ -749,16 +874,20 @@
       "source": "kino-lumiere",
       "externalId": "838982",
       "title": "Magická posadnutosť 2",
+      "englishTitle": "Magická posadnutosť 2",
       "originalTitle": "Practical Magic 2",
       "releaseYear": "2026",
+      "directors": [
+        "Susanne Bier"
+      ],
       "durationMinutes": 130,
       "ageRating": "12+",
       "genres": [
         "Komédia",
-        "Dráma",
-        "Fantasy"
+        "Fantasy",
+        "Dráma"
       ],
-      "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/8220S2R.jpg",
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/4/6/461433d6-a552-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838982"
     },
     {
@@ -766,11 +895,15 @@
       "source": "kino-mladost",
       "externalId": "838492",
       "title": "MAGICKÁ POSADNUTOSŤ 2",
-      "originalTitle": null,
+      "originalTitle": "PRACTICAL MAGIC 2",
       "releaseYear": null,
-      "durationMinutes": null,
+      "durationMinutes": 130,
       "ageRating": "12",
-      "genres": [],
+      "genres": [
+        "Komédia",
+        "Fantasy",
+        "Dráma"
+      ],
       "posterUrl": null,
       "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-838492"
     },
@@ -779,12 +912,18 @@
       "source": "kino-lumiere",
       "externalId": "810087",
       "title": "Malá sestra",
+      "englishTitle": "Malá sestra",
       "originalTitle": "La petite dernière",
       "releaseYear": "2025",
-      "durationMinutes": null,
+      "directors": [
+        "Hafsia Herzi"
+      ],
+      "durationMinutes": 106,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/6/2/6263345e-9f7e-11f0-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-810087"
     },
     {
@@ -792,12 +931,20 @@
       "source": "kino-lumiere",
       "externalId": "838710",
       "title": "Milovník, nie bojovník | diskusia s tvorkyňami filmu",
+      "englishTitle": "Milovník, nie bojovník",
       "originalTitle": "Milovník, nie bojovník",
       "releaseYear": "2026",
-      "durationMinutes": null,
+      "directors": [
+        "Martina Buchelová"
+      ],
+      "durationMinutes": 108,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Romantický",
+        "Komédia",
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/5/5/5564856a-a14c-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838710"
     },
     {
@@ -805,7 +952,7 @@
       "source": "cinema-city",
       "externalId": "8023s2r",
       "title": "Mimoni a monštrá",
-      "originalTitle": null,
+      "originalTitle": "Minions & Monsters",
       "releaseYear": "2026",
       "durationMinutes": 85,
       "ageRating": "MP",
@@ -821,12 +968,19 @@
       "source": "kino-lumiere",
       "externalId": "744334",
       "title": "Mladý Picasso | Príbehy umenia",
+      "englishTitle": "Young Picasso",
       "originalTitle": "Young Picasso",
       "releaseYear": "2019",
-      "durationMinutes": null,
+      "directors": [
+        "Phil Grabsky"
+      ],
+      "durationMinutes": 91,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dokument",
+        "Dokumentárny"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/8/4/841b342a-7a68-11ef-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-744334"
     },
     {
@@ -834,12 +988,19 @@
       "source": "kino-lumiere",
       "externalId": "835598",
       "title": "Muchy",
+      "englishTitle": "Muchy",
       "originalTitle": "Moscas",
       "releaseYear": "2026",
-      "durationMinutes": null,
+      "directors": [
+        "Fernando Eimbcke"
+      ],
+      "durationMinutes": 99,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Komédia",
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/b/0/b0003881-9b00-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-835598"
     },
     {
@@ -847,12 +1008,16 @@
       "source": "kino-lumiere",
       "externalId": "835849",
       "title": "Mumbo Jumbo",
+      "englishTitle": "Mumbo Jumbo",
       "originalTitle": "Da Mumbo Jumbo blev kæmpestor",
       "releaseYear": "2026",
-      "durationMinutes": null,
+      "directors": [
+        "Karsten Kiilerich"
+      ],
+      "durationMinutes": 80,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/6/0/60a15e17-7969-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-835849"
     },
     {
@@ -860,12 +1025,19 @@
       "source": "kino-lumiere",
       "externalId": "838259",
       "title": "Na jednu noc",
+      "englishTitle": "Na jednu noc",
       "originalTitle": "One Night Only",
       "releaseYear": "2026",
-      "durationMinutes": null,
+      "directors": [
+        "Will Gluck"
+      ],
+      "durationMinutes": 103,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Romantický",
+        "Komédia"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/b/4/b49c7343-9fb2-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838259"
     },
     {
@@ -873,7 +1045,7 @@
       "source": "cinema-city",
       "externalId": "8160s2r",
       "title": "Na konci Oak Street",
-      "originalTitle": null,
+      "originalTitle": "The End of Oak Street",
       "releaseYear": "2026",
       "durationMinutes": 110,
       "ageRating": "12+",
@@ -890,12 +1062,19 @@
       "source": "kino-lumiere",
       "externalId": "504708",
       "title": "Najhorší človek na svete",
+      "englishTitle": "The Worst Person in the World",
       "originalTitle": "The Worst Person in the World | Verdens verste menneske",
       "releaseYear": "2021",
-      "durationMinutes": null,
+      "directors": [
+        "Joachim Trier"
+      ],
+      "durationMinutes": 129,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Komédia",
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/4/5/455229a8-89c7-11ec-b67c-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-504708"
     },
     {
@@ -903,16 +1082,18 @@
       "source": "kino-lumiere",
       "externalId": "831876",
       "title": "Nedosiahnuteľná láska",
+      "englishTitle": "An Impossible Love",
       "originalTitle": "Un Amour Impossible",
       "releaseYear": "2018",
+      "directors": [
+        "Catherine Corsini"
+      ],
       "durationMinutes": 136,
       "ageRating": "15+",
       "genres": [
-        "Životopisný",
-        "Dráma",
-        "Romantický"
+        "Romantická dráma"
       ],
-      "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/0570D3SX2.jpg",
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/f/e/fe265a8b-494e-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-831876"
     },
     {
@@ -920,12 +1101,19 @@
       "source": "kino-lumiere",
       "externalId": "837852",
       "title": "Neviditeľný Ján Gogola | projekcia spojená s diskusiou",
+      "englishTitle": "Neviditeľný Ján Gogola",
       "originalTitle": "Neviditeľný Ján Gogola",
       "releaseYear": "2026",
-      "durationMinutes": null,
+      "directors": [
+        "Marek Janičík"
+      ],
+      "durationMinutes": 60,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dokument",
+        "Dokumentárny"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/0/b/0bcfd788-9b11-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837852"
     },
     {
@@ -933,12 +1121,19 @@
       "source": "kino-lumiere",
       "externalId": "242501",
       "title": "Nôž vo vode",
+      "englishTitle": "Knife in the Water",
       "originalTitle": "Nóż w wodzie",
       "releaseYear": "1962",
-      "durationMinutes": null,
+      "directors": [
+        "Roman Polański"
+      ],
+      "durationMinutes": 90,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dráma",
+        "Psychologický"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/f/4/f48852bd-625a-11e8-8e7d-000c29a578f8.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-242501"
     },
     {
@@ -946,12 +1141,19 @@
       "source": "kino-lumiere",
       "externalId": "838694",
       "title": "Oasis: Don't Look Back in Anger",
+      "englishTitle": "Oasis: Don't Look Back in Anger",
       "originalTitle": "Oasis: Don't Look Back in Anger",
       "releaseYear": "2026",
-      "durationMinutes": 121,
+      "directors": [
+        "Will Lovelace",
+        "Dylan Southern"
+      ],
+      "durationMinutes": 122,
       "ageRating": "15",
-      "genres": [],
-      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787135185-8-400-300-osisUVODWEB.jpg",
+      "genres": [
+        "Hudobný"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/1/d/1d5fe41d-a133-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838694"
     },
     {
@@ -959,15 +1161,19 @@
       "source": "kino-lumiere",
       "externalId": "835570",
       "title": "Odysea",
+      "englishTitle": "Odysea",
       "originalTitle": "The Odyssey",
       "releaseYear": "2026",
-      "durationMinutes": 180,
+      "directors": [
+        "Christopher Nolan"
+      ],
+      "durationMinutes": 172,
       "ageRating": "15+",
       "genres": [
         "Dráma",
         "Historický"
       ],
-      "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/7268S2R.jpg",
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/a/c/ac6c56c2-73d5-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-835570"
     },
     {
@@ -975,11 +1181,15 @@
       "source": "kino-mladost",
       "externalId": "835883",
       "title": "ODYSSEA",
-      "originalTitle": null,
+      "originalTitle": "The Odyssey",
       "releaseYear": null,
-      "durationMinutes": null,
+      "durationMinutes": 172,
       "ageRating": "15",
-      "genres": [],
+      "genres": [
+        "Historický",
+        "Dráma",
+        "Dobrodružný"
+      ],
       "posterUrl": null,
       "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-835883"
     },
@@ -1014,7 +1224,7 @@
       "source": "cinema-city",
       "externalId": "8417s2r",
       "title": "Osem nôh a milión followerov",
-      "originalTitle": null,
+      "originalTitle": "Spider Island",
       "releaseYear": "2026",
       "durationMinutes": 120,
       "ageRating": "15+",
@@ -1030,12 +1240,16 @@
       "source": "kino-lumiere",
       "externalId": "837366",
       "title": "Outsider. Freud",
+      "englishTitle": "Outsider. Freud",
       "originalTitle": "Outsider. Freud",
       "releaseYear": "2025",
-      "durationMinutes": null,
+      "directors": [
+        "Yair Qedar"
+      ],
+      "durationMinutes": 66,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/b/b/bba243e2-923d-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837366"
     },
     {
@@ -1043,12 +1257,19 @@
       "source": "kino-lumiere",
       "externalId": "839016",
       "title": "Persepolis | Narodeninový špeciál",
+      "englishTitle": "Persepolis",
       "originalTitle": "Persepolis",
       "releaseYear": "2007",
-      "durationMinutes": null,
+      "directors": [
+        "Marjane Satrapi",
+        "Vincent Paronnaud"
+      ],
+      "durationMinutes": 95,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Animovaný"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/8/8/88fed281-a5ee-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839016"
     },
     {
@@ -1056,12 +1277,18 @@
       "source": "kino-lumiere",
       "externalId": "833277",
       "title": "Pět švestek",
+      "englishTitle": "Five plums",
       "originalTitle": "Pět švestek",
       "releaseYear": "2026",
-      "durationMinutes": null,
+      "directors": [
+        "Jan Svěrák"
+      ],
+      "durationMinutes": 100,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Komédia"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/d/0/d03db8cb-581e-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-833277"
     },
     {
@@ -1069,12 +1296,19 @@
       "source": "kino-lumiere",
       "externalId": "817661",
       "title": "Potopa",
+      "englishTitle": "Potopa",
       "originalTitle": "Potopa",
       "releaseYear": "2025",
-      "durationMinutes": null,
+      "directors": [
+        "Martin Gonda"
+      ],
+      "durationMinutes": 102,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Historický",
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/e/2/e2b529d0-cb64-11f0-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-817661"
     },
     {
@@ -1082,12 +1316,19 @@
       "source": "kino-lumiere",
       "externalId": "838993",
       "title": "Pozdravy z Rodosu + Zakorenení vo vode",
+      "englishTitle": "Pozdravy z Rodosu + Zakorenení vo vode",
       "originalTitle": "Kým hory horia, voda stúpa (krátke filmy o klíme)",
       "releaseYear": "2026",
-      "durationMinutes": null,
+      "directors": [
+        "Viera Čákanyová",
+        "Tomáš Krupa"
+      ],
+      "durationMinutes": 63,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "zaner_pasmo_kratkych_filmov"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/e/4/e40a9c6e-a55b-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838993"
     },
     {
@@ -1095,15 +1336,19 @@
       "source": "kino-lumiere",
       "externalId": "835240",
       "title": "Pozvanie",
+      "englishTitle": "Pozvanie",
       "originalTitle": "The Invite",
       "releaseYear": "2026",
+      "directors": [
+        "Olivia Wilde"
+      ],
       "durationMinutes": 107,
       "ageRating": "15+",
       "genres": [
         "Komédia",
         "Dráma"
       ],
-      "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/8200S2R.jpg",
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/d/a/da9aa579-6f12-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-835240"
     },
     {
@@ -1111,12 +1356,18 @@
       "source": "kino-lumiere",
       "externalId": "835586",
       "title": "Prameň",
+      "englishTitle": "Prameň",
       "originalTitle": "Prameň",
       "releaseYear": "2026",
-      "durationMinutes": null,
+      "directors": [
+        "Ivan Ostrochovský"
+      ],
+      "durationMinutes": 88,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/4/9/49bf091b-746f-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-835586"
     },
     {
@@ -1124,11 +1375,13 @@
       "source": "kino-mladost",
       "externalId": "836097",
       "title": "PRAMEŇ",
-      "originalTitle": null,
+      "originalTitle": "Prameň",
       "releaseYear": null,
-      "durationMinutes": null,
+      "durationMinutes": 88,
       "ageRating": "12",
-      "genres": [],
+      "genres": [
+        "Dráma"
+      ],
       "posterUrl": null,
       "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-836097"
     },
@@ -1150,12 +1403,23 @@
       "source": "kino-lumiere",
       "externalId": "810156",
       "title": "Princezná Kozmolesba",
+      "englishTitle": "Princezná Kozmolesba",
       "originalTitle": "Lesbian Space Princess",
       "releaseYear": "2025",
-      "durationMinutes": null,
+      "directors": [
+        "Emma Hough Hobbs",
+        "Leela Varghese"
+      ],
+      "durationMinutes": 87,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Romantický",
+        "Animovaný",
+        "Komédia",
+        "Fantasy",
+        "Dobrodružný"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/0/6/0662d1d2-9f87-11f0-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-810156"
     },
     {
@@ -1163,12 +1427,19 @@
       "source": "kino-lumiere",
       "externalId": "837115",
       "title": "Prípad Bojarski | Ozveny Art Filmu 2026",
+      "englishTitle": "Prípad Bojarski",
       "originalTitle": "L'affaire Bojarski",
       "releaseYear": "2025",
-      "durationMinutes": null,
+      "directors": [
+        "Jean-Paul Salomé"
+      ],
+      "durationMinutes": 128,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Historický",
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/a/4/a45ce463-8ccc-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837115"
     },
     {
@@ -1176,12 +1447,19 @@
       "source": "kino-lumiere",
       "externalId": "833886",
       "title": "Prisahám, že za to nemôžem",
+      "englishTitle": "I Swear",
       "originalTitle": "I Swear",
       "releaseYear": "2025",
-      "durationMinutes": null,
+      "directors": [
+        "Kirk Jones"
+      ],
+      "durationMinutes": 121,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dráma",
+        "Životopisný"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/1/6/16f6cb77-5dc0-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-833886"
     },
     {
@@ -1189,7 +1467,7 @@
       "source": "cinema-city",
       "externalId": "7944s2r",
       "title": "Psie hvezdy",
-      "originalTitle": null,
+      "originalTitle": "Dog Stars",
       "releaseYear": "2026",
       "durationMinutes": 118,
       "ageRating": "15+",
@@ -1207,12 +1485,16 @@
       "source": "kino-lumiere",
       "externalId": "838518",
       "title": "Psie hviezdy",
+      "englishTitle": "Psie hviezdy",
       "originalTitle": "Dog Stars",
       "releaseYear": "2026",
-      "durationMinutes": 100,
+      "directors": [
+        "Ridley Scott"
+      ],
+      "durationMinutes": 118,
       "ageRating": "15",
       "genres": [],
-      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_07/kino_7/1782337635-8-400-300-dogstarsWEBB.jpg",
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/9/9/996cf93b-a07b-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838518"
     },
     {
@@ -1220,12 +1502,18 @@
       "source": "kino-lumiere",
       "externalId": "838686",
       "title": "Queen Budapest | Music & Film",
+      "englishTitle": "Queen Budapest",
       "originalTitle": "Queen Budapest",
       "releaseYear": "2026",
-      "durationMinutes": null,
+      "directors": [
+        "János Zsombolyai"
+      ],
+      "durationMinutes": 97,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Hudobný"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/0/6/06066471-a12b-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838686"
     },
     {
@@ -1246,12 +1534,18 @@
       "source": "kino-lumiere",
       "externalId": "835616",
       "title": "Rose",
+      "englishTitle": "Rose",
       "originalTitle": "Rose",
       "releaseYear": "2026",
-      "durationMinutes": null,
+      "directors": [
+        "Markus Schleinzer"
+      ],
+      "durationMinutes": 93,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/b/4/b477a1a8-7483-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-835616"
     },
     {
@@ -1259,12 +1553,18 @@
       "source": "kino-lumiere",
       "externalId": "823286",
       "title": "Rufus: morský dráčik, ktorý nevedel plávať | Inkluzívne kino pre deti",
+      "englishTitle": "Rufus: morský dráčik, ktorý nevedel plávať",
       "originalTitle": "Rufus - the sea serpent who couldn't swim",
       "releaseYear": "2025",
-      "durationMinutes": null,
+      "directors": [],
+      "durationMinutes": 80,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Rodinný",
+        "Animovaný",
+        "Dobrodružný"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/0/0/00390742-faaa-11f0-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-823286"
     },
     {
@@ -1272,12 +1572,18 @@
       "source": "kino-lumiere",
       "externalId": "839254",
       "title": "Ryška",
+      "englishTitle": "Ryška",
       "originalTitle": "Rotfuchs",
       "releaseYear": "1973",
-      "durationMinutes": null,
+      "directors": [
+        "Manfred Mosblech"
+      ],
+      "durationMinutes": 76,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/0/d/0de4cc8a-a79d-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839254"
     },
     {
@@ -1298,12 +1604,18 @@
       "source": "kino-lumiere",
       "externalId": "835612",
       "title": "Sex a smrť v kempe Miasma",
+      "englishTitle": "Sex a smrť v kempe Miasma",
       "originalTitle": "Teenage Sex and Death at Camp Miasma",
       "releaseYear": "2026",
+      "directors": [
+        "Jane Schoenbrun"
+      ],
       "durationMinutes": 112,
       "ageRating": "18",
-      "genres": [],
-      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787143398-8-400-300-vkempeUVODWEB.jpg",
+      "genres": [
+        "Horor"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/3/5/357d4cc4-7482-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-835612"
     },
     {
@@ -1311,12 +1623,16 @@
       "source": "kino-lumiere",
       "externalId": "839128",
       "title": "Soukromá vichřice | Výročia 80: Daniela Kolářová",
+      "englishTitle": "Soukromá vichřice",
       "originalTitle": "Soukromá vichřice",
       "releaseYear": "1967",
-      "durationMinutes": null,
+      "directors": [
+        "Hynek Bočan"
+      ],
+      "durationMinutes": 88,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/c/2/c2f685de-a6c4-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839128"
     },
     {
@@ -1324,7 +1640,7 @@
       "source": "cinema-city",
       "externalId": "8085s2r",
       "title": "Spider-Man: Nový deň",
-      "originalTitle": null,
+      "originalTitle": "Spider-Man: Brand New Day",
       "releaseYear": "2026",
       "durationMinutes": 145,
       "ageRating": "12+",
@@ -1337,33 +1653,20 @@
       "detailUrl": "https://www.cinemacity.sk/films/spider-man-novy-den/8085s2r"
     },
     {
-      "id": "movie-spider-man-novy-den-ukr-2026",
-      "source": "cinema-city",
-      "externalId": "8085s2r1",
-      "title": "Spider-Man: Nový deň UKR",
-      "originalTitle": null,
-      "releaseYear": "2026",
-      "durationMinutes": 145,
-      "ageRating": "12+",
-      "genres": [
-        "Akčný",
-        "Dobrodružný",
-        "Sci-Fi"
-      ],
-      "posterUrl": "https://www.cinemacity.sk/xmedia-cw/repo/feats/posters/8085S2R1.jpg",
-      "detailUrl": "https://www.cinemacity.sk/films/spider-man-novy-den-ukr/8085s2r1"
-    },
-    {
       "id": "movie-stvoreni-pre-lasku-narodeninovy-special-2000",
       "source": "kino-lumiere",
       "externalId": "174253",
       "title": "Stvorení pre lásku | Narodeninový špeciál",
+      "englishTitle": "In the Mood for Love",
       "originalTitle": "Hua yang nian hua",
       "releaseYear": "2000",
-      "durationMinutes": null,
+      "directors": [
+        "Kar-wai Wong"
+      ],
+      "durationMinutes": 94,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/c/e/cec7f708-a137-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-174253"
     },
     {
@@ -1371,7 +1674,7 @@
       "source": "cinema-city",
       "externalId": "8118s2r",
       "title": "Šedá zóna",
-      "originalTitle": null,
+      "originalTitle": "In the grey",
       "releaseYear": "2026",
       "durationMinutes": 98,
       "ageRating": "15+",
@@ -1387,12 +1690,16 @@
       "source": "kino-lumiere",
       "externalId": "490440",
       "title": "Šerif za mrežami | Výročia 80: Petr Svojtka",
+      "englishTitle": "Šerif za mrežami",
       "originalTitle": "Šerif za mrežami",
       "releaseYear": "1965",
-      "durationMinutes": null,
+      "directors": [
+        "Dimitrij Plichta"
+      ],
+      "durationMinutes": 93,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/0/a/0a81125f-4a0d-11ec-b67c-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-490440"
     },
     {
@@ -1400,12 +1707,16 @@
       "source": "kino-lumiere",
       "externalId": "300989",
       "title": "Šiesta veta | Narodeninový špeciál x 40. výročie filmu",
+      "englishTitle": "Šiesta veta",
       "originalTitle": "Šiesta veta",
       "releaseYear": "1986",
-      "durationMinutes": null,
+      "directors": [
+        "Štefan Uher"
+      ],
+      "durationMinutes": 91,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/f/a/fa41b525-a853-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-300989"
     },
     {
@@ -1413,12 +1724,16 @@
       "source": "kino-lumiere",
       "externalId": "838980",
       "title": "Šťastie pre troch",
+      "englishTitle": "Šťastie pre troch",
       "originalTitle": "Za sreću je potrebno troje",
       "releaseYear": "1985",
-      "durationMinutes": null,
+      "directors": [
+        "Rajko Grlić"
+      ],
+      "durationMinutes": 98,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/c/7/c795b659-a551-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838980"
     },
     {
@@ -1426,7 +1741,7 @@
       "source": "cinema-city",
       "externalId": "0176o2sx1",
       "title": "Tajomstvo džungle",
-      "originalTitle": null,
+      "originalTitle": "Tajemství džungle",
       "releaseYear": "2026",
       "durationMinutes": 72,
       "ageRating": "MP",
@@ -1456,7 +1771,7 @@
       "source": "cinema-city",
       "externalId": "6093s2r1",
       "title": "Tajomstvo sýkoriek",
-      "originalTitle": null,
+      "originalTitle": "Le secret des mésanges",
       "releaseYear": "2025",
       "durationMinutes": 77,
       "ageRating": "7+",
@@ -1472,11 +1787,14 @@
       "source": "kino-mladost",
       "externalId": "837479",
       "title": "TAJOMSTVO SÝKORIEK",
-      "originalTitle": null,
+      "originalTitle": "Le secrets des mesanges",
       "releaseYear": null,
-      "durationMinutes": null,
+      "durationMinutes": 77,
       "ageRating": "7",
-      "genres": [],
+      "genres": [
+        "Animovaný",
+        "Príbeh zo života"
+      ],
       "posterUrl": null,
       "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-837479"
     },
@@ -1485,7 +1803,7 @@
       "source": "cinema-city",
       "externalId": "8136s2r",
       "title": "Tom a Jerry: Magický kompas",
-      "originalTitle": null,
+      "originalTitle": "Tom and Jerry: Forbidden Compass",
       "releaseYear": "2025",
       "durationMinutes": 104,
       "ageRating": "MP",
@@ -1514,7 +1832,7 @@
       "source": "cinema-city",
       "externalId": "7784s2r",
       "title": "Toy Story 5: Príbeh hračiek",
-      "originalTitle": null,
+      "originalTitle": "Toy Story 5",
       "releaseYear": "2026",
       "durationMinutes": 102,
       "ageRating": "7+",
@@ -1531,12 +1849,18 @@
       "source": "kino-lumiere",
       "externalId": "142589",
       "title": "Trainspotting | Narodeninový špeciál",
+      "englishTitle": "Trainspotting",
       "originalTitle": "Trainspotting",
       "releaseYear": "1996",
-      "durationMinutes": null,
+      "directors": [
+        "Danny Boyle"
+      ],
+      "durationMinutes": 94,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/5/4/54a8dda2-f964-11e6-92c9-000c29a578f8.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-142589"
     },
     {
@@ -1544,12 +1868,19 @@
       "source": "kino-lumiere",
       "externalId": "829999",
       "title": "Turner & Constable | Príbehy umenia",
+      "englishTitle": "Turner & Constable",
       "originalTitle": "Turner & Constable",
       "releaseYear": "2025",
-      "durationMinutes": null,
+      "directors": [
+        "David Bickerstaff"
+      ],
+      "durationMinutes": 93,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Dokument",
+        "Dokumentárny"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/d/d/dd8136ee-3986-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-829999"
     },
     {
@@ -1557,12 +1888,16 @@
       "source": "kino-lumiere",
       "externalId": "837119",
       "title": "Ulica Malaga | Ozveny Art Filmu 2026",
+      "englishTitle": "Ulica Malaga",
       "originalTitle": "Calle Málaga",
       "releaseYear": "2025",
-      "durationMinutes": null,
+      "directors": [
+        "Maryam Touzani"
+      ],
+      "durationMinutes": 116,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/b/d/bd456e9f-8ccd-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837119"
     },
     {
@@ -1596,7 +1931,7 @@
       "source": "cinema-city",
       "externalId": "1808s2r",
       "title": "Vaiana",
-      "originalTitle": null,
+      "originalTitle": "Moana",
       "releaseYear": "2026",
       "durationMinutes": 115,
       "ageRating": "MP",
@@ -1612,7 +1947,7 @@
       "source": "cinema-city",
       "externalId": "6699o2sx1",
       "title": "Vzbura",
-      "originalTitle": null,
+      "originalTitle": "Mutiny",
       "releaseYear": "2026",
       "durationMinutes": 95,
       "ageRating": "15+",
@@ -1627,11 +1962,13 @@
       "source": "kino-mladost",
       "externalId": "838498",
       "title": "WELLNESS VÍKEND",
-      "originalTitle": null,
+      "originalTitle": "Spa Weekend",
       "releaseYear": null,
-      "durationMinutes": null,
+      "durationMinutes": 97,
       "ageRating": "15",
-      "genres": [],
+      "genres": [
+        "Komédia"
+      ],
       "posterUrl": null,
       "detailUrl": "https://www.kinomladost.sk/klient-3538/kino-513/stranka-16300/film-838498"
     },
@@ -1679,12 +2016,19 @@
       "source": "kino-lumiere",
       "externalId": "155756",
       "title": "Zmluva s diablom | Reštaurovaná klasika SK",
+      "englishTitle": "A Pact With The Devil",
       "originalTitle": "Zmluva s diablom",
       "releaseYear": "1967",
-      "durationMinutes": null,
+      "directors": [
+        "Jozef Zachar"
+      ],
+      "durationMinutes": 89,
       "ageRating": null,
-      "genres": [],
-      "posterUrl": null,
+      "genres": [
+        "Komédia",
+        "Dráma"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/7/4/74ed2245-a841-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-155756"
     },
     {
@@ -1692,12 +2036,16 @@
       "source": "kino-lumiere",
       "externalId": "838976",
       "title": "Zygfryd",
+      "englishTitle": "Zygfryd",
       "originalTitle": "Zygfryd",
       "releaseYear": "1987",
-      "durationMinutes": null,
+      "directors": [
+        "Andrzej Domalik"
+      ],
+      "durationMinutes": 91,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/a/b/abcb4a27-a550-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838976"
     },
     {
@@ -1705,1208 +2053,23 @@
       "source": "kino-lumiere",
       "externalId": "839176",
       "title": "Život je dlhý, metráž krátka",
+      "englishTitle": "Život je dlhý, metráž krátka",
       "originalTitle": "Život je dlhý, metráž krátka",
       "releaseYear": null,
-      "durationMinutes": null,
+      "directors": [
+        "Marie Topolová",
+        "Martin Imrich",
+        "Karel Prouza",
+        "Hana Hančinová"
+      ],
+      "durationMinutes": 70,
       "ageRating": null,
       "genres": [],
-      "posterUrl": null,
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/a/1/a14aa20a-a6da-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839176"
     }
   ],
   "screenings": [
-    {
-      "id": "cinema-city-1012-96455",
-      "source": "cinema-city",
-      "externalId": "96455",
-      "movieId": "movie-tajomstvo-dzungle-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T12:00:00+02:00",
-      "auditorium": "Sála 9",
-      "format": [
-        "2D",
-        "Laser"
-      ],
-      "languages": {
-        "original": [
-          "cs"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96455?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96623",
-      "source": "cinema-city",
-      "externalId": "96623",
-      "movieId": "movie-spider-man-novy-den-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T12:00:00+02:00",
-      "auditorium": "Sála 14",
-      "format": [
-        "2D",
-        "Dolby Atmos"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": [
-          "cs"
-        ]
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 0.9905,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96623?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96643",
-      "source": "cinema-city",
-      "externalId": "96643",
-      "movieId": "movie-labkova-patrola-dinosauri-film-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T12:00:00+02:00",
-      "auditorium": "Sála 15",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96643?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96698",
-      "source": "cinema-city",
-      "externalId": "96698",
-      "movieId": "movie-tajomstvo-sykoriek-2025",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T12:00:00+02:00",
-      "auditorium": "Sála 17",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "fr"
-        ],
-        "dubbed": [
-          "cs"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96698?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96492",
-      "source": "cinema-city",
-      "externalId": "96492",
-      "movieId": "movie-mimoni-a-monstra-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T12:10:00+02:00",
-      "auditorium": "Sála 10",
-      "format": [
-        "2D",
-        "Laser"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96492?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96527",
-      "source": "cinema-city",
-      "externalId": "96527",
-      "movieId": "movie-toy-story-5-pribeh-hraciek-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T12:20:00+02:00",
-      "auditorium": "Sála 11",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96527?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96408",
-      "source": "cinema-city",
-      "externalId": "96408",
-      "movieId": "movie-vaiana-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T12:30:00+02:00",
-      "auditorium": "Sála 7",
-      "format": [
-        "2D",
-        "Laser"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96408?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96257",
-      "source": "cinema-city",
-      "externalId": "96257",
-      "movieId": "movie-americky-sen-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T12:50:00+02:00",
-      "auditorium": "Sála 6",
-      "format": [
-        "2D",
-        "Laser"
-      ],
-      "languages": {
-        "original": [
-          "fr",
-          "en"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": [
-          "cs"
-        ]
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96257?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96676",
-      "source": "cinema-city",
-      "externalId": "96676",
-      "movieId": "movie-tom-a-jerry-magicky-kompas-2025",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T12:50:00+02:00",
-      "auditorium": "Sála 16",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96676?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-95996",
-      "source": "cinema-city",
-      "externalId": "95996",
-      "movieId": "movie-labkova-patrola-dinosauri-film-2026",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T13:00:00+02:00",
-      "auditorium": "Sála 3",
-      "format": [
-        "2D",
-        "Comfort"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/95996?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-96227",
-      "source": "cinema-city",
-      "externalId": "96227",
-      "movieId": "movie-auta-20-vyrocie-2006",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T13:00:00+02:00",
-      "auditorium": "Sála 9 4DX",
-      "format": [
-        "2D",
-        "4DX"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96227?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96377",
-      "source": "cinema-city",
-      "externalId": "96377",
-      "movieId": "movie-auta-20-vyrocie-2006",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T13:00:00+02:00",
-      "auditorium": "Sála 8",
-      "format": [
-        "2D",
-        "Laser"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96377?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-96086",
-      "source": "cinema-city",
-      "externalId": "96086",
-      "movieId": "movie-tajomstvo-dzungle-2026",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T13:10:00+02:00",
-      "auditorium": "Sála 10",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "cs"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96086?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-96286",
-      "source": "cinema-city",
-      "externalId": "96286",
-      "movieId": "movie-mimoni-a-monstra-2026",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T13:10:00+02:00",
-      "auditorium": "Sála 4",
-      "format": [
-        "2D",
-        "Comfort"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96286?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-96092",
-      "source": "cinema-city",
-      "externalId": "96092",
-      "movieId": "movie-mimoni-a-monstra-2026",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T13:20:00+02:00",
-      "auditorium": "Sála 8",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96092?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-96310",
-      "source": "cinema-city",
-      "externalId": "96310",
-      "movieId": "movie-vaiana-2026",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T13:20:00+02:00",
-      "auditorium": "Sála 5",
-      "format": [
-        "2D",
-        "Comfort"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96310?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96203",
-      "source": "cinema-city",
-      "externalId": "96203",
-      "movieId": "movie-labkova-patrola-dinosauri-film-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T13:20:00+02:00",
-      "auditorium": "Sála 5",
-      "format": [
-        "2D",
-        "Laser"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96203?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-96038",
-      "source": "cinema-city",
-      "externalId": "96038",
-      "movieId": "movie-labkova-patrola-dinosauri-film-2026",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T13:30:00+02:00",
-      "auditorium": "Sála 12",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96038?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-96352",
-      "source": "cinema-city",
-      "externalId": "96352",
-      "movieId": "movie-auta-20-vyrocie-2006",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T13:40:00+02:00",
-      "auditorium": "Sála 7",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96352?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96459",
-      "source": "cinema-city",
-      "externalId": "96459",
-      "movieId": "movie-tajomstvo-dzungle-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T13:40:00+02:00",
-      "auditorium": "Sála 9",
-      "format": [
-        "2D",
-        "Laser"
-      ],
-      "languages": {
-        "original": [
-          "cs"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96459?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96565",
-      "source": "cinema-city",
-      "externalId": "96565",
-      "movieId": "movie-tom-a-jerry-magicky-kompas-2025",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T13:40:00+02:00",
-      "auditorium": "Sála 12",
-      "format": [
-        "2D",
-        "Laser"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96565?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-96014",
-      "source": "cinema-city",
-      "externalId": "96014",
-      "movieId": "movie-auta-20-vyrocie-2006",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T13:50:00+02:00",
-      "auditorium": "Sála 2",
-      "format": [
-        "2D",
-        "Comfort"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96014?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96702",
-      "source": "cinema-city",
-      "externalId": "96702",
-      "movieId": "movie-odysea-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T13:50:00+02:00",
-      "auditorium": "Sála 17",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": [
-          "sk"
-        ]
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96702?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-95827",
-      "source": "cinema-city",
-      "externalId": "95827",
-      "movieId": "movie-auta-20-vyrocie-2006",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T14:00:00+02:00",
-      "auditorium": "Sála 1 VIP",
-      "format": [
-        "2D",
-        "VIP"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/95827?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-95902",
-      "source": "cinema-city",
-      "externalId": "95902",
-      "movieId": "movie-labkova-patrola-dinosauri-film-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T14:00:00+02:00",
-      "auditorium": "Sála 3 VIP",
-      "format": [
-        "2D",
-        "VIP"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/95902?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96649",
-      "source": "cinema-city",
-      "externalId": "96649",
-      "movieId": "movie-labkova-patrola-dinosauri-film-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T14:00:00+02:00",
-      "auditorium": "Sála 15",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96649?lang=sk"
-    },
-    {
-      "id": "cinema-city-1011-95684",
-      "source": "cinema-city",
-      "externalId": "95684",
-      "movieId": "movie-vaiana-2026",
-      "cinemaId": "cc-polus",
-      "startsAt": "2026-09-04T14:00:00+02:00",
-      "auditorium": "Sála 2",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95684?lang=sk"
-    },
-    {
-      "id": "cinema-city-1011-95694",
-      "source": "cinema-city",
-      "externalId": "95694",
-      "movieId": "movie-mimoni-a-monstra-2026",
-      "cinemaId": "cc-polus",
-      "startsAt": "2026-09-04T14:00:00+02:00",
-      "auditorium": "Sála 4",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95694?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96498",
-      "source": "cinema-city",
-      "externalId": "96498",
-      "movieId": "movie-mimoni-a-monstra-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T14:10:00+02:00",
-      "auditorium": "Sála 10",
-      "format": [
-        "2D",
-        "Laser"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96498?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96588",
-      "source": "cinema-city",
-      "externalId": "96588",
-      "movieId": "movie-spider-man-novy-den-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T14:10:00+02:00",
-      "auditorium": "Sála 13",
-      "format": [
-        "2D",
-        "Laser"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": [
-          "sk"
-        ]
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96588?lang=sk"
-    },
-    {
-      "id": "cinema-city-1011-95689",
-      "source": "cinema-city",
-      "externalId": "95689",
-      "movieId": "movie-labkova-patrola-dinosauri-film-2026",
-      "cinemaId": "cc-polus",
-      "startsAt": "2026-09-04T14:10:00+02:00",
-      "auditorium": "Sála 3",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95689?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-95972",
-      "source": "cinema-city",
-      "externalId": "95972",
-      "movieId": "movie-spider-man-novy-den-2026",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T14:30:00+02:00",
-      "auditorium": "Sála 1 SuperScreen",
-      "format": [
-        "2D",
-        "Dolby Atmos",
-        "Laser",
-        "Superscreen"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": [
-          "cs"
-        ]
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 0.9957,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/95972?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-96062",
-      "source": "cinema-city",
-      "externalId": "96062",
-      "movieId": "movie-bardotky-2026",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T14:30:00+02:00",
-      "auditorium": "Sála 11",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "cs"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96062?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-96334",
-      "source": "cinema-city",
-      "externalId": "96334",
-      "movieId": "movie-tom-a-jerry-magicky-kompas-2025",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T14:30:00+02:00",
-      "auditorium": "Sála 6",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96334?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-95942",
-      "source": "cinema-city",
-      "externalId": "95942",
-      "movieId": "movie-spider-man-novy-den-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T14:30:00+02:00",
-      "auditorium": "Sála 4 VIP",
-      "format": [
-        "2D",
-        "VIP"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": [
-          "sk"
-        ]
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/95942?lang=sk"
-    },
-    {
-      "id": "cinema-city-1011-95680",
-      "source": "cinema-city",
-      "externalId": "95680",
-      "movieId": "movie-auta-20-vyrocie-2006",
-      "cinemaId": "cc-polus",
-      "startsAt": "2026-09-04T14:30:00+02:00",
-      "auditorium": "Sála 1",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 0.9856,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95680?lang=sk"
-    },
-    {
-      "id": "cinema-city-1011-95715",
-      "source": "cinema-city",
-      "externalId": "95715",
-      "movieId": "movie-tajomstvo-dzungle-2026",
-      "cinemaId": "cc-polus",
-      "startsAt": "2026-09-04T14:30:00+02:00",
-      "auditorium": "Sála 5",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "cs"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 0.9849,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95715?lang=sk"
-    },
-    {
-      "id": "cinema-city-1011-95717",
-      "source": "cinema-city",
-      "externalId": "95717",
-      "movieId": "movie-mimoni-a-monstra-2026",
-      "cinemaId": "cc-polus",
-      "startsAt": "2026-09-04T14:30:00+02:00",
-      "auditorium": "Sála 7",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95717?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96533",
-      "source": "cinema-city",
-      "externalId": "96533",
-      "movieId": "movie-dokonaly-den-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T14:40:00+02:00",
-      "auditorium": "Sála 11",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "cs"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96533?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-95990",
-      "source": "cinema-city",
-      "externalId": "95990",
-      "movieId": "movie-odysea-2026",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T15:00:00+02:00",
-      "auditorium": "Sála 3",
-      "format": [
-        "2D",
-        "Comfort"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 0.949,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/95990?lang=sk"
-    },
-    {
-      "id": "cinema-city-1010-96080",
-      "source": "cinema-city",
-      "externalId": "96080",
-      "movieId": "movie-labkova-patrola-dinosauri-film-2026",
-      "cinemaId": "cc-aupark",
-      "startsAt": "2026-09-04T15:00:00+02:00",
-      "auditorium": "Sála 10",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96080?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96413",
-      "source": "cinema-city",
-      "externalId": "96413",
-      "movieId": "movie-vaiana-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T15:00:00+02:00",
-      "auditorium": "Sála 7",
-      "format": [
-        "2D",
-        "Laser"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 0.8947,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96413?lang=sk"
-    },
-    {
-      "id": "cinema-city-1012-96626",
-      "source": "cinema-city",
-      "externalId": "96626",
-      "movieId": "movie-spider-man-novy-den-2026",
-      "cinemaId": "cc-eurovea",
-      "startsAt": "2026-09-04T15:00:00+02:00",
-      "auditorium": "Sála 14",
-      "format": [
-        "2D",
-        "Dolby Atmos"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": [
-          "cs"
-        ]
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 0.9905,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96626?lang=sk"
-    },
-    {
-      "id": "cinema-city-1011-95712",
-      "source": "cinema-city",
-      "externalId": "95712",
-      "movieId": "movie-spider-man-novy-den-2026",
-      "cinemaId": "cc-polus",
-      "startsAt": "2026-09-04T15:00:00+02:00",
-      "auditorium": "Sála 8",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95712?lang=sk"
-    },
-    {
-      "id": "cinema-city-1011-95716",
-      "source": "cinema-city",
-      "externalId": "95716",
-      "movieId": "movie-tom-a-jerry-magicky-kompas-2025",
-      "cinemaId": "cc-polus",
-      "startsAt": "2026-09-04T15:00:00+02:00",
-      "auditorium": "Sála 6",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [
-          "en"
-        ],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": 1,
-      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95716?lang=sk"
-    },
     {
       "id": "cinema-city-1010-96292",
       "source": "cinema-city",
@@ -2931,7 +2094,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9328,
+      "availabilityRatio": 0.8403,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96292?lang=sk"
     },
     {
@@ -2957,7 +2120,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9933,
+      "availabilityRatio": 0.9733,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96682?lang=sk"
     },
     {
@@ -2983,7 +2146,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9706,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96098?lang=sk"
     },
     {
@@ -3017,7 +2180,7 @@
       "id": "cinema-city-1012-96209",
       "source": "cinema-city",
       "externalId": "96209",
-      "movieId": "movie-spider-man-novy-den-ukr-2026",
+      "movieId": "movie-spider-man-novy-den-2026",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-04T15:20:00+02:00",
       "auditorium": "Sála 5",
@@ -3062,7 +2225,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9041,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96463?lang=sk"
     },
     {
@@ -3095,7 +2258,7 @@
       "id": "cinema-city-1010-96228",
       "source": "cinema-city",
       "externalId": "96228",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-04T15:30:00+02:00",
       "auditorium": "Sála 9 4DX",
@@ -3142,14 +2305,14 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9556,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96263?lang=sk"
     },
     {
       "id": "cinema-city-1012-96383",
       "source": "cinema-city",
       "externalId": "96383",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-04T15:30:00+02:00",
       "auditorium": "Sála 8",
@@ -3169,14 +2332,14 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9684,
+      "availabilityRatio": 0.943,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96383?lang=sk"
     },
     {
       "id": "cinema-city-1010-96316",
       "source": "cinema-city",
       "externalId": "96316",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-04T15:50:00+02:00",
       "auditorium": "Sála 5",
@@ -3196,7 +2359,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9474,
+      "availabilityRatio": 0.8947,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96316?lang=sk"
     },
     {
@@ -3272,7 +2435,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9883,
+      "availabilityRatio": 0.9708,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96570?lang=sk"
     },
     {
@@ -3349,7 +2512,7 @@
       "id": "cinema-city-1010-96358",
       "source": "cinema-city",
       "externalId": "96358",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-04T16:10:00+02:00",
       "auditorium": "Sála 7",
@@ -3368,7 +2531,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9902,
+      "availabilityRatio": 0.9805,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96358?lang=sk"
     },
     {
@@ -3445,7 +2608,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9899,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95699?lang=sk"
     },
     {
@@ -3492,7 +2655,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9677,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96008?lang=sk"
     },
     {
@@ -3516,14 +2679,14 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9658,
+      "availabilityRatio": 0.9487,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96056?lang=sk"
     },
     {
       "id": "cinema-city-1012-95830",
       "source": "cinema-city",
       "externalId": "95830",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-04T16:30:00+02:00",
       "auditorium": "Sála 1 VIP",
@@ -3567,7 +2730,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9874,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95685?lang=sk"
     },
     {
@@ -3593,7 +2756,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9792,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95709?lang=sk"
     },
     {
@@ -3698,7 +2861,7 @@
       "id": "cinema-city-1011-95681",
       "source": "cinema-city",
       "externalId": "95681",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-04T17:00:00+02:00",
       "auditorium": "Sála 1",
@@ -3791,7 +2954,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9452,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96467?lang=sk"
     },
     {
@@ -3817,7 +2980,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9646,
+      "availabilityRatio": 0.9545,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96706?lang=sk"
     },
     {
@@ -3870,7 +3033,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9828,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/95960?lang=sk"
     },
     {
@@ -3948,7 +3111,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9298,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96418?lang=sk"
     },
     {
@@ -4055,7 +3218,7 @@
       "id": "cinema-city-1012-96389",
       "source": "cinema-city",
       "externalId": "96389",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-04T18:00:00+02:00",
       "auditorium": "Sála 8",
@@ -4177,7 +3340,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9832,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96298?lang=sk"
     },
     {
@@ -4228,7 +3391,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.98,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96688?lang=sk"
     },
     {
@@ -4254,7 +3417,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9912,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95691?lang=sk"
     },
     {
@@ -4359,7 +3522,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.8785,
+      "availabilityRatio": 0.8287,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96215?lang=sk"
     },
     {
@@ -4383,7 +3546,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9658,
+      "availabilityRatio": 0.9487,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96661?lang=sk"
     },
     {
@@ -4635,7 +3798,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9913,
+      "availabilityRatio": 0.974,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95696?lang=sk"
     },
     {
@@ -4816,7 +3979,7 @@
       "id": "cinema-city-1011-95706",
       "source": "cinema-city",
       "externalId": "95706",
-      "movieId": "movie-spider-man-novy-den-ukr-2026",
+      "movieId": "movie-spider-man-novy-den-2026",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-04T19:40:00+02:00",
       "auditorium": "Sála 6",
@@ -5062,7 +4225,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9733,
+      "availabilityRatio": 0.9667,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96715?lang=sk"
     },
     {
@@ -5088,7 +4251,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9849,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95701?lang=sk"
     },
     {
@@ -5215,7 +4378,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9556,
+      "availabilityRatio": 0.8889,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96275?lang=sk"
     },
     {
@@ -5320,7 +4483,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9874,
+      "availabilityRatio": 0.956,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1011/95687?lang=sk"
     },
     {
@@ -5559,7 +4722,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9883,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96580?lang=sk"
     },
     {
@@ -5697,7 +4860,7 @@
       "id": "cinema-city-1012-95839",
       "source": "cinema-city",
       "externalId": "95839",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-05T10:00:00+02:00",
       "auditorium": "Sála 1 VIP",
@@ -5854,6 +5017,32 @@
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96717?lang=sk"
     },
     {
+      "id": "cinema-city-1012-96753",
+      "source": "cinema-city",
+      "externalId": "96753",
+      "movieId": "movie-labkova-patrola-dinosauri-film-2026",
+      "cinemaId": "cc-eurovea",
+      "startsAt": "2026-09-05T10:00:00+02:00",
+      "auditorium": "Sála 15",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [
+          "en"
+        ],
+        "dubbed": [
+          "sk"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": 1,
+      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96753?lang=sk"
+    },
+    {
       "id": "cinema-city-1012-96558",
       "source": "cinema-city",
       "externalId": "96558",
@@ -5884,7 +5073,7 @@
       "id": "cinema-city-1012-96433",
       "source": "cinema-city",
       "externalId": "96433",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-05T10:30:00+02:00",
       "auditorium": "Sála 8",
@@ -5906,6 +5095,32 @@
       "soldOut": false,
       "availabilityRatio": 1,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96433?lang=sk"
+    },
+    {
+      "id": "cinema-city-1012-96752",
+      "source": "cinema-city",
+      "externalId": "96752",
+      "movieId": "movie-tom-a-jerry-magicky-kompas-2025",
+      "cinemaId": "cc-eurovea",
+      "startsAt": "2026-09-05T10:30:00+02:00",
+      "auditorium": "Sála 16",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [
+          "en"
+        ],
+        "dubbed": [
+          "sk"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": 1,
+      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96752?lang=sk"
     },
     {
       "id": "cinema-city-1010-96123",
@@ -6069,7 +5284,7 @@
       "id": "cinema-city-1010-96122",
       "source": "cinema-city",
       "externalId": "96122",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-05T11:20:00+02:00",
       "auditorium": "Sála 2",
@@ -6382,7 +5597,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9664,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96438?lang=sk"
     },
     {
@@ -6548,7 +5763,7 @@
       "id": "cinema-city-1011-95607",
       "source": "cinema-city",
       "externalId": "95607",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-05T12:00:00+02:00",
       "auditorium": "Sála 1",
@@ -6759,7 +5974,7 @@
       "id": "cinema-city-1010-96445",
       "source": "cinema-city",
       "externalId": "96445",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-05T12:30:00+02:00",
       "auditorium": "Sála 7",
@@ -6785,7 +6000,7 @@
       "id": "cinema-city-1012-95840",
       "source": "cinema-city",
       "externalId": "95840",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-05T12:30:00+02:00",
       "auditorium": "Sála 1 VIP",
@@ -6947,7 +6162,7 @@
       "id": "cinema-city-1012-96378",
       "source": "cinema-city",
       "externalId": "96378",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-05T13:00:00+02:00",
       "auditorium": "Sála 8",
@@ -7237,7 +6452,7 @@
       "id": "cinema-city-1010-96015",
       "source": "cinema-city",
       "externalId": "96015",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-05T13:50:00+02:00",
       "auditorium": "Sála 2",
@@ -7573,7 +6788,7 @@
       "id": "cinema-city-1011-95608",
       "source": "cinema-city",
       "externalId": "95608",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-05T14:30:00+02:00",
       "auditorium": "Sála 1",
@@ -7645,7 +6860,7 @@
       "id": "cinema-city-1010-96239",
       "source": "cinema-city",
       "externalId": "96239",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-05T14:50:00+02:00",
       "auditorium": "Sála 9 4DX",
@@ -7692,7 +6907,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9832,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96293?lang=sk"
     },
     {
@@ -7779,7 +6994,7 @@
       "id": "cinema-city-1012-95841",
       "source": "cinema-city",
       "externalId": "95841",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-05T15:00:00+02:00",
       "auditorium": "Sála 1 VIP",
@@ -7927,7 +7142,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9533,
+      "availabilityRatio": 0.8933,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96683?lang=sk"
     },
     {
@@ -7980,14 +7195,14 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9787,
+      "availabilityRatio": 0.9468,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/95856?lang=sk"
     },
     {
       "id": "cinema-city-1012-96210",
       "source": "cinema-city",
       "externalId": "96210",
-      "movieId": "movie-spider-man-novy-den-ukr-2026",
+      "movieId": "movie-spider-man-novy-den-2026",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-05T15:20:00+02:00",
       "auditorium": "Sála 5",
@@ -8092,7 +7307,7 @@
       "id": "cinema-city-1012-96384",
       "source": "cinema-city",
       "externalId": "96384",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-05T15:30:00+02:00",
       "auditorium": "Sála 8",
@@ -8286,7 +7501,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9829,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96668?lang=sk"
     },
     {
@@ -8412,7 +7627,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9677,
+      "availabilityRatio": 0.9032,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96009?lang=sk"
     },
     {
@@ -8517,7 +7732,7 @@
       "id": "cinema-city-1010-96444",
       "source": "cinema-city",
       "externalId": "96444",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-05T16:50:00+02:00",
       "auditorium": "Sála 6",
@@ -8643,7 +7858,7 @@
       "id": "cinema-city-1011-95609",
       "source": "cinema-city",
       "externalId": "95609",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-05T17:00:00+02:00",
       "auditorium": "Sála 1",
@@ -9054,7 +8269,7 @@
       "id": "cinema-city-1012-96390",
       "source": "cinema-city",
       "externalId": "96390",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-05T18:00:00+02:00",
       "auditorium": "Sála 8",
@@ -9296,7 +8511,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.6354,
+      "availabilityRatio": 0.6077,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96216?lang=sk"
     },
     {
@@ -9320,7 +8535,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9744,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96662?lang=sk"
     },
     {
@@ -10014,7 +9229,7 @@
       "id": "cinema-city-1011-95634",
       "source": "cinema-city",
       "externalId": "95634",
-      "movieId": "movie-spider-man-novy-den-ukr-2026",
+      "movieId": "movie-spider-man-novy-den-2026",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-05T20:20:00+02:00",
       "auditorium": "Sála 6",
@@ -10289,7 +9504,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.9664,
+      "availabilityRatio": 0.9496,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96305?lang=sk"
     },
     {
@@ -10560,7 +9775,7 @@
       "id": "cinema-city-1012-95844",
       "source": "cinema-city",
       "externalId": "95844",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-06T10:00:00+02:00",
       "auditorium": "Sála 1 VIP",
@@ -10717,6 +9932,32 @@
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96722?lang=sk"
     },
     {
+      "id": "cinema-city-1012-96754",
+      "source": "cinema-city",
+      "externalId": "96754",
+      "movieId": "movie-labkova-patrola-dinosauri-film-2026",
+      "cinemaId": "cc-eurovea",
+      "startsAt": "2026-09-06T10:00:00+02:00",
+      "auditorium": "Sála 15",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [
+          "en"
+        ],
+        "dubbed": [
+          "sk"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": 1,
+      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96754?lang=sk"
+    },
+    {
       "id": "cinema-city-1012-96559",
       "source": "cinema-city",
       "externalId": "96559",
@@ -10774,7 +10015,7 @@
       "id": "cinema-city-1012-96435",
       "source": "cinema-city",
       "externalId": "96435",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-06T10:30:00+02:00",
       "auditorium": "Sála 8",
@@ -10796,6 +10037,32 @@
       "soldOut": false,
       "availabilityRatio": 1,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96435?lang=sk"
+    },
+    {
+      "id": "cinema-city-1012-96751",
+      "source": "cinema-city",
+      "externalId": "96751",
+      "movieId": "movie-tom-a-jerry-magicky-kompas-2025",
+      "cinemaId": "cc-eurovea",
+      "startsAt": "2026-09-06T10:30:00+02:00",
+      "auditorium": "Sála 16",
+      "format": [
+        "2D"
+      ],
+      "languages": {
+        "original": [
+          "en"
+        ],
+        "dubbed": [
+          "sk"
+        ],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": null,
+      "soldOut": false,
+      "availabilityRatio": 1,
+      "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96751?lang=sk"
     },
     {
       "id": "cinema-city-1010-96151",
@@ -10880,7 +10147,7 @@
       "id": "cinema-city-1010-96354",
       "source": "cinema-city",
       "externalId": "96354",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-06T11:10:00+02:00",
       "auditorium": "Sála 7",
@@ -10958,7 +10225,7 @@
       "id": "cinema-city-1010-96153",
       "source": "cinema-city",
       "externalId": "96153",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-06T11:20:00+02:00",
       "auditorium": "Sála 2",
@@ -11436,7 +10703,7 @@
       "id": "cinema-city-1011-95670",
       "source": "cinema-city",
       "externalId": "95670",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-06T12:00:00+02:00",
       "auditorium": "Sála 1",
@@ -11675,7 +10942,7 @@
       "id": "cinema-city-1012-95845",
       "source": "cinema-city",
       "externalId": "95845",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-06T12:30:00+02:00",
       "auditorium": "Sála 1 VIP",
@@ -11810,7 +11077,7 @@
       "id": "cinema-city-1012-96379",
       "source": "cinema-city",
       "externalId": "96379",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-06T13:00:00+02:00",
       "auditorium": "Sála 8",
@@ -12021,7 +11288,7 @@
       "id": "cinema-city-1010-96360",
       "source": "cinema-city",
       "externalId": "96360",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-06T13:40:00+02:00",
       "auditorium": "Sála 7",
@@ -12126,7 +11393,7 @@
       "id": "cinema-city-1010-96016",
       "source": "cinema-city",
       "externalId": "96016",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-06T13:50:00+02:00",
       "auditorium": "Sála 2",
@@ -12469,7 +11736,7 @@
       "id": "cinema-city-1011-95662",
       "source": "cinema-city",
       "externalId": "95662",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-06T14:30:00+02:00",
       "auditorium": "Sála 1",
@@ -12519,7 +11786,7 @@
       "id": "cinema-city-1010-96254",
       "source": "cinema-city",
       "externalId": "96254",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-06T14:50:00+02:00",
       "auditorium": "Sála 9 4DX",
@@ -12626,7 +11893,7 @@
       "id": "cinema-city-1012-95846",
       "source": "cinema-city",
       "externalId": "95846",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-06T15:00:00+02:00",
       "auditorium": "Sála 1 VIP",
@@ -12807,7 +12074,7 @@
       "id": "cinema-city-1012-96211",
       "source": "cinema-city",
       "externalId": "96211",
-      "movieId": "movie-spider-man-novy-den-ukr-2026",
+      "movieId": "movie-spider-man-novy-den-2026",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-06T15:20:00+02:00",
       "auditorium": "Sála 5",
@@ -12912,7 +12179,7 @@
       "id": "cinema-city-1012-96385",
       "source": "cinema-city",
       "externalId": "96385",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-06T15:30:00+02:00",
       "auditorium": "Sála 8",
@@ -13160,7 +12427,7 @@
       "id": "cinema-city-1010-96447",
       "source": "cinema-city",
       "externalId": "96447",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-06T16:10:00+02:00",
       "auditorium": "Sála 7",
@@ -13463,7 +12730,7 @@
       "id": "cinema-city-1011-95663",
       "source": "cinema-city",
       "externalId": "95663",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-06T17:00:00+02:00",
       "auditorium": "Sála 1",
@@ -13864,7 +13131,7 @@
       "id": "cinema-city-1012-96391",
       "source": "cinema-city",
       "externalId": "96391",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-06T18:00:00+02:00",
       "auditorium": "Sála 8",
@@ -14108,7 +13375,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.8508,
+      "availabilityRatio": 0.8398,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96217?lang=sk"
     },
     {
@@ -14585,7 +13852,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9677,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96004?lang=sk"
     },
     {
@@ -14869,7 +14136,7 @@
       "id": "cinema-city-1011-95643",
       "source": "cinema-city",
       "externalId": "95643",
-      "movieId": "movie-spider-man-novy-den-ukr-2026",
+      "movieId": "movie-spider-man-novy-den-2026",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-06T20:20:00+02:00",
       "auditorium": "Sála 6",
@@ -14998,7 +14265,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9857,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1012/96518?lang=sk"
     },
     {
@@ -15638,7 +14905,7 @@
       "id": "cinema-city-1010-96241",
       "source": "cinema-city",
       "externalId": "96241",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-07T13:00:00+02:00",
       "auditorium": "Sála 9 4DX",
@@ -15665,7 +14932,7 @@
       "id": "cinema-city-1012-96380",
       "source": "cinema-city",
       "externalId": "96380",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-07T13:00:00+02:00",
       "auditorium": "Sála 8",
@@ -15851,7 +15118,7 @@
       "id": "cinema-city-1010-96355",
       "source": "cinema-city",
       "externalId": "96355",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-07T13:40:00+02:00",
       "auditorium": "Sála 7",
@@ -15931,7 +15198,7 @@
       "id": "cinema-city-1010-96017",
       "source": "cinema-city",
       "externalId": "96017",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-07T13:50:00+02:00",
       "auditorium": "Sála 2",
@@ -15984,7 +15251,7 @@
       "id": "cinema-city-1012-95849",
       "source": "cinema-city",
       "externalId": "95849",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-07T14:00:00+02:00",
       "auditorium": "Sála 1 VIP",
@@ -16354,7 +15621,7 @@
       "id": "cinema-city-1011-95783",
       "source": "cinema-city",
       "externalId": "95783",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-07T14:30:00+02:00",
       "auditorium": "Sála 1",
@@ -16669,7 +15936,7 @@
       "id": "cinema-city-1012-96212",
       "source": "cinema-city",
       "externalId": "96212",
-      "movieId": "movie-spider-man-novy-den-ukr-2026",
+      "movieId": "movie-spider-man-novy-den-2026",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-07T15:20:00+02:00",
       "auditorium": "Sála 5",
@@ -16747,7 +16014,7 @@
       "id": "cinema-city-1010-96246",
       "source": "cinema-city",
       "externalId": "96246",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-07T15:30:00+02:00",
       "auditorium": "Sála 9 4DX",
@@ -16801,7 +16068,7 @@
       "id": "cinema-city-1012-96386",
       "source": "cinema-city",
       "externalId": "96386",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-07T15:30:00+02:00",
       "auditorium": "Sála 8",
@@ -16828,7 +16095,7 @@
       "id": "cinema-city-1010-96319",
       "source": "cinema-city",
       "externalId": "96319",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-07T15:50:00+02:00",
       "auditorium": "Sála 5",
@@ -16959,7 +16226,7 @@
       "id": "cinema-city-1010-96361",
       "source": "cinema-city",
       "externalId": "96361",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-07T16:10:00+02:00",
       "auditorium": "Sála 7",
@@ -17089,7 +16356,7 @@
       "id": "cinema-city-1012-95850",
       "source": "cinema-city",
       "externalId": "95850",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-07T16:20:00+02:00",
       "auditorium": "Sála 1 VIP",
@@ -17266,7 +16533,7 @@
       "id": "cinema-city-1011-95819",
       "source": "cinema-city",
       "externalId": "95819",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-07T17:00:00+02:00",
       "auditorium": "Sála 1",
@@ -17621,7 +16888,7 @@
       "id": "cinema-city-1012-96392",
       "source": "cinema-city",
       "externalId": "96392",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-07T18:00:00+02:00",
       "auditorium": "Sála 8",
@@ -18332,7 +17599,7 @@
       "id": "cinema-city-1011-95771",
       "source": "cinema-city",
       "externalId": "95771",
-      "movieId": "movie-spider-man-novy-den-ukr-2026",
+      "movieId": "movie-spider-man-novy-den-2026",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-07T19:40:00+02:00",
       "auditorium": "Sála 6",
@@ -19472,7 +18739,7 @@
       "id": "cinema-city-1010-96242",
       "source": "cinema-city",
       "externalId": "96242",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-08T13:00:00+02:00",
       "auditorium": "Sála 9 4DX",
@@ -19499,7 +18766,7 @@
       "id": "cinema-city-1012-96381",
       "source": "cinema-city",
       "externalId": "96381",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-08T13:00:00+02:00",
       "auditorium": "Sála 8",
@@ -19685,7 +18952,7 @@
       "id": "cinema-city-1010-96356",
       "source": "cinema-city",
       "externalId": "96356",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-08T13:40:00+02:00",
       "auditorium": "Sála 7",
@@ -19765,7 +19032,7 @@
       "id": "cinema-city-1010-96018",
       "source": "cinema-city",
       "externalId": "96018",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-08T13:50:00+02:00",
       "auditorium": "Sála 2",
@@ -19818,7 +19085,7 @@
       "id": "cinema-city-1012-95828",
       "source": "cinema-city",
       "externalId": "95828",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-08T14:00:00+02:00",
       "auditorium": "Sála 1 VIP",
@@ -20188,7 +19455,7 @@
       "id": "cinema-city-1011-95784",
       "source": "cinema-city",
       "externalId": "95784",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-08T14:30:00+02:00",
       "auditorium": "Sála 1",
@@ -20476,7 +19743,7 @@
       "id": "cinema-city-1012-96213",
       "source": "cinema-city",
       "externalId": "96213",
-      "movieId": "movie-spider-man-novy-den-ukr-2026",
+      "movieId": "movie-spider-man-novy-den-2026",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-08T15:20:00+02:00",
       "auditorium": "Sála 5",
@@ -20554,7 +19821,7 @@
       "id": "cinema-city-1010-96247",
       "source": "cinema-city",
       "externalId": "96247",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-08T15:30:00+02:00",
       "auditorium": "Sála 9 4DX",
@@ -20608,7 +19875,7 @@
       "id": "cinema-city-1012-96387",
       "source": "cinema-city",
       "externalId": "96387",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-08T15:30:00+02:00",
       "auditorium": "Sála 8",
@@ -20662,7 +19929,7 @@
       "id": "cinema-city-1010-96320",
       "source": "cinema-city",
       "externalId": "96320",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-08T15:50:00+02:00",
       "auditorium": "Sála 5",
@@ -20793,7 +20060,7 @@
       "id": "cinema-city-1010-96362",
       "source": "cinema-city",
       "externalId": "96362",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-08T16:10:00+02:00",
       "auditorium": "Sála 7",
@@ -20947,7 +20214,7 @@
       "id": "cinema-city-1012-95831",
       "source": "cinema-city",
       "externalId": "95831",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-08T16:30:00+02:00",
       "auditorium": "Sála 1 VIP",
@@ -21122,7 +20389,7 @@
       "id": "cinema-city-1011-95820",
       "source": "cinema-city",
       "externalId": "95820",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-08T17:00:00+02:00",
       "auditorium": "Sála 1",
@@ -21477,7 +20744,7 @@
       "id": "cinema-city-1012-96393",
       "source": "cinema-city",
       "externalId": "96393",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-08T18:00:00+02:00",
       "auditorium": "Sála 8",
@@ -22133,7 +21400,7 @@
       "id": "cinema-city-1011-95772",
       "source": "cinema-city",
       "externalId": "95772",
-      "movieId": "movie-spider-man-novy-den-ukr-2026",
+      "movieId": "movie-spider-man-novy-den-2026",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-08T19:40:00+02:00",
       "auditorium": "Sála 6",
@@ -23250,7 +22517,7 @@
       "id": "cinema-city-1010-96243",
       "source": "cinema-city",
       "externalId": "96243",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-09T13:00:00+02:00",
       "auditorium": "Sála 9 4DX",
@@ -23277,7 +22544,7 @@
       "id": "cinema-city-1012-96382",
       "source": "cinema-city",
       "externalId": "96382",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-09T13:00:00+02:00",
       "auditorium": "Sála 8",
@@ -23463,7 +22730,7 @@
       "id": "cinema-city-1010-96357",
       "source": "cinema-city",
       "externalId": "96357",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-09T13:40:00+02:00",
       "auditorium": "Sála 7",
@@ -23543,7 +22810,7 @@
       "id": "cinema-city-1010-96019",
       "source": "cinema-city",
       "externalId": "96019",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-09T13:50:00+02:00",
       "auditorium": "Sála 2",
@@ -23596,7 +22863,7 @@
       "id": "cinema-city-1012-95829",
       "source": "cinema-city",
       "externalId": "95829",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-09T14:00:00+02:00",
       "auditorium": "Sála 1 VIP",
@@ -23940,7 +23207,7 @@
       "id": "cinema-city-1011-95785",
       "source": "cinema-city",
       "externalId": "95785",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-09T14:30:00+02:00",
       "auditorium": "Sála 1",
@@ -24281,7 +23548,7 @@
       "id": "cinema-city-1012-96214",
       "source": "cinema-city",
       "externalId": "96214",
-      "movieId": "movie-spider-man-novy-den-ukr-2026",
+      "movieId": "movie-spider-man-novy-den-2026",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-09T15:20:00+02:00",
       "auditorium": "Sála 5",
@@ -24359,7 +23626,7 @@
       "id": "cinema-city-1010-96248",
       "source": "cinema-city",
       "externalId": "96248",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-09T15:30:00+02:00",
       "auditorium": "Sála 9 4DX",
@@ -24413,7 +23680,7 @@
       "id": "cinema-city-1012-96388",
       "source": "cinema-city",
       "externalId": "96388",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-09T15:30:00+02:00",
       "auditorium": "Sála 8",
@@ -24440,7 +23707,7 @@
       "id": "cinema-city-1010-96321",
       "source": "cinema-city",
       "externalId": "96321",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-09T15:50:00+02:00",
       "auditorium": "Sála 5",
@@ -24571,7 +23838,7 @@
       "id": "cinema-city-1010-96363",
       "source": "cinema-city",
       "externalId": "96363",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-aupark",
       "startsAt": "2026-09-09T16:10:00+02:00",
       "auditorium": "Sála 7",
@@ -24725,7 +23992,7 @@
       "id": "cinema-city-1012-95832",
       "source": "cinema-city",
       "externalId": "95832",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-09T16:30:00+02:00",
       "auditorium": "Sála 1 VIP",
@@ -24905,7 +24172,7 @@
       "id": "cinema-city-1011-95821",
       "source": "cinema-city",
       "externalId": "95821",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-09T17:00:00+02:00",
       "auditorium": "Sála 1",
@@ -25257,7 +24524,7 @@
       "id": "cinema-city-1012-96394",
       "source": "cinema-city",
       "externalId": "96394",
-      "movieId": "movie-auta-20-vyrocie-2006",
+      "movieId": "movie-auta-2006",
       "cinemaId": "cc-eurovea",
       "startsAt": "2026-09-09T18:00:00+02:00",
       "auditorium": "Sála 8",
@@ -25991,7 +25258,7 @@
       "id": "cinema-city-1011-95773",
       "source": "cinema-city",
       "externalId": "95773",
-      "movieId": "movie-spider-man-novy-den-ukr-2026",
+      "movieId": "movie-spider-man-novy-den-2026",
       "cinemaId": "cc-polus",
       "startsAt": "2026-09-09T19:40:00+02:00",
       "auditorium": "Sála 6",
@@ -26037,7 +25304,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 0.871,
+      "availabilityRatio": 0.8387,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96121?lang=sk"
     },
     {
@@ -26524,7 +25791,7 @@
       },
       "price": null,
       "soldOut": false,
-      "availabilityRatio": 1,
+      "availabilityRatio": 0.9474,
       "bookingUrl": "https://www.cinemacity.sk/sk/booking-router/launch/1010/96333?lang=sk"
     },
     {

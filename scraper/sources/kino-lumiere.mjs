@@ -2,21 +2,41 @@ import * as cheerio from "cheerio";
 import { LUMIERE_PROGRAM_EN_URL, LUMIERE_PROGRAM_URL, TIMEZONE } from "../config.mjs";
 import { cleanTitle, collapseWhitespace, fetchWithRetry, inferUpcomingDate, localDateKey, movieId, zonedIso } from "../utils.mjs";
 
-function absoluteUrl(value) {
+function absoluteUrl(value, baseUrl = LUMIERE_PROGRAM_URL) {
   if (!value || value === "#") return null;
-  return new URL(value, LUMIERE_PROGRAM_URL).href;
+  return new URL(value, baseUrl).href;
 }
 
 function parseSubtitle(value) {
   const text = collapseWhitespace(value);
   const year = text.match(/\b((?:19|20)\d{2})\b/)?.[1] || null;
   const originalTitle = collapseWhitespace(text.split(";")[0]);
+  const credits = text.split(";")[1] || "";
+  const directors = collapseWhitespace(credits.replace(/,?\s*(?:19|20)\d{2}\b.*$/u, ""))
+    .replace(/^Réžia:\s*/iu, "")
+    .split(/\s*,\s*/u)
+    .filter(Boolean);
   const languageText = text.match(/jazyk:\s*([^,]+(?:,\s*[a-z]{3})*)/iu)?.[1] || "";
   return {
     originalTitle: originalTitle || null,
     releaseYear: year,
+    directors,
     languages: languageText ? languageText.split(",").map((item) => item.trim()).filter(Boolean) : [],
   };
+}
+
+export function parseLumiereDetails(html, baseUrl = LUMIERE_PROGRAM_URL) {
+  const $ = cheerio.load(html);
+  const hero = $(".hlavnePlatnoPlatno").first();
+  const posterUrl = absoluteUrl(hero.find("img").first().attr("src"), baseUrl);
+  const rows = hero.find("table tr");
+  const valueFor = (label) => collapseWhitespace(rows.filter((_, row) => (
+    collapseWhitespace($(row).find("td").first().text()).replace(/:$/u, "").toLocaleLowerCase("sk") === label
+  )).first().find("td").eq(1).text());
+  const directors = valueFor("réžia").split(/\s*,\s*/u).filter(Boolean);
+  const durationMinutes = Number(valueFor("dĺžka").match(/\d{1,3}/u)?.[0]) || null;
+  const genres = valueFor("žáner").split(/\s*,\s*/u).filter(Boolean);
+  return { posterUrl, directors, durationMinutes, genres };
 }
 
 export function parseEnglishTitles(html) {
@@ -66,6 +86,7 @@ export function parseLumiere(html, options = {}) {
         englishTitle: movieExternalId ? englishTitles.get(movieExternalId) || null : null,
         originalTitle: details.originalTitle,
         releaseYear: details.releaseYear,
+        directors: details.directors,
         durationMinutes: null,
         ageRating: null,
         genres: [],
@@ -103,8 +124,26 @@ export async function fetchLumiere(options = {}) {
       return null;
     }),
   ]);
-  return parseLumiere(html, {
+  const result = parseLumiere(html, {
     ...options,
     englishTitles: englishHtml ? parseEnglishTitles(englishHtml) : new Map(),
   });
+  result.movies = await Promise.all(result.movies.map(async (movie) => {
+    if (!movie.detailUrl) return movie;
+    try {
+      const detailHtml = await (await fetchWithRetry(movie.detailUrl)).text();
+      const details = parseLumiereDetails(detailHtml, movie.detailUrl);
+      return {
+        ...movie,
+        posterUrl: details.posterUrl,
+        directors: details.directors.length ? details.directors : movie.directors,
+        durationMinutes: details.durationMinutes,
+        genres: details.genres,
+      };
+    } catch (error) {
+      console.warn(`Kino Lumière details unavailable for “${movie.title}”: ${error.message}`);
+      return movie;
+    }
+  }));
+  return result;
 }

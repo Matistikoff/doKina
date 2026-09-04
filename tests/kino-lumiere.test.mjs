@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { parseEnglishTitles, parseLumiere } from "../scraper/sources/kino-lumiere.mjs";
+import { parseEnglishTitles, parseLumiere, parseLumiereDetails } from "../scraper/sources/kino-lumiere.mjs";
 
 const fixture = await readFile(new URL("./fixtures/kino-lumiere.html", import.meta.url), "utf8");
 
@@ -10,9 +10,28 @@ test("parses Kino Lumière HTML and removes programme labels from titles", () =>
   assert.equal(result.movies.length, 2);
   assert.equal(result.movies[0].title, "Bojovník");
   assert.equal(result.movies[0].originalTitle, "Bojovník");
+  assert.deepEqual(result.movies[0].directors, ["Vojtěch Frič"]);
   assert.equal(result.screenings[0].startsAt, "2026-09-04T16:00:00+02:00");
   assert.equal(result.screenings[0].price, "3,- €");
   assert.equal(result.screenings[0].bookingUrl, "https://system.cinemaware.eu/wstep1.php?id=test");
+});
+
+test("parses poster, director, duration and genres from a Lumière film detail", () => {
+  const details = parseLumiereDetails(`
+    <div class="hlavnePlatnoPlatno">
+      <div class="info"><div class="right"><table><tbody>
+        <tr><td>Réžia:</td><td>Vojtěch Frič, Tomáš Dianiška</td></tr>
+        <tr><td>Dĺžka:</td><td>110 minút</td></tr>
+        <tr><td>Žáner:</td><td>Dráma, Komédia</td></tr>
+      </tbody></table></div></div>
+      <img src="/posters/bojovnik.jpg">
+    </div>
+  `, "https://www.kino-lumiere.sk/film/123");
+
+  assert.equal(details.posterUrl, "https://www.kino-lumiere.sk/posters/bojovnik.jpg");
+  assert.deepEqual(details.directors, ["Vojtěch Frič", "Tomáš Dianiška"]);
+  assert.equal(details.durationMinutes, 110);
+  assert.deepEqual(details.genres, ["Dráma", "Komédia"]);
 });
 
 test("infers the next year and recognizes sold-out screenings", () => {

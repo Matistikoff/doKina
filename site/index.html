@@ -25,12 +25,7 @@
     </header>
 
     <main>
-      <section class="intro" aria-labelledby="page-title">
-        <div>
-          <p class="eyebrow">Čo sa oplatí vidieť v kine</p>
-          <h1 id="page-title">Vyber si dobrý film.</h1>
-          <p class="intro-copy">Všetky filmy, ktoré práve hrajú v Bratislave. Porovnaj hodnotenia, žánre a termíny bez preklikávania medzi kinami.</p>
-        </div>
+      <section class="intro" aria-label="Aktuálnosť programu">
         <div class="freshness" id="freshness" aria-live="polite">
           <span class="status-dot" aria-hidden="true"></span>
           <span>Načítavam aktuálny program…</span>
@@ -120,6 +115,21 @@
       </p>
     </footer>
 
+    <dialog class="movie-dialog" id="movie-dialog" aria-labelledby="movie-dialog-title">
+      <div class="dialog-header">
+        <div>
+          <p class="movie-kicker" id="movie-dialog-kicker"></p>
+          <h2 id="movie-dialog-title"></h2>
+          <p class="movie-meta" id="movie-dialog-meta"></p>
+        </div>
+        <button class="dialog-close" type="button" aria-label="Zavrieť detail filmu">×</button>
+      </div>
+      <div class="dialog-screenings">
+        <h3>Termíny premietania</h3>
+        <div class="showtime-groups" id="movie-dialog-showtimes"></div>
+      </div>
+    </dialog>
+
     <template id="movie-card-template">
       <article class="movie-card">
         <div class="poster-wrap">
@@ -134,7 +144,7 @@
             <h3></h3>
             <p class="movie-meta"></p>
           </div>
-          <div class="showtime-groups"></div>
+          <p class="screening-count"></p>
         </div>
       </article>
     </template>

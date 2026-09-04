@@ -9,6 +9,12 @@ const state = {
 const elements = {
   allCinemasButton: document.querySelector("#all-cinemas-button"),
   cinemaFilter: document.querySelector("#cinema-filter"),
+  dialog: document.querySelector("#movie-dialog"),
+  dialogClose: document.querySelector("#movie-dialog .dialog-close"),
+  dialogKicker: document.querySelector("#movie-dialog-kicker"),
+  dialogMeta: document.querySelector("#movie-dialog-meta"),
+  dialogShowtimes: document.querySelector("#movie-dialog-showtimes"),
+  dialogTitle: document.querySelector("#movie-dialog-title"),
   freshness: document.querySelector("#freshness"),
   genreFilter: document.querySelector("#genre-filter"),
   movieGrid: document.querySelector("#movie-grid"),
@@ -179,38 +185,18 @@ function showtimeElement(screening) {
   return element;
 }
 
-function renderMovie(movie, screenings, cinemaMap) {
-  const fragment = elements.template.content.cloneNode(true);
-  const card = fragment.querySelector(".movie-card");
-  const poster = fragment.querySelector(".poster");
-  const ageBadge = fragment.querySelector(".age-badge");
-  const imdbRating = fragment.querySelector(".imdb-rating");
-  const groupsRoot = fragment.querySelector(".showtime-groups");
-
-  fragment.querySelector("h3").textContent = movie.title;
-  fragment.querySelector(".movie-kicker").textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
-  fragment.querySelector(".movie-meta").textContent = [
+function movieMeta(movie) {
+  return [
+    movie.directors?.length ? `Réžia: ${movie.directors.join(", ")}` : null,
     movie.durationMinutes ? `${movie.durationMinutes} min` : null,
     movie.releaseYear || null,
     movie.originalTitle && movie.originalTitle !== movie.title ? movie.originalTitle : null,
   ].filter(Boolean).join(" · ");
+}
 
-  if (movie.posterUrl) {
-    poster.src = movie.posterUrl;
-    poster.alt = `Plagát filmu ${movie.title}`;
-    poster.addEventListener("error", () => poster.classList.add("is-broken"));
-  }
-  ageBadge.textContent = movie.ageRating || "";
-  if (movie.imdbId && Number.isFinite(movie.imdbRating)) {
-    imdbRating.href = `https://www.imdb.com/title/${movie.imdbId}/`;
-    imdbRating.textContent = `IMDb ★ ${movie.imdbRating.toFixed(1)}`;
-    imdbRating.title = movie.imdbVotes
-      ? `IMDb hodnotenie z ${movie.imdbVotes.toLocaleString("sk-SK")} hlasov`
-      : "IMDb hodnotenie";
-    imdbRating.setAttribute("aria-label", `${movie.title}: IMDb hodnotenie ${movie.imdbRating.toFixed(1)} z 10`);
-  }
-
-  const byDate = groupByDate(screenings.sort((a, b) => a.startsAt.localeCompare(b.startsAt)));
+function renderShowtimes(screenings, cinemaMap, root) {
+  root.replaceChildren();
+  const byDate = groupByDate([...screenings].sort((a, b) => a.startsAt.localeCompare(b.startsAt)));
 
   for (const [date, dateScreenings] of byDate) {
     const day = document.createElement("section");
@@ -232,10 +218,67 @@ function renderMovie(movie, screenings, cinemaMap) {
       group.append(label, times);
       day.append(group);
     }
-    groupsRoot.append(day);
+    root.append(day);
+  }
+}
+
+function openMovieDialog(movie, screenings, cinemaMap) {
+  elements.dialogKicker.textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
+  elements.dialogTitle.textContent = movie.title;
+  elements.dialogMeta.textContent = movieMeta(movie);
+  renderShowtimes(screenings, cinemaMap, elements.dialogShowtimes);
+  if (typeof elements.dialog.showModal === "function") elements.dialog.showModal();
+  else elements.dialog.setAttribute("open", "");
+  document.body.classList.add("has-open-dialog");
+}
+
+function closeMovieDialog() {
+  if (typeof elements.dialog.close === "function") elements.dialog.close();
+  else elements.dialog.removeAttribute("open");
+  document.body.classList.remove("has-open-dialog");
+}
+
+function renderMovie(movie, screenings, cinemaMap) {
+  const fragment = elements.template.content.cloneNode(true);
+  const card = fragment.querySelector(".movie-card");
+  const poster = fragment.querySelector(".poster");
+  const ageBadge = fragment.querySelector(".age-badge");
+  const imdbRating = fragment.querySelector(".imdb-rating");
+  const screeningCount = fragment.querySelector(".screening-count");
+
+  fragment.querySelector("h3").textContent = movie.title;
+  fragment.querySelector(".movie-kicker").textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
+  fragment.querySelector(".movie-meta").textContent = movieMeta(movie);
+  screeningCount.textContent = `${screenings.length} ${screenings.length === 1 ? "predstavenie" : screenings.length < 5 ? "predstavenia" : "predstavení"} · Zobraziť termíny`;
+
+  if (movie.posterUrl) {
+    poster.src = movie.posterUrl;
+    poster.alt = `Plagát filmu ${movie.title}`;
+    poster.addEventListener("error", () => poster.classList.add("is-broken"));
+  }
+  ageBadge.textContent = movie.ageRating || "";
+  if (movie.imdbId && Number.isFinite(movie.imdbRating)) {
+    imdbRating.href = `https://www.imdb.com/title/${movie.imdbId}/`;
+    imdbRating.textContent = `IMDb ★ ${movie.imdbRating.toFixed(1)}`;
+    imdbRating.title = movie.imdbVotes
+      ? `IMDb hodnotenie z ${movie.imdbVotes.toLocaleString("sk-SK")} hlasov`
+      : "IMDb hodnotenie";
+    imdbRating.setAttribute("aria-label", `${movie.title}: IMDb hodnotenie ${movie.imdbRating.toFixed(1)} z 10`);
   }
 
   card.dataset.movieId = movie.id;
+  card.tabIndex = 0;
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", `${movie.title} — zobraziť termíny premietania`);
+  card.addEventListener("click", (event) => {
+    if (event.target.closest("a, button")) return;
+    openMovieDialog(movie, screenings, cinemaMap);
+  });
+  card.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    openMovieDialog(movie, screenings, cinemaMap);
+  });
   return fragment;
 }
 
@@ -415,6 +458,15 @@ elements.allCinemasButton.addEventListener("click", () => {
   if (!allSelected) state.program.cinemas.forEach((cinema) => state.selectedCinemas.add(cinema.id));
   renderCinemas();
   renderProgram();
+});
+
+elements.dialogClose.addEventListener("click", closeMovieDialog);
+elements.dialog.addEventListener("click", (event) => {
+  if (event.target === elements.dialog) closeMovieDialog();
+});
+elements.dialog.addEventListener("close", () => document.body.classList.remove("has-open-dialog"));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && elements.dialog.hasAttribute("open")) closeMovieDialog();
 });
 
 init();
