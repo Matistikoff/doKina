@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { assembleProgram } from "../scraper/index.mjs";
 import { validateProgram } from "../scraper/schema.mjs";
+import { CINEMAS } from "../scraper/config.mjs";
 
 test("assembles deterministic data and merges matching films", () => {
   const results = [
@@ -13,7 +14,7 @@ test("assembles deterministic data and merges matching films", () => {
   assert.deepEqual(program.movies[0].genres, ["Dráma"]);
   assert.equal(program.movies[0].posterUrl, "poster.jpg");
   assert.deepEqual(program.screenings.map((item) => item.id), ["a-1", "a-2"]);
-  assert.equal(program.sources.length, 7);
+  assert.equal(program.sources.length, CINEMAS.length);
 });
 
 test("schema validation rejects dangling movie references", () => {

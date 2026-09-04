@@ -1,6 +1,6 @@
 # doKina.sk
 
-Jednoduchý prehľad filmových predstavení v bratislavských kinách. Spája program Kina Lumière, Kina Film Europe, Kina Mladosť, Kina Lúky, Kina Nostalgia, Edison Filmhub Bratislava a Novej Cvernovky do jedného normalizovaného súboru `program.json`.
+Jednoduchý prehľad filmových predstavení v bratislavských kinách. Spája program Kina Lumière, Kina Film Europe, Kina Mladosť, Kina Lúky, Kina Nostalgia, Edison Filmhub Bratislava, Novej Cvernovky a Kina inak v A4 do jedného normalizovaného súboru `program.json`.
 
 Frontend je čisté HTML, CSS a JavaScript. Node.js sa používa iba na získanie dát, testy a lokálny server.
 
@@ -12,6 +12,7 @@ Frontend je čisté HTML, CSS a JavaScript. Node.js sa používa iba na získani
 - **Kino Lúky:** verejný zoznam filmových podujatí Kultúrnych zariadení Petržalky.
 - **Edison Filmhub Bratislava:** slovenský HTML program a oficiálna anglická lokalizácia, z ktorej sa dopĺňajú anglické názvy; filmové metadáta sa čítajú zo schema.org dát na detailoch filmov.
 - **Nová Cvernovka:** verejný zoznam podujatí filtrovaný na filmy a ich detailové stránky; anglický názov sa doplní, keď ho oficiálna anglická lokalizácia naozaj poskytuje.
+- **A4 – Kino inak:** slovenský program a detaily podujatí; anglické názvy sa párujú s oficiálnou anglickou lokalizáciou pomocou spoločného odkazu na vstupenky a termínu projekcie.
 
 Scraper pristupuje iba k verejným programovým stránkam, používa časové limity a obmedzený počet opakovaní. Zlyhanie jedného zdroja sa zaznamená do `program.json` a neblokuje aktualizáciu ostatných kín; ak zlyhajú všetky zdroje, starý program zostane zachovaný.
 

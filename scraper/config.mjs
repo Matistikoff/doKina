@@ -52,6 +52,13 @@ export const CINEMAS = [
     shortName: "Nová Cvernovka",
     url: "https://novacvernovka.eu/program",
   },
+  {
+    id: "a4-kino-inak",
+    sourceId: "a4-kino-inak",
+    name: "A4 – Kino inak",
+    shortName: "A4 Kino inak",
+    url: "https://a4.sk/events/kino-inak-sk/",
+  },
 ];
 
 export const LUMIERE_PROGRAM_URL = "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-19175";
@@ -65,3 +72,5 @@ export const EDISON_EN_URL = "https://edisonfilmhub.sk/en";
 export const EDISON_PROGRAM_EN_URL = "https://edisonfilmhub.sk/programme";
 export const NOVA_CVERNOVKA_PROGRAM_URL = "https://novacvernovka.eu/program";
 export const NOVA_CVERNOVKA_PROGRAM_EN_URL = `${NOVA_CVERNOVKA_PROGRAM_URL}?lang=en`;
+export const A4_KINO_INAK_PROGRAM_URL = "https://a4.sk/events/kino-inak-sk/";
+export const A4_KINO_INAK_PROGRAM_EN_URL = "https://a4.sk/en/events/kino-inak-en/";

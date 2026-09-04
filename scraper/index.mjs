@@ -10,6 +10,7 @@ import { fetchMladost } from "./sources/kino-mladost.mjs";
 import { fetchNostalgia } from "./sources/kino-nostalgia.mjs";
 import { fetchEdison } from "./sources/edison-filmhub.mjs";
 import { fetchNovaCvernovka } from "./sources/nova-cvernovka.mjs";
+import { fetchA4KinoInak } from "./sources/a4-kino-inak.mjs";
 import { localDateKey } from "./utils.mjs";
 import { enrichMoviesWithOmdb } from "./omdb.mjs";
 
@@ -62,6 +63,7 @@ async function main() {
     { sourceId: "kino-nostalgia", promise: fetchNostalgia() },
     { sourceId: "edison-filmhub", promise: fetchEdison({ referenceDate: today }) },
     { sourceId: "nova-cvernovka", promise: fetchNovaCvernovka() },
+    { sourceId: "a4-kino-inak", promise: fetchA4KinoInak() },
   ];
   const settled = await Promise.allSettled(jobs.map((job) => job.promise));
   const results = [];

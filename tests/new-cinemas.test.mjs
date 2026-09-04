@@ -12,6 +12,11 @@ import {
   parseNovaCvernovkaDetails,
   parseNovaCvernovkaEnglishTitles,
 } from "../scraper/sources/nova-cvernovka.mjs";
+import {
+  parseA4EnglishTitles,
+  parseA4KinoInak,
+  parseA4KinoInakDetails,
+} from "../scraper/sources/a4-kino-inak.mjs";
 
 const fixture = (name) => readFile(new URL(`./fixtures/${name}`, import.meta.url), "utf8");
 
@@ -131,6 +136,33 @@ test("parses Nová Cvernovka detail metadata", () => {
   assert.deepEqual(details.languages.subtitles, ["cs"]);
 });
 
+test("parses A4 Kino inak and pairs its official English title", async () => {
+  const html = await fixture("a4-kino-inak.html");
+  const englishHtml = html
+    .replaceAll("Smrť a sex v kempe Miazma", "Teenage Sex and Death at Camp Miasma")
+    .replace("teaser-20053", "teaser-20192");
+  const result = parseA4KinoInak(html, {
+    englishTitles: parseA4EnglishTitles(englishHtml),
+  });
+  assert.equal(result.movies[0].title, "Smrť a sex v kempe Miazma");
+  assert.equal(result.movies[0].englishTitle, "Teenage Sex and Death at Camp Miasma");
+  assert.equal(result.screenings[0].cinemaId, "a4-kino-inak");
+  assert.equal(result.screenings[0].startsAt, "2026-09-14T20:00:00+02:00");
+  assert.equal(result.screenings[0].price, "predpredaj 6 € / zľavnené 4 € / na mieste 6,5 €");
+  assert.match(result.screenings[0].bookingUrl, /szaawly/);
+});
+
+test("parses A4 Kino inak detail metadata", async () => {
+  const details = parseA4KinoInakDetails(await fixture("a4-kino-inak-detail.html"));
+  assert.equal(details.releaseYear, "2026");
+  assert.equal(details.durationMinutes, 116);
+  assert.equal(details.ageRating, "18");
+  assert.deepEqual(details.directors, ["Jane Schoenbrun"]);
+  assert.deepEqual(details.languages.original, ["en"]);
+  assert.deepEqual(details.languages.subtitles, ["cs"]);
+  assert.equal(details.posterUrl, "https://a4.sk/wp-content/uploads/film.png");
+});
+
 test("new cinema parsers reject pages without schedules", () => {
   assert.throws(() => parseMladost("<html></html>"), /no recognizable screenings/i);
   assert.throws(() => parseFilmEurope("<html></html>"), /no recognizable screenings/i);
@@ -138,4 +170,5 @@ test("new cinema parsers reject pages without schedules", () => {
   assert.throws(() => parseNostalgia("<html></html>"), /no recognizable screenings/i);
   assert.throws(() => parseEdison("<html></html>"), /no recognizable screenings/i);
   assert.throws(() => parseNovaCvernovka("<html></html>"), /no recognizable film screenings/i);
+  assert.throws(() => parseA4KinoInak("<html></html>"), /no recognizable screenings/i);
 });
