@@ -152,6 +152,7 @@ function renderMovie(movie, screenings, cinemaMap) {
   const card = fragment.querySelector(".movie-card");
   const poster = fragment.querySelector(".poster");
   const ageBadge = fragment.querySelector(".age-badge");
+  const imdbRating = fragment.querySelector(".imdb-rating");
   const groupsRoot = fragment.querySelector(".showtime-groups");
 
   fragment.querySelector("h3").textContent = movie.title;
@@ -168,6 +169,14 @@ function renderMovie(movie, screenings, cinemaMap) {
     poster.addEventListener("error", () => poster.classList.add("is-broken"));
   }
   ageBadge.textContent = movie.ageRating || "";
+  if (movie.imdbId && Number.isFinite(movie.imdbRating)) {
+    imdbRating.href = `https://www.imdb.com/title/${movie.imdbId}/`;
+    imdbRating.textContent = `IMDb ★ ${movie.imdbRating.toFixed(1)}`;
+    imdbRating.title = movie.imdbVotes
+      ? `IMDb hodnotenie z ${movie.imdbVotes.toLocaleString("sk-SK")} hlasov`
+      : "IMDb hodnotenie";
+    imdbRating.setAttribute("aria-label", `${movie.title}: IMDb hodnotenie ${movie.imdbRating.toFixed(1)} z 10`);
+  }
 
   const byCinema = groupByCinema(screenings.sort((a, b) => a.startsAt.localeCompare(b.startsAt)));
 

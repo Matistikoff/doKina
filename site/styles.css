@@ -427,6 +427,28 @@ h2 {
   display: none;
 }
 
+.imdb-rating {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: rgba(24, 24, 23, 0.9);
+  color: #f5c518;
+  font-size: 0.68rem;
+  font-weight: 850;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+}
+
+.imdb-rating:empty {
+  display: none;
+}
+
+.imdb-rating:hover {
+  background: #181817;
+}
+
 .movie-content {
   display: flex;
   flex-direction: column;

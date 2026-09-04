@@ -16,6 +16,9 @@ export function validateProgram(program) {
 
   for (const movie of program?.movies || []) {
     if (!isString(movie.id) || !isString(movie.title)) errors.push("each movie needs an id and title");
+    if (movie.imdbId != null && !/^tt\d+$/.test(movie.imdbId)) errors.push(`invalid imdbId: ${movie.imdbId}`);
+    if (movie.imdbRating != null && (!Number.isFinite(movie.imdbRating) || movie.imdbRating < 1 || movie.imdbRating > 10)) errors.push(`invalid imdbRating: ${movie.imdbRating}`);
+    if (movie.imdbVotes != null && (!Number.isInteger(movie.imdbVotes) || movie.imdbVotes < 0)) errors.push(`invalid imdbVotes: ${movie.imdbVotes}`);
   }
 
   for (const screening of program?.screenings || []) {

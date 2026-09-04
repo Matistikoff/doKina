@@ -1,8 +1,10 @@
 name: Refresh programme and deploy
 
 on:
+  push:
+    branches: [main]
   schedule:
-    - cron: "17 */2 * * *"
+    - cron: "17 4 * * *"
   workflow_dispatch:
 
 permissions:
@@ -24,7 +26,15 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      - name: Restore OMDb cache
+        uses: actions/cache@v5
+        with:
+          path: .cache/omdb.json
+          key: omdb-${{ github.run_id }}
+          restore-keys: omdb-
       - run: npm run scrape
+        env:
+          OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
       - run: npm run build
       - name: Save generated programme for diagnostics
         uses: actions/upload-artifact@v5

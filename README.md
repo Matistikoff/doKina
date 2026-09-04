@@ -37,11 +37,16 @@ Web bude dostupný na `http://127.0.0.1:4173`.
 
 ## Automatické obnovenie
 
-Workflow `.github/workflows/refresh-and-deploy.yml` beží každé dve hodiny a dá sa spustiť aj ručne. Najskôr vykoná testy, potom získanie programu, zostavenie a nasadenie.
+Workflow `.github/workflows/refresh-and-deploy.yml` beží po každom pushi do vetvy `main`, raz denne o 04:17 UTC a dá sa spustiť aj ručne. Najskôr vykoná testy, potom získanie programu, zostavenie a nasadenie.
 
 V GitHub repozitári treba nastaviť Actions secret `DOKINACLOUDFLARE`
 s API tokenom pre nasadenie. Cloudflare account ID je nesenzitívna hodnota
 uvedená priamo vo workflow.
+
+Voliteľné IMDb hodnotenia sa získavajú cez OMDb a ukladajú do cache. Na ich
+zapnutie pridaj GitHub Actions secret `OMDB_API_KEY`. Bez neho scraper aj web
+fungujú ďalej, iba nezobrazia hodnotenia. Bezplatný OMDb kľúč má denný limit
+1 000 požiadaviek a jeho obsah je dostupný pod licenciou CC BY-NC 4.0.
 
 Token potrebuje oprávnenie nasadiť Cloudflare Worker. Projekt sa nasadzuje ako Cloudflare Worker so statickými assets z priečinka `dist/`.
 

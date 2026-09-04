@@ -10,6 +10,7 @@ import { fetchLuky } from "./sources/kino-luky.mjs";
 import { fetchMladost } from "./sources/kino-mladost.mjs";
 import { fetchNostalgia } from "./sources/kino-nostalgia.mjs";
 import { localDateKey } from "./utils.mjs";
+import { enrichMoviesWithOmdb } from "./omdb.mjs";
 
 function prefer(current, incoming) {
   if (!current) return incoming;
@@ -85,6 +86,11 @@ async function main() {
     ...(sourceErrors.has(id) ? { error: sourceErrors.get(id) } : {}),
   }));
   const program = assembleProgram(results, generatedAt, sources);
+  program.movies = await enrichMoviesWithOmdb(program.movies, {
+    apiKey: process.env.OMDB_API_KEY,
+    cachePath: process.env.OMDB_CACHE_PATH,
+  });
+  validateProgram(program);
   const output = fileURLToPath(OUTPUT_PATH);
   const temporary = `${output}.tmp`;
   await mkdir(dirname(output), { recursive: true });
