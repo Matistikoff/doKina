@@ -36,10 +36,9 @@ Web bude dostupný na `http://127.0.0.1:4173`.
 
 Workflow `.github/workflows/refresh-and-deploy.yml` beží každé dve hodiny a dá sa spustiť aj ručne. Najskôr vykoná testy, potom získanie programu, zostavenie a nasadenie.
 
-V GitHub repozitári treba nastaviť tieto Actions secrets:
-
-- `CLOUDFLARE_ACCOUNT_ID`
-- `CLOUDFLARE_API_TOKEN`
+V GitHub repozitári treba nastaviť Actions secret `DOKINACLOUDFLARE`
+s API tokenom pre nasadenie. Cloudflare account ID je nesenzitívna hodnota
+uvedená priamo vo workflow.
 
 Token potrebuje oprávnenie nasadiť Cloudflare Worker. Projekt sa nasadzuje ako Cloudflare Worker so statickými assets z priečinka `dist/`.
 
