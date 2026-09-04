@@ -1,0 +1,52 @@
+# doKina.sk
+
+Jednoduchý prehľad filmových predstavení v bratislavských kinách. Spája program Kina Lumière a všetkých troch bratislavských kín Cinema City do jedného normalizovaného súboru `program.json`.
+
+Frontend je čisté HTML, CSS a JavaScript. Node.js sa používa iba na získanie dát, testy a lokálny server.
+
+## Zdroje dát
+
+- **Cinema City:** verejný JSON endpoint používaný webom Cinema City.
+- **Kino Lumière:** HTML kompletného programu; stránka neposkytuje štruktúrovaný JSON program.
+
+Scraper pristupuje iba k verejným programovým stránkam, používa časové limity a obmedzený počet opakovaní. Ak niektorý zdroj zlyhá, proces skončí chybou a staré funkčné nasadenie zostane online.
+
+## Lokálne spustenie
+
+Vyžaduje Node.js 22 alebo novší.
+
+```bash
+npm install
+npm test
+npm run scrape
+npm run serve
+```
+
+Web bude dostupný na `http://127.0.0.1:4173`.
+
+## Príkazy
+
+- `npm run scrape` — načíta programy a prepíše `site/program.json`.
+- `npm test` — spustí parser testy nad lokálnymi fixtures bez siete.
+- `npm run check` — skontroluje syntax hlavných JavaScript súborov.
+- `npm run build` — overí dáta a pripraví priečinok `dist/`.
+- `npm run deploy` — nasadí pripravený web cez Wrangler.
+
+## Automatické obnovenie
+
+Workflow `.github/workflows/refresh-and-deploy.yml` beží každé dve hodiny a dá sa spustiť aj ručne. Najskôr vykoná testy, potom získanie programu, zostavenie a nasadenie.
+
+V GitHub repozitári treba nastaviť tieto Actions secrets:
+
+- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_API_TOKEN`
+
+Token potrebuje oprávnenie nasadiť Cloudflare Worker. Projekt sa nasadzuje ako Cloudflare Worker so statickými assets z priečinka `dist/`.
+
+## Štruktúra dát
+
+`site/program.json` obsahuje čas vytvorenia, stav zdrojov, kiná, filmy a predstavenia. Časy sú uložené ako ISO 8601 s bratislavským UTC offsetom. Identifikátory predstavení sú odvodené zo zdrojových ID, aby boli stabilné medzi obnoveniami.
+
+## Údržba parserov
+
+Ak zdroj zmení formát, najprv ulož anonymizovanú reprezentatívnu odpoveď do `tests/fixtures/`, uprav čistú parser funkciu a až potom aktualizuj sieťovú časť. Testy zámerne nepoužívajú živé weby, aby boli spoľahlivé.

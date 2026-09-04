@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="sk">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#151515">
+    <meta name="description" content="Program bratislavských kín na jednom mieste. Kino Lumière a Cinema City Bratislava.">
+    <meta property="og:title" content="doKina.sk — Bratislava dnes hrá">
+    <meta property="og:description" content="Vyber si dátum, kino a predstavenie. Program bratislavských kín prehľadne na jednom mieste.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/og.png">
+    <title>doKina.sk — Bratislava dnes hrá</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#program">Preskočiť na program</a>
+
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="doKina.sk — domov">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>doKina<span>.sk</span></span>
+      </a>
+      <p class="header-note">Bratislava dnes hrá</p>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Program kín na jednom mieste</p>
+          <h1 id="page-title">Čo si pozrieme?</h1>
+          <p class="intro-copy">Lumière, Aupark, Eurovea aj POLUS. Bez preklikávania, bez chaosu.</p>
+        </div>
+        <div class="freshness" id="freshness" aria-live="polite">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>Načítavam aktuálny program…</span>
+        </div>
+      </section>
+
+      <section class="filters" aria-label="Filtrovanie programu">
+        <div class="filter-group">
+          <div class="filter-heading">
+            <span>Dátum</span>
+            <button class="text-button" id="today-button" type="button">Späť na dnes</button>
+          </div>
+          <div class="date-strip" id="date-filter" role="group" aria-label="Vyber dátum"></div>
+        </div>
+
+        <div class="filter-group cinema-filter-wrap">
+          <div class="filter-heading">
+            <span>Kino</span>
+            <button class="text-button" id="all-cinemas-button" type="button">Vybrať všetky</button>
+          </div>
+          <div class="cinema-filter" id="cinema-filter" role="group" aria-label="Vyber kiná"></div>
+        </div>
+      </section>
+
+      <section class="program" id="program" aria-labelledby="program-heading">
+        <div class="program-heading-row">
+          <div>
+            <p class="eyebrow" id="selected-date-label">Dnes</p>
+            <h2 id="program-heading">Filmy a predstavenia</h2>
+          </div>
+          <p class="result-count" id="result-count" aria-live="polite"></p>
+        </div>
+
+        <div class="movie-grid" id="movie-grid" aria-live="polite" aria-busy="true">
+          <div class="loading-card">
+            <span class="loader" aria-hidden="true"></span>
+            <p>Hľadám najlepšie predstavenia…</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Program sa obnovuje každé dve hodiny. Pred návštevou si čas over u prevádzkovateľa kina.</p>
+      <p class="source-links">
+        <a href="https://www.kino-lumiere.sk/" rel="noreferrer">Kino Lumière</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://www.cinemacity.sk/" rel="noreferrer">Cinema City</a>
+      </p>
+    </footer>
+
+    <template id="movie-card-template">
+      <article class="movie-card">
+        <div class="poster-wrap">
+          <img class="poster" alt="" loading="lazy" width="320" height="480">
+          <div class="poster-fallback" aria-hidden="true"><span></span></div>
+          <span class="age-badge"></span>
+        </div>
+        <div class="movie-content">
+          <div class="movie-copy">
+            <p class="movie-kicker"></p>
+            <h3></h3>
+            <p class="movie-meta"></p>
+          </div>
+          <div class="showtime-groups"></div>
+        </div>
+      </article>
+    </template>
+  </body>
+</html>

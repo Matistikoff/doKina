@@ -1,0 +1,24 @@
+{
+  "name": "dokina-sk",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Prehľad filmových predstavení v bratislavských kinách.",
+  "scripts": {
+    "serve": "node scripts/serve.mjs",
+    "scrape": "node scraper/index.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test --test-isolation=none",
+    "check": "node --check site/app.js && node --check scraper/index.mjs",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "cheerio": "^1.1.2"
+  },
+  "devDependencies": {
+    "wrangler": "^4.35.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
