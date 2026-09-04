@@ -7,11 +7,11 @@ const UNMATCHED_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 async function readCache(cachePath) {
   try {
     const cache = JSON.parse(await readFile(cachePath, "utf8"));
-    return cache?.version === 3 && cache.entries ? cache : { version: 3, entries: {} };
+    return cache?.version === 4 && cache.entries ? cache : { version: 4, entries: {} };
   } catch (error) {
-    if (error.code === "ENOENT") return { version: 3, entries: {} };
+    if (error.code === "ENOENT") return { version: 4, entries: {} };
     console.warn(`OMDb cache could not be read: ${error.message}`);
-    return { version: 3, entries: {} };
+    return { version: 4, entries: {} };
   }
 }
 
@@ -143,7 +143,7 @@ async function fetchEntry(movie, previous, apiKey, request, wikiRequest, fetched
     if (entry.imdbId) return entry;
   }
 
-  const titles = [...new Set([movie.originalTitle, movie.title].filter(Boolean))];
+  const titles = [...new Set([movie.englishTitle, movie.originalTitle, movie.title].filter(Boolean))];
   for (const title of titles) {
     const payload = await request({
       t: title,

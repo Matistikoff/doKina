@@ -26,6 +26,29 @@ test("enriches a movie with its IMDb rating and caches the result", async () => 
   assert.equal(cached.entries["movie-matrix-1999"].imdbId, "tt0133093");
 });
 
+test("tries a first-party English title before localized and original titles", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "dokina-omdb-"));
+  const requests = [];
+  const movies = [{
+    id: "movie-nedosiahnutelna-laska-2018",
+    title: "Nedosiahnuteľná láska",
+    englishTitle: "An Impossible Love",
+    originalTitle: "Un Amour Impossible",
+    releaseYear: 2018,
+  }];
+  await enrichMoviesWithOmdb(movies, {
+    apiKey: "test",
+    cachePath: join(directory, "omdb.json"),
+    request: async (parameters) => {
+      requests.push(parameters);
+      return { Response: "True", imdbID: "tt8260226", imdbRating: "7.0", imdbVotes: "1,000" };
+    },
+    now: new Date("2026-09-04T10:00:00.000Z"),
+  });
+
+  assert.deepEqual(requests, [{ t: "An Impossible Love", type: "movie", y: "2018" }]);
+});
+
 test("uses a fresh cached result without making another request", async () => {
   const directory = await mkdtemp(join(tmpdir(), "dokina-omdb-"));
   const cachePath = join(directory, "omdb.json");

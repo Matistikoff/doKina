@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { parseLumiere } from "../scraper/sources/kino-lumiere.mjs";
+import { parseEnglishTitles, parseLumiere } from "../scraper/sources/kino-lumiere.mjs";
 
 const fixture = await readFile(new URL("./fixtures/kino-lumiere.html", import.meta.url), "utf8");
 
@@ -20,6 +20,18 @@ test("infers the next year and recognizes sold-out screenings", () => {
   assert.equal(result.screenings[1].startsAt, "2027-01-01T20:30:00+01:00");
   assert.equal(result.screenings[1].soldOut, true);
   assert.equal(result.screenings[1].bookingUrl, null);
+});
+
+test("pairs the English programme title by Lumière film ID", () => {
+  const englishFixture = fixture
+    .replace("Bojovník | SENior kino", "The Fighter (2026) | Senior Cinema")
+    .replace("Novoročný film | novinka", "New Year Film | New Release");
+  const englishTitles = parseEnglishTitles(englishFixture);
+  const result = parseLumiere(fixture, { referenceDate: "2026-09-04", englishTitles });
+
+  assert.equal(result.movies[0].title, "Bojovník");
+  assert.equal(result.movies[0].englishTitle, "The Fighter");
+  assert.equal(result.movies[1].englishTitle, "New Year Film");
 });
 
 test("rejects HTML without schedule rows", () => {

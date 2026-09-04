@@ -66,6 +66,7 @@ export const CINEMAS = [
 
 export const CINEMA_CITY_API = "https://www.cinemacity.sk/sk/data-api-service/v1/quickbook/10105";
 export const LUMIERE_PROGRAM_URL = "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-19175";
+export const LUMIERE_PROGRAM_EN_URL = `${LUMIERE_PROGRAM_URL}/jazyk-en_GB`;
 export const FILM_EUROPE_PROGRAM_URL = "https://cinevitaj.filmeurope.sk/";
 export const MLADOST_PROGRAM_URL = "https://www.kinomladost.sk/";
 export const LUKY_PROGRAM_URL = "https://www.kzp.sk/podujatia/kino?place=80";

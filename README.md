@@ -7,7 +7,7 @@ Frontend je čisté HTML, CSS a JavaScript. Node.js sa používa iba na získani
 ## Zdroje dát
 
 - **Cinema City:** verejný JSON endpoint používaný webom Cinema City.
-- **Kino Lumière:** HTML kompletného programu; stránka neposkytuje štruktúrovaný JSON program.
+- **Kino Lumière:** slovenský a anglický HTML program; zhodujú sa podľa stabilného ID filmu, aby sa anglický názov dal použiť na vyhľadanie IMDb.
 - **Kino Film Europe a Kino Mladosť:** HTML programové tabuľky systému Cinemaware.
 - **Kino Lúky:** verejný zoznam filmových podujatí Kultúrnych zariadení Petržalky.
 - **Kino Nostalgia:** štruktúrované dáta programu vložené vo verejnej stránke kina.
@@ -51,6 +51,8 @@ Pri filmoch Cinema City sa na presné párovanie používa aj anglická verzia
 verejných dát kina. Kino Mladosť a Kino Film Europe sa dopĺňajú z detailu filmu.
 Ak zdroj originálny názov neposkytne, presná zhoda slovenského alebo českého
 názvu a roku sa cez Wikidata prevedie na IMDb ID.
+Pri Lumière sa najskôr skúsi anglický názov z oficiálnej anglickej verzie programu;
+slovenský názov zostáva zobrazený na karte filmu.
 
 Token potrebuje oprávnenie nasadiť Cloudflare Worker. Projekt sa nasadzuje ako Cloudflare Worker so statickými assets z priečinka `dist/`.
 

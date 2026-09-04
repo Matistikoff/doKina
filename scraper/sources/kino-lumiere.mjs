@@ -1,5 +1,5 @@
 import * as cheerio from "cheerio";
-import { LUMIERE_PROGRAM_URL, TIMEZONE } from "../config.mjs";
+import { LUMIERE_PROGRAM_EN_URL, LUMIERE_PROGRAM_URL, TIMEZONE } from "../config.mjs";
 import { cleanTitle, collapseWhitespace, fetchWithRetry, inferUpcomingDate, localDateKey, movieId, zonedIso } from "../utils.mjs";
 
 function absoluteUrl(value) {
@@ -19,8 +19,23 @@ function parseSubtitle(value) {
   };
 }
 
+export function parseEnglishTitles(html) {
+  const $ = cheerio.load(html);
+  const titles = new Map();
+  $(".calendar-left-table-tr").each((_, row) => {
+    const link = $(row).find("h2 a").first();
+    const externalId = link.attr("href")?.match(/film-(\d+)/)?.[1];
+    const title = cleanTitle(collapseWhitespace(link.find(".text-underline").first().text()).split(/\s*\|\s*/u)[0])
+      .replace(/\s*\((?:19|20)\d{2}\)\s*$/u, "")
+      .trim();
+    if (externalId && title) titles.set(externalId, title);
+  });
+  return titles;
+}
+
 export function parseLumiere(html, options = {}) {
   const referenceDate = options.referenceDate || localDateKey();
+  const englishTitles = options.englishTitles || new Map();
   const $ = cheerio.load(html);
   const moviesById = new Map();
   const screenings = [];
@@ -40,13 +55,15 @@ export function parseLumiere(html, options = {}) {
     const externalId = priceElement.attr("data-id") || `${date}-${time}-${id}`;
     const bookingUrl = absoluteUrl($(row).find(".cal-event-item-buy-span").attr("href"));
     const detailUrl = absoluteUrl($(row).find("h2 a").attr("href"));
+    const movieExternalId = detailUrl?.match(/film-(\d+)/)?.[1] || null;
 
     if (!moviesById.has(id)) {
       moviesById.set(id, {
         id,
         source: "kino-lumiere",
-        externalId: detailUrl?.match(/film-(\d+)/)?.[1] || null,
+        externalId: movieExternalId,
         title,
+        englishTitle: movieExternalId ? englishTitles.get(movieExternalId) || null : null,
         originalTitle: details.originalTitle,
         releaseYear: details.releaseYear,
         durationMinutes: null,
@@ -79,6 +96,15 @@ export function parseLumiere(html, options = {}) {
 }
 
 export async function fetchLumiere(options = {}) {
-  const html = await (await fetchWithRetry(LUMIERE_PROGRAM_URL)).text();
-  return parseLumiere(html, options);
+  const [html, englishHtml] = await Promise.all([
+    fetchWithRetry(LUMIERE_PROGRAM_URL).then((response) => response.text()),
+    fetchWithRetry(LUMIERE_PROGRAM_EN_URL).then((response) => response.text()).catch((error) => {
+      console.warn(`Kino Lumière English programme unavailable: ${error.message}`);
+      return null;
+    }),
+  ]);
+  return parseLumiere(html, {
+    ...options,
+    englishTitles: englishHtml ? parseEnglishTitles(englishHtml) : new Map(),
+  });
 }
