@@ -3,7 +3,55 @@ import { mkdtemp, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import test from "node:test";
-import { enrichMoviesWithOmdb } from "../scraper/omdb.mjs";
+import { enrichMoviesWithOmdb, preserveMovieRatings } from "../scraper/omdb.mjs";
+
+test("preserves ratings across changed movie IDs without an API key", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "dokina-omdb-"));
+  const movie = { id: "movie-odyssea-2026", title: "Odyssea", releaseYear: "2026", durationMinutes: 172 };
+  const previous = { ...movie, id: "movie-odysea", title: "Odysea", imdbId: "tt1234", imdbRating: 8.1, imdbVotes: 100 };
+  const result = await enrichMoviesWithOmdb([movie], {
+    cachePath: join(directory, "missing.json"), previousMovies: [previous],
+    request: async () => assert.fail("No network request without an API key"),
+  });
+  assert.deepEqual(result, [{ ...movie, imdbId: "tt1234", imdbRating: 8.1, imdbVotes: 100 }]);
+});
+
+test("does not transfer ratings between remakes or ambiguous matches", () => {
+  const movie = { id: "film", title: "Film", releaseYear: "2026" };
+  const previous = { ...movie, releaseYear: "1990", imdbId: "tt1234", imdbRating: 8 };
+  assert.deepEqual(preserveMovieRatings([movie], [previous]), [movie]);
+  const unknownYear = { id: "unknown", title: "Film" };
+  assert.deepEqual(preserveMovieRatings([unknownYear], [previous, { ...movie, imdbId: "tt5678", imdbRating: 7 }]), [unknownYear]);
+});
+
+test("uses stale cached ratings even without an API key", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "dokina-omdb-"));
+  const cachePath = join(directory, "omdb.json");
+  const movies = [{ id: "matrix", title: "Matrix" }];
+  await enrichMoviesWithOmdb(movies, {
+    apiKey: "test", cachePath, now: new Date("2026-09-01T10:00:00Z"),
+    request: async () => ({ Response: "True", imdbID: "tt0133093", imdbRating: "8.7", imdbVotes: "100" }),
+  });
+  const result = await enrichMoviesWithOmdb(movies, {
+    cachePath, now: new Date("2026-09-06T10:00:00Z"),
+    request: async () => assert.fail("No network request without an API key"),
+  });
+  assert.equal(result[0].imdbRating, 8.7);
+});
+
+test("keeps prior programme ratings when the API fails and cache is absent", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "dokina-omdb-"));
+  const movie = { id: "matrix", title: "Matrix" };
+  const result = await enrichMoviesWithOmdb([movie], {
+    apiKey: "test", cachePath: join(directory, "omdb.json"),
+    previousMovies: [{ ...movie, imdbId: "tt0133093", imdbRating: 8.7, imdbVotes: 100 }],
+    request: async (parameters) => {
+      assert.equal(parameters.i, "tt0133093");
+      throw new Error("Service unavailable");
+    },
+  });
+  assert.equal(result[0].imdbRating, 8.7);
+});
 
 test("enriches a movie with its IMDb rating and caches the result", async () => {
   const directory = await mkdtemp(join(tmpdir(), "dokina-omdb-"));

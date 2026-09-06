@@ -1,6 +1,7 @@
-import { mkdir, rename, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { loadEnvFile } from "node:process";
 import { CINEMAS, OUTPUT_PATH, TIMEZONE } from "./config.mjs";
 import { validateProgram } from "./schema.mjs";
 import { fetchLumiere } from "./sources/kino-lumiere.mjs";
@@ -13,6 +14,7 @@ import { fetchNovaCvernovka } from "./sources/nova-cvernovka.mjs";
 import { fetchA4KinoInak } from "./sources/a4-kino-inak.mjs";
 import { localDateKey } from "./utils.mjs";
 import { enrichMoviesWithOmdb } from "./omdb.mjs";
+import { deduplicateMovies } from "./deduplicate.mjs";
 
 function prefer(current, incoming) {
   if (!current) return incoming;
@@ -40,7 +42,7 @@ export function assembleProgram(results, generatedAt = new Date().toISOString(),
     .filter((movie) => usedMovieIds.has(movie.id))
     .sort((a, b) => a.title.localeCompare(b.title, "sk"));
 
-  return validateProgram({
+  return validateProgram(deduplicateMovies({
     schemaVersion: 1,
     generatedAt,
     timezone: TIMEZONE,
@@ -49,10 +51,21 @@ export function assembleProgram(results, generatedAt = new Date().toISOString(),
     cinemas: CINEMAS.map(({ externalId: _externalId, sourceId: _sourceId, ...cinema }) => cinema),
     movies,
     screenings,
-  });
+  }));
 }
 
 async function main() {
+  try {
+    loadEnvFile();
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+  let previousMovies = [];
+  try {
+    previousMovies = validateProgram(JSON.parse(await readFile(OUTPUT_PATH, "utf8"))).movies;
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
   const today = localDateKey();
   console.log(`Fetching schedules from ${today}…`);
   const jobs = [
@@ -85,12 +98,14 @@ async function main() {
     fetchedAt: generatedAt,
     ...(sourceErrors.has(id) ? { error: sourceErrors.get(id) } : {}),
   }));
-  const program = assembleProgram(results, generatedAt, sources);
+  let program = assembleProgram(results, generatedAt, sources);
   program.movies = await enrichMoviesWithOmdb(program.movies, {
     apiKey: process.env.OMDB_API_KEY,
+    tmdbApiKey: process.env.TMDB_API_KEY,
     cachePath: process.env.OMDB_CACHE_PATH,
+    previousMovies,
   });
-  validateProgram(program);
+  program = validateProgram(deduplicateMovies(program));
   const output = fileURLToPath(OUTPUT_PATH);
   const temporary = `${output}.tmp`;
   await mkdir(dirname(output), { recursive: true });

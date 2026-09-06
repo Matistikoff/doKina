@@ -1,5 +1,9 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
+import { moviesMatch } from "./deduplicate.mjs";
+import { lookupTitles, normalizeTitle, resolveTmdbMovie } from "./tmdb.mjs";
+import { fillMovieMetadata, metadataText } from "./movie-metadata.mjs";
+import { applyKnownMovieIdentity } from "./movie-identities.mjs";
 
 const MATCHED_TTL_MS = 20 * 60 * 60 * 1000;
 const UNMATCHED_TTL_MS = 7 * 24 * 60 * 60 * 1000;
@@ -28,12 +32,13 @@ function isFresh(entry, now) {
 }
 
 function applyEntry(movie, entry) {
-  if (!entry?.imdbId) return movie;
+  const enriched = fillMovieMetadata(movie, entry);
+  if (!entry?.imdbId) return enriched;
   return {
-    ...movie,
+    ...enriched,
     imdbId: entry.imdbId,
-    imdbRating: entry.imdbRating,
-    imdbVotes: entry.imdbVotes,
+    imdbRating: entry.imdbRating ?? movie.imdbRating,
+    imdbVotes: entry.imdbVotes ?? movie.imdbVotes,
   };
 }
 
@@ -47,6 +52,12 @@ function normalizedResult(payload, fetchedAt) {
     imdbId: payload.imdbID,
     imdbRating: Number.isFinite(rating) ? rating : null,
     imdbVotes: Number.isFinite(votes) ? votes : null,
+    englishTitle: metadataText(payload.Title),
+    directors: (metadataText(payload.Director) || "").split(",").map(metadataText).filter(Boolean),
+    durationMinutes: /^\d+ min$/.test(payload.Runtime || "") && Number.parseInt(payload.Runtime, 10) > 0
+      ? Number.parseInt(payload.Runtime, 10) : null,
+    releaseYear: /^\d{4}$/.test(payload.Year || "") ? String(payload.Year) : null,
+    ...(metadataText(payload.Plot) ? { overview: metadataText(payload.Plot), overviewLanguage: "en" } : {}),
     fetchedAt,
   };
 }
@@ -135,15 +146,42 @@ async function resolveWikidataImdbId(movie, request) {
   return null;
 }
 
-async function fetchEntry(movie, previous, apiKey, request, wikiRequest, fetchedAt) {
-  if (previous?.imdbId) {
+async function fetchEntry(movie, previous, apiKey, request, wikiRequest, fetchedAt, tmdb) {
+  let metadata;
+  let tmdbError;
+  if (tmdb.apiKey) {
+    try {
+      metadata = await resolveTmdbMovie(movie, tmdb.apiKey, tmdb.request);
+    } catch (error) {
+      tmdbError = error;
+      console.warn(`TMDb enrichment failed for “${movie.title}”: ${error.message}`);
+    }
+  }
+  const details = metadata ? { ...metadata, fetchedAt, resolvedBy: "tmdb" } : null;
+  if (details) {
+    if (!apiKey || !details.imdbId) return details;
+    try {
+      const payload = await request({ i: details.imdbId }, apiKey);
+      assertServiceAvailable(payload);
+      const entry = normalizedResult(payload, fetchedAt);
+      return entry.imdbId === details.imdbId ? { ...fillMovieMetadata(entry, details), resolvedBy: "tmdb" } : details;
+    } catch (error) {
+      console.warn(`OMDb rating failed for “${movie.title}”: ${error.message}`);
+      return details;
+    }
+  }
+  if (!apiKey) {
+    if (tmdbError) throw tmdbError;
+    return { fetchedAt };
+  }
+  if (previous?.imdbId && (Number.isFinite(previous.imdbRating) || previous.resolvedBy === "tmdb")) {
     const payload = await request({ i: previous.imdbId }, apiKey);
     assertServiceAvailable(payload);
     const entry = normalizedResult(payload, fetchedAt);
-    if (entry.imdbId) return entry;
+    if (entry.imdbId) return { ...entry, ...(previous.resolvedBy ? { resolvedBy: previous.resolvedBy } : {}) };
   }
 
-  const titles = [...new Set([movie.englishTitle, movie.originalTitle, movie.title].filter(Boolean))];
+  const titles = lookupTitles(movie);
   for (const title of titles) {
     const payload = await request({
       t: title,
@@ -151,6 +189,10 @@ async function fetchEntry(movie, previous, apiKey, request, wikiRequest, fetched
       ...(movie.releaseYear ? { y: String(movie.releaseYear) } : {}),
     }, apiKey);
     assertServiceAvailable(payload);
+    // Localized title lookup can return an unrelated film. Require corroboration.
+    if (payload.Title && !titles.map(normalizeTitle).includes(normalizeTitle(payload.Title))) continue;
+    if (movie.releaseYear && payload.Year && Number.parseInt(payload.Year, 10) !== Number(movie.releaseYear)) continue;
+    if (tmdb.apiKey && !movie.releaseYear && !movie.originalTitle && !movie.englishTitle) continue;
     const entry = normalizedResult(payload, fetchedAt);
     if (entry.imdbId) return entry;
   }
@@ -161,19 +203,24 @@ async function fetchEntry(movie, previous, apiKey, request, wikiRequest, fetched
     assertServiceAvailable(payload);
     return normalizedResult(payload, fetchedAt);
   }
+  if (tmdbError) throw tmdbError;
   return { fetchedAt };
 }
 
 export async function enrichMoviesWithOmdb(movies, options = {}) {
   const apiKey = options.apiKey;
-  if (!apiKey) return movies;
-
   const cachePath = options.cachePath || ".cache/omdb.json";
   const request = options.request || omdbRequest;
   const wikiRequest = options.wikidataRequest || wikidataRequest;
+  const tmdb = { apiKey: options.tmdbApiKey, request: options.tmdbRequest };
   const now = options.now || new Date();
   const fetchedAt = now.toISOString();
   const cache = await readCache(cachePath);
+  movies = preserveMovieRatings(movies.map(applyKnownMovieIdentity), options.previousMovies || []);
+  if (!apiKey && !tmdb.apiKey) {
+    console.warn("OMDB_API_KEY is not set; using saved IMDb ratings without refreshing them.");
+    return movies.map((movie) => applySavedEntry(movie, cache.entries[movie.id]));
+  }
   let cursor = 0;
 
   async function worker() {
@@ -181,9 +228,20 @@ export async function enrichMoviesWithOmdb(movies, options = {}) {
       const movie = movies[cursor];
       cursor += 1;
       const previous = cache.entries[movie.id];
-      if (isFresh(previous, now)) continue;
+      const lookupKey = JSON.stringify(["metadata-v1", lookupTitles(movie), movie.releaseYear, movie.directors, movie.durationMinutes, Boolean(tmdb.apiKey), Boolean(apiKey)]);
+      const needsRetry = previous?.metadataVersion !== 1
+        || (!Number.isFinite(previous?.imdbRating) && previous?.lookupKey !== lookupKey);
+      if (!needsRetry && isFresh(previous, now)) continue;
       try {
-        cache.entries[movie.id] = await fetchEntry(movie, previous, apiKey, request, wikiRequest, fetchedAt);
+        let entry = await fetchEntry(movie, previous?.imdbId ? previous : movie, apiKey, request, wikiRequest, fetchedAt, tmdb);
+        if (previous?.imdbId && previous.imdbId === entry.imdbId) entry = applyEntry(entry, {
+          ...previous, imdbRating: entry.imdbRating ?? previous.imdbRating, imdbVotes: entry.imdbVotes ?? previous.imdbVotes,
+        });
+        cache.entries[movie.id] = {
+          ...entry,
+          lookupKey,
+          metadataVersion: 1,
+        };
       } catch (error) {
         console.warn(`OMDb enrichment failed for “${movie.title}”: ${error.message}`);
       }
@@ -192,5 +250,24 @@ export async function enrichMoviesWithOmdb(movies, options = {}) {
 
   await Promise.all(Array.from({ length: Math.min(5, movies.length) }, worker));
   await writeCache(cachePath, cache);
-  return movies.map((movie) => applyEntry(movie, cache.entries[movie.id]));
+  return movies.map((movie) => applySavedEntry(movie, cache.entries[movie.id]));
+}
+
+function applySavedEntry(movie, entry) {
+  if (Number.isFinite(movie.imdbRating) && movie.imdbId && entry?.imdbId && movie.imdbId !== entry.imdbId) return movie;
+  return applyEntry(movie, entry);
+}
+
+export function preserveMovieRatings(movies, previousMovies) {
+  return movies.map((movie) => {
+    const candidates = previousMovies.filter((previous) => previous.imdbId
+      && moviesMatch(movie, previous));
+    // Different historical matches are ambiguous: never guess a rating.
+    if (new Set(candidates.map((previous) => previous.imdbId)).size !== 1) return movie;
+    const previous = candidates.find((candidate) => candidate.id === movie.id) || candidates[0];
+    return applySavedEntry(movie, { ...previous,
+      imdbRating: movie.imdbRating ?? previous.imdbRating,
+      imdbVotes: movie.imdbVotes ?? previous.imdbVotes,
+    });
+  });
 }
