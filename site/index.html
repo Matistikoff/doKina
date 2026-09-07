@@ -1,208 +1,477 @@
 <!doctype html>
 <html lang="sk">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#e8dfc8">
-    <meta name="description" content="Filmy, ktoré práve hrajú v Bratislave. Porovnaj ich podľa IMDb hodnotenia, roku a žánru.">
-    <meta property="og:title" content="doKina.sk — Vyber si najlepší film v kinách">
-    <meta property="og:description" content="Všetky filmy, ktoré práve hrajú v Bratislave. Zoraď ich podľa hodnotenia a filtruj podľa žánru či kina.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="/og.png">
-    <title>doKina.sk — Najlepšie filmy, ktoré práve hrajú</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Syne:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
-    <script>
-      (() => {
-        const savedTheme = localStorage.getItem("theme");
-        const theme = savedTheme === "light" || savedTheme === "dark"
-          ? savedTheme
-          : "dark";
-        document.documentElement.dataset.theme = theme;
-      })();
-    </script>
-    <link rel="stylesheet" href="/styles.css">
-    <script type="module" src="/app.js"></script>
-  </head>
-  <body>
-    <a class="skip-link" href="#program">Preskočiť na program</a>
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<meta
+			name="theme-color"
+			content="#e8dfc8"
+		/>
+		<meta
+			name="description"
+			content="Filmy, ktoré práve hrajú v Bratislave. Porovnaj ich podľa IMDb hodnotenia, roku a žánru."
+		/>
+		<meta
+			property="og:title"
+			content="doKina.sk — Vyber si najlepší film v kinách"
+		/>
+		<meta
+			property="og:description"
+			content="Všetky filmy, ktoré práve hrajú v Bratislave. Zoraď ich podľa hodnotenia a filtruj podľa žánru či kina."
+		/>
+		<meta
+			property="og:type"
+			content="website"
+		/>
+		<meta
+			property="og:image"
+			content="/og.png"
+		/>
+		<title>doKina.sk — Najlepšie filmy, ktoré práve hrajú</title>
+		<link
+			rel="preconnect"
+			href="https://fonts.googleapis.com"
+		/>
+		<link
+			rel="preconnect"
+			href="https://fonts.gstatic.com"
+			crossorigin
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Syne:wght@500;600;700;800&amp;display=swap"
+			rel="stylesheet"
+		/>
+		<script>
+			(() => {
+				const savedTheme = localStorage.getItem("theme");
+				const theme =
+					savedTheme === "light" || savedTheme === "dark" ? savedTheme : "dark";
+				document.documentElement.dataset.theme = theme;
+			})();
+		</script>
+		<link
+			rel="stylesheet"
+			href="/styles.css"
+		/>
+		<script
+			type="module"
+			src="/app.js"
+		></script>
+	</head>
+	<body>
+		<a
+			class="skip-link"
+			href="#program"
+			>Preskočiť na program</a
+		>
 
-    <div class="hero-shell">
-      <header class="site-header">
-        <a class="brand" href="/" aria-label="doKina.sk — domov">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <span>doKina<span>.sk</span></span>
-        </a>
-        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Zapnúť tmavý režim" aria-pressed="false">
-          <svg class="theme-icon theme-icon-sun" aria-hidden="true" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="3.5"></circle>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path>
-          </svg>
-          <svg class="theme-icon theme-icon-moon" aria-hidden="true" viewBox="0 0 24 24">
-            <path d="M20.5 15.1A8.5 8.5 0 0 1 8.9 3.5 8.5 8.5 0 1 0 20.5 15.1Z"></path>
-          </svg>
-        </button>
-      </header>
+		<div class="hero-shell">
+			<header class="site-header">
+				<a
+					class="brand"
+					href="/"
+					aria-label="doKina.sk — domov"
+				>
+					<span
+						class="brand-mark"
+						aria-hidden="true"
+					></span>
+					<span>doKina<span>.sk</span></span>
+				</a>
+				<button
+					class="theme-toggle"
+					id="theme-toggle"
+					type="button"
+					aria-label="Zapnúť tmavý režim"
+					aria-pressed="false"
+				>
+					<svg
+						class="theme-icon theme-icon-sun"
+						aria-hidden="true"
+						viewBox="0 0 24 24"
+					>
+						<circle
+							cx="12"
+							cy="12"
+							r="3.5"
+						></circle>
+						<path
+							d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"
+						></path>
+					</svg>
+					<svg
+						class="theme-icon theme-icon-moon"
+						aria-hidden="true"
+						viewBox="0 0 24 24"
+					>
+						<path
+							d="M20.5 15.1A8.5 8.5 0 0 1 8.9 3.5 8.5 8.5 0 1 0 20.5 15.1Z"
+						></path>
+					</svg>
+				</button>
+			</header>
 
-      <section class="intro" aria-label="Filmový program Bratislavy">
-        <h1 class="intro-title">Čo dnes hrajú v Bratislave?</h1>
-        <div class="freshness" id="freshness" aria-live="polite">
-          <span class="status-dot" aria-hidden="true"></span>
-          <span>Načítavam aktuálny program…</span>
-        </div>
-        <section class="filters" aria-label="Filtrovanie programu">
-          <div class="filter-group period-filter-wrap">
-            <div class="filter-heading">
-              <span>Obdobie</span>
-            </div>
-            <div class="period-filter" id="period-filter" role="group" aria-label="Vyber obdobie">
-              <button class="period-chip" type="button" data-period="all">Celý program</button>
-              <div class="date-range-filter">
-                <div class="date-field">
-                  <span>Od</span>
-                  <span class="date-picker">
-                    <input id="date-start-filter" type="hidden">
-                    <button class="date-picker-trigger" type="button" aria-label="Dátum alebo začiatok obdobia" aria-haspopup="dialog" aria-expanded="false">
-                      <span class="date-picker-value">Vyber dátum</span>
-                      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"></path></svg>
-                    </button>
-                    <span class="date-picker-popover" role="dialog" aria-label="Vyber dátum" hidden></span>
-                  </span>
-                </div>
-                <div class="date-field">
-                  <span>Do <small>voliteľné</small></span>
-                  <span class="date-picker">
-                    <input id="date-end-filter" type="hidden">
-                    <button class="date-picker-trigger" type="button" aria-label="Koniec obdobia, voliteľné" aria-haspopup="dialog" aria-expanded="false">
-                      <span class="date-picker-value">Vyber dátum</span>
-                      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"></path></svg>
-                    </button>
-                    <span class="date-picker-popover" role="dialog" aria-label="Vyber dátum" hidden></span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+			<section
+				class="intro"
+				aria-label="Filmový program Bratislavy"
+			>
+				<div
+					class="freshness"
+					id="freshness"
+					aria-live="polite"
+				>
+					<span
+						class="status-dot"
+						aria-hidden="true"
+					></span>
+					<span>Načítavam aktuálny program…</span>
+				</div>
+				<section
+					class="filters"
+					aria-label="Filtrovanie programu"
+				>
+					<div class="filter-group period-filter-wrap">
+						<div
+							class="period-filter"
+							id="period-filter"
+							role="group"
+							aria-label="Vyber obdobie"
+						>
+							<button
+								class="period-chip"
+								type="button"
+								data-period="all"
+							>
+								Celý program
+							</button>
+							<div class="date-range-filter">
+								<div class="date-field">
+									<span>Od</span>
+									<span class="date-picker">
+										<input
+											id="date-start-filter"
+											type="hidden"
+										/>
+										<button
+											class="date-picker-trigger"
+											type="button"
+											aria-label="Dátum alebo začiatok obdobia"
+											aria-haspopup="dialog"
+											aria-expanded="false"
+										>
+											<span class="date-picker-value">Vyber dátum</span>
+											<svg
+												aria-hidden="true"
+												viewBox="0 0 24 24"
+											>
+												<path
+													d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
+												></path>
+											</svg>
+										</button>
+										<span
+											class="date-picker-popover"
+											role="dialog"
+											aria-label="Vyber dátum"
+											hidden
+										></span>
+									</span>
+								</div>
+								<div class="date-field">
+									<span>Do <small>voliteľné</small></span>
+									<span class="date-picker">
+										<input
+											id="date-end-filter"
+											type="hidden"
+										/>
+										<button
+											class="date-picker-trigger"
+											type="button"
+											aria-label="Koniec obdobia, voliteľné"
+											aria-haspopup="dialog"
+											aria-expanded="false"
+										>
+											<span class="date-picker-value">Vyber dátum</span>
+											<svg
+												aria-hidden="true"
+												viewBox="0 0 24 24"
+											>
+												<path
+													d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
+												></path>
+											</svg>
+										</button>
+										<span
+											class="date-picker-popover"
+											role="dialog"
+											aria-label="Vyber dátum"
+											hidden
+										></span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
 
-          <div class="filter-group discovery-filter-wrap">
-            <div class="filter-heading">
-              <span>Objavuj</span>
-              <button class="text-button" id="reset-filters-button" type="button">Obnoviť filtre</button>
-            </div>
-            <div class="select-filters">
-              <div class="select-field">
-                <span id="cinema-label">Kiná</span>
-                <details class="filter-dropdown" id="cinema-dropdown">
-                  <summary aria-labelledby="cinema-label cinema-summary"><span id="cinema-summary">Všetky kiná</span></summary>
-                  <div class="filter-options" id="cinema-filter" role="group" aria-label="Vyber kiná"></div>
-                </details>
-              </div>
-              <div class="select-field">
-                <span id="genre-label">Žánre</span>
-                <details class="filter-dropdown" id="genre-dropdown">
-                  <summary aria-labelledby="genre-label genre-summary"><span id="genre-summary">Všetky žánre</span></summary>
-                  <div class="filter-options" id="genre-filter" role="group" aria-label="Vyber žánre"></div>
-                </details>
-              </div>
-              <label class="select-field">
-                <span>Zoradiť</span>
-                <select id="sort-filter">
-                  <option value="rating">Najlepšie hodnotené</option>
-                  <option value="year">Najnovšie filmy</option>
-                  <option value="year-oldest">Najstaršie filmy</option>
-                  <option value="soonest">Najbližšie predstavenie</option>
-                  <option value="title">Podľa názvu</option>
-                </select>
-              </label>
-            </div>
-          </div>
-        </section>
-      </section>
-    </div>
+					<div class="filter-group discovery-filter-wrap">
+						<div class="filter-heading">
+							<button
+								class="text-button"
+								id="reset-filters-button"
+								type="button"
+							>
+								Obnoviť filtre
+							</button>
+						</div>
+						<div class="select-filters">
+							<div class="select-field">
+								<span id="cinema-label">Kiná</span>
+								<details
+									class="filter-dropdown"
+									id="cinema-dropdown"
+								>
+									<summary aria-labelledby="cinema-label cinema-summary">
+										<span id="cinema-summary">Všetky kiná</span>
+									</summary>
+									<div
+										class="filter-options"
+										id="cinema-filter"
+										role="group"
+										aria-label="Vyber kiná"
+									></div>
+								</details>
+							</div>
+							<div class="select-field">
+								<span id="genre-label">Žánre</span>
+								<details
+									class="filter-dropdown"
+									id="genre-dropdown"
+								>
+									<summary aria-labelledby="genre-label genre-summary">
+										<span id="genre-summary">Všetky žánre</span>
+									</summary>
+									<div
+										class="filter-options"
+										id="genre-filter"
+										role="group"
+										aria-label="Vyber žánre"
+									></div>
+								</details>
+							</div>
+							<label class="select-field">
+								<span>Zoradiť</span>
+								<select id="sort-filter">
+									<option value="rating">Najlepšie hodnotené</option>
+									<option value="year">Najnovšie filmy</option>
+									<option value="year-oldest">Najstaršie filmy</option>
+									<option value="soonest">Najbližšie predstavenie</option>
+									<option value="title">Podľa názvu</option>
+								</select>
+							</label>
+						</div>
+					</div>
+				</section>
+			</section>
+		</div>
 
-    <main>
+		<main>
+			<section
+				class="program"
+				id="program"
+				aria-labelledby="program-heading"
+			>
+				<div class="program-heading-row">
+					<div>
+						<p
+							class="eyebrow"
+							id="selected-period-label"
+						>
+							Celý program
+						</p>
+						<h2 id="program-heading">Filmy, ktoré práve hrajú</h2>
+					</div>
+					<p
+						class="result-count"
+						id="result-count"
+						aria-live="polite"
+					></p>
+				</div>
 
-      <section class="program" id="program" aria-labelledby="program-heading">
-        <div class="program-heading-row">
-          <div>
-            <p class="eyebrow" id="selected-period-label">Celý program</p>
-            <h2 id="program-heading">Filmy, ktoré práve hrajú</h2>
-          </div>
-          <p class="result-count" id="result-count" aria-live="polite"></p>
-        </div>
+				<div
+					class="movie-grid"
+					id="movie-grid"
+					aria-live="polite"
+					aria-busy="true"
+				>
+					<div class="loading-card">
+						<span
+							class="loader"
+							aria-hidden="true"
+						></span>
+						<p>Hľadám najlepšie predstavenia…</p>
+					</div>
+				</div>
+			</section>
+		</main>
 
-        <div class="movie-grid" id="movie-grid" aria-live="polite" aria-busy="true">
-          <div class="loading-card">
-            <span class="loader" aria-hidden="true"></span>
-            <p>Hľadám najlepšie predstavenia…</p>
-          </div>
-        </div>
-      </section>
-    </main>
+		<footer>
+			<p>
+				Program sa obnovuje raz denne. Pred návštevou si čas over u
+				prevádzkovateľa kina.
+			</p>
+			<p class="source-links">
+				<a
+					href="https://www.kino-lumiere.sk/"
+					rel="noreferrer"
+					>Kino Lumière</a
+				>
+				<span aria-hidden="true">·</span>
+				<a
+					href="https://www.kfe.sk/"
+					rel="noreferrer"
+					>Kino Film Europe</a
+				>
+				<span aria-hidden="true">·</span>
+				<a
+					href="https://www.kinomladost.sk/"
+					rel="noreferrer"
+					>Kino Mladosť</a
+				>
+				<span aria-hidden="true">·</span>
+				<a
+					href="https://www.kzp.sk/podujatia/kino?place=80"
+					rel="noreferrer"
+					>Kino Lúky</a
+				>
+				<span aria-hidden="true">·</span>
+				<a
+					href="https://www.nostalgia.sk/"
+					rel="noreferrer"
+					>Kino Nostalgia</a
+				>
+				<span aria-hidden="true">·</span>
+				<a
+					href="https://edisonfilmhub.sk/"
+					rel="noreferrer"
+					>Edison Filmhub</a
+				>
+				<span aria-hidden="true">·</span>
+				<a
+					href="https://novacvernovka.eu/program"
+					rel="noreferrer"
+					>Nová Cvernovka</a
+				>
+				<span aria-hidden="true">·</span>
+				<a
+					href="https://a4.sk/events/kino-inak-sk/"
+					rel="noreferrer"
+					>A4 Kino inak</a
+				>
+				<span aria-hidden="true">·</span>
+				<a
+					href="https://www.omdbapi.com/"
+					rel="noreferrer"
+					>Hodnotenia: OMDb</a
+				>
+			</p>
+			<section
+				class="data-credits"
+				aria-label="Zdroje filmových údajov"
+			>
+				<a
+					href="https://www.themoviedb.org/"
+					rel="noreferrer"
+					><img
+						src="/tmdb-logo.svg"
+						alt="TMDB"
+						width="90"
+						height="40"
+						loading="lazy"
+				/></a>
+				<p lang="en">
+					This product uses the TMDB API but is not endorsed or certified by
+					TMDB.
+				</p>
+			</section>
+		</footer>
 
-    <footer>
-      <p>Program sa obnovuje raz denne. Pred návštevou si čas over u prevádzkovateľa kina.</p>
-      <p class="source-links">
-        <a href="https://www.kino-lumiere.sk/" rel="noreferrer">Kino Lumière</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://www.kfe.sk/" rel="noreferrer">Kino Film Europe</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://www.kinomladost.sk/" rel="noreferrer">Kino Mladosť</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://www.kzp.sk/podujatia/kino?place=80" rel="noreferrer">Kino Lúky</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://www.nostalgia.sk/" rel="noreferrer">Kino Nostalgia</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://edisonfilmhub.sk/" rel="noreferrer">Edison Filmhub</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://novacvernovka.eu/program" rel="noreferrer">Nová Cvernovka</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://a4.sk/events/kino-inak-sk/" rel="noreferrer">A4 Kino inak</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://www.omdbapi.com/" rel="noreferrer">Hodnotenia: OMDb</a>
-      </p>
-      <section class="data-credits" aria-label="Zdroje filmových údajov">
-        <a href="https://www.themoviedb.org/" rel="noreferrer"><img src="/tmdb-logo.svg" alt="TMDB" width="90" height="40" loading="lazy"></a>
-        <p lang="en">This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
-      </section>
-    </footer>
+		<dialog
+			class="movie-dialog"
+			id="movie-dialog"
+			aria-labelledby="movie-dialog-title"
+		>
+			<div class="dialog-header">
+				<div>
+					<p
+						class="movie-kicker"
+						id="movie-dialog-kicker"
+					></p>
+					<h2 id="movie-dialog-title"></h2>
+					<p
+						class="movie-meta"
+						id="movie-dialog-meta"
+					></p>
+				</div>
+				<button
+					class="dialog-close"
+					type="button"
+					aria-label="Zavrieť detail filmu"
+				>
+					×
+				</button>
+			</div>
+			<div class="dialog-screenings">
+				<h3>Termíny premietania</h3>
+				<div
+					class="showtime-groups"
+					id="movie-dialog-showtimes"
+				></div>
+				<section
+					class="dialog-overview"
+					id="movie-dialog-overview"
+					hidden
+					aria-labelledby="movie-dialog-overview-heading"
+				>
+					<h3 id="movie-dialog-overview-heading">O filme</h3>
+					<p id="movie-dialog-overview-text"></p>
+				</section>
+			</div>
+		</dialog>
 
-    <dialog class="movie-dialog" id="movie-dialog" aria-labelledby="movie-dialog-title">
-      <div class="dialog-header">
-        <div>
-          <p class="movie-kicker" id="movie-dialog-kicker"></p>
-          <h2 id="movie-dialog-title"></h2>
-          <p class="movie-meta" id="movie-dialog-meta"></p>
-        </div>
-        <button class="dialog-close" type="button" aria-label="Zavrieť detail filmu">×</button>
-      </div>
-      <div class="dialog-screenings">
-        <h3>Termíny premietania</h3>
-        <div class="showtime-groups" id="movie-dialog-showtimes"></div>
-        <section class="dialog-overview" id="movie-dialog-overview" hidden aria-labelledby="movie-dialog-overview-heading">
-          <h3 id="movie-dialog-overview-heading">O filme</h3>
-          <p id="movie-dialog-overview-text"></p>
-        </section>
-      </div>
-    </dialog>
-
-    <template id="movie-card-template">
-      <article class="movie-card">
-        <div class="poster-wrap">
-          <img class="poster" alt="" loading="lazy" width="320" height="480">
-          <div class="poster-fallback" aria-hidden="true"><span></span></div>
-          <a class="imdb-rating" target="_blank" rel="noreferrer"></a>
-        </div>
-        <div class="movie-content">
-          <div class="movie-copy">
-            <p class="movie-kicker"></p>
-            <h3></h3>
-            <p class="movie-meta"></p>
-          </div>
-          <p class="screening-count"></p>
-        </div>
-      </article>
-    </template>
-  </body>
+		<template id="movie-card-template">
+			<article class="movie-card">
+				<div class="poster-wrap">
+					<img
+						class="poster"
+						alt=""
+						loading="lazy"
+						width="320"
+						height="480"
+					/>
+					<div
+						class="poster-fallback"
+						aria-hidden="true"
+					>
+						<span></span>
+					</div>
+					<a
+						class="imdb-rating"
+						target="_blank"
+						rel="noreferrer"
+					></a>
+				</div>
+				<div class="movie-content">
+					<div class="movie-copy">
+						<p class="movie-kicker"></p>
+						<h3></h3>
+						<p class="movie-meta"></p>
+					</div>
+					<p class="screening-count"></p>
+				</div>
+			</article>
+		</template>
+	</body>
 </html>
