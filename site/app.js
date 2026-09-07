@@ -1,3 +1,5 @@
+import { formatDuration } from "./formatters.js";
+
 const state = {
   program: null,
   selectedPeriod: "all",
@@ -21,6 +23,9 @@ const elements = {
   dialogOverview: document.querySelector("#movie-dialog-overview"),
   dialogOverviewText: document.querySelector("#movie-dialog-overview-text"),
   dialogOverviewHeading: document.querySelector("#movie-dialog-overview-heading"),
+  dialogScrollbar: document.querySelector(".dialog-scrollbar"),
+  dialogScrollbarThumb: document.querySelector(".dialog-scrollbar-thumb"),
+  dialogScreenings: document.querySelector(".dialog-screenings"),
   dialogShowtimes: document.querySelector("#movie-dialog-showtimes"),
   dialogTitle: document.querySelector("#movie-dialog-title"),
   freshness: document.querySelector("#freshness"),
@@ -28,6 +33,8 @@ const elements = {
   genreDropdown: document.querySelector("#genre-dropdown"),
   genreSummary: document.querySelector("#genre-summary"),
   movieGrid: document.querySelector("#movie-grid"),
+  pageScrollbar: document.querySelector(".page-scrollbar"),
+  pageScrollbarThumb: document.querySelector(".page-scrollbar-thumb"),
   periodFilter: document.querySelector("#period-filter"),
   resetFiltersButton: document.querySelector("#reset-filters-button"),
   resultCount: document.querySelector("#result-count"),
@@ -39,6 +46,146 @@ const elements = {
 };
 
 const datePickers = new Map();
+let updateDialogScrollbar = () => {};
+
+function setupPageScrollbar() {
+  const track = elements.pageScrollbar;
+  const thumb = elements.pageScrollbarThumb;
+  const minimumThumbHeight = 36;
+  let isDragging = false;
+
+  function measurements() {
+    const viewportHeight = document.documentElement.clientHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const maximumScroll = Math.max(0, documentHeight - viewportHeight);
+    const thumbHeight = Math.max(minimumThumbHeight, viewportHeight * viewportHeight / documentHeight);
+    const thumbTravel = Math.max(0, viewportHeight - thumbHeight);
+    return { maximumScroll, thumbHeight, thumbTravel, viewportHeight };
+  }
+
+  function update() {
+    if (isDragging) return;
+    const { maximumScroll, thumbHeight, thumbTravel } = measurements();
+    track.hidden = maximumScroll === 0;
+    if (maximumScroll === 0) return;
+    const thumbTop = window.scrollY / maximumScroll * thumbTravel;
+    thumb.style.height = `${thumbHeight}px`;
+    thumb.style.transform = `translateY(${thumbTop}px)`;
+  }
+
+  thumb.addEventListener("pointerdown", (event) => {
+    const startY = event.clientY;
+    const startThumbTop = thumb.getBoundingClientRect().top;
+    isDragging = true;
+    document.documentElement.classList.add("is-dragging-scrollbar");
+    thumb.setPointerCapture(event.pointerId);
+    event.preventDefault();
+
+    function drag(pointerEvent) {
+      const { maximumScroll, thumbTravel } = measurements();
+      if (thumbTravel === 0) return;
+      const thumbTop = Math.min(thumbTravel, Math.max(0, startThumbTop + pointerEvent.clientY - startY));
+      thumb.style.transform = `translateY(${thumbTop}px)`;
+      window.scrollTo(0, thumbTop / thumbTravel * maximumScroll);
+    }
+
+    function stop(pointerEvent) {
+      isDragging = false;
+      document.documentElement.classList.remove("is-dragging-scrollbar");
+      thumb.releasePointerCapture(pointerEvent.pointerId);
+      thumb.removeEventListener("pointermove", drag);
+      thumb.removeEventListener("pointerup", stop);
+      thumb.removeEventListener("pointercancel", stop);
+      update();
+    }
+
+    thumb.addEventListener("pointermove", drag);
+    thumb.addEventListener("pointerup", stop);
+    thumb.addEventListener("pointercancel", stop);
+  });
+
+  track.addEventListener("pointerdown", (event) => {
+    if (event.target === thumb) return;
+    const { viewportHeight } = measurements();
+    const thumbBounds = thumb.getBoundingClientRect();
+    const direction = event.clientY < thumbBounds.top ? -1 : 1;
+    window.scrollBy({ top: direction * viewportHeight * 0.85, behavior: "smooth" });
+  });
+
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+  new ResizeObserver(update).observe(document.body);
+  update();
+}
+
+function setupDialogScrollbar() {
+  const scroller = elements.dialogScreenings;
+  const track = elements.dialogScrollbar;
+  const thumb = elements.dialogScrollbarThumb;
+  const minimumThumbHeight = 36;
+  let isDragging = false;
+
+  function measurements() {
+    const viewportHeight = scroller.clientHeight;
+    const contentHeight = scroller.scrollHeight;
+    const maximumScroll = Math.max(0, contentHeight - viewportHeight);
+    const thumbHeight = Math.max(minimumThumbHeight, viewportHeight * viewportHeight / contentHeight);
+    const thumbTravel = Math.max(0, viewportHeight - thumbHeight);
+    return { maximumScroll, thumbHeight, thumbTravel, viewportHeight };
+  }
+
+  updateDialogScrollbar = () => {
+    if (isDragging) return;
+    const { maximumScroll, thumbHeight, thumbTravel, viewportHeight } = measurements();
+    track.hidden = maximumScroll === 0;
+    if (maximumScroll === 0) return;
+    track.style.top = `${scroller.offsetTop}px`;
+    track.style.height = `${viewportHeight}px`;
+    thumb.style.height = `${thumbHeight}px`;
+    thumb.style.transform = `translateY(${scroller.scrollTop / maximumScroll * thumbTravel}px)`;
+  };
+
+  thumb.addEventListener("pointerdown", (event) => {
+    const startY = event.clientY;
+    const startThumbTop = thumb.getBoundingClientRect().top - track.getBoundingClientRect().top;
+    isDragging = true;
+    thumb.setPointerCapture(event.pointerId);
+    event.preventDefault();
+
+    function drag(pointerEvent) {
+      const { maximumScroll, thumbTravel } = measurements();
+      if (thumbTravel === 0) return;
+      const thumbTop = Math.min(thumbTravel, Math.max(0, startThumbTop + pointerEvent.clientY - startY));
+      thumb.style.transform = `translateY(${thumbTop}px)`;
+      scroller.scrollTop = thumbTop / thumbTravel * maximumScroll;
+    }
+
+    function stop(pointerEvent) {
+      isDragging = false;
+      thumb.releasePointerCapture(pointerEvent.pointerId);
+      thumb.removeEventListener("pointermove", drag);
+      thumb.removeEventListener("pointerup", stop);
+      thumb.removeEventListener("pointercancel", stop);
+      updateDialogScrollbar();
+    }
+
+    thumb.addEventListener("pointermove", drag);
+    thumb.addEventListener("pointerup", stop);
+    thumb.addEventListener("pointercancel", stop);
+  });
+
+  track.addEventListener("pointerdown", (event) => {
+    if (event.target === thumb) return;
+    const { viewportHeight } = measurements();
+    const thumbBounds = thumb.getBoundingClientRect();
+    const direction = event.clientY < thumbBounds.top ? -1 : 1;
+    scroller.scrollBy({ top: direction * viewportHeight * 0.85, behavior: "smooth" });
+  });
+
+  scroller.addEventListener("scroll", updateDialogScrollbar, { passive: true });
+  window.addEventListener("resize", updateDialogScrollbar);
+  new ResizeObserver(updateDialogScrollbar).observe(scroller);
+}
 
 function applyTheme(theme, persist = false) {
   const isDark = theme === "dark";
@@ -50,6 +197,8 @@ function applyTheme(theme, persist = false) {
 }
 
 applyTheme(document.documentElement.dataset.theme || "dark");
+setupPageScrollbar();
+setupDialogScrollbar();
 
 const dateKey = (value) => value.slice(0, 10);
 const timeValue = (value) => value.slice(11, 16);
@@ -382,7 +531,7 @@ function showtimeElement(screening) {
 function movieMeta(movie) {
   return [
     movie.directors?.length ? `Réžia: ${movie.directors.join(", ")}` : null,
-    movie.durationMinutes ? `${movie.durationMinutes} min` : null,
+    movie.durationMinutes ? formatDuration(movie.durationMinutes) : null,
     movie.releaseYear || null,
     (movie.originalTitle || movie.englishTitle) !== movie.title ? (movie.originalTitle || movie.englishTitle) : null,
   ].filter(Boolean).join(" · ");
@@ -426,9 +575,11 @@ function openMovieDialog(movie, screenings, cinemaMap) {
   elements.dialogOverviewHeading.textContent = movie.overviewLanguage === "en" ? "O filme · anglicky"
     : movie.overviewLanguage === "cs" ? "O filme · česky" : "O filme";
   renderShowtimes(screenings, cinemaMap, elements.dialogShowtimes);
+  elements.dialogScreenings.scrollTop = 0;
   if (typeof elements.dialog.showModal === "function") elements.dialog.showModal();
   else elements.dialog.setAttribute("open", "");
   document.body.classList.add("has-open-dialog");
+  requestAnimationFrame(updateDialogScrollbar);
 }
 
 function closeMovieDialog() {
