@@ -32,6 +32,7 @@ Web bude dostupný na `http://127.0.0.1:4173`.
 ## Príkazy
 
 - `npm run scrape` — načíta programy a prepíše `site/program.json`.
+- `npm run audit:duplicates` — vypíše podozrivé dvojice filmov a dôvody zlúčenia alebo ponechania na kontrolu; dáta nemení.
 - `npm test` — spustí parser testy nad lokálnymi fixtures bez siete.
 - `npm run check` — skontroluje syntax hlavných JavaScript súborov.
 - `npm run build` — overí dáta a pripraví priečinok `dist/`.
@@ -45,35 +46,20 @@ V GitHub repozitári treba nastaviť Actions secret `DOKINACLOUDFLARE`
 s API tokenom pre nasadenie. Cloudflare account ID je nesenzitívna hodnota
 uvedená priamo vo workflow.
 
-Voliteľné IMDb hodnotenia sa získavajú cez OMDb a ukladajú do cache. Na ich
-zapnutie pridaj GitHub Actions secret `OMDB_API_KEY`. Bez neho scraper aj web
-fungujú ďalej a zachovajú dostupné hodnotenia z predchádzajúceho programu
-alebo lokálnej cache; nové hodnotenia bez kľúča nezískajú. Pri lokálnom spustení
-scraper načíta kľúč aj zo súboru `.env` v koreňovom priečinku projektu
-(`OMDB_API_KEY=...`), ktorý je vylúčený z Gitu. Bezplatný OMDb kľúč má denný limit
-1 000 požiadaviek a jeho obsah je dostupný pod licenciou CC BY-NC 4.0.
-Kino Mladosť sa dopĺňa z detailu filmu.
-Ak zdroj originálny názov neposkytne, presná zhoda slovenského alebo českého
-názvu a roku sa cez Wikidata prevedie na IMDb ID.
-Pri Lumière sa najskôr skúsi anglický názov z oficiálnej anglickej verzie programu;
-slovenský názov zostáva zobrazený na karte filmu.
-
-Pre spoľahlivejšie párovanie lokalizovaných názvov pridaj aj `TMDB_API_KEY`
-do lokálneho `.env` a GitHub Actions secrets. Ide o API kľúč (v3) z
+Voliteľné plagáty, hodnotenia a filmové metadáta sa získavajú cez TMDB a ukladajú
+do cache. Na ich zapnutie pridaj `TMDB_API_KEY` do lokálneho `.env` a GitHub
+Actions secrets. Ide o API kľúč (v3) z
 [nastavení TMDB](https://www.themoviedb.org/settings/api), nie prihlasovacie heslo.
 Kľúče zostávajú iba v scrapere; do statického webu sa nezapisujú.
-TMDB sa používa na vyhľadanie IMDb ID a doplnenie metadát podľa pôvodných,
-slovenských a alternatívnych názvov. Overuje sa názov, dostupný rok (±1 rok),
-réžia a dĺžka; viacero zhodných filmov sa automaticky nepáruje.
-Hodnotenie naďalej pochádza z OMDb. Existujúce hodnotenia sa pri výpadku zachovajú.
-Po zapnutí TMDB alebo doplnení metadát sa staré neúspešné vyhľadávania zopakujú
-bez čakania na sedemdňovú cache. Staré IMDb ID bez hodnotenia sa znovu preveria.
-Bez TMDB kľúča zostáva dostupné vyhľadávanie cez OMDb a Wikidata.
-OMDb dopĺňa aj chýbajúcu réžiu, anglický názov, rok, dĺžku a krátky anglický
-popis. TMDB pridáva pôvodný názov, réžiu, rok, dĺžku a popis s prednosťou
-slovenčiny, potom češtiny a angličtiny. Metadáta z TMDB sa získajú aj bez OMDb
-kľúča alebo pri výpadku OMDb. Existujúce údaje kina sa neprepisujú a stará
-cache iba s hodnoteniami sa automaticky doplní pri najbližšom obnovení.
+TMDB sa páruje podľa pôvodných, slovenských a alternatívnych názvov; overuje sa
+dostupný rok (±1 rok), réžia a dĺžka. Viacero zhodných filmov sa automaticky
+nepáruje. Dopĺňa TMDB a IMDb ID, hodnotenie, počet hlasov, pôvodný názov, réžiu,
+rok, dĺžku a popis s prednosťou slovenčiny, potom češtiny a angličtiny.
+Existujúce údaje kina sa neprepisujú. Plagát kina má prednosť; ak chýba, TMDB
+vyberie najlepšie hodnotený plagát v poradí slovenčina, čeština, bez textu a
+angličtina. Cache úspešných zhôd sa obnovuje denne a neúspešné zhody raz za
+sedem dní. Bez TMDB kľúča scraper aj web fungujú ďalej so zachovanými údajmi
+z predchádzajúceho programu alebo lokálnej cache.
 Detail filmu zobrazuje sekciu „O filme“ nad termínmi; ak popis chýba, sekcia
 sa nezobrazuje. Český a anglický popis majú označený jazyk.
 Potvrdené výnimky pri chýbajúcich metadátach sú v `scraper/movie-identities.mjs`:
@@ -89,14 +75,28 @@ Token potrebuje oprávnenie nasadiť Cloudflare Worker. Projekt sa nasadzuje ako
 `site/program.json` obsahuje čas vytvorenia, stav zdrojov, kiná, filmy a predstavenia. Časy sú uložené ako ISO 8601 s bratislavským UTC offsetom. Identifikátory predstavení sú odvodené zo zdrojových ID, aby boli stabilné medzi obnoveniami.
 
 Pri zostavení programu sa filmy spájajú podľa normalizovaných slovenských,
-originálnych a anglických názvov; po doplnení hodnotení aj podľa IMDb ID.
+originálnych a anglických názvov; po doplnení metadát aj podľa IMDb a TMDB ID.
 Normalizácia ignoruje veľkosť písmen, diakritiku, interpunkciu a známe prípony
 predstavení. Preklep v jednom písmene pri názve s aspoň šiestimi znakmi sa
 akceptuje iba pri rovnakom roku a zhodnej réžii alebo dĺžke (rozdiel do 2 minút).
-Rozporné IMDb ID, roky, režiséri alebo dĺžky s rozdielom nad 5 minút spájanie
-zablokujú. Nejednoznačné zhody zostávajú oddelené. Najúplnejší záznam dodá
+Zhodné TMDB ID umožňuje spárovať aj odlišné názvy. Rozporné IMDb/TMDB ID,
+roky, režiséri alebo dĺžky s rozdielom nad 5 minút spájanie zablokujú.
+Výnimka pre rok výroby verzus lokálnej premiéry povoľuje rozdiel presne jedného
+roka, iba ak sa zhoduje normalizovaný názov, réžia aj dĺžka (do 2 minút).
+Samotný podobný názov na túto výnimku nestačí. Konfliktné databázové ID
+zostávajú prekážkou. Nejednoznačné zhody zostávajú oddelené. Najúplnejší záznam dodá
 názov a ID, ostatné doplnia chýbajúce údaje a žánre. Všetky predstavenia,
 ich pôvodné ID a odkazy na vstupenky zostávajú zachované.
+
+Audit používa rovnaké pravidlá a skupiny ako scraper. `ZLÚČIŤ` znamená, že
+deduplikácia dvojicu spojí; `PREVERIŤ` označuje konflikt metadát, nedostatok
+dôkazov alebo nejednoznačnú skupinu. Vypíše zdroje, roky, ID a konkrétne
+konfliktné polia. Ani podozrivá dvojica nemusí byť duplicita (napríklad
+film a sprievodné podujatie). Na audit stiahnutých produkčných dát použi
+`npm run audit:duplicates -- cesta/program.json`; pre strojový JSON výstup
+`node scripts/audit-duplicates.mjs cesta/program.json --json`.
+Automatický refresh ukladá report zostávajúcich kandidátov do
+`duplicate-audit.json` spolu s programom v diagnostickom artefakte `program-json`.
 
 ## Údržba parserov
 

@@ -250,8 +250,11 @@ function availableDateBounds() {
 
 function periodBounds() {
   const { start, end } = availableDateBounds();
-  if (state.selectedPeriod === "custom" && state.selectedDateStart) {
-    return { start: state.selectedDateStart, end: state.selectedDateEnd || state.selectedDateStart };
+  if (state.selectedPeriod === "custom") {
+    return {
+      start: state.selectedDateStart || start,
+      end: state.selectedDateEnd || end,
+    };
   }
   return { start, end };
 }
@@ -371,7 +374,7 @@ function setupDatePicker(input) {
   popover.addEventListener("click", (event) => {
     const day = event.target.closest("[data-date]");
     if (day && !day.disabled) {
-      input.value = day.dataset.date;
+      input.value = input.value === day.dataset.date ? "" : day.dataset.date;
       input.dispatchEvent(new Event("change", { bubbles: true }));
       closeDatePickers();
       trigger.focus();
@@ -405,6 +408,8 @@ function setupDatePickers() {
 function periodLabel() {
   const { start, end } = periodBounds();
   if (state.selectedPeriod === "custom") {
+    if (!state.selectedDateStart) return `Do ${formatDay(end, "long")}`;
+    if (!state.selectedDateEnd) return `Od ${formatDay(start, "long")}`;
     if (start === end) return start === localToday() ? "Dnes" : formatDay(start, "long");
     return `${formatDay(start, "long")} – ${formatDay(end, "long")}`;
   }
@@ -602,7 +607,7 @@ function renderMovie(movie, screenings, cinemaMap) {
   const fragment = elements.template.content.cloneNode(true);
   const card = fragment.querySelector(".movie-card");
   const poster = fragment.querySelector(".poster");
-  const imdbRating = fragment.querySelector(".imdb-rating");
+  const tmdbRating = fragment.querySelector(".tmdb-rating");
   const screeningCount = fragment.querySelector(".screening-count");
 
   fragment.querySelector("h3").textContent = movie.title;
@@ -617,13 +622,13 @@ function renderMovie(movie, screenings, cinemaMap) {
     poster.alt = `Plagát filmu ${movie.title}`;
     poster.addEventListener("error", () => poster.classList.add("is-broken"));
   }
-  if (movie.imdbId && Number.isFinite(movie.imdbRating)) {
-    imdbRating.href = `https://www.imdb.com/title/${movie.imdbId}/`;
-    imdbRating.textContent = `IMDb ★ ${movie.imdbRating.toFixed(1)}`;
-    imdbRating.title = movie.imdbVotes
-      ? `IMDb hodnotenie z ${movie.imdbVotes.toLocaleString("sk-SK")} hlasov`
-      : "IMDb hodnotenie";
-    imdbRating.setAttribute("aria-label", `${movie.title}: IMDb hodnotenie ${movie.imdbRating.toFixed(1)} z 10`);
+  if (movie.tmdbId && Number.isFinite(movie.tmdbRating)) {
+    tmdbRating.href = `https://www.themoviedb.org/movie/${movie.tmdbId}`;
+    tmdbRating.textContent = `TMDB ★ ${movie.tmdbRating.toFixed(1)}`;
+    tmdbRating.title = movie.tmdbVotes
+      ? `TMDB hodnotenie z ${movie.tmdbVotes.toLocaleString("sk-SK")} hlasov`
+      : "TMDB hodnotenie";
+    tmdbRating.setAttribute("aria-label", `${movie.title}: TMDB hodnotenie ${movie.tmdbRating.toFixed(1)} z 10`);
   }
 
   card.dataset.movieId = movie.id;
@@ -680,8 +685,8 @@ function renderProgram() {
     .filter(({ movie }) => movie)
     .sort((a, b) => {
       if (state.sortBy === "rating" || state.sortBy === "cult") {
-        const ratingA = Number.isFinite(a.movie.imdbRating) ? a.movie.imdbRating : -1;
-        const ratingB = Number.isFinite(b.movie.imdbRating) ? b.movie.imdbRating : -1;
+        const ratingA = Number.isFinite(a.movie.tmdbRating) ? a.movie.tmdbRating : -1;
+        const ratingB = Number.isFinite(b.movie.tmdbRating) ? b.movie.tmdbRating : -1;
         return ratingB - ratingA || a.movie.title.localeCompare(b.movie.title, "sk");
       }
       if (state.sortBy === "added") {
@@ -739,8 +744,8 @@ function registerProgramTool() {
         type: "object",
         properties: {
           period: { type: "string", enum: ["all", "custom"], description: "Celý program alebo vlastné obdobie." },
-          startDate: { type: "string", description: "Jeden dátum alebo začiatok rozsahu vo formáte RRRR-MM-DD." },
-          endDate: { type: "string", description: "Voliteľný koniec rozsahu vo formáte RRRR-MM-DD." },
+          startDate: { type: "string", description: "Začiatok rozsahu vo formáte RRRR-MM-DD." },
+          endDate: { type: "string", description: "Koniec rozsahu vo formáte RRRR-MM-DD." },
           cinemaIds: {
             type: "array",
             items: { type: "string", enum: [...availableCinemas] },
@@ -762,17 +767,18 @@ function registerProgramTool() {
         const datePattern = /^\d{4}-\d{2}-\d{2}$/;
         if (input.startDate !== undefined && !datePattern.test(input.startDate)) throw new Error("Neplatný počiatočný dátum.");
         if (input.endDate !== undefined && !datePattern.test(input.endDate)) throw new Error("Neplatný koncový dátum.");
-        if (input.period === "custom" && !input.startDate && !state.selectedDateStart) throw new Error("Vlastné obdobie potrebuje počiatočný dátum.");
-        if (input.endDate && !input.startDate && !state.selectedDateStart) throw new Error("Koncový dátum potrebuje počiatočný dátum.");
-        if (input.startDate && input.endDate && input.endDate < input.startDate) throw new Error("Koniec obdobia musí byť po jeho začiatku.");
+        const nextStart = input.startDate ?? state.selectedDateStart;
+        const nextEnd = input.endDate ?? state.selectedDateEnd;
+        if (input.period === "custom" && !nextStart && !nextEnd) throw new Error("Vlastné obdobie potrebuje aspoň jeden dátum.");
+        if (nextStart && nextEnd && nextEnd < nextStart) throw new Error("Koniec obdobia musí byť po jeho začiatku.");
         if (input.period === "all") {
           state.selectedPeriod = "all";
           state.selectedDateStart = "";
           state.selectedDateEnd = "";
-        } else if (input.period === "custom" || input.startDate) {
+        } else if (input.period === "custom" || input.startDate || input.endDate) {
           state.selectedPeriod = "custom";
-          state.selectedDateStart = input.startDate || state.selectedDateStart;
-          state.selectedDateEnd = input.endDate || "";
+          if (input.startDate !== undefined) state.selectedDateStart = input.startDate;
+          if (input.endDate !== undefined) state.selectedDateEnd = input.endDate;
         }
         if (input.cinemaIds) state.selectedCinemas = new Set(input.cinemaIds);
         if (input.genre) state.selectedGenres = input.genre === "all" ? new Set(availableGenres()) : new Set([input.genre]);
@@ -836,20 +842,17 @@ elements.periodFilter.addEventListener("click", (event) => {
 
 elements.dateStartFilter.addEventListener("change", () => {
   state.selectedDateStart = elements.dateStartFilter.value;
-  if (!state.selectedDateStart || (state.selectedDateEnd && state.selectedDateEnd < state.selectedDateStart)) {
+  if (state.selectedDateStart && state.selectedDateEnd && state.selectedDateEnd < state.selectedDateStart) {
     state.selectedDateEnd = "";
   }
-  state.selectedPeriod = state.selectedDateStart ? "custom" : "all";
+  state.selectedPeriod = state.selectedDateStart || state.selectedDateEnd ? "custom" : "all";
   renderPeriods();
   renderProgram();
 });
 
 elements.dateEndFilter.addEventListener("change", () => {
-  if (elements.dateEndFilter.value && !state.selectedDateStart) {
-    state.selectedDateStart = elements.dateEndFilter.value;
-  }
   state.selectedDateEnd = elements.dateEndFilter.value;
-  state.selectedPeriod = state.selectedDateStart ? "custom" : "all";
+  state.selectedPeriod = state.selectedDateStart || state.selectedDateEnd ? "custom" : "all";
   renderPeriods();
   renderProgram();
 });

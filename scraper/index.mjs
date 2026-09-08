@@ -13,7 +13,7 @@ import { fetchEdison } from "./sources/edison-filmhub.mjs";
 import { fetchNovaCvernovka } from "./sources/nova-cvernovka.mjs";
 import { fetchA4KinoInak } from "./sources/a4-kino-inak.mjs";
 import { localDateKey } from "./utils.mjs";
-import { enrichMoviesWithOmdb } from "./omdb.mjs";
+import { enrichMoviesWithTmdb } from "./tmdb.mjs";
 import { deduplicateMovies } from "./deduplicate.mjs";
 import { applyMovieHistory, readMovieHistory, writeMovieHistory } from "./movie-history.mjs";
 
@@ -103,10 +103,9 @@ async function main() {
     ...(sourceErrors.has(id) ? { error: sourceErrors.get(id) } : {}),
   }));
   let program = assembleProgram(results, generatedAt, sources);
-  program.movies = await enrichMoviesWithOmdb(program.movies, {
-    apiKey: process.env.OMDB_API_KEY,
-    tmdbApiKey: process.env.TMDB_API_KEY,
-    cachePath: process.env.OMDB_CACHE_PATH,
+  program.movies = await enrichMoviesWithTmdb(program.movies, {
+    apiKey: process.env.TMDB_API_KEY,
+    cachePath: process.env.TMDB_CACHE_PATH,
     previousMovies,
   });
   program = validateProgram(deduplicateMovies(program));

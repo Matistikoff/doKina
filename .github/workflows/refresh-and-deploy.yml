@@ -26,12 +26,12 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - name: Restore OMDb cache
+      - name: Restore TMDB cache
         uses: actions/cache@v5
         with:
-          path: .cache/omdb.json
-          key: omdb-${{ github.run_id }}
-          restore-keys: omdb-
+          path: .cache/tmdb.json
+          key: tmdb-${{ github.run_id }}
+          restore-keys: tmdb-
       - name: Restore movie history
         uses: actions/cache@v5
         with:
@@ -40,14 +40,17 @@ jobs:
           restore-keys: movie-history-
       - run: npm run scrape
         env:
-          OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+      - name: Audit possible movie duplicates
+        run: node scripts/audit-duplicates.mjs --json > duplicate-audit.json
       - run: npm run build
       - name: Save generated programme for diagnostics
         uses: actions/upload-artifact@v5
         with:
           name: program-json
-          path: site/program.json
+          path: |
+            site/program.json
+            duplicate-audit.json
           retention-days: 7
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3

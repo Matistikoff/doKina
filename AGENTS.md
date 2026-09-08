@@ -5,7 +5,7 @@
 doKina.sk aggregates Bratislava cinema listings into a static Slovak-language website.
 
 - `site/`: plain HTML, CSS, browser JavaScript, image assets, and generated `program.json`.
-- `scraper/`: data collection, normalization, schema validation, and OMDb enrichment. Cinema-specific adapters live in `scraper/sources/`; shared configuration and helpers live in `config.mjs` and `utils.mjs`.
+- `scraper/`: data collection, normalization, schema validation, and TMDB enrichment. Cinema-specific adapters live in `scraper/sources/`; shared configuration and helpers live in `config.mjs` and `utils.mjs`.
 - `scripts/`: local server and build scripts.
 - `tests/`: Node.js tests and saved HTML responses in `tests/fixtures/`.
 - `.github/workflows/`: validation and scheduled refresh/deployment. `wrangler.jsonc` configures Cloudflare Workers; `dist/` is generated output.
@@ -36,4 +36,4 @@ History uses short imperative subjects, such as `Add A4 Kino inak scraper`; foll
 
 ## Security & Configuration
 
-Keep secrets out of Git. Deployment uses the `DOKINACLOUDFLARE` Actions secret; optional ratings use `OMDB_API_KEY`. Do not commit `.env`, `.dev.vars`, caches, or build output.
+Keep secrets out of Git. Deployment uses the `DOKINACLOUDFLARE` Actions secret; optional movie metadata uses `TMDB_API_KEY`. Do not commit `.env`, `.dev.vars`, caches, or build output.

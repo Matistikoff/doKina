@@ -1647,7 +1647,7 @@
         "Kirk Jones"
       ],
       "durationMinutes": 121,
-      "ageRating": null,
+      "ageRating": "15",
       "genres": [
         "Dráma",
         "Životopisný"
@@ -1660,26 +1660,6 @@
       "imdbId": "tt31514146",
       "imdbRating": 8.4,
       "imdbVotes": 37223,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
-    },
-    {
-      "id": "movie-prisaham-ze-za-to-nemozem",
-      "source": "edison-filmhub",
-      "externalId": "prisaham-ze-za-to-nemozem",
-      "title": "PRISAHÁM, ŽE ZA TO NEMÔŽEM",
-      "englishTitle": "I SWEAR",
-      "originalTitle": "I Swear",
-      "releaseYear": "2026",
-      "directors": [
-        "Kirk Jones"
-      ],
-      "durationMinutes": 121,
-      "ageRating": "15",
-      "genres": [
-        "Dráma"
-      ],
-      "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_b0ca14171e9b65d423a2736f2d4b639895e4b58e.jpg",
-      "detailUrl": "https://edisonfilmhub.sk/filmy/prisaham-ze-za-to-nemozem",
       "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
@@ -5862,7 +5842,7 @@
       "id": "edison-filmhub-92817",
       "source": "edison-filmhub",
       "externalId": "92817",
-      "movieId": "movie-prisaham-ze-za-to-nemozem",
+      "movieId": "movie-prisaham-ze-za-to-nemozem-2025",
       "cinemaId": "edison-filmhub",
       "startsAt": "2026-09-15T16:30:00+02:00",
       "auditorium": "Malá sála",

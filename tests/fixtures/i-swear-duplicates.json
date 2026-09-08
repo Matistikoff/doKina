@@ -1,0 +1,165 @@
+{
+  "movies": [
+    {
+      "id": "movie-prisaham-ze-za-to-nemozem-2025",
+      "source": "kino-lumiere",
+      "externalId": "833886",
+      "title": "Prisahám, že za to nemôžem",
+      "englishTitle": "I Swear",
+      "originalTitle": "I Swear",
+      "releaseYear": "2025",
+      "directors": [
+        "Kirk Jones"
+      ],
+      "durationMinutes": 121,
+      "ageRating": null,
+      "genres": [
+        "Dráma",
+        "Životopisný"
+      ],
+      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/1/6/16f6cb77-5dc0-11f1-9bbd-9e966f951e90.jpg",
+      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-833886",
+      "tmdbId": 1317149,
+      "overview": "Pätnásťročnému Johnovi sa navždy zmení život, keď mu náhly nástup Tourettovho syndrómu prinesie nekontrolovateľné hlasové a telesné tiky. Kvôli tomu sa dostáva do konfliktov a izolácie. Hanba mu bráni nadväzovať vzťahy, zatiaľ čo okolitý svet jeho ochorenie takmer nepozná a nerozumie mu.",
+      "overviewLanguage": "sk",
+      "imdbId": "tt31514146",
+      "imdbRating": 8.4,
+      "imdbVotes": 37223,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+    },
+    {
+      "id": "movie-prisaham-ze-za-to-nemozem",
+      "source": "edison-filmhub",
+      "externalId": "prisaham-ze-za-to-nemozem",
+      "title": "PRISAHÁM, ŽE ZA TO NEMÔŽEM",
+      "englishTitle": "I SWEAR",
+      "originalTitle": "I Swear",
+      "releaseYear": "2026",
+      "directors": [
+        "Kirk Jones"
+      ],
+      "durationMinutes": 121,
+      "ageRating": "15",
+      "genres": [
+        "Dráma"
+      ],
+      "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_b0ca14171e9b65d423a2736f2d4b639895e4b58e.jpg",
+      "detailUrl": "https://edisonfilmhub.sk/filmy/prisaham-ze-za-to-nemozem",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+    }
+  ],
+  "screenings": [
+    {
+      "id": "kino-lumiere-5569306",
+      "source": "kino-lumiere",
+      "externalId": "5569306",
+      "movieId": "movie-prisaham-ze-za-to-nemozem-2025",
+      "cinemaId": "lumiere",
+      "startsAt": "2026-09-09T17:30:00+02:00",
+      "auditorium": null,
+      "format": [],
+      "languages": {
+        "original": [
+          "eng"
+        ],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "5,- €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=c82147df3249e83fda76ef2ffbceb4a2dbbb32597a39ae16df1dabcf"
+    },
+    {
+      "id": "kino-lumiere-5569345",
+      "source": "kino-lumiere",
+      "externalId": "5569345",
+      "movieId": "movie-prisaham-ze-za-to-nemozem-2025",
+      "cinemaId": "lumiere",
+      "startsAt": "2026-09-10T17:50:00+02:00",
+      "auditorium": null,
+      "format": [],
+      "languages": {
+        "original": [
+          "eng"
+        ],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "5,- €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=8a019ccccaab970ecf4ca3d91e9e3b23d61f229db79b810834690ea7"
+    },
+    {
+      "id": "kino-lumiere-5572480",
+      "source": "kino-lumiere",
+      "externalId": "5572480",
+      "movieId": "movie-prisaham-ze-za-to-nemozem-2025",
+      "cinemaId": "lumiere",
+      "startsAt": "2026-09-11T18:00:00+02:00",
+      "auditorium": null,
+      "format": [],
+      "languages": {
+        "original": [
+          "eng"
+        ],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "7,- €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=c222adc340a1cba08bb11faf66acf0275a84e98421bdb7fdbcab3651"
+    },
+    {
+      "id": "kino-lumiere-5572498",
+      "source": "kino-lumiere",
+      "externalId": "5572498",
+      "movieId": "movie-prisaham-ze-za-to-nemozem-2025",
+      "cinemaId": "lumiere",
+      "startsAt": "2026-09-13T17:40:00+02:00",
+      "auditorium": null,
+      "format": [],
+      "languages": {
+        "original": [
+          "eng"
+        ],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": []
+      },
+      "price": "7,- €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=6a85070e60222f6ff4e861cf26efe8d74cf95a6080d39ffce312e1fe"
+    },
+    {
+      "id": "edison-filmhub-92817",
+      "source": "edison-filmhub",
+      "externalId": "92817",
+      "movieId": "movie-prisaham-ze-za-to-nemozem",
+      "cinemaId": "edison-filmhub",
+      "startsAt": "2026-09-15T16:30:00+02:00",
+      "auditorium": "Malá sála",
+      "format": [],
+      "languages": {
+        "original": [
+          "en"
+        ],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "cs"
+        ]
+      },
+      "price": "9 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://edisonfilmhub.sk/kosik?ent_id=92817"
+    }
+  ]
+}

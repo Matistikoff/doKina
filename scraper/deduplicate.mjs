@@ -16,15 +16,6 @@ function directors(movie) {
   return (movie.directors || []).map(normalize).filter(Boolean);
 }
 
-function compatible(a, b) {
-  if (a.imdbId && b.imdbId && a.imdbId !== b.imdbId) return false;
-  if (a.releaseYear && b.releaseYear && String(a.releaseYear) !== String(b.releaseYear)) return false;
-  const ad = directors(a);
-  const bd = directors(b);
-  if (ad.length && bd.length && !ad.some((name) => bd.includes(name))) return false;
-  return !(a.durationMinutes && b.durationMinutes && Math.abs(a.durationMinutes - b.durationMinutes) > 5);
-}
-
 // Only one inserted, removed or substituted letter; never blur sequel numbers.
 function oneLetterApart(a, b) {
   if (Math.min(a.length, b.length) < 6 || Math.abs(a.length - b.length) > 1) return false;
@@ -35,21 +26,46 @@ function oneLetterApart(a, b) {
   return a.slice(i + (a.length === b.length ? 1 : 0)) === b.slice(i + 1);
 }
 
-export function moviesMatch(a, b) {
-  if (!compatible(a, b)) return false;
-  if (a.imdbId && a.imdbId === b.imdbId) return true;
+export function compareMovies(a, b) {
   const at = titles(a);
   const bt = titles(b);
-  if (at.some((title) => bt.includes(title))) return true;
+  const sameTitle = at.some((title) => bt.includes(title));
+  const similarTitle = at.some((title) => bt.some((other) => oneLetterApart(title, other)));
+  const sameImdb = Boolean(a.imdbId && a.imdbId === b.imdbId);
+  const sameTmdb = Boolean(a.tmdbId && a.tmdbId === b.tmdbId);
   const sameYear = a.releaseYear && String(a.releaseYear) === String(b.releaseYear);
-  const sameDirector = directors(a).some((name) => directors(b).includes(name));
+  const ad = directors(a);
+  const bd = directors(b);
+  const sameDirector = ad.some((name) => bd.includes(name));
   const sameDuration = a.durationMinutes && b.durationMinutes && Math.abs(a.durationMinutes - b.durationMinutes) <= 2;
-  return Boolean(sameYear && (sameDirector || sameDuration)
-    && at.some((title) => bt.some((other) => oneLetterApart(title, other))));
+  // Cinemas sometimes list the local premiere year instead of production year.
+  // Require all three independent metadata fields, never a fuzzy title alone.
+  const premiereYear = Math.abs(Number(a.releaseYear) - Number(b.releaseYear)) === 1
+    && sameTitle && sameDirector && sameDuration;
+  const conflicts = [];
+  if (a.imdbId && b.imdbId && a.imdbId !== b.imdbId) conflicts.push("imdbId");
+  if (a.tmdbId && b.tmdbId && a.tmdbId !== b.tmdbId) conflicts.push("tmdbId");
+  if (a.releaseYear && b.releaseYear && !sameYear && !premiereYear) conflicts.push("releaseYear");
+  if (ad.length && bd.length && !sameDirector) conflicts.push("directors");
+  if (a.durationMinutes && b.durationMinutes && Math.abs(a.durationMinutes - b.durationMinutes) > 5) conflicts.push("durationMinutes");
+  const reason = sameImdb ? "shared-imdb" : sameTmdb ? "shared-tmdb"
+    : premiereYear ? "title-director-duration-premiere-year"
+      : sameTitle ? "normalized-title"
+        : similarTitle && sameYear && (sameDirector || sameDuration) ? "corroborated-typo" : null;
+  return {
+    matches: Boolean(reason && conflicts.length === 0),
+    candidate: Boolean(sameTitle || similarTitle || sameImdb || sameTmdb),
+    reason,
+    conflicts,
+  };
+}
+
+export function moviesMatch(a, b) {
+  return compareMovies(a, b).matches;
 }
 
 function completeness(movie) {
-  return [movie.imdbId, movie.releaseYear, movie.originalTitle, movie.englishTitle,
+  return [movie.imdbId, movie.tmdbId, movie.releaseYear, movie.originalTitle, movie.englishTitle,
     directors(movie).length, movie.durationMinutes, movie.posterUrl].filter(Boolean).length;
 }
 
@@ -64,15 +80,15 @@ function merge(current, incoming) {
   return result;
 }
 
-export function deduplicateMovies(program) {
+function groupMovies(movies) {
   const groups = [];
   // Rich records first make missing-year matches unambiguous; ID breaks ties
   // independently of the order in which cinema responses arrive.
-  const ordered = program.movies
+  const ordered = movies
     .map((movie) => ({ ...movie, genres: normalizeGenres(movie.genres) }))
     .sort((a, b) => completeness(b) - completeness(a) || a.id.localeCompare(b.id));
   for (const movie of ordered) {
-    const candidates = groups.filter((group) => group.members.every((member) => compatible(member, movie))
+    const candidates = groups.filter((group) => group.members.every((member) => compareMovies(member, movie).conflicts.length === 0)
       && group.members.some((member) => moviesMatch(member, movie)));
     if (candidates.length === 1) {
       candidates[0].members.push(movie);
@@ -81,6 +97,40 @@ export function deduplicateMovies(program) {
       groups.push({ movie: { ...movie }, members: [movie] });
     }
   }
+  return groups;
+}
+
+export function auditMovieDuplicates(program) {
+  const groups = groupMovies(program.movies);
+  const groupById = new Map(groups.flatMap((group, index) => group.members.map((movie) => [movie.id, index])));
+  const movies = [...program.movies].sort((a, b) => a.id.localeCompare(b.id));
+  const findings = [];
+  for (let i = 0; i < movies.length; i += 1) {
+    for (let j = i + 1; j < movies.length; j += 1) {
+      const a = movies[i];
+      const b = movies[j];
+      const evidence = compareMovies(a, b);
+      if (!evidence.candidate) continue;
+      const merged = groupById.get(a.id) === groupById.get(b.id);
+      findings.push({
+        status: merged ? "merge" : "review",
+        movieIds: [a.id, b.id],
+        titles: [a.title, b.title],
+        sources: [a.source || null, b.source || null],
+        years: [a.releaseYear || null, b.releaseYear || null],
+        reason: evidence.reason || "similar-title-insufficient-evidence",
+        conflicts: evidence.conflicts,
+        ...(merged ? { canonicalId: groups[groupById.get(a.id)].movie.id }
+          : { reviewReason: evidence.conflicts.length ? "conflicting-metadata"
+            : evidence.matches ? "ambiguous-group" : "insufficient-evidence" }),
+      });
+    }
+  }
+  return findings;
+}
+
+export function deduplicateMovies(program) {
+  const groups = groupMovies(program.movies);
   const ids = new Map(groups.flatMap((group) => group.members.map((movie) => [movie.id, group.movie.id])));
   return {
     ...program,
