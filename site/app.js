@@ -1,5 +1,5 @@
 import { formatDuration } from "./formatters.js";
-import { compareMoviesByRating, preferredRating } from "./ratings.js";
+import { compareMoviesByRating } from "./ratings.js";
 
 const CULT_MOVIE_LATEST_YEAR = 2024;
 const RECENTLY_ADDED_DAYS = 7;
@@ -611,7 +611,7 @@ function renderMovie(movie, screenings, cinemaMap) {
   const fragment = elements.template.content.cloneNode(true);
   const card = fragment.querySelector(".movie-card");
   const poster = fragment.querySelector(".poster");
-  const ratingElement = fragment.querySelector(".movie-rating");
+  const ratingsElement = fragment.querySelector(".movie-ratings");
   const screeningCount = fragment.querySelector(".screening-count");
 
   fragment.querySelector("h3").textContent = movie.title;
@@ -627,22 +627,34 @@ function renderMovie(movie, screenings, cinemaMap) {
     poster.addEventListener("error", () => poster.classList.add("is-broken"));
   }
   card.dataset.movieId = movie.id;
-  const rating = preferredRating(movie);
-  if (rating) {
-    const star = document.createElement("span");
-    star.className = "rating-star";
-    star.setAttribute("aria-hidden", "true");
-    star.textContent = "★";
-    ratingElement.append(star, `${rating.percent.toLocaleString("sk-SK")} %`);
-    ratingElement.title = rating.votes
+  const ratings = [
+    { source: "ČSFD", percent: movie.csfdRating, votes: movie.csfdVotes, url: movie.csfdId ? `https://www.csfd.cz/film/${movie.csfdId}/` : null },
+    { source: "IMDb", percent: Number.isFinite(movie.imdbRating) ? movie.imdbRating * 10 : null, votes: movie.imdbVotes, url: movie.imdbId ? `https://www.imdb.com/title/${movie.imdbId}/` : null },
+  ];
+  for (const rating of ratings) {
+    const hasRating = Number.isFinite(rating.percent);
+    const percent = hasRating ? Math.round(rating.percent) : null;
+    const ratingElement = document.createElement(rating.url ? "a" : "span");
+    ratingElement.className = "movie-rating";
+    const sourceIcon = document.createElement("span");
+    sourceIcon.className = `rating-source ${rating.source === "IMDb" ? "is-imdb" : "is-csfd"}`;
+    sourceIcon.setAttribute("aria-hidden", "true");
+    sourceIcon.textContent = rating.source;
+    ratingElement.append(sourceIcon, hasRating ? `${percent.toLocaleString("sk-SK")} %` : "—");
+    ratingElement.title = !hasRating
+      ? `${rating.source}: hodnotenie nie je dostupné`
+      : rating.votes
       ? `${rating.source} hodnotenie z ${rating.votes.toLocaleString("sk-SK")} hlasov`
       : `${rating.source} hodnotenie`;
-    ratingElement.setAttribute("aria-label", `${movie.title}: ${rating.source} hodnotenie ${rating.percent} zo 100`);
-    if (rating.source === "IMDb" && movie.imdbId) {
-      ratingElement.href = `https://www.imdb.com/title/${movie.imdbId}/`;
-    } else if (rating.source === "ČSFD" && movie.csfdId) {
-      ratingElement.href = `https://www.csfd.cz/film/${movie.csfdId}/`;
+    ratingElement.setAttribute("aria-label", hasRating
+      ? `${movie.title}: ${rating.source} hodnotenie ${percent} zo 100`
+      : `${movie.title}: ${rating.source} hodnotenie nie je dostupné`);
+    if (rating.url) {
+      ratingElement.href = rating.url;
+      ratingElement.target = "_blank";
+      ratingElement.rel = "noreferrer";
     }
+    ratingsElement.append(ratingElement);
   }
   card.tabIndex = 0;
   card.setAttribute("role", "button");

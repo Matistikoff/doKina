@@ -901,6 +901,14 @@ h2 {
 	display: grid;
 }
 
+.movie-ratings {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: 6px;
+	margin-left: auto;
+}
+
 .movie-rating {
 	display: inline-flex;
 	flex: 0 0 auto;
@@ -908,7 +916,6 @@ h2 {
 	justify-content: center;
 	gap: 6px;
 	min-height: 32px;
-	margin-left: auto;
 	padding: 5px 9px;
 	border: 1px solid var(--line);
 	border-radius: 999px;
@@ -924,16 +931,36 @@ h2 {
 		border-color 160ms ease;
 }
 
-.rating-star {
-	color: var(--accent-deep);
-	font-size: 0.85rem;
+.rating-source {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 30px;
+	height: 18px;
+	padding: 0 4px;
+	border-radius: 3px;
+	font-family: Arial, sans-serif;
+	font-size: 0.6rem;
+	font-weight: 900;
+	line-height: 1;
+	letter-spacing: -0.04em;
+}
+
+.rating-source.is-imdb {
+	background: #f5c518;
+	color: #181817;
+}
+
+.rating-source.is-csfd {
+	background: #b52424;
+	color: #fff;
 }
 
 .movie-rating:empty {
 	display: none;
 }
 
-.movie-rating:hover,
+.movie-rating[href]:hover,
 .movie-rating:focus-visible {
 	border-color: var(--accent-deep);
 	background: color-mix(in srgb, var(--accent-deep) 12%, transparent);
