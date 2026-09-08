@@ -44,7 +44,7 @@ function posterUrl(path) {
 
 export function selectPoster(detail) {
   const posters = Array.isArray(detail.images?.posters) ? detail.images.posters : [];
-  for (const language of ["sk", "cs", "en", null]) {
+  for (const language of [null, "sk", "cs", "en"]) {
     const candidate = posters.filter((poster) => poster.iso_639_1 === language && posterUrl(poster.file_path))
       .sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0)
         || (b.vote_average || 0) - (a.vote_average || 0)
@@ -83,7 +83,7 @@ export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
     const detail = await request(`movie/${candidate.id}`, {
       language: "sk-SK",
       append_to_response: "alternative_titles,credits,translations,images",
-      include_image_language: "sk,cs,en,null",
+      include_image_language: "null,sk,cs,en",
     }, apiKey);
     if (detail.id !== candidate.id) throw new Error("Invalid TMDb movie response");
     const names = [candidate.title, candidate.original_title, detail.title, detail.original_title,
@@ -182,7 +182,7 @@ export async function enrichMoviesWithTmdb(movies, options = {}) {
   const now = options.now || new Date();
   const cache = await readCache(cachePath);
   movies = preserveTmdbMetadata(movies.map(applyKnownMovieIdentity), options.previousMovies || []);
-  const lookupKey = (movie) => JSON.stringify(["tmdb-v4", lookupTitles(movie), movie.releaseYear,
+  const lookupKey = (movie) => JSON.stringify(["tmdb-v5", lookupTitles(movie), movie.releaseYear,
     movie.directors, movie.durationMinutes, movie.imdbId]);
   if (!apiKey) {
     console.warn("TMDB_API_KEY is not set; using saved TMDB metadata without refreshing it.");

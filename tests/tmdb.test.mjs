@@ -70,7 +70,7 @@ test("resolves a unique localized title with IDs and poster", async () => {
   assert.equal((await resolveTmdbMovie({ title: "Nenávisť" }, "test", tmdbMock([alternate]))).tmdbId, 406);
 });
 
-test("prefers Slovak, Czech, English and language-neutral posters in that order", () => {
+test("prefers a clean language-neutral poster before localized posters", () => {
   const posters = [
     { file_path: "/en.jpg", iso_639_1: "en", vote_count: 100 },
     { file_path: "/neutral.jpg", iso_639_1: null, vote_count: 100 },
@@ -78,13 +78,13 @@ test("prefers Slovak, Czech, English and language-neutral posters in that order"
     { file_path: "/sk-low.jpg", iso_639_1: "sk", vote_count: 1, vote_average: 5 },
     { file_path: "/sk-best.jpg", iso_639_1: "sk", vote_count: 2, vote_average: 4 },
   ];
-  assert.equal(selectPoster({ images: { posters } }), "https://image.tmdb.org/t/p/w500/sk-best.jpg");
-  assert.equal(selectPoster({ images: { posters: posters.filter((poster) => poster.iso_639_1 !== "sk") } }),
+  assert.equal(selectPoster({ images: { posters } }), "https://image.tmdb.org/t/p/w500/neutral.jpg");
+  const localized = posters.filter((poster) => poster.iso_639_1 !== null);
+  assert.equal(selectPoster({ images: { posters: localized } }), "https://image.tmdb.org/t/p/w500/sk-best.jpg");
+  assert.equal(selectPoster({ images: { posters: localized.filter((poster) => poster.iso_639_1 !== "sk") } }),
     "https://image.tmdb.org/t/p/w500/cs.jpg");
-  assert.equal(selectPoster({ images: { posters: posters.filter((poster) => !["sk", "cs"].includes(poster.iso_639_1)) } }),
+  assert.equal(selectPoster({ images: { posters: localized.filter((poster) => !["sk", "cs"].includes(poster.iso_639_1)) } }),
     "https://image.tmdb.org/t/p/w500/en.jpg");
-  assert.equal(selectPoster({ images: { posters: posters.filter((poster) => poster.iso_639_1 === null) } }),
-    "https://image.tmdb.org/t/p/w500/neutral.jpg");
   assert.equal(selectPoster({ images: { posters: [] }, poster_path: "/fallback.jpg" }),
     "https://image.tmdb.org/t/p/w500/fallback.jpg");
 });
