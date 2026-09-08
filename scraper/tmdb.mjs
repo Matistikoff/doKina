@@ -8,6 +8,7 @@ import { cleanTitle } from "./utils.mjs";
 const MATCHED_TTL_MS = 20 * 60 * 60 * 1000;
 const UNMATCHED_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
+const MAX_CAST_MEMBERS = 6;
 
 export function lookupTitles(movie) {
   return [...new Set([movie.englishTitle, movie.originalTitle, movie.title, ...(movie.alternativeTitles || [])]
@@ -43,7 +44,7 @@ function posterUrl(path) {
 
 export function selectPoster(detail) {
   const posters = Array.isArray(detail.images?.posters) ? detail.images.posters : [];
-  for (const language of ["sk", "cs", null, "en"]) {
+  for (const language of ["sk", "cs", "en", null]) {
     const candidate = posters.filter((poster) => poster.iso_639_1 === language && posterUrl(poster.file_path))
       .sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0)
         || (b.vote_average || 0) - (a.vote_average || 0)
@@ -82,7 +83,7 @@ export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
     const detail = await request(`movie/${candidate.id}`, {
       language: "sk-SK",
       append_to_response: "alternative_titles,credits,translations,images",
-      include_image_language: "sk,cs,null,en",
+      include_image_language: "sk,cs,en,null",
     }, apiKey);
     if (detail.id !== candidate.id) throw new Error("Invalid TMDb movie response");
     const names = [candidate.title, candidate.original_title, detail.title, detail.original_title,
@@ -109,6 +110,8 @@ export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
     text: metadataText(translations.find((item) => item.iso_639_1 === language && metadataText(item.data?.overview))?.data.overview)
       || (language === "sk" ? metadataText(detail.overview) : null),
   })).find((item) => item.text);
+  const actors = [...new Set((detail.credits?.cast || [])
+    .map((person) => metadataText(person.name)).filter(Boolean))].slice(0, MAX_CAST_MEMBERS);
   return {
     tmdbId: detail.id,
     ...(/^tt\d+$/.test(detail.imdb_id || "") ? { imdbId: detail.imdb_id } : {}),
@@ -119,6 +122,7 @@ export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
     durationMinutes: Number.isInteger(detail.runtime) && detail.runtime > 0 ? detail.runtime : null,
     directors: [...new Set((detail.credits?.crew || []).filter((person) => person.job === "Director")
       .map((person) => metadataText(person.name)).filter(Boolean))],
+    ...(actors.length ? { actors } : {}),
     ...(overview ? { overview: overview.text, overviewLanguage: overview.language } : {}),
   };
 }
@@ -178,7 +182,7 @@ export async function enrichMoviesWithTmdb(movies, options = {}) {
   const now = options.now || new Date();
   const cache = await readCache(cachePath);
   movies = preserveTmdbMetadata(movies.map(applyKnownMovieIdentity), options.previousMovies || []);
-  const lookupKey = (movie) => JSON.stringify(["tmdb-v2", lookupTitles(movie), movie.releaseYear,
+  const lookupKey = (movie) => JSON.stringify(["tmdb-v4", lookupTitles(movie), movie.releaseYear,
     movie.directors, movie.durationMinutes, movie.imdbId]);
   if (!apiKey) {
     console.warn("TMDB_API_KEY is not set; using saved TMDB metadata without refreshing it.");

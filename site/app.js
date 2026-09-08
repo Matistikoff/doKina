@@ -1,4 +1,5 @@
 import { formatDuration } from "./formatters.js";
+import { compareMoviesByRating, preferredRating } from "./ratings.js";
 
 const CULT_MOVIE_LATEST_YEAR = 2024;
 const RECENTLY_ADDED_DAYS = 7;
@@ -21,6 +22,7 @@ const elements = {
   dateStartFilter: document.querySelector("#date-start-filter"),
   dialog: document.querySelector("#movie-dialog"),
   dialogClose: document.querySelector("#movie-dialog .dialog-close"),
+  dialogCast: document.querySelector("#movie-dialog-cast"),
   dialogKicker: document.querySelector("#movie-dialog-kicker"),
   dialogMeta: document.querySelector("#movie-dialog-meta"),
   dialogOverview: document.querySelector("#movie-dialog-overview"),
@@ -527,18 +529,18 @@ function groupByDate(screenings) {
   return groups;
 }
 
-function showtimeElement(screening) {
-  const element = document.createElement(screening.bookingUrl && !screening.soldOut ? "a" : "span");
+function showtimeElement(screening, movie) {
+  const element = document.createElement(movie.detailUrl && !screening.soldOut ? "a" : "span");
   element.className = `showtime${screening.soldOut ? " is-sold-out" : ""}`;
   element.textContent = timeValue(screening.startsAt);
   element.title = screening.soldOut
     ? "Vypredané"
-    : [screening.auditorium, screening.format?.join(" · ")].filter(Boolean).join(" · ") || "Kúpiť vstupenky";
+    : [screening.auditorium, screening.format?.join(" · ")].filter(Boolean).join(" · ") || "Zobraziť kartu filmu";
   if (element instanceof HTMLAnchorElement) {
-    element.href = screening.bookingUrl;
+    element.href = movie.detailUrl;
     element.target = "_blank";
     element.rel = "noreferrer";
-    element.setAttribute("aria-label", `${timeValue(screening.startsAt)} — kúpiť vstupenky`);
+    element.setAttribute("aria-label", `${timeValue(screening.startsAt)} — zobraziť kartu filmu`);
   }
   return element;
 }
@@ -552,7 +554,7 @@ function movieMeta(movie) {
   ].filter(Boolean).join(" · ");
 }
 
-function renderShowtimes(screenings, cinemaMap, root) {
+function renderShowtimes(movie, screenings, cinemaMap, root) {
   root.replaceChildren();
   const byDate = groupByDate([...screenings].sort((a, b) => a.startsAt.localeCompare(b.startsAt)));
 
@@ -572,7 +574,7 @@ function renderShowtimes(screenings, cinemaMap, root) {
       label.textContent = cinemaName(cinemaMap.get(cinemaId));
       const times = document.createElement("div");
       times.className = "showtimes";
-      times.replaceChildren(...cinemaScreenings.map(showtimeElement));
+      times.replaceChildren(...cinemaScreenings.map((screening) => showtimeElement(screening, movie)));
       group.append(label, times);
       day.append(group);
     }
@@ -584,12 +586,14 @@ function openMovieDialog(movie, screenings, cinemaMap) {
   elements.dialogKicker.textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
   elements.dialogTitle.textContent = movie.title;
   elements.dialogMeta.textContent = movieMeta(movie);
+  elements.dialogCast.hidden = !movie.actors?.length;
+  elements.dialogCast.textContent = movie.actors?.length ? `Hrajú: ${movie.actors.join(", ")}` : "";
   elements.dialogOverview.hidden = !movie.overview;
   elements.dialogOverviewText.textContent = movie.overview || "";
   elements.dialogOverviewText.lang = movie.overviewLanguage || "sk";
   elements.dialogOverviewHeading.textContent = movie.overviewLanguage === "en" ? "O filme · anglicky"
     : movie.overviewLanguage === "cs" ? "O filme · česky" : "O filme";
-  renderShowtimes(screenings, cinemaMap, elements.dialogShowtimes);
+  renderShowtimes(movie, screenings, cinemaMap, elements.dialogShowtimes);
   elements.dialogScreenings.scrollTop = 0;
   if (typeof elements.dialog.showModal === "function") elements.dialog.showModal();
   else elements.dialog.setAttribute("open", "");
@@ -607,8 +611,7 @@ function renderMovie(movie, screenings, cinemaMap) {
   const fragment = elements.template.content.cloneNode(true);
   const card = fragment.querySelector(".movie-card");
   const poster = fragment.querySelector(".poster");
-  const imdbRating = fragment.querySelector(".imdb-rating");
-  const csfdRating = fragment.querySelector(".csfd-rating");
+  const ratingElement = fragment.querySelector(".movie-rating");
   const screeningCount = fragment.querySelector(".screening-count");
 
   fragment.querySelector("h3").textContent = movie.title;
@@ -623,23 +626,23 @@ function renderMovie(movie, screenings, cinemaMap) {
     poster.alt = `Plagát filmu ${movie.title}`;
     poster.addEventListener("error", () => poster.classList.add("is-broken"));
   }
-  if (movie.imdbId && Number.isFinite(movie.imdbRating)) {
-    imdbRating.href = `https://www.imdb.com/title/${movie.imdbId}/`;
-    imdbRating.textContent = `IMDb ★ ${movie.imdbRating.toFixed(1)}`;
-    imdbRating.title = movie.imdbVotes
-      ? `IMDb hodnotenie z ${movie.imdbVotes.toLocaleString("sk-SK")} hlasov`
-      : "IMDb hodnotenie";
-    imdbRating.setAttribute("aria-label", `${movie.title}: IMDb hodnotenie ${movie.imdbRating.toFixed(1)} z 10`);
-  }
-
   card.dataset.movieId = movie.id;
-  if (movie.csfdId && Number.isFinite(movie.csfdRating)) {
-    csfdRating.href = `https://www.csfd.cz/film/${movie.csfdId}/`;
-    csfdRating.textContent = `ČSFD ${movie.csfdRating.toLocaleString("sk-SK")} %`;
-    csfdRating.title = movie.csfdVotes
-      ? `ČSFD hodnotenie z ${movie.csfdVotes.toLocaleString("sk-SK")} hlasov`
-      : "ČSFD hodnotenie";
-    csfdRating.setAttribute("aria-label", `${movie.title}: ČSFD hodnotenie ${movie.csfdRating} zo 100`);
+  const rating = preferredRating(movie);
+  if (rating) {
+    const star = document.createElement("span");
+    star.className = "rating-star";
+    star.setAttribute("aria-hidden", "true");
+    star.textContent = "★";
+    ratingElement.append(star, `${rating.percent.toLocaleString("sk-SK")} %`);
+    ratingElement.title = rating.votes
+      ? `${rating.source} hodnotenie z ${rating.votes.toLocaleString("sk-SK")} hlasov`
+      : `${rating.source} hodnotenie`;
+    ratingElement.setAttribute("aria-label", `${movie.title}: ${rating.source} hodnotenie ${rating.percent} zo 100`);
+    if (rating.source === "IMDb" && movie.imdbId) {
+      ratingElement.href = `https://www.imdb.com/title/${movie.imdbId}/`;
+    } else if (rating.source === "ČSFD" && movie.csfdId) {
+      ratingElement.href = `https://www.csfd.cz/film/${movie.csfdId}/`;
+    }
   }
   card.tabIndex = 0;
   card.setAttribute("role", "button");
@@ -694,11 +697,8 @@ function renderProgram() {
     .map(([movieId, screenings]) => ({ movie: movieMap.get(movieId), screenings }))
     .filter(({ movie }) => movie)
     .sort((a, b) => {
-      if (state.sortBy === "rating" || state.sortBy === "cult" || state.sortBy === "csfd") {
-        const ratingKey = state.sortBy === "csfd" ? "csfdRating" : "imdbRating";
-        const ratingA = Number.isFinite(a.movie[ratingKey]) ? a.movie[ratingKey] : -1;
-        const ratingB = Number.isFinite(b.movie[ratingKey]) ? b.movie[ratingKey] : -1;
-        return ratingB - ratingA || a.movie.title.localeCompare(b.movie.title, "sk");
+      if (state.sortBy === "rating" || state.sortBy === "cult") {
+        return compareMoviesByRating(a.movie, b.movie);
       }
       if (state.sortBy === "added") {
         return Date.parse(b.movie.firstSeenAt) - Date.parse(a.movie.firstSeenAt)
@@ -764,7 +764,7 @@ function registerProgramTool() {
           },
           genre: { type: "string", enum: ["all", ...availableGenres], description: "Vybraný žáner alebo all." },
           genres: { type: "array", items: { type: "string", enum: [...availableGenres] }, description: "Vybrané žánre (stačí zhoda s jedným); prázdny zoznam zobrazí všetky. Má prednosť pred genre." },
-          sortBy: { type: "string", enum: ["rating", "csfd", "cult", "added", "soonest"], description: "rating zoradí podľa IMDb, csfd podľa ČSFD; cult zobrazí filmy do roku 2024 a added filmy prvýkrát zachytené za posledných 7 dní." }
+          sortBy: { type: "string", enum: ["rating", "cult", "added", "soonest"], description: "rating zoradí podľa hodnotenia zo zdroja s väčším počtom hlasov; cult zobrazí filmy do roku 2024 a added filmy prvýkrát zachytené za posledných 7 dní." }
         },
         additionalProperties: false
       },

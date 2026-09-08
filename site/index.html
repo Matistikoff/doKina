@@ -16,7 +16,7 @@
 		/>
 		<meta
 			name="description"
-			content="Filmy, ktoré práve hrajú v Bratislave. Porovnaj ich podľa IMDb hodnotenia, roku a žánru."
+			content="Filmy, ktoré práve hrajú v Bratislave. Porovnaj ich podľa hodnotenia, roku a žánru."
 		/>
 		<meta
 			property="og:title"
@@ -290,8 +290,7 @@
 							<label class="select-field">
 								<span>Zoradiť</span>
 								<select id="sort-filter">
-									<option value="rating">IMDb hodnotenie</option>
-									<option value="csfd">ČSFD hodnotenie</option>
+									<option value="rating">Najlepšie hodnotené</option>
 									<option value="cult">Kultovky</option>
 									<option value="added">Najnovšie pridané</option>
 									<option value="soonest">Najbližšie predstavenie</option>
@@ -443,6 +442,11 @@
 						class="movie-meta"
 						id="movie-dialog-meta"
 					></p>
+					<p
+						class="dialog-cast"
+						id="movie-dialog-cast"
+						hidden
+					></p>
 				</div>
 				<button
 					class="dialog-close"
@@ -492,12 +496,6 @@
 					>
 						<span></span>
 					</div>
-					<a
-						class="movie-rating imdb-rating"
-						target="_blank"
-						rel="noreferrer"
-					></a>
-					<a class="movie-rating csfd-rating" target="_blank" rel="noreferrer"></a>
 				</div>
 				<div class="movie-content">
 					<div class="movie-copy">
@@ -505,7 +503,10 @@
 						<h3></h3>
 						<p class="movie-meta"></p>
 					</div>
-					<p class="screening-count"></p>
+					<div class="movie-footer">
+						<p class="screening-count"></p>
+						<a class="movie-rating" target="_blank" rel="noreferrer"></a>
+					</div>
 				</div>
 			</article>
 		</template>

@@ -16,7 +16,11 @@ const detail = {
   vote_average: 8.5,
   vote_count: 19_000,
   poster_path: "/parasite.jpg",
-  credits: { crew: [{ job: "Director", name: "Bong Joon Ho" }] },
+  credits: {
+    crew: [{ job: "Director", name: "Bong Joon Ho" }],
+    cast: ["Song Kang-ho", "Lee Sun-kyun", "Cho Yeo-jeong", "Choi Woo-shik", "Park So-dam", "Jang Hye-jin", "Lee Jung-eun"]
+      .map((name) => ({ name })),
+  },
   translations: { translations: [
     { iso_639_1: "sk", data: { overview: "Slovenský popis." } },
     { iso_639_1: "cs", data: { overview: "Český popis." } },
@@ -38,6 +42,7 @@ test("TMDB fills missing metadata and replaces the cinema poster", async () => {
     apiKey: "test", cachePath: await cachePath(), request: tmdbRequest(detail),
   });
   assert.deepEqual(result.directors, ["Bong Joon Ho"]);
+  assert.deepEqual(result.actors, ["Song Kang-ho", "Lee Sun-kyun", "Cho Yeo-jeong", "Choi Woo-shik", "Park So-dam", "Jang Hye-jin"]);
   assert.equal(result.posterUrl, "https://image.tmdb.org/t/p/w500/parasite.jpg");
   assert.equal(result.originalTitle, "기생충");
   assert.equal(result.tmdbId, 496243);

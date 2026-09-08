@@ -19,6 +19,7 @@ export function validateProgram(program) {
     if (movie.englishTitle != null && !isString(movie.englishTitle)) errors.push(`invalid englishTitle: ${movie.englishTitle}`);
     if (movie.overview != null && !isString(movie.overview)) errors.push(`invalid overview for ${movie.id}`);
     if (movie.overviewLanguage != null && !["sk", "cs", "en"].includes(movie.overviewLanguage)) errors.push(`invalid overviewLanguage for ${movie.id}`);
+    if (movie.actors != null && (!Array.isArray(movie.actors) || !movie.actors.every(isString))) errors.push(`invalid actors for ${movie.id}`);
     if (movie.tmdbId != null && (!Number.isInteger(movie.tmdbId) || movie.tmdbId <= 0)) errors.push(`invalid tmdbId for ${movie.id}`);
     if (movie.imdbId != null && !/^tt\d+$/.test(movie.imdbId)) errors.push(`invalid imdbId: ${movie.imdbId}`);
     if (movie.imdbRating != null && (!Number.isFinite(movie.imdbRating) || movie.imdbRating < 1 || movie.imdbRating > 10)) errors.push(`invalid imdbRating: ${movie.imdbRating}`);
