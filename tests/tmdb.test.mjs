@@ -8,7 +8,9 @@ import {
   lookupTitles,
   preserveTmdbMetadata,
   resolveTmdbMovie,
+  selectBackdrop,
   selectPoster,
+  selectTrailer,
 } from "../scraper/tmdb.mjs";
 import { applyKnownMovieIdentity } from "../scraper/movie-identities.mjs";
 
@@ -22,7 +24,14 @@ const haine = {
   vote_average: 8.1,
   vote_count: 4100,
   credits: { crew: [{ job: "Director", name: "Mathieu Kassovitz" }] },
-  images: { posters: [{ file_path: "/haine-sk.jpg", iso_639_1: "sk", vote_count: 2 }] },
+  production_countries: [{ iso_3166_1: "FR", name: "France" }],
+  images: {
+    posters: [{ file_path: "/haine-sk.jpg", iso_639_1: "sk", vote_count: 2 }],
+    backdrops: [{ file_path: "/haine-backdrop.jpg", iso_639_1: null, vote_count: 5 }],
+  },
+  videos: { results: [
+    { site: "YouTube", key: "abcdefghijk", type: "Trailer", official: true, iso_639_1: "fr", size: 1080 },
+  ] },
 };
 
 test("retries an empty year-filtered search and recognizes translated titles", async () => {
@@ -65,9 +74,30 @@ test("resolves a unique localized title with IDs and poster", async () => {
   assert.equal(result.tmdbId, 406);
   assert.equal(result.imdbId, "tt0113247");
   assert.equal(result.posterUrl, "https://image.tmdb.org/t/p/w500/haine-sk.jpg");
+  assert.equal(result.backdropUrl, "https://image.tmdb.org/t/p/w1280/haine-backdrop.jpg");
+  assert.equal(result.trailerUrl, "https://www.youtube.com/watch?v=abcdefghijk");
+  assert.deepEqual(result.productionCountries, ["FR"]);
 
   const alternate = { ...haine, title: "La Haine", alternative_titles: { titles: [{ title: "Nenávisť" }] } };
   assert.equal((await resolveTmdbMovie({ title: "Nenávisť" }, "test", tmdbMock([alternate]))).tmdbId, 406);
+});
+
+test("selects a clean backdrop and an official trailer", () => {
+  const backdrops = [
+    { file_path: "/sk.jpg", iso_639_1: "sk", vote_count: 20 },
+    { file_path: "/neutral.jpg", iso_639_1: null, vote_count: 1 },
+  ];
+  assert.equal(selectBackdrop({ images: { backdrops } }), "https://image.tmdb.org/t/p/w1280/neutral.jpg");
+  assert.equal(selectBackdrop({ images: { backdrops: [] }, backdrop_path: "/fallback.jpg" }),
+    "https://image.tmdb.org/t/p/w1280/fallback.jpg");
+
+  const videos = { results: [
+    { site: "Vimeo", key: "ignored1", type: "Trailer", official: true, iso_639_1: "sk" },
+    { site: "YouTube", key: "teaser12345", type: "Teaser", official: true, iso_639_1: "sk" },
+    { site: "YouTube", key: "trailer1234", type: "Trailer", official: false, iso_639_1: "sk" },
+    { site: "YouTube", key: "official123", type: "Trailer", official: true, iso_639_1: "en" },
+  ] };
+  assert.equal(selectTrailer({ videos }), "https://www.youtube.com/watch?v=official123");
 });
 
 test("prefers a clean language-neutral poster before localized posters", () => {

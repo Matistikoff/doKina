@@ -8,6 +8,7 @@ import { cleanTitle } from "./utils.mjs";
 const MATCHED_TTL_MS = 20 * 60 * 60 * 1000;
 const UNMATCHED_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
+const BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 const MAX_CAST_MEMBERS = 6;
 
 export function lookupTitles(movie) {
@@ -42,6 +43,10 @@ function posterUrl(path) {
   return typeof path === "string" && /^\/[\w.-]+$/u.test(path) ? `${POSTER_BASE_URL}${path}` : null;
 }
 
+function backdropUrl(path) {
+  return typeof path === "string" && /^\/[\w.-]+$/u.test(path) ? `${BACKDROP_BASE_URL}${path}` : null;
+}
+
 export function selectPoster(detail) {
   const posters = Array.isArray(detail.images?.posters) ? detail.images.posters : [];
   for (const language of [null, "sk", "cs", "en"]) {
@@ -52,6 +57,36 @@ export function selectPoster(detail) {
     if (candidate) return posterUrl(candidate.file_path);
   }
   return posterUrl(detail.poster_path);
+}
+
+export function selectBackdrop(detail) {
+  const backdrops = Array.isArray(detail.images?.backdrops) ? detail.images.backdrops : [];
+  for (const language of [null, "sk", "cs", "en"]) {
+    const candidate = backdrops.filter((backdrop) => backdrop.iso_639_1 === language && backdropUrl(backdrop.file_path))
+      .sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0)
+        || (b.vote_average || 0) - (a.vote_average || 0)
+        || (b.width || 0) - (a.width || 0))[0];
+    if (candidate) return backdropUrl(candidate.file_path);
+  }
+  return backdropUrl(detail.backdrop_path);
+}
+
+export function selectTrailer(detail) {
+  const languageOrder = ["sk", "cs", "en", null];
+  const typeOrder = ["Trailer", "Teaser"];
+  const videos = (Array.isArray(detail.videos?.results) ? detail.videos.results : [])
+    .filter((video) => video.site === "YouTube" && typeOrder.includes(video.type)
+      && /^[\w-]{6,20}$/u.test(video.key || ""));
+  const selected = videos.sort((a, b) => {
+    const typeA = typeOrder.includes(a.type) ? typeOrder.indexOf(a.type) : typeOrder.length;
+    const typeB = typeOrder.includes(b.type) ? typeOrder.indexOf(b.type) : typeOrder.length;
+    const languageA = languageOrder.includes(a.iso_639_1) ? languageOrder.indexOf(a.iso_639_1) : languageOrder.length;
+    const languageB = languageOrder.includes(b.iso_639_1) ? languageOrder.indexOf(b.iso_639_1) : languageOrder.length;
+    return typeA - typeB || Number(Boolean(b.official)) - Number(Boolean(a.official))
+      || languageA - languageB || (b.size || 0) - (a.size || 0)
+      || String(b.published_at || "").localeCompare(String(a.published_at || ""));
+  })[0];
+  return selected ? `https://www.youtube.com/watch?v=${selected.key}` : null;
 }
 
 export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
@@ -82,7 +117,7 @@ export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
   for (const candidate of candidates.values()) {
     const detail = await request(`movie/${candidate.id}`, {
       language: "sk-SK",
-      append_to_response: "alternative_titles,credits,translations,images",
+      append_to_response: "alternative_titles,credits,translations,images,videos",
       include_image_language: "null,sk,cs,en",
     }, apiKey);
     if (detail.id !== candidate.id) throw new Error("Invalid TMDb movie response");
@@ -112,10 +147,14 @@ export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
   })).find((item) => item.text);
   const actors = [...new Set((detail.credits?.cast || [])
     .map((person) => metadataText(person.name)).filter(Boolean))].slice(0, MAX_CAST_MEMBERS);
+  const productionCountries = [...new Set((detail.production_countries || [])
+    .map((country) => metadataText(country.iso_3166_1)?.toUpperCase()).filter(Boolean))];
   return {
     tmdbId: detail.id,
     ...(/^tt\d+$/.test(detail.imdb_id || "") ? { imdbId: detail.imdb_id } : {}),
     posterUrl: selectPoster(detail),
+    backdropUrl: selectBackdrop(detail),
+    trailerUrl: selectTrailer(detail),
     originalTitle: metadataText(detail.original_title),
     englishTitle: metadataText(translations.find((item) => item.iso_639_1 === "en")?.data?.title),
     releaseYear: /^\d{4}-/.test(detail.release_date || "") ? detail.release_date.slice(0, 4) : null,
@@ -123,6 +162,7 @@ export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
     directors: [...new Set((detail.credits?.crew || []).filter((person) => person.job === "Director")
       .map((person) => metadataText(person.name)).filter(Boolean))],
     ...(actors.length ? { actors } : {}),
+    ...(productionCountries.length ? { productionCountries } : {}),
     ...(overview ? { overview: overview.text, overviewLanguage: overview.language } : {}),
   };
 }
@@ -182,7 +222,7 @@ export async function enrichMoviesWithTmdb(movies, options = {}) {
   const now = options.now || new Date();
   const cache = await readCache(cachePath);
   movies = preserveTmdbMetadata(movies.map(applyKnownMovieIdentity), options.previousMovies || []);
-  const lookupKey = (movie) => JSON.stringify(["tmdb-v5", lookupTitles(movie), movie.releaseYear,
+  const lookupKey = (movie) => JSON.stringify(["tmdb-v7", lookupTitles(movie), movie.releaseYear,
     movie.directors, movie.durationMinutes, movie.imdbId]);
   if (!apiKey) {
     console.warn("TMDB_API_KEY is not set; using saved TMDB metadata without refreshing it.");

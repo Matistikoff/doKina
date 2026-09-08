@@ -16,6 +16,9 @@ const detail = {
   vote_average: 8.5,
   vote_count: 19_000,
   poster_path: "/parasite.jpg",
+  backdrop_path: "/parasite-backdrop.jpg",
+  videos: { results: [{ site: "YouTube", key: "parasite123", type: "Trailer", official: true, iso_639_1: "en" }] },
+  production_countries: [{ iso_3166_1: "KR", name: "South Korea" }],
   credits: {
     crew: [{ job: "Director", name: "Bong Joon Ho" }],
     cast: ["Song Kang-ho", "Lee Sun-kyun", "Cho Yeo-jeong", "Choi Woo-shik", "Park So-dam", "Jang Hye-jin", "Lee Jung-eun"]
@@ -44,9 +47,12 @@ test("TMDB fills missing metadata and replaces the cinema poster", async () => {
   assert.deepEqual(result.directors, ["Bong Joon Ho"]);
   assert.deepEqual(result.actors, ["Song Kang-ho", "Lee Sun-kyun", "Cho Yeo-jeong", "Choi Woo-shik", "Park So-dam", "Jang Hye-jin"]);
   assert.equal(result.posterUrl, "https://image.tmdb.org/t/p/w500/parasite.jpg");
+  assert.equal(result.backdropUrl, "https://image.tmdb.org/t/p/w1280/parasite-backdrop.jpg");
+  assert.equal(result.trailerUrl, "https://www.youtube.com/watch?v=parasite123");
   assert.equal(result.originalTitle, "기생충");
   assert.equal(result.tmdbId, 496243);
   assert.equal(result.durationMinutes, 132);
+  assert.deepEqual(result.productionCountries, ["KR"]);
 });
 
 test("TMDB chooses Slovak, Czech, then English overview", async () => {

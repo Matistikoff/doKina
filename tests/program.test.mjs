@@ -29,6 +29,35 @@ test("schema validation rejects dangling movie references", () => {
   }), /unknown movieId/);
 });
 
+test("schema validation accepts ISO production countries and rejects invalid codes", () => {
+  const base = {
+    schemaVersion: 1,
+    generatedAt: "2026-09-04T10:00:00.000Z",
+    timezone: "Europe/Bratislava",
+    sources: [{}, {}],
+    cinemas: [{ id: "a" }, { id: "b" }, { id: "c" }, { id: "d" }],
+    screenings: [],
+  };
+  assert.doesNotThrow(() => validateProgram({ ...base, movies: [{ id: "film", title: "Film", productionCountries: ["SK", "CZ"] }] }));
+  assert.throws(() => validateProgram({ ...base, movies: [{ id: "film", title: "Film", productionCountries: ["Slovakia"] }] }), /invalid productionCountries/);
+});
+
+test("schema validation accepts trusted TMDB backdrop and YouTube trailer URLs", () => {
+  const base = {
+    schemaVersion: 1,
+    generatedAt: "2026-09-04T10:00:00.000Z",
+    timezone: "Europe/Bratislava",
+    sources: [{}, {}],
+    cinemas: [{ id: "a" }, { id: "b" }, { id: "c" }, { id: "d" }],
+    screenings: [],
+  };
+  assert.doesNotThrow(() => validateProgram({ ...base, movies: [{ id: "film", title: "Film",
+    backdropUrl: "https://image.tmdb.org/t/p/w1280/image.jpg",
+    trailerUrl: "https://www.youtube.com/watch?v=abcdefghijk" }] }));
+  assert.throws(() => validateProgram({ ...base, movies: [{ id: "film", title: "Film",
+    trailerUrl: "javascript:alert(1)" }] }), /invalid trailerUrl/);
+});
+
 test("assembly remaps different movie IDs to a single film", () => {
   const program = assembleProgram([
     { movies: [{ id: "movie-odysea-2026", title: "Odysea", releaseYear: "2026", durationMinutes: 172 }], screenings: [{ id: "one", movieId: "movie-odysea-2026", cinemaId: "lumiere", startsAt: "2026-09-06T18:00:00+02:00" }] },

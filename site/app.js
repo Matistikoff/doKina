@@ -1,4 +1,6 @@
 import { formatDuration } from "./formatters.js";
+import { compareMoviesByDuration, isMustWatch } from "./discovery.js";
+import { isCzSkMovie } from "./filters.js";
 import { compareMoviesByRating } from "./ratings.js";
 
 const CULT_MOVIE_LATEST_YEAR = 2024;
@@ -21,6 +23,7 @@ const elements = {
   dateEndFilter: document.querySelector("#date-end-filter"),
   dateStartFilter: document.querySelector("#date-start-filter"),
   dialog: document.querySelector("#movie-dialog"),
+  dialogBackdrop: document.querySelector("#movie-dialog-backdrop"),
   dialogClose: document.querySelector("#movie-dialog .dialog-close"),
   dialogCast: document.querySelector("#movie-dialog-cast"),
   dialogKicker: document.querySelector("#movie-dialog-kicker"),
@@ -33,11 +36,13 @@ const elements = {
   dialogScreenings: document.querySelector(".dialog-screenings"),
   dialogShowtimes: document.querySelector("#movie-dialog-showtimes"),
   dialogTitle: document.querySelector("#movie-dialog-title"),
+  dialogTrailer: document.querySelector("#movie-dialog-trailer"),
   freshness: document.querySelector("#freshness"),
   genreFilter: document.querySelector("#genre-filter"),
   genreDropdown: document.querySelector("#genre-dropdown"),
   genreSummary: document.querySelector("#genre-summary"),
   movieGrid: document.querySelector("#movie-grid"),
+  letterboxdToggle: document.querySelector("#letterboxd-toggle"),
   pageScrollbar: document.querySelector(".page-scrollbar"),
   pageScrollbarThumb: document.querySelector(".page-scrollbar-thumb"),
   periodFilter: document.querySelector("#period-filter"),
@@ -583,6 +588,9 @@ function renderShowtimes(movie, screenings, cinemaMap, root) {
 }
 
 function openMovieDialog(movie, screenings, cinemaMap) {
+  elements.dialog.classList.toggle("has-backdrop", Boolean(movie.backdropUrl));
+  elements.dialogBackdrop.hidden = !movie.backdropUrl;
+  elements.dialogBackdrop.src = movie.backdropUrl || "";
   elements.dialogKicker.textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
   elements.dialogTitle.textContent = movie.title;
   elements.dialogMeta.textContent = movieMeta(movie);
@@ -593,6 +601,9 @@ function openMovieDialog(movie, screenings, cinemaMap) {
   elements.dialogOverviewText.lang = movie.overviewLanguage || "sk";
   elements.dialogOverviewHeading.textContent = movie.overviewLanguage === "en" ? "O filme · anglicky"
     : movie.overviewLanguage === "cs" ? "O filme · česky" : "O filme";
+  elements.dialogTrailer.hidden = !movie.trailerUrl;
+  if (movie.trailerUrl) elements.dialogTrailer.href = movie.trailerUrl;
+  else elements.dialogTrailer.removeAttribute("href");
   renderShowtimes(movie, screenings, cinemaMap, elements.dialogShowtimes);
   elements.dialogScreenings.scrollTop = 0;
   if (typeof elements.dialog.showModal === "function") elements.dialog.showModal();
@@ -628,26 +639,27 @@ function renderMovie(movie, screenings, cinemaMap) {
   }
   card.dataset.movieId = movie.id;
   const ratings = [
-    { source: "ČSFD", percent: movie.csfdRating, votes: movie.csfdVotes, url: movie.csfdId ? `https://www.csfd.cz/film/${movie.csfdId}/` : null },
-    { source: "IMDb", percent: Number.isFinite(movie.imdbRating) ? movie.imdbRating * 10 : null, votes: movie.imdbVotes, url: movie.imdbId ? `https://www.imdb.com/title/${movie.imdbId}/` : null },
+    { source: "ČSFD", score: movie.csfdRating, max: 100, votes: movie.csfdVotes, url: movie.csfdId ? `https://www.csfd.cz/film/${movie.csfdId}/` : null },
+    { source: "IMDb", score: movie.imdbRating, max: 10, votes: movie.imdbVotes, url: movie.imdbId ? `https://www.imdb.com/title/${movie.imdbId}/` : null },
   ];
   for (const rating of ratings) {
-    const hasRating = Number.isFinite(rating.percent);
-    const percent = hasRating ? Math.round(rating.percent) : null;
+    if (!rating.url) continue;
+    const hasRating = Number.isFinite(rating.score);
+    const score = hasRating ? (rating.max === 10 ? rating.score.toFixed(1) : Math.round(rating.score).toLocaleString("sk-SK")) : null;
     const ratingElement = document.createElement(rating.url ? "a" : "span");
     ratingElement.className = "movie-rating";
     const sourceIcon = document.createElement("span");
     sourceIcon.className = `rating-source ${rating.source === "IMDb" ? "is-imdb" : "is-csfd"}`;
     sourceIcon.setAttribute("aria-hidden", "true");
     sourceIcon.textContent = rating.source;
-    ratingElement.append(sourceIcon, hasRating ? `${percent.toLocaleString("sk-SK")} %` : "—");
+    ratingElement.append(sourceIcon, hasRating ? `${score}${rating.max === 100 ? " %" : ""}` : "—");
     ratingElement.title = !hasRating
       ? `${rating.source}: hodnotenie nie je dostupné`
       : rating.votes
       ? `${rating.source} hodnotenie z ${rating.votes.toLocaleString("sk-SK")} hlasov`
       : `${rating.source} hodnotenie`;
     ratingElement.setAttribute("aria-label", hasRating
-      ? `${movie.title}: ${rating.source} hodnotenie ${percent} zo 100`
+      ? `${movie.title}: ${rating.source} hodnotenie ${score} z ${rating.max}`
       : `${movie.title}: ${rating.source} hodnotenie nie je dostupné`);
     if (rating.url) {
       ratingElement.href = rating.url;
@@ -679,6 +691,9 @@ function renderProgram() {
   const moviesInGenre = new Set(state.program.movies
     .filter((movie) => state.selectedGenres.size === availableGenres().length || movie.genres?.some((genre) => state.selectedGenres.has(genre)))
     .map((movie) => movie.id));
+  const czSkMovieIds = new Set(state.program.screenings
+    .filter((screening) => isCzSkMovie(movieMap.get(screening.movieId), screening))
+    .map((screening) => screening.movieId));
   const now = Date.now();
   const recentlyAddedSince = Date.parse(state.program.generatedAt) - RECENTLY_ADDED_DAYS * 86_400_000;
   const visible = state.program.screenings.filter((screening) => {
@@ -690,8 +705,10 @@ function renderProgram() {
       && date >= start && date <= end
       && state.selectedCinemas.has(screening.cinemaId)
       && moviesInGenre.has(screening.movieId)
+      && (state.sortBy !== "czSk" || czSkMovieIds.has(screening.movieId))
       && (state.sortBy !== "cult" || (Number.isFinite(releaseYear) && releaseYear <= CULT_MOVIE_LATEST_YEAR))
-      && (state.sortBy !== "added" || (Number.isFinite(firstSeenAt) && firstSeenAt >= recentlyAddedSince));
+      && (state.sortBy !== "added" || (Number.isFinite(firstSeenAt) && firstSeenAt >= recentlyAddedSince))
+      && (state.sortBy !== "mustWatch" || isMustWatch(movie));
   });
   const grouped = groupScreenings(visible);
   elements.selectedPeriodLabel.textContent = periodLabel();
@@ -709,12 +726,15 @@ function renderProgram() {
     .map(([movieId, screenings]) => ({ movie: movieMap.get(movieId), screenings }))
     .filter(({ movie }) => movie)
     .sort((a, b) => {
-      if (state.sortBy === "rating" || state.sortBy === "cult") {
+      if (["rating", "cult", "mustWatch", "czSk"].includes(state.sortBy)) {
         return compareMoviesByRating(a.movie, b.movie);
       }
       if (state.sortBy === "added") {
         return Date.parse(b.movie.firstSeenAt) - Date.parse(a.movie.firstSeenAt)
           || a.movie.title.localeCompare(b.movie.title, "sk");
+      }
+      if (state.sortBy === "shortest" || state.sortBy === "longest") {
+        return compareMoviesByDuration(a.movie, b.movie, state.sortBy);
       }
       const firstA = a.screenings.map((item) => item.startsAt).sort()[0];
       const firstB = b.screenings.map((item) => item.startsAt).sort()[0];
@@ -762,7 +782,7 @@ function registerProgramTool() {
     void Promise.resolve(context.registerTool({
       name: "filter_program",
       title: "Filtrovať program kín",
-      description: "Filtruje filmy, ktoré práve hrajú, podľa obdobia, kín a žánru a zmení ich poradie.",
+      description: "Filtruje filmy, ktoré práve hrajú, podľa obdobia, kín, žánru a krajiny výroby a zmení ich poradie.",
       inputSchema: {
         type: "object",
         properties: {
@@ -776,7 +796,7 @@ function registerProgramTool() {
           },
           genre: { type: "string", enum: ["all", ...availableGenres], description: "Vybraný žáner alebo all." },
           genres: { type: "array", items: { type: "string", enum: [...availableGenres] }, description: "Vybrané žánre (stačí zhoda s jedným); prázdny zoznam zobrazí všetky. Má prednosť pred genre." },
-          sortBy: { type: "string", enum: ["rating", "cult", "added", "soonest"], description: "rating zoradí podľa hodnotenia zo zdroja s väčším počtom hlasov; cult zobrazí filmy do roku 2024 a added filmy prvýkrát zachytené za posledných 7 dní." }
+          sortBy: { type: "string", enum: ["rating", "mustWatch", "czSk", "shortest", "longest", "cult", "added", "soonest"], description: "rating zoradí podľa hodnotenia zo zdroja s väčším počtom hlasov; mustWatch zobrazí iba filmy s IMDb hodnotením aspoň 8; czSk zobrazí české, slovenské a československé filmy zoradené podľa hodnotenia; shortest a longest zoradia podľa dĺžky; cult zobrazí filmy do roku 2024 a added filmy prvýkrát zachytené za posledných 7 dní." }
         },
         additionalProperties: false
       },
@@ -804,8 +824,8 @@ function registerProgramTool() {
           if (input.endDate !== undefined) state.selectedDateEnd = input.endDate;
         }
         if (input.cinemaIds) state.selectedCinemas = new Set(input.cinemaIds);
-        if (input.genre) state.selectedGenres = input.genre === "all" ? new Set(availableGenres()) : new Set([input.genre]);
-        if (input.genres) state.selectedGenres = input.genres.length === 0 ? new Set(availableGenres()) : new Set(input.genres);
+        if (input.genre) state.selectedGenres = input.genre === "all" ? new Set(availableGenres) : new Set([input.genre]);
+        if (input.genres) state.selectedGenres = input.genres.length === 0 ? new Set(availableGenres) : new Set(input.genres);
         if (input.sortBy) state.sortBy = input.sortBy;
         updateGenreSelection();
         elements.sortFilter.value = state.sortBy;
@@ -945,7 +965,16 @@ elements.themeToggle.addEventListener("click", () => {
   applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark", true);
 });
 
+elements.letterboxdToggle.addEventListener("click", () => {
+  const isLetterboxd = elements.movieGrid.classList.toggle("is-letterboxd");
+  elements.letterboxdToggle.setAttribute("aria-pressed", String(isLetterboxd));
+});
+
 elements.dialogClose.addEventListener("click", closeMovieDialog);
+elements.dialogBackdrop.addEventListener("error", () => {
+  elements.dialogBackdrop.hidden = true;
+  elements.dialog.classList.remove("has-backdrop");
+});
 elements.dialog.addEventListener("click", (event) => {
   if (event.target === elements.dialog) closeMovieDialog();
 });
