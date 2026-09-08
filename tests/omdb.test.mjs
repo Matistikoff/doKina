@@ -4,6 +4,23 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import test from "node:test";
 import { enrichMoviesWithOmdb, preserveMovieRatings } from "../scraper/omdb.mjs";
+import { ratingAudit } from "../scraper/rating-audit.mjs";
+
+test("uses verified ČSFD aliases and distinguishes missing rating from missing movie", async () => {
+  for (const [payload, status] of [
+    [{ Response: "True", imdbID: "tt1234", Title: "Five Plums", Year: "2026", imdbRating: "N/A" }, "rating-unavailable"],
+    [{ Response: "False", Error: "Movie not found!" }, "not-found"],
+  ]) {
+    const diagnostics = [];
+    const requests = [];
+    const result = await enrichMoviesWithOmdb([{ id: "plums", title: "Pět švestek", releaseYear: "2026", alternativeTitles: ["Five Plums"] }], {
+      apiKey: "test", cachePath: await cachePath(), diagnostics,
+      request: async (params) => { requests.push(params); return params.t === "Five Plums" ? payload : { Response: "False", Error: "Movie not found!" }; },
+    });
+    assert.ok(requests.some((params) => params.t === "Five Plums"));
+    assert.equal(ratingAudit(result, diagnostics).missingImdb[0].status, status);
+  }
+});
 
 async function cachePath() {
   return join(await mkdtemp(join(tmpdir(), "dokina-omdb-")), "omdb.json");

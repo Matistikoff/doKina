@@ -608,6 +608,7 @@ function renderMovie(movie, screenings, cinemaMap) {
   const card = fragment.querySelector(".movie-card");
   const poster = fragment.querySelector(".poster");
   const imdbRating = fragment.querySelector(".imdb-rating");
+  const csfdRating = fragment.querySelector(".csfd-rating");
   const screeningCount = fragment.querySelector(".screening-count");
 
   fragment.querySelector("h3").textContent = movie.title;
@@ -632,6 +633,14 @@ function renderMovie(movie, screenings, cinemaMap) {
   }
 
   card.dataset.movieId = movie.id;
+  if (movie.csfdId && Number.isFinite(movie.csfdRating)) {
+    csfdRating.href = `https://www.csfd.cz/film/${movie.csfdId}/`;
+    csfdRating.textContent = `ČSFD ${movie.csfdRating.toLocaleString("sk-SK")} %`;
+    csfdRating.title = movie.csfdVotes
+      ? `ČSFD hodnotenie z ${movie.csfdVotes.toLocaleString("sk-SK")} hlasov`
+      : "ČSFD hodnotenie";
+    csfdRating.setAttribute("aria-label", `${movie.title}: ČSFD hodnotenie ${movie.csfdRating} zo 100`);
+  }
   card.tabIndex = 0;
   card.setAttribute("role", "button");
   card.setAttribute("aria-label", `${movie.title} — zobraziť termíny premietania`);
@@ -640,6 +649,7 @@ function renderMovie(movie, screenings, cinemaMap) {
     openMovieDialog(movie, screenings, cinemaMap);
   });
   card.addEventListener("keydown", (event) => {
+    if (event.target.closest("a, button")) return;
     if (event.key !== "Enter" && event.key !== " ") return;
     event.preventDefault();
     openMovieDialog(movie, screenings, cinemaMap);
@@ -684,9 +694,10 @@ function renderProgram() {
     .map(([movieId, screenings]) => ({ movie: movieMap.get(movieId), screenings }))
     .filter(({ movie }) => movie)
     .sort((a, b) => {
-      if (state.sortBy === "rating" || state.sortBy === "cult") {
-        const ratingA = Number.isFinite(a.movie.imdbRating) ? a.movie.imdbRating : -1;
-        const ratingB = Number.isFinite(b.movie.imdbRating) ? b.movie.imdbRating : -1;
+      if (state.sortBy === "rating" || state.sortBy === "cult" || state.sortBy === "csfd") {
+        const ratingKey = state.sortBy === "csfd" ? "csfdRating" : "imdbRating";
+        const ratingA = Number.isFinite(a.movie[ratingKey]) ? a.movie[ratingKey] : -1;
+        const ratingB = Number.isFinite(b.movie[ratingKey]) ? b.movie[ratingKey] : -1;
         return ratingB - ratingA || a.movie.title.localeCompare(b.movie.title, "sk");
       }
       if (state.sortBy === "added") {
@@ -753,7 +764,7 @@ function registerProgramTool() {
           },
           genre: { type: "string", enum: ["all", ...availableGenres], description: "Vybraný žáner alebo all." },
           genres: { type: "array", items: { type: "string", enum: [...availableGenres] }, description: "Vybrané žánre (stačí zhoda s jedným); prázdny zoznam zobrazí všetky. Má prednosť pred genre." },
-          sortBy: { type: "string", enum: ["rating", "cult", "added", "soonest"], description: "Spôsob výberu a zoradenia filmov; cult zobrazí filmy do roku 2024 a added filmy prvýkrát zachytené za posledných 7 dní." }
+          sortBy: { type: "string", enum: ["rating", "csfd", "cult", "added", "soonest"], description: "rating zoradí podľa IMDb, csfd podľa ČSFD; cult zobrazí filmy do roku 2024 a added filmy prvýkrát zachytené za posledných 7 dní." }
         },
         additionalProperties: false
       },

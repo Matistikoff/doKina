@@ -44,6 +44,12 @@ jobs:
           path: .cache/movie-history.json
           key: movie-history-${{ github.run_id }}
           restore-keys: movie-history-
+      - name: Restore ČSFD cache
+        uses: actions/cache@v5
+        with:
+          path: .cache/csfd.json
+          key: csfd-${{ github.run_id }}
+          restore-keys: csfd-
       - run: npm run scrape
         env:
           OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
@@ -58,6 +64,8 @@ jobs:
           path: |
             site/program.json
             duplicate-audit.json
+            .cache/rating-audit.json
+          include-hidden-files: true
           retention-days: 7
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3

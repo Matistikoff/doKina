@@ -121,7 +121,17 @@
       "imdbId": "tt0074084",
       "imdbRating": 7.6,
       "imdbVotes": 28600,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 746,
+      "csfdRating": 81,
+      "csfdVotes": 773,
+      "alternativeTitles": [
+        "XX. století",
+        "Novecento",
+        "1900",
+        "1900 - Deuxième acte",
+        "Novecento (1900) - Acte I"
+      ]
     },
     {
       "id": "movie-aftersun-2022",
@@ -147,7 +157,14 @@
       "imdbId": "tt19770238",
       "imdbRating": 7.6,
       "imdbVotes": 127815,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1183879,
+      "csfdRating": 74,
+      "csfdVotes": 4270,
+      "alternativeTitles": [
+        "Aftersun",
+        "All Inclusive"
+      ]
     },
     {
       "id": "movie-ako-stvana-zver-1975",
@@ -194,7 +211,18 @@
       ],
       "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_b3d1ef7d7aff8c3432fbaeaf71b07db59b95cf19.jpg",
       "detailUrl": "https://edisonfilmhub.sk/filmy/anjelske-vajce",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 34301,
+      "csfdRating": 77,
+      "csfdVotes": 1221,
+      "alternativeTitles": [
+        "Anjelské vajce",
+        "Andělské vejce",
+        "Tenshi no Tamago",
+        "天使のたまご",
+        "Angel's Egg",
+        "Egg of God"
+      ]
     },
     {
       "id": "movie-auta-2006",
@@ -221,7 +249,15 @@
       "imdbId": "tt0317219",
       "imdbRating": 7.3,
       "imdbVotes": 528959,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 32954,
+      "csfdRating": 83,
+      "csfdVotes": 50295,
+      "alternativeTitles": [
+        "Autá",
+        "Auta",
+        "Cars"
+      ]
     },
     {
       "id": "movie-balada-o-narajame-vyrocia-100-sohei-imamura-1983",
@@ -259,7 +295,13 @@
       "directors": [
         "Hana Hendrychová"
       ],
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1700377,
+      "csfdRating": 27,
+      "csfdVotes": 302,
+      "alternativeTitles": [
+        "Bardotky"
+      ]
     },
     {
       "id": "movie-bojovnik-2026",
@@ -285,7 +327,14 @@
       "overview": "Pavel Hoffmeister alias Hoff býval mistrem Evropy a olympijským medailistou v boxu. Po letech mimo sportovní svět dostává nečekanou nabídku vrátit se do boje. Hozená rukavice, kterou zvedá, ale není boxerská. Se svým soupeřem se utká v MMA. Čekají ho nová pravidla, tvrdá příprava a protivník, který prověří jeho formu i charakter. Nejtěžší zápas ale nesvede v kleci. Bude se muset postavit hlavně sám sobě a zabojovat o ztracenou důvěru svých nejbližších.  (Bontonfilm)",
       "overviewLanguage": "sk",
       "imdbId": "tt23807030",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1693083,
+      "csfdRating": 56,
+      "csfdVotes": 403,
+      "alternativeTitles": [
+        "Bojovník",
+        "The Cursed Warrior"
+      ]
     },
     {
       "id": "movie-bugonia-2025",
@@ -308,7 +357,14 @@
       "imdbId": "tt12300742",
       "imdbRating": 7.4,
       "imdbVotes": 216094,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1499806,
+      "csfdRating": 75,
+      "csfdVotes": 6367,
+      "alternativeTitles": [
+        "Bugonia",
+        "La Bugonia"
+      ]
     },
     {
       "id": "movie-caravaggiov-tien",
@@ -336,7 +392,17 @@
       "imdbId": "tt11877386",
       "imdbRating": 6.5,
       "imdbVotes": 2069,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 929532,
+      "csfdRating": 71,
+      "csfdVotes": 367,
+      "alternativeTitles": [
+        "Caravaggiov tieň",
+        "Caravaggiův stín",
+        "L'ombra di Caravaggio",
+        "Caravage",
+        "Caravaggio's Shadow"
+      ]
     },
     {
       "id": "movie-cudzinec",
@@ -362,7 +428,16 @@
       "imdbId": "tt36243564",
       "imdbRating": 7.1,
       "imdbVotes": 3403,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1708383,
+      "csfdRating": 77,
+      "csfdVotes": 147,
+      "alternativeTitles": [
+        "Cudzinec",
+        "Cizinec",
+        "L'Étranger",
+        "The Stranger"
+      ]
     },
     {
       "id": "movie-dazdnicky-zo-cherbourgu",
@@ -390,7 +465,17 @@
       "imdbId": "tt0058450",
       "imdbRating": 7.8,
       "imdbVotes": 32696,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 22149,
+      "csfdRating": 71,
+      "csfdVotes": 565,
+      "alternativeTitles": [
+        "Dáždničky zo Cherbourgu",
+        "Paraplíčka ze Cherbourgu",
+        "Les Parapluies de Cherbourg",
+        "Die Regenschirme von Cherbourg",
+        "The Umbrellas of Cherbourg"
+      ]
     },
     {
       "id": "movie-diabol-nosi-pradu-2",
@@ -414,7 +499,16 @@
       "imdbId": "tt33612209",
       "imdbRating": 6.4,
       "imdbVotes": 87496,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1617612,
+      "csfdRating": 58,
+      "csfdVotes": 4658,
+      "alternativeTitles": [
+        "Diabol nosí Pradu 2",
+        "Ďábel nosí Pradu 2",
+        "The Devil Wears Prada 2",
+        "Cerulean"
+      ]
     },
     {
       "id": "movie-dievca-v-oblakoch",
@@ -440,7 +534,14 @@
       "overview": "Providence je desetiletá dívka, která žije v Paříži se svým strýcem Jasonem a morčetem Airbagem. Miluje knižní ságu Strážci Země. Její autor Octavius bydlí shodou okolností hned vedle – a Providence brzy zjistí, že jeho příběhy nejsou jen fikcí. Octavius totiž píše kouzelným perem, které dokáže proměnit fantazii ve skutečnost. Když se z knih nešťastnou náhodou osvobodí temná bytost Necato, původní tvůrce kouzelného pera, ocitá se v ohrožení svět fantazie i ten reálný. Spisovatle Octavius proto svěří pero Providence a vyšle ji na nebezpečnou cestu za tajemným bratrstvem, které ho může ochránit. Providence se svým mluvícím morčetem Aribagem prochází fantastickými světy a musí se rozhodnout, zda dá přednost vlastním snům, nebo zachrání skutečný svět.",
       "overviewLanguage": "sk",
       "imdbId": "tt20259240",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1835396,
+      "alternativeTitles": [
+        "Dievča v oblakoch",
+        "Dívka v oblacích",
+        "La Fille dans les nuages",
+        "Girl in the Clouds"
+      ]
     },
     {
       "id": "movie-divoch",
@@ -467,7 +568,15 @@
       "imdbId": "tt11328762",
       "imdbRating": 6.4,
       "imdbVotes": 2997,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 881949,
+      "csfdRating": 66,
+      "csfdVotes": 799,
+      "alternativeTitles": [
+        "Divoch",
+        "Vildmænd",
+        "Wild Men"
+      ]
     },
     {
       "id": "movie-dokonaly-den",
@@ -491,7 +600,14 @@
       "overview": "Anna spěchá na pracovní pohovor. Má to promyšlené, naplánované a pod kontrolou…až do chvíle, než se jí cestou pokazí auto. Anna místo kariérního vítězství končí ve vlaku, kde potká Edu. Eda vystoupí v místě, které pro něj má velký význam, a přesvědčí nic netušící Annu, aby ho následovala. Zažívají nečekaná dobrodružství, poznávají okolí i jeden druhého. Po noci plné vášně přichází ráno a s ním i vystřízlivění. Eda je krátce po rozchodu a Anna brzy odcestuje do Kanady. Je na čase se rozloučit. Jenže život má pro Annu jiné plány. V práci o ni totiž projeví velký zájem Ellis. Anna se tak poprvé v životě ocitá mezi dvěma úplně odlišnými světy…a dvěma úplně odlišnými možnostmi, kam její život může směřovat.",
       "overviewLanguage": "cs",
       "imdbId": "tt39730838",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1730041,
+      "csfdRating": 64,
+      "csfdVotes": 85,
+      "alternativeTitles": [
+        "Dokonalý deň",
+        "Dokonalý den"
+      ]
     },
     {
       "id": "movie-domaca-uroda-kavej-2-2026",
@@ -513,7 +629,13 @@
       "overview": "Keď Veronika zažije sklamanie v láske, Klára sa ju rozhodne zachrániť a vezme ju na Šíravu, kde spolu s nevestami z jednotky rozbiehajú babskú jazdu s jasným cieľom – nájsť jej nového chlapa! Zatiaľ čo dievčatá hľadajú lásku, muži sa aj s deťmi vydávajú za dobrodružstvom do lesa. Svoj vzťah sa pokúša oživiť aj Klára staršia s Bertym, no plán sa im čoskoro začne vymykať spod kontroly.",
       "overviewLanguage": "sk",
       "imdbId": "tt41974665",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1768683,
+      "csfdRating": 68,
+      "csfdVotes": 208,
+      "alternativeTitles": [
+        "Kavej 2"
+      ]
     },
     {
       "id": "movie-domaca-uroda-kuko-drobcek-a-ratafak-znovu-zasahuju-2026",
@@ -555,7 +677,15 @@
       "genres": [],
       "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787136058-8-400-300-milovnikbojovnikUVODWEB.jpg",
       "detailUrl": "https://www.kzp.sk/podujatie/domaca-uroda-milovnik-nie-bojovnik-fk-1?place=80",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1795874,
+      "csfdRating": 82,
+      "csfdVotes": 130,
+      "alternativeTitles": [
+        "Milovník, nie bojovník",
+        "Milovník, ne bojovník",
+        "Lover, Not a Fighter"
+      ]
     },
     {
       "id": "movie-draha-neznama-1980",
@@ -579,7 +709,15 @@
       "imdbId": "tt0082182",
       "imdbRating": 7.2,
       "imdbVotes": 431,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 38829,
+      "csfdRating": 82,
+      "csfdVotes": 34,
+      "alternativeTitles": [
+        "Drahá neznámá",
+        "Chère inconnue",
+        "I Sent a Letter to My Love"
+      ]
     },
     {
       "id": "movie-dunaj-1982",
@@ -628,7 +766,15 @@
       "imdbId": "tt0082416",
       "imdbRating": 6.9,
       "imdbVotes": 16224,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 13528,
+      "csfdRating": 73,
+      "csfdVotes": 1591,
+      "alternativeTitles": [
+        "Francúzova milenka",
+        "Francouzova milenka",
+        "The French Lieutenant's Woman"
+      ]
     },
     {
       "id": "movie-frida-kahlo-pribehy-umenia-2020",
@@ -679,7 +825,15 @@
       "imdbId": "tt6330052",
       "imdbRating": 6,
       "imdbVotes": 2545,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 483620,
+      "csfdRating": 66,
+      "csfdVotes": 969,
+      "alternativeTitles": [
+        "Gauguin",
+        "Gauguin - Voyage de Tahiti",
+        "Gauguin: Voyage to Tahiti"
+      ]
     },
     {
       "id": "movie-guru",
@@ -699,7 +853,14 @@
       "directors": [
         "Yann Gozlan"
       ],
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1761274,
+      "csfdRating": 65,
+      "csfdVotes": 75,
+      "alternativeTitles": [
+        "Guru",
+        "Gourou"
+      ]
     },
     {
       "id": "movie-hamnet-2025",
@@ -723,7 +884,13 @@
       "imdbId": "tt14905854",
       "imdbRating": 7.8,
       "imdbVotes": 109507,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1580027,
+      "csfdRating": 79,
+      "csfdVotes": 2976,
+      "alternativeTitles": [
+        "Hamnet"
+      ]
     },
     {
       "id": "movie-hlavicka-2026",
@@ -749,7 +916,16 @@
       "overview": "When her parents mysteriously vanish, a determined 10-year-old girl joins forces with a young detective club and her autistic brother, whose unique perspective becomes the unexpected key to unraveling a criminal conspiracy.",
       "overviewLanguage": "en",
       "imdbId": "tt33049085",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1816292,
+      "csfdRating": 71,
+      "csfdVotes": 14,
+      "alternativeTitles": [
+        "Hlavička",
+        "Výjimečný",
+        "Glavonja",
+        "Extraordinary"
+      ]
     },
     {
       "id": "movie-chungking-express-narodeninovy-special-1994",
@@ -775,7 +951,16 @@
       "imdbId": "tt0109424",
       "imdbRating": 7.9,
       "imdbVotes": 108698,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 37590,
+      "csfdRating": 81,
+      "csfdVotes": 1946,
+      "alternativeTitles": [
+        "Chungking Express",
+        "Chongqing senlin",
+        "重慶森林",
+        "Chung Hing sam lam"
+      ]
     },
     {
       "id": "movie-kojoti-vs-smejdi-2026",
@@ -810,7 +995,13 @@
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/d/7/d7eb6a54-a841-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-487109",
       "imdbId": "tt0175821",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 121813,
+      "csfdRating": 54,
+      "csfdVotes": 140,
+      "alternativeTitles": [
+        "Koncert pre pozostalých"
+      ]
     },
     {
       "id": "movie-kronika-vopred-ohlasenej-smrti-vyrocia-100-irena-papas-1987",
@@ -836,7 +1027,17 @@
       "imdbId": "tt0092800",
       "imdbRating": 6.6,
       "imdbVotes": 1324,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 32615,
+      "csfdRating": 74,
+      "csfdVotes": 164,
+      "alternativeTitles": [
+        "Kronika vopred ohlásenej smrti",
+        "Kronika ohlášené smrti",
+        "Cronaca di una morte annunciata",
+        "Chronique d'une mort annoncée",
+        "Chronicle of a Death Foretold"
+      ]
     },
     {
       "id": "movie-kuko-drobcek-ratafak-znovu-zasahuju-2026",
@@ -922,7 +1123,17 @@
       "imdbId": "tt13032926",
       "imdbRating": 7.6,
       "imdbVotes": 180,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 898275,
+      "csfdRating": 80,
+      "csfdVotes": 82,
+      "alternativeTitles": [
+        "Láska to nebola",
+        "Láska to nebyla",
+        "Ahava Zot Lo Hayta",
+        "אהבה זאת לא הייתה",
+        "Liebe war es nie"
+      ]
     },
     {
       "id": "movie-leto-ked-som-vsetkych-stratil-2026",
@@ -940,7 +1151,13 @@
       "genres": [],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/3/c/3cc97bc3-5902-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-833527",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1692953,
+      "csfdVotes": 1,
+      "alternativeTitles": [
+        "Leto, keď som všetkých stratil",
+        "The Summer When I Lost Everyone"
+      ]
     },
     {
       "id": "movie-liecive-ucinky-sebaklamu-2026",
@@ -964,7 +1181,12 @@
       "overview": "Láska je příčinou i důvodem, proč slavný spisovatel Abel Znorko, nositel mnoha cen za literaturu, žije daleko od lidí a civilizace. Aby lásce unikl, aby se před ní schoval, aby popřel všechnu její sílu. Na samotě, ve svém luxusním srubu uprostřed lesů, luk a hájů, si požitkářky užívá života, ale také se topí ve své vlastní osamělosti.",
       "overviewLanguage": "cs",
       "imdbId": "tt32862852",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1523889,
+      "alternativeTitles": [
+        "Liečivé účinky sebaklamu",
+        "Léčivé účinky sebeklamu"
+      ]
     },
     {
       "id": "movie-magicka-posadnutost-2",
@@ -990,7 +1212,13 @@
       "overview": "Sandra Bullock a Nicole Kidman v pokračovaní kultovej rodinnej klasiky. Ako sestry Owensové sa vracajú, aby čelili dosiaľ najväčšej výzve. Temná rodinná kliatba ohrozuje nielen ich partnerov, ale hrozí, že definitívne pretrhne ich pokrvné puto a zničí všetko, čo milujú.",
       "overviewLanguage": "sk",
       "imdbId": "tt32588798",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1678776,
+      "alternativeTitles": [
+        "Magická posadnutosť 2",
+        "Magická posedlost 2",
+        "Practical Magic 2"
+      ]
     },
     {
       "id": "movie-max-a-lea",
@@ -1032,7 +1260,13 @@
       "imdbId": "tt11378946",
       "imdbRating": 7.5,
       "imdbVotes": 144205,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1471878,
+      "csfdRating": 74,
+      "csfdVotes": 4928,
+      "alternativeTitles": [
+        "Michael"
+      ]
     },
     {
       "id": "movie-milovnik-nie-bojovnik",
@@ -1058,7 +1292,15 @@
       "overview": "Andrej has a secret plan – to see no one, meet no one, only talk to his grandma and not climb high trees while being drunk. Then he unexpectedly encounters Miša, at whom he previously tried to smile 17 times while being drunk at parties. He never remembered the outcome as he was always too drunk, but not today. Today he is sober. Andrej and Miša start to talk and over the glass of Fanta find an interest in each other. The fight for their young and tender love begins.",
       "overviewLanguage": "en",
       "imdbId": "tt43329650",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1795874,
+      "csfdRating": 82,
+      "csfdVotes": 130,
+      "alternativeTitles": [
+        "Milovník, nie bojovník",
+        "Milovník, ne bojovník",
+        "Lover, Not a Fighter"
+      ]
     },
     {
       "id": "movie-muchy-2026",
@@ -1085,7 +1327,16 @@
       "imdbId": "tt35854741",
       "imdbRating": 6.2,
       "imdbVotes": 50,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1813829,
+      "csfdRating": 75,
+      "csfdVotes": 156,
+      "alternativeTitles": [
+        "Muchy",
+        "Mouchy",
+        "Moscas",
+        "Flies"
+      ]
     },
     {
       "id": "movie-na-jednu-noc-2026",
@@ -1112,7 +1363,14 @@
       "imdbId": "tt37853455",
       "imdbRating": 6.4,
       "imdbVotes": 1318,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1721578,
+      "csfdRating": 66,
+      "csfdVotes": 133,
+      "alternativeTitles": [
+        "Na jednu noc",
+        "One Night Only"
+      ]
     },
     {
       "id": "movie-najhorsi-clovek-na-svete-2021",
@@ -1138,7 +1396,19 @@
       "imdbId": "tt10370710",
       "imdbRating": 7.7,
       "imdbVotes": 126525,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 975420,
+      "csfdRating": 75,
+      "csfdVotes": 6082,
+      "alternativeTitles": [
+        "Najhorší človek na svete",
+        "Nejhorší člověk na světě",
+        "Verdens verste menneske",
+        "Julie (en 12 chapitres)",
+        "Världens värsta människa",
+        "Verdens værste menneske",
+        "The Worst Person in the World"
+      ]
     },
     {
       "id": "movie-narusitel-systemu",
@@ -1164,7 +1434,16 @@
       "imdbId": "tt8535968",
       "imdbRating": 7.8,
       "imdbVotes": 16068,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 692567,
+      "csfdRating": 80,
+      "csfdVotes": 2022,
+      "alternativeTitles": [
+        "Narušiteľ systému",
+        "Narušitel systému",
+        "Systemsprenger",
+        "System Crasher"
+      ]
     },
     {
       "id": "movie-nedosiahnutelna-laska",
@@ -1193,7 +1472,16 @@
       "imdbId": "tt8260226",
       "imdbRating": 7,
       "imdbVotes": 2822,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 648526,
+      "csfdRating": 74,
+      "csfdVotes": 20,
+      "alternativeTitles": [
+        "Nedosiahnuteľná láska",
+        "Nedosažitelná láska",
+        "Un amour impossible",
+        "An Impossible Love"
+      ]
     },
     {
       "id": "movie-nenavist",
@@ -1217,7 +1505,16 @@
       "imdbId": "tt0113247",
       "imdbRating": 8.1,
       "imdbVotes": 223323,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 29541,
+      "csfdRating": 80,
+      "csfdVotes": 3471,
+      "alternativeTitles": [
+        "Nenávisť",
+        "Nenávist",
+        "La Haine",
+        "Hate"
+      ]
     },
     {
       "id": "movie-nesmierny",
@@ -1238,7 +1535,16 @@
       ],
       "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_6f74051472b2e098d444e2f147f04dfe3310fccc.jpg",
       "detailUrl": "https://edisonfilmhub.sk/filmy/nesmierny",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1299055,
+      "csfdRating": 58,
+      "csfdVotes": 401,
+      "alternativeTitles": [
+        "Nesmierny",
+        "Nesmírný",
+        "Den grænseløse",
+        "Boundless"
+      ]
     },
     {
       "id": "movie-neuveritelne-ale-pravdive",
@@ -1260,7 +1566,16 @@
       ],
       "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_ddb22edc3d2ded20bafd6b593f140ff7b0b6234f.jpg",
       "detailUrl": "https://edisonfilmhub.sk/filmy/neuveritelne-ale-pravdive",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1052467,
+      "csfdRating": 66,
+      "csfdVotes": 371,
+      "alternativeTitles": [
+        "Neuveriteľné, ale pravdivé",
+        "Neuvěřitelné, ale pravdivé",
+        "Incroyable mais vrai",
+        "Incredible but True"
+      ]
     },
     {
       "id": "movie-neviditelny-jan-gogola-projekcia-spojena-s-diskusiou-2026",
@@ -1280,7 +1595,16 @@
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/0/b/0bcfd788-9b11-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837852",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1703235,
+      "csfdRating": 80,
+      "csfdVotes": 23,
+      "alternativeTitles": [
+        "Neviditeľný Ján Gogola",
+        "Neviditelný Jan Gogola",
+        "The Invisible Jan Gogola",
+        "Jan Gogola Invisible"
+      ]
     },
     {
       "id": "movie-noz-vo-vode-1962",
@@ -1307,7 +1631,16 @@
       "imdbId": "tt0056291",
       "imdbRating": 7.4,
       "imdbVotes": 24943,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 7354,
+      "csfdRating": 78,
+      "csfdVotes": 1624,
+      "alternativeTitles": [
+        "Nôž vo vode",
+        "Nůž ve vodě",
+        "Nóż w wodzie",
+        "Knife in the Water"
+      ]
     },
     {
       "id": "movie-oasis-don-t-look-back-in-anger",
@@ -1334,7 +1667,14 @@
       "overview": "Legendární Oasis se vrací na velké plátno. Dokument Don’t Look Back In Anger zachycuje triumfální comeback Liama a Noela Gallagherových během turné Live ’25, které znamenalo jejich první společné živé vystoupení po 16 letech. Film nabídne dosud nezveřejněné záběry ze zákulisí, zkoušek i koncertních pódií a také první společné rozhovory bratrů Gallagherových po více než dvou dekádách.",
       "overviewLanguage": "cs",
       "imdbId": "tt36152310",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1856744,
+      "csfdRating": 72,
+      "csfdVotes": 12,
+      "alternativeTitles": [
+        "Oasis: Don't Look Back in Anger",
+        "Don't Look Back in Anger"
+      ]
     },
     {
       "id": "movie-odrazy",
@@ -1361,7 +1701,16 @@
       "imdbId": "tt5186236",
       "imdbRating": 7,
       "imdbVotes": 3438,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 423643,
+      "csfdRating": 77,
+      "csfdVotes": 1053,
+      "alternativeTitles": [
+        "Odrazy",
+        "Mžitky",
+        "Powidoki",
+        "Afterimage"
+      ]
     },
     {
       "id": "movie-odysea",
@@ -1389,7 +1738,16 @@
       "imdbId": "tt33764258",
       "imdbRating": 8.5,
       "imdbVotes": 377702,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1580037,
+      "csfdRating": 85,
+      "csfdVotes": 14352,
+      "alternativeTitles": [
+        "Odysea",
+        "Odyssea",
+        "The Odyssey",
+        "Charlie's Tale"
+      ]
     },
     {
       "id": "movie-opusteny-2026",
@@ -1409,7 +1767,15 @@
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/e/5/e5a58c31-aaa8-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839494",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1837154,
+      "csfdVotes": 4,
+      "alternativeTitles": [
+        "Opustený",
+        "Opuštěný",
+        "L'Abandon",
+        "Forsaken"
+      ]
     },
     {
       "id": "movie-osem-noh-a-milion-followerov-2026",
@@ -1423,7 +1789,15 @@
       "genres": [],
       "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787227398-8-400-300-foloweryUVODWEB.jpg",
       "detailUrl": "https://www.kzp.sk/podujatie/klenoty-zanroveho-filmu-osem-noh-a-milion-followerov?place=80",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1861393,
+      "csfdRating": 39,
+      "csfdVotes": 76,
+      "alternativeTitles": [
+        "Osem nôh a milión followerov",
+        "Osm nohou a milion followerů",
+        "Spider Island"
+      ]
     },
     {
       "id": "movie-outsider-freud-2025",
@@ -1444,7 +1818,13 @@
       "overview": "A journey into the life and work of Sigmund Freud in four acts, combining animation, dreams, and insights from leading psychoanalysts. It explores Freud's experiences of marginalization as a Jew in Vienna during Hitler's rise and ...",
       "overviewLanguage": "en",
       "imdbId": "tt35170345",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1617756,
+      "csfdVotes": 5,
+      "alternativeTitles": [
+        "Freud - der Außenseiter",
+        "Outsider. Freud"
+      ]
     },
     {
       "id": "movie-persepolis-narodeninovy-special-2007",
@@ -1471,7 +1851,13 @@
       "imdbId": "tt0808417",
       "imdbRating": 8,
       "imdbVotes": 102920,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 230517,
+      "csfdRating": 85,
+      "csfdVotes": 10427,
+      "alternativeTitles": [
+        "Persepolis"
+      ]
     },
     {
       "id": "movie-pet-svestek-2026",
@@ -1495,7 +1881,14 @@
       "overview": "Věra žije sama a už ji v životě zdánlivě nic nečeká. Zasteskne se jí po době, kdy bývala  opravdu šťastná – když jezdila s přáteli na moře. Ze staré party však zbyly jen trosky a není  jisté, zda takové dobrodružství vůbec zvládnou. Přesto zatouží ještě jednou společně vyplout  na otevřené moře vstříc idylickým zátokám a západům slunce. Netuší, že největším  ohrožením jejich výpravy nebude moře, ani staré křivdy, které během cesty vyplují napovrch,  ale vlastní děti, které nemají pro bláznivý výlet starých rodičů pochopení.  Pět švestek režiséra Jana Svěráka s Lenkou Termerovou, Oldřichem Kaiserem, Petrem  Kostkou, Danou Syslovou a Janem Vlasákem v hlavních rolích, je dojemná i hravá komedie o  přátelství, lásce, odpuštění a o tom, že chuť žít a hledat svobodu může člověka provázet v  každé životní etapě.",
       "overviewLanguage": "cs",
       "imdbId": "tt41126967",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1822825,
+      "csfdRating": 71,
+      "csfdVotes": 717,
+      "alternativeTitles": [
+        "Pět švestek",
+        "Five Plums"
+      ]
     },
     {
       "id": "movie-posledna-sezona-2026",
@@ -1516,7 +1909,13 @@
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/d/8/d8e37378-aaac-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839498",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1801921,
+      "csfdVotes": 9,
+      "alternativeTitles": [
+        "Posledná sezóna",
+        "The Last Season"
+      ]
     },
     {
       "id": "movie-pozvanie",
@@ -1543,7 +1942,15 @@
       "imdbId": "tt14173636",
       "imdbRating": 7.8,
       "imdbVotes": 27141,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1670293,
+      "csfdRating": 77,
+      "csfdVotes": 1981,
+      "alternativeTitles": [
+        "Pozvanie",
+        "Pozvání",
+        "The Invite"
+      ]
     },
     {
       "id": "movie-pramen-2026",
@@ -1563,7 +1970,16 @@
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/4/9/49bf091b-746f-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-835586",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1801610,
+      "csfdRating": 65,
+      "csfdVotes": 466,
+      "alternativeTitles": [
+        "Prameň",
+        "Pramen",
+        "Only Beautiful Things to Look At",
+        "Forrás"
+      ]
     },
     {
       "id": "movie-preco-by-sme-sa-nezabili-2026",
@@ -1577,7 +1993,12 @@
       "genres": [],
       "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787518275-8-400-300-precobyUVOD.jpg",
       "detailUrl": "https://www.kzp.sk/podujatie/klenoty-zanroveho-filmu-preco-by-sme-sa-nezabili?place=80",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1871098,
+      "alternativeTitles": [
+        "Prečo by sme sa nezabili",
+        "Proč bychom se nezabili"
+      ]
     },
     {
       "id": "movie-princezna-kozmolesba-2025",
@@ -1608,7 +2029,15 @@
       "imdbId": "tt29781139",
       "imdbRating": 7.1,
       "imdbVotes": 424,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1590042,
+      "csfdRating": 55,
+      "csfdVotes": 331,
+      "alternativeTitles": [
+        "Princezná Kozmolesba",
+        "Princezna kosmolesba",
+        "Lesbian Space Princess"
+      ]
     },
     {
       "id": "movie-pripad-bojarski-ozveny-art-filmu-2026-2025",
@@ -1633,7 +2062,15 @@
       "overview": "A Polish engineer relocates to France and becomes a legendary counterfeiter. Working solo, he crafts flawless fake francs worth millions over 14 years, earning the nickname \"Cézanne of counterfeit money\" for his artistic skill and...",
       "overviewLanguage": "en",
       "imdbId": "tt35495035",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1735085,
+      "csfdRating": 76,
+      "csfdVotes": 21,
+      "alternativeTitles": [
+        "Prípad Bojarski",
+        "L'Affaire Bojarski",
+        "The Money Maker"
+      ]
     },
     {
       "id": "movie-prisaham-ze-za-to-nemozem-2025",
@@ -1660,7 +2097,15 @@
       "imdbId": "tt31514146",
       "imdbRating": 8.4,
       "imdbVotes": 37223,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1703542,
+      "csfdRating": 91,
+      "csfdVotes": 3579,
+      "alternativeTitles": [
+        "Prisahám, že za to nemôžem",
+        "Přísahám, že za to nemůžu",
+        "I Swear"
+      ]
     },
     {
       "id": "movie-psie-hviezdy-2026",
@@ -1684,7 +2129,15 @@
       "imdbId": "tt21285562",
       "imdbRating": 6.5,
       "imdbVotes": 10215,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1610745,
+      "csfdRating": 72,
+      "csfdVotes": 858,
+      "alternativeTitles": [
+        "Psie hviezdy",
+        "Vzhlížet ke hvězdám",
+        "The Dog Stars"
+      ]
     },
     {
       "id": "movie-queen-budapest-music-film-2026",
@@ -1726,7 +2179,11 @@
       "overview": "Film sleduje jedinou noc, kdy se obyčejný kurýr Bryan vydává doručit zásilku do Raccoon City – města, které se mezitím propadá do naprostého chaosu po úniku smrtícího viru. Jak se ulice zaplňují nakaženými a realita se mění v noční můru, Bryan je nucen bojovat o přežití, improvizovat s omezenými prostředky a čelit nejen hordám nemrtvých, ale i rozpadu společnosti kolem sebe. Izolovaný, bez pomoci a bez jasného vysvětlení toho, co se vlastně stalo, se postupně dostává hlouběji do centra katastrofy – a zjišťuje, že za nákazou stojí něco mnohem děsivějšího, než si dokázal představit.",
       "overviewLanguage": "cs",
       "imdbId": "tt35538033",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1661633,
+      "alternativeTitles": [
+        "Resident Evil"
+      ]
     },
     {
       "id": "movie-riefenstahl",
@@ -1746,7 +2203,13 @@
       ],
       "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_37fdde60c8389f9f6a741e87fdcd6b17603ca66a.jpg",
       "detailUrl": "https://edisonfilmhub.sk/filmy/riefenstahl",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1543764,
+      "csfdRating": 75,
+      "csfdVotes": 218,
+      "alternativeTitles": [
+        "Riefenstahl"
+      ]
     },
     {
       "id": "movie-rodina",
@@ -1794,7 +2257,13 @@
       "imdbId": "tt25399154",
       "imdbRating": 7.6,
       "imdbVotes": 1104,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1802698,
+      "csfdRating": 81,
+      "csfdVotes": 237,
+      "alternativeTitles": [
+        "Rose"
+      ]
     },
     {
       "id": "movie-rufus-morsky-dracik-ktory-nevedel-plavat-inkluzivne-kino-pre-deti-2025",
@@ -1820,7 +2289,16 @@
       "overview": "Na malom ostrove, ktorý sa nedá nájsť nikde na mape, si morské príšerky užívajú šťastný a bezstarostný život. Boja sa len jednej veci – aby ich neobjavili ľudia. Našťastie majú strýka Ludvika s čínskou dračou krvou v žilách, ktorý dokáže vypustiť paru a zahaliť ostrov hmlou vždy, keď sa na obzore  objaví nejaká loď. Jedným z obyvateľov ostrova je aj morský dráčik Rufus, ktorý má veľkú smolu – nevie totiž plávať, a preto väčšinu času trávi sám. Všetko sa zmení vo chvíli, kedy strýko stratí svoju magickú silu a ostrov sa ocitne v nebezpečenstve. Jediný, kto im môže pomôcť, je teta Bessie z lochnesského jazera v ďalekom Škótsku. Rufus pochopí, že toto je jeho príležitosť a prihlási sa, že za ňou pôjde. Bude musieť prekonať sám seba a čeliť svojmu strachu, ale konečne dostane šancu dokázať, že aj keď je iný, patrí do rodiny.",
       "overviewLanguage": "sk",
       "imdbId": "tt32267711",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1613963,
+      "csfdRating": 61,
+      "csfdVotes": 19,
+      "alternativeTitles": [
+        "Rufus: Morský dráčik, ktorý nevedel plávať",
+        "Rufus: Mořský dráček, který neuměl plavat",
+        "Ruffen: Sjøormen som ikke kunne svømme",
+        "Rufus: The Sea Serpent Who Couldn't Swim"
+      ]
     },
     {
       "id": "movie-ryska-1973",
@@ -1857,7 +2335,17 @@
       "genres": [],
       "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787142873-8-400-300-2samurajavazanUVODWEB.jpg",
       "detailUrl": "https://www.kzp.sk/podujatie/ozveny-svetovych-festivalov-samuraj-a-vaezen-1?place=80",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1799667,
+      "csfdRating": 74,
+      "csfdVotes": 73,
+      "alternativeTitles": [
+        "Samuraj a väzeň",
+        "Samuraj a vězeň",
+        "Kokurôjô",
+        "黒牢城",
+        "The Samurai and the Prisoner"
+      ]
     },
     {
       "id": "movie-sex-a-smrt-v-kempe-miasma",
@@ -1885,7 +2373,16 @@
       "imdbId": "tt35298123",
       "imdbRating": 7.1,
       "imdbVotes": 912,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1733166,
+      "csfdRating": 69,
+      "csfdVotes": 299,
+      "alternativeTitles": [
+        "Sex a smrť v kempe Miasma",
+        "Sex a smrt v kempu Miasma",
+        "Teenage Sex and Death at Camp Miasma",
+        "Sexe et mort chez les ados au camp Miasma"
+      ]
     },
     {
       "id": "movie-sip-paint-caravaggiov-tien",
@@ -1931,7 +2428,14 @@
       "imdbId": "tt0123276",
       "imdbRating": 7.6,
       "imdbVotes": 48,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 823,
+      "csfdRating": 74,
+      "csfdVotes": 1564,
+      "alternativeTitles": [
+        "Soukromá vichřice",
+        "Private Torment"
+      ]
     },
     {
       "id": "movie-spider-man-novy-den",
@@ -1959,7 +2463,15 @@
       "imdbId": "tt22084616",
       "imdbRating": 8.1,
       "imdbVotes": 183571,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1591126,
+      "csfdRating": 83,
+      "csfdVotes": 8171,
+      "alternativeTitles": [
+        "Spider-Man: Nový deň",
+        "Spider-Man: Zbrusu nový den",
+        "Spider-Man: Brand New Day"
+      ]
     },
     {
       "id": "movie-spomienky-z-bazena",
@@ -1987,7 +2499,13 @@
       "imdbId": "tt0405461",
       "imdbRating": 7.2,
       "imdbVotes": 252,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 317752,
+      "alternativeTitles": [
+        "Spomienky z bazéna",
+        "Hakoah Lischot",
+        "Watermarks"
+      ]
     },
     {
       "id": "movie-serif-za-mrezami-vyrocia-80-petr-svojtka-1965",
@@ -2010,7 +2528,13 @@
       "imdbId": "tt0243544",
       "imdbRating": 6.5,
       "imdbVotes": 49,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 163929,
+      "csfdRating": 68,
+      "csfdVotes": 205,
+      "alternativeTitles": [
+        "Šerif za mrežami"
+      ]
     },
     {
       "id": "movie-stastie-pre-troch-1985",
@@ -2034,7 +2558,16 @@
       "imdbId": "tt0090360",
       "imdbRating": 6.7,
       "imdbVotes": 212,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 35011,
+      "csfdRating": 75,
+      "csfdVotes": 11,
+      "alternativeTitles": [
+        "Šťastie pre troch",
+        "Štěstí pro tři",
+        "Ke štěstí je zapotřebí tří",
+        "Za sreću je potrebno troje"
+      ]
     },
     {
       "id": "movie-tajomstvo-dzungle",
@@ -2057,7 +2590,16 @@
       ],
       "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_d4602fd05cc2c36067cae2d9816ce9a6633f5afc.jpg",
       "detailUrl": "https://edisonfilmhub.sk/filmy/tajomstvo-dzungle",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1807141,
+      "csfdRating": 71,
+      "csfdVotes": 41,
+      "alternativeTitles": [
+        "Tajomstvo džungle",
+        "Tajemství džungle",
+        "Laimīgie",
+        "Born in the Jungle"
+      ]
     },
     {
       "id": "movie-tony",
@@ -2087,7 +2629,11 @@
       "imdbId": "tt33095251",
       "imdbRating": 7.7,
       "imdbVotes": 156,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1701630,
+      "alternativeTitles": [
+        "Tony"
+      ]
     },
     {
       "id": "movie-trpke-sviatky",
@@ -2119,7 +2665,18 @@
       "genres": [],
       "posterUrl": "https://a4.sk/wp-content/uploads/2026/08/kino-inak_facebook-event-e1788624574693.png",
       "detailUrl": "https://a4.sk/events/2026/09/27/trpke-vianoce",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1690954,
+      "csfdRating": 63,
+      "csfdVotes": 213,
+      "alternativeTitles": [
+        "Trpké sviatky",
+        "Trpké Vianoce",
+        "Hořké svátky",
+        "Amarga Navidad",
+        "Autofiktion",
+        "Bitter Christmas"
+      ]
     },
     {
       "id": "movie-turner-constable-pribehy-umenia-2025",
@@ -2142,7 +2699,15 @@
       "overview": "Celebrating the 250th anniversary of their births, this unmissable new documentary explores Turner and Constable's intertwined lives and legacies alongside the groundbreaking Tate exhibition. Two of Britain's greatest painters, J....",
       "overviewLanguage": "en",
       "imdbId": "tt38351582",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1820247,
+      "csfdRating": 75,
+      "csfdVotes": 11,
+      "alternativeTitles": [
+        "EOS: Turner &amp; Constable",
+        "Turner & Constable",
+        "Exhibition on Screen: Turner & Constable"
+      ]
     },
     {
       "id": "movie-ulica-malaga-ozveny-art-filmu-2026-2025",
@@ -2165,7 +2730,16 @@
       "overviewLanguage": "en",
       "imdbId": "tt32429174",
       "imdbVotes": 19,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1722399,
+      "csfdRating": 76,
+      "csfdVotes": 10,
+      "alternativeTitles": [
+        "Ulica Malaga",
+        "Rue Málaga",
+        "Calle Málaga",
+        "Calle Málaga – Ein Zuhause in Tanger"
+      ]
     },
     {
       "id": "movie-utajene-poklady-dj-ahmet-2025",
@@ -2189,7 +2763,13 @@
       "imdbId": "tt34964187",
       "imdbRating": 7.3,
       "imdbVotes": 1368,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1617792,
+      "csfdRating": 75,
+      "csfdVotes": 794,
+      "alternativeTitles": [
+        "DJ Ahmet"
+      ]
     },
     {
       "id": "movie-v-srdci-divociny-2026",
@@ -2211,7 +2791,12 @@
       "overview": "James Belmont, penzionovaný vojenský expert, se se svým psem Odinem, taktéž válečným veteránem, vydává na výlet do aljašské divočiny. Jejich výprava se povážlivě zkomplikuje, když James vinou zdravotní indispozice nezvládne pilotování malého letadla a havaruje. Ti dva už v minulosti ve válečné zóně dokázali, že se jeden na druhého můžou stoprocentně spolehnout. Zvládnou ale spolu zdolat nástrahy aljašské divočiny, kde číhá smrtelné nebezpečí na každém kroku? A poté, co oba letecká havárie nepěkně pocuchala? A protože jedinou nadějí na přežití je pro oba návrat do civilizace, musí se vydat na cestu, která se promění v boj s přírodou v její nejdrsnější podobě. Když ale máte po boku dobrého parťáka, lze zvládnout cokoliv.",
       "overviewLanguage": "cs",
       "imdbId": "tt7526136",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1679576,
+      "alternativeTitles": [
+        "V srdci divočiny",
+        "Heart of the Beast"
+      ]
     },
     {
       "id": "movie-v-ziare-tienov",
@@ -2250,7 +2835,14 @@
       "overview": "Jane, Coco a Sophie si naplánovaly jediné – vypnout, nechat všechny starosti doma a užít si víkend plný wellness, prosecca a ničím nerušené pohody. Jenže pak dorazí Mel. Kamarádka, která dokáže proměnit každou zdánlivě nevinnou situaci v naprostou katastrofu. Co mělo být luxusním únikem od reality, se během chvíle mění v divokou jízdu plnou alkoholu, nečekaných známostí, praštěných nápadů a trapasů, které nabírají stále větší obrátky. Jediné, co je jisté? Domů se rozhodně nevrátí s čistou hlavou ani odpočatým tělem. A hlavně – co se stane ve wellness, zůstane ve wellness.",
       "overviewLanguage": "cs",
       "imdbId": "tt33305867",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1816326,
+      "csfdRating": 56,
+      "csfdVotes": 42,
+      "alternativeTitles": [
+        "Wellness víkend",
+        "Spa Weekend"
+      ]
     },
     {
       "id": "movie-zabudnuty-ostrov-2026",
@@ -2273,7 +2865,13 @@
       "overview": "Two best friends become stranded on the mystical world of Nakali, where their only escape might cost them their shared lifetime of memories.",
       "overviewLanguage": "en",
       "imdbId": "tt36583977",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1776291,
+      "alternativeTitles": [
+        "Zabudnutý ostrov",
+        "Zapomenutý ostrov",
+        "Forgotten Island"
+      ]
     },
     {
       "id": "movie-zapas-storocia",
@@ -2321,7 +2919,15 @@
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/a/1/a1a625fb-aaa5-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839488",
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 1848384,
+      "csfdRating": 77,
+      "csfdVotes": 76,
+      "alternativeTitles": [
+        "Zápas storočia",
+        "Zápas století",
+        "El partido"
+      ]
     },
     {
       "id": "movie-zmluva-s-diablom-restaurovana-klasika-sk-1967",
@@ -2348,7 +2954,14 @@
       "imdbId": "tt0062525",
       "imdbRating": 7,
       "imdbVotes": 89,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 24893,
+      "csfdRating": 71,
+      "csfdVotes": 793,
+      "alternativeTitles": [
+        "Zmluva s diablom",
+        "A Pact with the Devil"
+      ]
     },
     {
       "id": "movie-zygfryd-1987",
@@ -2372,7 +2985,12 @@
       "imdbId": "tt0094394",
       "imdbRating": 6.3,
       "imdbVotes": 55,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+      "firstSeenAt": "2026-09-08T12:05:24.126Z",
+      "csfdId": 144879,
+      "csfdVotes": 6,
+      "alternativeTitles": [
+        "Zygfryd"
+      ]
     },
     {
       "id": "movie-zivot-je-dlhy-metraz-kratka",

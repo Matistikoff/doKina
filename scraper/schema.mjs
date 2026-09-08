@@ -23,6 +23,10 @@ export function validateProgram(program) {
     if (movie.imdbId != null && !/^tt\d+$/.test(movie.imdbId)) errors.push(`invalid imdbId: ${movie.imdbId}`);
     if (movie.imdbRating != null && (!Number.isFinite(movie.imdbRating) || movie.imdbRating < 1 || movie.imdbRating > 10)) errors.push(`invalid imdbRating: ${movie.imdbRating}`);
     if (movie.imdbVotes != null && (!Number.isInteger(movie.imdbVotes) || movie.imdbVotes < 0)) errors.push(`invalid imdbVotes: ${movie.imdbVotes}`);
+    if (movie.csfdId != null && (!Number.isInteger(movie.csfdId) || movie.csfdId <= 0)) errors.push(`invalid csfdId for ${movie.id}`);
+    if (movie.csfdRating != null && (!Number.isFinite(movie.csfdRating) || movie.csfdRating < 0 || movie.csfdRating > 100 || !movie.csfdId)) errors.push(`invalid csfdRating for ${movie.id}`);
+    if (movie.csfdVotes != null && (!Number.isInteger(movie.csfdVotes) || movie.csfdVotes < 0)) errors.push(`invalid csfdVotes for ${movie.id}`);
+    if (movie.alternativeTitles != null && (!Array.isArray(movie.alternativeTitles) || !movie.alternativeTitles.every(isString))) errors.push(`invalid alternativeTitles for ${movie.id}`);
     if (movie.firstSeenAt != null && (!isString(movie.firstSeenAt) || Number.isNaN(Date.parse(movie.firstSeenAt)))) errors.push(`invalid firstSeenAt for ${movie.id}`);
   }
 

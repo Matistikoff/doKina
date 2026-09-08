@@ -15,6 +15,8 @@ import { fetchA4KinoInak } from "./sources/a4-kino-inak.mjs";
 import { localDateKey } from "./utils.mjs";
 import { enrichMoviesWithTmdb } from "./tmdb.mjs";
 import { enrichMoviesWithOmdb } from "./omdb.mjs";
+import { enrichMoviesWithCsfd } from "./csfd.mjs";
+import { ratingAudit } from "./rating-audit.mjs";
 import { deduplicateMovies } from "./deduplicate.mjs";
 import { applyMovieHistory, readMovieHistory, writeMovieHistory } from "./movie-history.mjs";
 
@@ -104,12 +106,19 @@ async function main() {
     ...(sourceErrors.has(id) ? { error: sourceErrors.get(id) } : {}),
   }));
   let program = assembleProgram(results, generatedAt, sources);
+  program.movies = await enrichMoviesWithCsfd(program.movies, {
+    cachePath: process.env.CSFD_CACHE_PATH,
+    enabled: process.env.CSFD_ENABLED !== "false",
+    previousMovies,
+  });
   program.movies = await enrichMoviesWithTmdb(program.movies, {
     apiKey: process.env.TMDB_API_KEY,
     cachePath: process.env.TMDB_CACHE_PATH,
     previousMovies,
   });
+  const ratingDiagnostics = [];
   program.movies = await enrichMoviesWithOmdb(program.movies, {
+    diagnostics: ratingDiagnostics,
     apiKey: process.env.OMDB_API_KEY,
     cachePath: process.env.OMDB_CACHE_PATH,
     previousMovies,
@@ -123,6 +132,8 @@ async function main() {
   });
   program.movies = tracked.movies;
   program = validateProgram(program);
+  await mkdir(".cache", { recursive: true });
+  await writeFile(".cache/rating-audit.json", `${JSON.stringify(ratingAudit(program.movies, ratingDiagnostics), null, 2)}\n`, "utf8");
   const output = fileURLToPath(OUTPUT_PATH);
   const temporary = `${output}.tmp`;
   await mkdir(dirname(output), { recursive: true });

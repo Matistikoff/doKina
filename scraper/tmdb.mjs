@@ -10,7 +10,7 @@ const UNMATCHED_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 export function lookupTitles(movie) {
-  return [...new Set([movie.englishTitle, movie.originalTitle, movie.title]
+  return [...new Set([movie.englishTitle, movie.originalTitle, movie.title, ...(movie.alternativeTitles || [])]
     .filter(Boolean).map((title) => cleanTitle(title)
       .replace(/\s*\|.*$/u, "")
       .replace(/\s*\+\s*(?:beseda|diskusia|diskusia s|Q&A).*$/iu, "")
@@ -59,10 +59,14 @@ export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
   const expectedYear = Number(movie.releaseYear) || null;
   const candidates = new Map();
   for (const query of titles) {
-    const payload = await request("search/movie", {
+    let payload = await request("search/movie", {
       query, language: "sk-SK", include_adult: "false",
       ...(expectedYear ? { year: String(expectedYear) } : {}),
     }, apiKey);
+    // The cinema's local premiere year can differ from TMDb's production year.
+    if (expectedYear && Array.isArray(payload.results) && payload.results.length === 0) {
+      payload = await request("search/movie", { query, language: "sk-SK", include_adult: "false" }, apiKey);
+    }
     if (!Array.isArray(payload.results)) throw new Error("Invalid TMDb search response");
     // A truncated candidate set cannot establish an unambiguous identity.
     if (payload.total_pages > 1) return null;
@@ -82,7 +86,8 @@ export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
     }, apiKey);
     if (detail.id !== candidate.id) throw new Error("Invalid TMDb movie response");
     const names = [candidate.title, candidate.original_title, detail.title, detail.original_title,
-      ...(detail.alternative_titles?.titles || []).map((item) => item.title)]
+      ...(detail.alternative_titles?.titles || []).map((item) => item.title),
+      ...(detail.translations?.translations || []).map((item) => item.data?.title)]
       .filter(Boolean).map(normalizeTitle);
     if (!expectedTitles.some((title) => names.includes(title))) continue;
     const year = Number(String(detail.release_date || "").slice(0, 4));
@@ -109,6 +114,7 @@ export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
     ...(/^tt\d+$/.test(detail.imdb_id || "") ? { imdbId: detail.imdb_id } : {}),
     posterUrl: selectPoster(detail),
     originalTitle: metadataText(detail.original_title),
+    englishTitle: metadataText(translations.find((item) => item.iso_639_1 === "en")?.data?.title),
     releaseYear: /^\d{4}-/.test(detail.release_date || "") ? detail.release_date.slice(0, 4) : null,
     durationMinutes: Number.isInteger(detail.runtime) && detail.runtime > 0 ? detail.runtime : null,
     directors: [...new Set((detail.credits?.crew || []).filter((person) => person.job === "Director")
@@ -172,7 +178,7 @@ export async function enrichMoviesWithTmdb(movies, options = {}) {
   const now = options.now || new Date();
   const cache = await readCache(cachePath);
   movies = preserveTmdbMetadata(movies.map(applyKnownMovieIdentity), options.previousMovies || []);
-  const lookupKey = (movie) => JSON.stringify(["tmdb-v1", lookupTitles(movie), movie.releaseYear,
+  const lookupKey = (movie) => JSON.stringify(["tmdb-v2", lookupTitles(movie), movie.releaseYear,
     movie.directors, movie.durationMinutes, movie.imdbId]);
   if (!apiKey) {
     console.warn("TMDB_API_KEY is not set; using saved TMDB metadata without refreshing it.");

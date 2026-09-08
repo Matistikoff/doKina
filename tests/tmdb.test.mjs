@@ -25,6 +25,22 @@ const haine = {
   images: { posters: [{ file_path: "/haine-sk.jpg", iso_639_1: "sk", vote_count: 2 }] },
 };
 
+test("retries an empty year-filtered search and recognizes translated titles", async () => {
+  const calls = [];
+  const result = await resolveTmdbMovie({ title: "Nenávisť", releaseYear: "1996" }, "test", async (path, params) => {
+    calls.push(params);
+    if (path === "search/movie") return { results: params.year ? [] : [{ ...haine, title: "La Haine" }], total_pages: 1 };
+    return { ...haine, title: "La Haine", translations: { translations: [
+      { iso_639_1: "sk", data: { title: "Nenávisť" } },
+      { iso_639_1: "en", data: { title: "Hate" } },
+    ] } };
+  });
+  assert.equal(result.imdbId, "tt0113247");
+  assert.equal(result.englishTitle, "Hate");
+  assert.equal(calls[0].year, "1996");
+  assert.equal(calls[1].year, undefined);
+});
+
 function tmdbMock(films = [haine]) {
   return async (path) => path === "search/movie"
     ? { results: films, total_pages: 1 }

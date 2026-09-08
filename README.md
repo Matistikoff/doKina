@@ -59,6 +59,30 @@ s prednosťou slovenčiny, potom češtiny a angličtiny. Pri potvrdenej zhode T
 plagát nahradí obrázok kina; vyberá sa v poradí slovenčina, čeština, bez textu
 a angličtina. OMDb následne podľa IMDb ID doplní IMDb hodnotenie a počet hlasov.
 Cache úspešných zhôd sa obnovuje denne a neúspešné zhody raz za sedem dní.
+
+ČSFD hodnotenia sa získavajú cez neoficiálny `node-csfd-api` bez API kľúča.
+ČSFD sa spracuje pred TMDB a OMDb: potvrdené alternatívne názvy pomáhajú
+nájsť film aj pod zahraničným názvom. Vyžaduje sa zhoda názvu a roku alebo
+réžie; dostupná réžia a dĺžka nesmú odporovať výsledku. Rozdiel roka o jeden
+sa povoľuje iba pri zhodnom režisérovi. Nejednoznačné výsledky sa vynechajú.
+TMDB navyše kontroluje názvy z prekladov a pri prázdnom vyhľadávaní s rokom
+skúsi názov bez filtra roka, stále s následnou kontrolou metadát.
+ČSFD požiadavky bežia postupne s odstupom aspoň 700 ms a cache v
+`.cache/csfd.json`. Po troch po sebe idúcich chybách sa ČSFD pre daný beh
+preskočí a zachovajú sa uložené hodnotenia. Vypnutie: `CSFD_ENABLED=false`;
+vlastná cesta cache: `CSFD_CACHE_PATH`.
+Web zobrazuje IMDb a ČSFD oddelene a umožňuje radenie podľa každého zdroja.
+Filmy bez hodnotenia vybraného zdroja sú na konci; skóre sa nemiešajú.
+
+`npm run refresh:ratings` doplní hodnotenia a metadáta existujúceho programu
+bez obnovovania predstavení či času získania programu. Diagnostika v
+`.cache/rating-audit.json` obsahuje pokrytie a dôvod chýbajúceho IMDb ratingu:
+`key-missing`, `not-found`, `rating-unavailable` alebo `service-error`.
+`not-checked` a `identity-missing` znamenajú, že výsledok dotazu nie je dostupný.
+Rovnaký report vytvára pravidelný scraper a workflow ho ukladá do artefaktu.
+Fixture `tests/fixtures/csfd-movie.json` je zúžená verejná odpoveď knižnice
+pre film Pět švestek z 8. 9. 2026; offline testy overujú párovanie a výpadky.
+
 Bez niektorého kľúča scraper aj web fungujú ďalej so zachovanými údajmi
 z predchádzajúceho programu alebo príslušnej lokálnej cache.
 Detail filmu zobrazuje sekciu „O filme“ nad termínmi; ak popis chýba, sekcia

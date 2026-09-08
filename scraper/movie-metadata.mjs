@@ -6,7 +6,8 @@ export function fillMovieMetadata(movie, metadata) {
   const result = { ...movie };
   for (const key of ["originalTitle", "englishTitle", "releaseYear", "durationMinutes", "directors", "tmdbId", "posterUrl"]) {
     const value = metadata?.[key];
-    if ((!result[key] || (Array.isArray(result[key]) && !result[key].length))
+    if ((!result[key] || (key === "englishTitle" && result[key].toLocaleLowerCase("sk") === movie.title?.toLocaleLowerCase("sk"))
+      || (Array.isArray(result[key]) && !result[key].length))
       && value && (!Array.isArray(value) || value.length)) result[key] = value;
   }
   const languages = { sk: 3, cs: 2, en: 1 };

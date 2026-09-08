@@ -40,13 +40,14 @@ function applyEntry(movie, entry) {
 }
 
 function normalizedResult(payload, fetchedAt) {
-  if (payload?.Response !== "True" || !/^tt\d+$/.test(payload.imdbID || "")) return { fetchedAt };
+  if (payload?.Response !== "True" || !/^tt\d+$/.test(payload.imdbID || "")) return { fetchedAt, status: "not-found" };
   const rating = Number.parseFloat(payload.imdbRating);
   const votes = Number.parseInt(String(payload.imdbVotes || "").replaceAll(",", ""), 10);
   return {
     imdbId: payload.imdbID,
     imdbRating: Number.isFinite(rating) ? rating : null,
     imdbVotes: Number.isFinite(votes) ? votes : null,
+    status: Number.isFinite(rating) ? "rated" : "rating-unavailable",
     fetchedAt,
   };
 }
@@ -74,6 +75,7 @@ async function fetchEntry(movie, request, apiKey, fetchedAt) {
     return normalizedResult(payload, fetchedAt);
   }
   const titles = lookupTitles(movie);
+  if (!movie.releaseYear && !movie.directors?.length) return { fetchedAt, status: "identity-missing" };
   for (const title of titles) {
     const payload = await request({
       t: title,
@@ -82,11 +84,16 @@ async function fetchEntry(movie, request, apiKey, fetchedAt) {
     }, apiKey);
     assertServiceAvailable(payload);
     if (payload.Response !== "True") continue;
+    if (payload.Type && payload.Type !== "movie") continue;
     if (payload.Title && !titles.map(normalizeTitle).includes(normalizeTitle(payload.Title))) continue;
     if (movie.releaseYear && payload.Year && Number.parseInt(payload.Year, 10) !== Number(movie.releaseYear)) continue;
+    if (movie.directors?.length) {
+      const directors = String(payload.Director || "").split(/,\s*/u).map(normalizeTitle);
+      if (!movie.directors.flatMap((name) => name.split(/,\s*/u)).map(normalizeTitle).some((name) => directors.includes(name))) continue;
+    }
     return normalizedResult(payload, fetchedAt);
   }
-  return { fetchedAt };
+  return { fetchedAt, status: "not-found" };
 }
 
 export function preserveMovieRatings(movies, previousMovies) {
@@ -103,12 +110,14 @@ export async function enrichMoviesWithOmdb(movies, options = {}) {
   const request = options.request || omdbRequest;
   const now = options.now || new Date();
   const cache = await readCache(cachePath);
+  const diagnostics = options.diagnostics;
   movies = preserveMovieRatings(movies, options.previousMovies || []);
-  const lookupKey = (movie) => JSON.stringify(["omdb-rating-v1", movie.imdbId,
+  const lookupKey = (movie) => JSON.stringify(["omdb-rating-v2", movie.imdbId,
     lookupTitles(movie), movie.releaseYear]);
   if (!apiKey) {
     console.warn("OMDB_API_KEY is not set; using saved IMDb ratings without refreshing them.");
     return movies.map((movie) => {
+      diagnostics?.push({ id: movie.id, title: movie.title, status: "key-missing" });
       const entry = cache.entries[movie.id];
       return applyEntry(movie, entry?.lookupKey === lookupKey(movie) ? entry : null);
     });
@@ -120,13 +129,18 @@ export async function enrichMoviesWithOmdb(movies, options = {}) {
       cursor += 1;
       const previous = cache.entries[movie.id];
       const currentLookupKey = lookupKey(movie);
-      if (previous?.lookupKey === currentLookupKey && isFresh(previous, now)) continue;
+      if (previous?.lookupKey === currentLookupKey && isFresh(previous, now)) {
+        diagnostics?.push({ id: movie.id, title: movie.title, status: previous.status || "cached", fetchedAt: previous.fetchedAt });
+        continue;
+      }
       try {
         cache.entries[movie.id] = {
           ...await fetchEntry(movie, request, apiKey, now.toISOString()),
           lookupKey: currentLookupKey,
         };
+        diagnostics?.push({ id: movie.id, title: movie.title, status: cache.entries[movie.id].status, fetchedAt: now.toISOString() });
       } catch (error) {
+        diagnostics?.push({ id: movie.id, title: movie.title, status: "service-error" });
         console.warn(`OMDb rating failed for “${movie.title}”: ${error.message}`);
       }
     }

@@ -1,0 +1,14 @@
+{
+  "id": 1822825,
+  "title": "Pět švestek",
+  "type": "film",
+  "year": 2026,
+  "rating": 71,
+  "ratingCount": 717,
+  "duration": 100,
+  "titlesOther": [
+    { "country": "Slovensko", "title": "Pět švestek" },
+    { "country": "angličtina", "title": "Five Plums" }
+  ],
+  "creators": { "directors": [{ "id": 1462, "name": "Jan Svěrák" }] }
+}

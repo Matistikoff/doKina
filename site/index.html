@@ -290,7 +290,8 @@
 							<label class="select-field">
 								<span>Zoradiť</span>
 								<select id="sort-filter">
-									<option value="rating">Najlepšie hodnotené</option>
+									<option value="rating">IMDb hodnotenie</option>
+									<option value="csfd">ČSFD hodnotenie</option>
 									<option value="cult">Kultovky</option>
 									<option value="added">Najnovšie pridané</option>
 									<option value="soonest">Najbližšie predstavenie</option>
@@ -399,8 +400,10 @@
 				<a
 					href="https://www.omdbapi.com/"
 					rel="noreferrer"
-					>Hodnotenia: OMDb</a
+					>IMDb cez OMDb</a
 				>
+				<span aria-hidden="true">·</span>
+				<a href="https://www.csfd.cz/" rel="noreferrer">Hodnotenia ČSFD</a>
 				<span aria-hidden="true">·</span>
 			</p>
 			<section
@@ -490,10 +493,11 @@
 						<span></span>
 					</div>
 					<a
-						class="imdb-rating"
+						class="movie-rating imdb-rating"
 						target="_blank"
 						rel="noreferrer"
 					></a>
+					<a class="movie-rating csfd-rating" target="_blank" rel="noreferrer"></a>
 				</div>
 				<div class="movie-content">
 					<div class="movie-copy">

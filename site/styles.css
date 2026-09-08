@@ -901,7 +901,7 @@ h2 {
 	display: grid;
 }
 
-.imdb-rating {
+.movie-rating {
 	position: absolute;
 	right: 10px;
 	bottom: 10px;
@@ -919,21 +919,35 @@ h2 {
 		transform 160ms ease;
 }
 
-.imdb-rating:empty {
+.movie-rating:empty {
 	display: none;
 }
 
-.imdb-rating:hover,
-.imdb-rating:focus-visible {
+.movie-rating:hover,
+.movie-rating:focus-visible {
 	background: #f1c931;
 	color: #181817;
 	box-shadow: 0 4px 14px rgba(24, 24, 23, 0.3);
 	transform: translateY(-1px);
 }
 
-.imdb-rating:focus-visible {
+.movie-rating:focus-visible {
 	outline: 3px solid var(--ink);
 	outline-offset: 2px;
+}
+
+.csfd-rating {
+	color: #fff;
+}
+
+.imdb-rating:not(:empty) + .csfd-rating {
+	bottom: 44px;
+}
+
+.csfd-rating:hover,
+.csfd-rating:focus-visible {
+	background: #b52424;
+	color: #fff;
 }
 
 .movie-content {

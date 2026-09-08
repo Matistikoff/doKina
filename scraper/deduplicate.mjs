@@ -45,6 +45,7 @@ export function compareMovies(a, b) {
   const conflicts = [];
   if (a.imdbId && b.imdbId && a.imdbId !== b.imdbId) conflicts.push("imdbId");
   if (a.tmdbId && b.tmdbId && a.tmdbId !== b.tmdbId) conflicts.push("tmdbId");
+  if (a.csfdId && b.csfdId && a.csfdId !== b.csfdId) conflicts.push("csfdId");
   if (a.releaseYear && b.releaseYear && !sameYear && !premiereYear) conflicts.push("releaseYear");
   if (ad.length && bd.length && !sameDirector) conflicts.push("directors");
   if (a.durationMinutes && b.durationMinutes && Math.abs(a.durationMinutes - b.durationMinutes) > 5) conflicts.push("durationMinutes");
