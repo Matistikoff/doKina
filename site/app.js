@@ -57,6 +57,7 @@ const elements = {
 
 const datePickers = new Map();
 let updateDialogScrollbar = () => {};
+let dialogBackdropLoadId = 0;
 
 function setupPageScrollbar() {
   const track = elements.pageScrollbar;
@@ -587,10 +588,42 @@ function renderShowtimes(movie, screenings, cinemaMap, root) {
   }
 }
 
+function clearDialogBackdrop() {
+  dialogBackdropLoadId += 1;
+  elements.dialog.classList.remove("has-backdrop");
+  elements.dialogBackdrop.classList.remove("is-loaded");
+  elements.dialogBackdrop.hidden = true;
+  elements.dialogBackdrop.onload = null;
+  elements.dialogBackdrop.onerror = null;
+  elements.dialogBackdrop.removeAttribute("src");
+}
+
+function loadDialogBackdrop(url) {
+  clearDialogBackdrop();
+  if (!url) return;
+
+  const loadId = dialogBackdropLoadId;
+  const reveal = () => {
+    if (loadId !== dialogBackdropLoadId || elements.dialogBackdrop.getAttribute("src") !== url) return;
+    elements.dialogBackdrop.classList.add("is-loaded");
+  };
+  const discard = () => {
+    if (loadId === dialogBackdropLoadId) clearDialogBackdrop();
+  };
+
+  elements.dialog.classList.add("has-backdrop");
+  elements.dialogBackdrop.hidden = false;
+  elements.dialogBackdrop.onload = reveal;
+  elements.dialogBackdrop.onerror = discard;
+  elements.dialogBackdrop.src = url;
+  if (elements.dialogBackdrop.complete) {
+    if (elements.dialogBackdrop.naturalWidth) reveal();
+    else discard();
+  }
+}
+
 function openMovieDialog(movie, screenings, cinemaMap) {
-  elements.dialog.classList.toggle("has-backdrop", Boolean(movie.backdropUrl));
-  elements.dialogBackdrop.hidden = !movie.backdropUrl;
-  elements.dialogBackdrop.src = movie.backdropUrl || "";
+  loadDialogBackdrop(movie.backdropUrl);
   elements.dialogKicker.textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
   elements.dialogTitle.textContent = movie.title;
   elements.dialogMeta.textContent = movieMeta(movie);
@@ -615,6 +648,7 @@ function openMovieDialog(movie, screenings, cinemaMap) {
 function closeMovieDialog() {
   if (typeof elements.dialog.close === "function") elements.dialog.close();
   else elements.dialog.removeAttribute("open");
+  clearDialogBackdrop();
   document.body.classList.remove("has-open-dialog");
 }
 
@@ -971,10 +1005,6 @@ elements.letterboxdToggle.addEventListener("click", () => {
 });
 
 elements.dialogClose.addEventListener("click", closeMovieDialog);
-elements.dialogBackdrop.addEventListener("error", () => {
-  elements.dialogBackdrop.hidden = true;
-  elements.dialog.classList.remove("has-backdrop");
-});
 elements.dialog.addEventListener("click", (event) => {
   if (event.target === elements.dialog) closeMovieDialog();
 });
