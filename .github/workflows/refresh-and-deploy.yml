@@ -32,6 +32,12 @@ jobs:
           path: .cache/tmdb.json
           key: tmdb-${{ github.run_id }}
           restore-keys: tmdb-
+      - name: Restore OMDb cache
+        uses: actions/cache@v5
+        with:
+          path: .cache/omdb.json
+          key: omdb-${{ github.run_id }}
+          restore-keys: omdb-
       - name: Restore movie history
         uses: actions/cache@v5
         with:
@@ -40,6 +46,7 @@ jobs:
           restore-keys: movie-history-
       - run: npm run scrape
         env:
+          OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
       - name: Audit possible movie duplicates
         run: node scripts/audit-duplicates.mjs --json > duplicate-audit.json

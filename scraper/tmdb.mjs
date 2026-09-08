@@ -104,13 +104,9 @@ export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
     text: metadataText(translations.find((item) => item.iso_639_1 === language && metadataText(item.data?.overview))?.data.overview)
       || (language === "sk" ? metadataText(detail.overview) : null),
   })).find((item) => item.text);
-  const rating = Number(detail.vote_average);
-  const votes = Number(detail.vote_count);
   return {
     tmdbId: detail.id,
     ...(/^tt\d+$/.test(detail.imdb_id || "") ? { imdbId: detail.imdb_id } : {}),
-    tmdbRating: Number.isFinite(rating) && rating > 0 ? rating : null,
-    tmdbVotes: Number.isInteger(votes) && votes > 0 ? votes : null,
     posterUrl: selectPoster(detail),
     originalTitle: metadataText(detail.original_title),
     releaseYear: /^\d{4}-/.test(detail.release_date || "") ? detail.release_date.slice(0, 4) : null,
@@ -155,10 +151,9 @@ function applyEntry(movie, entry) {
   const enriched = fillMovieMetadata(movie, entry);
   return {
     ...enriched,
+    ...(entry.posterUrl ? { posterUrl: entry.posterUrl } : {}),
     ...(entry.tmdbId ? { tmdbId: entry.tmdbId } : {}),
     ...(entry.imdbId ? { imdbId: entry.imdbId } : {}),
-    ...(Number.isFinite(entry.tmdbRating) ? { tmdbRating: entry.tmdbRating } : {}),
-    ...(Number.isInteger(entry.tmdbVotes) ? { tmdbVotes: entry.tmdbVotes } : {}),
   };
 }
 

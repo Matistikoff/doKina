@@ -46,20 +46,21 @@ V GitHub repozitári treba nastaviť Actions secret `DOKINACLOUDFLARE`
 s API tokenom pre nasadenie. Cloudflare account ID je nesenzitívna hodnota
 uvedená priamo vo workflow.
 
-Voliteľné plagáty, hodnotenia a filmové metadáta sa získavajú cez TMDB a ukladajú
-do cache. Na ich zapnutie pridaj `TMDB_API_KEY` do lokálneho `.env` a GitHub
-Actions secrets. Ide o API kľúč (v3) z
+Voliteľné plagáty a filmové metadáta sa získavajú cez TMDB; IMDb hodnotenia
+pochádzajú z OMDb. Obe služby používajú samostatnú cache. Do lokálneho `.env`
+a GitHub Actions secrets pridaj `TMDB_API_KEY` a `OMDB_API_KEY`. TMDB používa
+API kľúč (v3) z
 [nastavení TMDB](https://www.themoviedb.org/settings/api), nie prihlasovacie heslo.
 Kľúče zostávajú iba v scrapere; do statického webu sa nezapisujú.
 TMDB sa páruje podľa pôvodných, slovenských a alternatívnych názvov; overuje sa
 dostupný rok (±1 rok), réžia a dĺžka. Viacero zhodných filmov sa automaticky
-nepáruje. Dopĺňa TMDB a IMDb ID, hodnotenie, počet hlasov, pôvodný názov, réžiu,
-rok, dĺžku a popis s prednosťou slovenčiny, potom češtiny a angličtiny.
-Existujúce údaje kina sa neprepisujú. Plagát kina má prednosť; ak chýba, TMDB
-vyberie najlepšie hodnotený plagát v poradí slovenčina, čeština, bez textu a
-angličtina. Cache úspešných zhôd sa obnovuje denne a neúspešné zhody raz za
-sedem dní. Bez TMDB kľúča scraper aj web fungujú ďalej so zachovanými údajmi
-z predchádzajúceho programu alebo lokálnej cache.
+nepáruje. Dopĺňa TMDB a IMDb ID, pôvodný názov, réžiu, rok, dĺžku a popis
+s prednosťou slovenčiny, potom češtiny a angličtiny. Pri potvrdenej zhode TMDB
+plagát nahradí obrázok kina; vyberá sa v poradí slovenčina, čeština, bez textu
+a angličtina. OMDb následne podľa IMDb ID doplní IMDb hodnotenie a počet hlasov.
+Cache úspešných zhôd sa obnovuje denne a neúspešné zhody raz za sedem dní.
+Bez niektorého kľúča scraper aj web fungujú ďalej so zachovanými údajmi
+z predchádzajúceho programu alebo príslušnej lokálnej cache.
 Detail filmu zobrazuje sekciu „O filme“ nad termínmi; ak popis chýba, sekcia
 sa nezobrazuje. Český a anglický popis majú označený jazyk.
 Potvrdené výnimky pri chýbajúcich metadátach sú v `scraper/movie-identities.mjs`:

@@ -607,7 +607,7 @@ function renderMovie(movie, screenings, cinemaMap) {
   const fragment = elements.template.content.cloneNode(true);
   const card = fragment.querySelector(".movie-card");
   const poster = fragment.querySelector(".poster");
-  const tmdbRating = fragment.querySelector(".tmdb-rating");
+  const imdbRating = fragment.querySelector(".imdb-rating");
   const screeningCount = fragment.querySelector(".screening-count");
 
   fragment.querySelector("h3").textContent = movie.title;
@@ -622,13 +622,13 @@ function renderMovie(movie, screenings, cinemaMap) {
     poster.alt = `Plagát filmu ${movie.title}`;
     poster.addEventListener("error", () => poster.classList.add("is-broken"));
   }
-  if (movie.tmdbId && Number.isFinite(movie.tmdbRating)) {
-    tmdbRating.href = `https://www.themoviedb.org/movie/${movie.tmdbId}`;
-    tmdbRating.textContent = `TMDB ★ ${movie.tmdbRating.toFixed(1)}`;
-    tmdbRating.title = movie.tmdbVotes
-      ? `TMDB hodnotenie z ${movie.tmdbVotes.toLocaleString("sk-SK")} hlasov`
-      : "TMDB hodnotenie";
-    tmdbRating.setAttribute("aria-label", `${movie.title}: TMDB hodnotenie ${movie.tmdbRating.toFixed(1)} z 10`);
+  if (movie.imdbId && Number.isFinite(movie.imdbRating)) {
+    imdbRating.href = `https://www.imdb.com/title/${movie.imdbId}/`;
+    imdbRating.textContent = `IMDb ★ ${movie.imdbRating.toFixed(1)}`;
+    imdbRating.title = movie.imdbVotes
+      ? `IMDb hodnotenie z ${movie.imdbVotes.toLocaleString("sk-SK")} hlasov`
+      : "IMDb hodnotenie";
+    imdbRating.setAttribute("aria-label", `${movie.title}: IMDb hodnotenie ${movie.imdbRating.toFixed(1)} z 10`);
   }
 
   card.dataset.movieId = movie.id;
@@ -685,8 +685,8 @@ function renderProgram() {
     .filter(({ movie }) => movie)
     .sort((a, b) => {
       if (state.sortBy === "rating" || state.sortBy === "cult") {
-        const ratingA = Number.isFinite(a.movie.tmdbRating) ? a.movie.tmdbRating : -1;
-        const ratingB = Number.isFinite(b.movie.tmdbRating) ? b.movie.tmdbRating : -1;
+        const ratingA = Number.isFinite(a.movie.imdbRating) ? a.movie.imdbRating : -1;
+        const ratingB = Number.isFinite(b.movie.imdbRating) ? b.movie.imdbRating : -1;
         return ratingB - ratingA || a.movie.title.localeCompare(b.movie.title, "sk");
       }
       if (state.sortBy === "added") {

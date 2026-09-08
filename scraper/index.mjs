@@ -14,6 +14,7 @@ import { fetchNovaCvernovka } from "./sources/nova-cvernovka.mjs";
 import { fetchA4KinoInak } from "./sources/a4-kino-inak.mjs";
 import { localDateKey } from "./utils.mjs";
 import { enrichMoviesWithTmdb } from "./tmdb.mjs";
+import { enrichMoviesWithOmdb } from "./omdb.mjs";
 import { deduplicateMovies } from "./deduplicate.mjs";
 import { applyMovieHistory, readMovieHistory, writeMovieHistory } from "./movie-history.mjs";
 
@@ -106,6 +107,11 @@ async function main() {
   program.movies = await enrichMoviesWithTmdb(program.movies, {
     apiKey: process.env.TMDB_API_KEY,
     cachePath: process.env.TMDB_CACHE_PATH,
+    previousMovies,
+  });
+  program.movies = await enrichMoviesWithOmdb(program.movies, {
+    apiKey: process.env.OMDB_API_KEY,
+    cachePath: process.env.OMDB_CACHE_PATH,
     previousMovies,
   });
   program = validateProgram(deduplicateMovies(program));

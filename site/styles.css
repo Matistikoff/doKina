@@ -901,7 +901,7 @@ h2 {
 	display: grid;
 }
 
-.tmdb-rating {
+.imdb-rating {
 	position: absolute;
 	right: 10px;
 	bottom: 10px;
@@ -919,19 +919,19 @@ h2 {
 		transform 160ms ease;
 }
 
-.tmdb-rating:empty {
+.imdb-rating:empty {
 	display: none;
 }
 
-.tmdb-rating:hover,
-.tmdb-rating:focus-visible {
+.imdb-rating:hover,
+.imdb-rating:focus-visible {
 	background: #f1c931;
 	color: #181817;
 	box-shadow: 0 4px 14px rgba(24, 24, 23, 0.3);
 	transform: translateY(-1px);
 }
 
-.tmdb-rating:focus-visible {
+.imdb-rating:focus-visible {
 	outline: 3px solid var(--ink);
 	outline-offset: 2px;
 }

@@ -44,12 +44,10 @@ test("confirmed film metadata is scoped to its source record and preserves IDs",
   }
 });
 
-test("resolves a unique localized title with IDs, rating and poster", async () => {
+test("resolves a unique localized title with IDs and poster", async () => {
   const result = await resolveTmdbMovie({ title: "Nenávisť" }, "test", tmdbMock());
   assert.equal(result.tmdbId, 406);
   assert.equal(result.imdbId, "tt0113247");
-  assert.equal(result.tmdbRating, 8.1);
-  assert.equal(result.tmdbVotes, 4100);
   assert.equal(result.posterUrl, "https://image.tmdb.org/t/p/w500/haine-sk.jpg");
 
   const alternate = { ...haine, title: "La Haine", alternative_titles: { titles: [{ title: "Nenávisť" }] } };
@@ -98,7 +96,7 @@ test("enriches, caches and reuses a fresh TMDB result", async () => {
   const movies = [{ id: "nenavist", title: "Nenávisť" }];
   const now = new Date("2026-09-08T10:00:00Z");
   const [result] = await enrichMoviesWithTmdb(movies, { apiKey: "test", cachePath: path, now, request: tmdbMock() });
-  assert.equal(result.tmdbRating, 8.1);
+  assert.equal(result.tmdbId, 406);
   assert.equal(JSON.parse(await readFile(path, "utf8")).entries.nenavist.tmdbId, 406);
   const [cached] = await enrichMoviesWithTmdb(movies, {
     apiKey: "test", cachePath: path, now: new Date("2026-09-08T12:00:00Z"),
@@ -107,29 +105,29 @@ test("enriches, caches and reuses a fresh TMDB result", async () => {
   assert.equal(cached.posterUrl, result.posterUrl);
 });
 
-test("keeps cinema posters and stale TMDB data during an outage", async () => {
+test("prefers the TMDB poster and keeps it during an outage", async () => {
   const path = await cachePath();
   const movie = { id: "nenavist", title: "Nenávisť", posterUrl: "https://cinema.example/poster.jpg" };
   const [initial] = await enrichMoviesWithTmdb([movie], {
     apiKey: "test", cachePath: path, now: new Date("2026-09-01T10:00:00Z"), request: tmdbMock(),
   });
-  assert.equal(initial.posterUrl, movie.posterUrl);
+  assert.equal(initial.posterUrl, "https://image.tmdb.org/t/p/w500/haine-sk.jpg");
   const [stale] = await enrichMoviesWithTmdb([movie], {
     apiKey: "test", cachePath: path, now: new Date("2026-09-03T10:00:00Z"),
     request: async () => { throw new Error("Service unavailable"); },
   });
-  assert.equal(stale.tmdbRating, 8.1);
-  assert.equal(stale.posterUrl, movie.posterUrl);
+  assert.equal(stale.tmdbId, 406);
+  assert.equal(stale.posterUrl, "https://image.tmdb.org/t/p/w500/haine-sk.jpg");
 });
 
 test("preserves unambiguous previous TMDB metadata without an API key", async () => {
   const movie = { id: "new-id", title: "Nenávisť", releaseYear: "1995" };
-  const previous = { ...movie, id: "old-id", tmdbId: 406, tmdbRating: 8.1, tmdbVotes: 4100,
+  const previous = { ...movie, id: "old-id", tmdbId: 406,
     posterUrl: "https://image.tmdb.org/t/p/w500/haine-sk.jpg" };
   assert.equal(preserveTmdbMetadata([movie], [previous])[0].tmdbId, 406);
   const [result] = await enrichMoviesWithTmdb([movie], {
     cachePath: await cachePath(), previousMovies: [previous],
     request: async () => assert.fail("no request without an API key"),
   });
-  assert.equal(result.tmdbRating, 8.1);
+  assert.equal(result.tmdbId, 406);
 });

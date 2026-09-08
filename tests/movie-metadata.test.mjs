@@ -32,15 +32,15 @@ function tmdbRequest(film) {
   return async (path) => path === "search/movie" ? { results: [film], total_pages: 1 } : film;
 }
 
-test("TMDB fills missing metadata without replacing cinema data", async () => {
+test("TMDB fills missing metadata and replaces the cinema poster", async () => {
   const [result] = await enrichMoviesWithTmdb([{ ...movie, directors: ["Bong Joon Ho"],
     posterUrl: "https://cinema.example/poster.jpg" }], {
     apiKey: "test", cachePath: await cachePath(), request: tmdbRequest(detail),
   });
   assert.deepEqual(result.directors, ["Bong Joon Ho"]);
-  assert.equal(result.posterUrl, "https://cinema.example/poster.jpg");
+  assert.equal(result.posterUrl, "https://image.tmdb.org/t/p/w500/parasite.jpg");
   assert.equal(result.originalTitle, "기생충");
-  assert.equal(result.tmdbRating, 8.5);
+  assert.equal(result.tmdbId, 496243);
   assert.equal(result.durationMinutes, 132);
 });
 
@@ -65,5 +65,5 @@ test("an ambiguous TMDB match supplies no metadata", async () => {
   });
   assert.equal(result.overview, undefined);
   assert.equal(result.directors, undefined);
-  assert.equal(result.tmdbRating, undefined);
+  assert.equal(result.tmdbId, undefined);
 });
