@@ -1,48 +1,47 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-07T14:34:54.892Z",
+  "generatedAt": "2026-09-08T12:05:24.126Z",
   "timezone": "Europe/Bratislava",
   "sources": [
     {
       "id": "kino-lumiere",
       "status": "ok",
-      "fetchedAt": "2026-09-07T14:34:54.892Z"
+      "fetchedAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "kino-film-europe",
       "status": "ok",
-      "fetchedAt": "2026-09-07T14:34:54.892Z"
+      "fetchedAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "kino-mladost",
       "status": "ok",
-      "fetchedAt": "2026-09-07T14:34:54.892Z"
+      "fetchedAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "kino-luky",
       "status": "ok",
-      "fetchedAt": "2026-09-07T14:34:54.892Z"
+      "fetchedAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "kino-nostalgia",
       "status": "ok",
-      "fetchedAt": "2026-09-07T14:34:54.892Z"
+      "fetchedAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "edison-filmhub",
       "status": "ok",
-      "fetchedAt": "2026-09-07T14:34:54.892Z"
+      "fetchedAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "nova-cvernovka",
-      "status": "error",
-      "fetchedAt": "2026-09-07T14:34:54.892Z",
-      "error": "Nová Cvernovka page contained no recognizable film screenings"
+      "status": "ok",
+      "fetchedAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "a4-kino-inak",
       "status": "ok",
-      "fetchedAt": "2026-09-07T14:34:54.892Z"
+      "fetchedAt": "2026-09-08T12:05:24.126Z"
     }
   ],
   "cinemas": [
@@ -121,7 +120,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt0074084",
       "imdbRating": 7.6,
-      "imdbVotes": 28600
+      "imdbVotes": 28600,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-aftersun-2022",
@@ -146,7 +146,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt19770238",
       "imdbRating": 7.6,
-      "imdbVotes": 127815
+      "imdbVotes": 127815,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-ako-stvana-zver-1975",
@@ -168,7 +169,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt0073815",
       "imdbRating": 7.2,
-      "imdbVotes": 754
+      "imdbVotes": 754,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-anjelske-vajce",
@@ -191,7 +193,8 @@
         "Mysteriózny"
       ],
       "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_b3d1ef7d7aff8c3432fbaeaf71b07db59b95cf19.jpg",
-      "detailUrl": "https://edisonfilmhub.sk/filmy/anjelske-vajce"
+      "detailUrl": "https://edisonfilmhub.sk/filmy/anjelske-vajce",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-auta-2006",
@@ -217,7 +220,8 @@
       "overviewLanguage": "sk",
       "imdbId": "tt0317219",
       "imdbRating": 7.3,
-      "imdbVotes": 528959
+      "imdbVotes": 528959,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-balada-o-narajame-vyrocia-100-sohei-imamura-1983",
@@ -234,7 +238,8 @@
       "ageRating": null,
       "genres": [],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/8/d/8d246071-a6c0-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-468180"
+      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-468180",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-bardotky",
@@ -253,7 +258,8 @@
       "englishTitle": "BARDOTKY",
       "directors": [
         "Hana Hendrychová"
-      ]
+      ],
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-bojovnik-2026",
@@ -278,7 +284,8 @@
       "tmdbId": 1510556,
       "overview": "Pavel Hoffmeister alias Hoff býval mistrem Evropy a olympijským medailistou v boxu. Po letech mimo sportovní svět dostává nečekanou nabídku vrátit se do boje. Hozená rukavice, kterou zvedá, ale není boxerská. Se svým soupeřem se utká v MMA. Čekají ho nová pravidla, tvrdá příprava a protivník, který prověří jeho formu i charakter. Nejtěžší zápas ale nesvede v kleci. Bude se muset postavit hlavně sám sobě a zabojovat o ztracenou důvěru svých nejbližších.  (Bontonfilm)",
       "overviewLanguage": "sk",
-      "imdbId": "tt23807030"
+      "imdbId": "tt23807030",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-bugonia-2025",
@@ -300,7 +307,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt12300742",
       "imdbRating": 7.4,
-      "imdbVotes": 216094
+      "imdbVotes": 216094,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-caravaggiov-tien",
@@ -327,7 +335,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt11877386",
       "imdbRating": 6.5,
-      "imdbVotes": 2069
+      "imdbVotes": 2069,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-cudzinec",
@@ -352,7 +361,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt36243564",
       "imdbRating": 7.1,
-      "imdbVotes": 3403
+      "imdbVotes": 3403,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-dazdnicky-zo-cherbourgu",
@@ -379,7 +389,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt0058450",
       "imdbRating": 7.8,
-      "imdbVotes": 32696
+      "imdbVotes": 32696,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-diabol-nosi-pradu-2",
@@ -391,7 +402,7 @@
       "durationMinutes": 119,
       "ageRating": "12",
       "genres": [],
-      "posterUrl": "https://attendio-library.attendio.online/a89de080fe7e0df540965835c79325a8093d1549-photo-large.jpg",
+      "posterUrl": "https://attendio-library.attendio.online/0a3b7fd96bbdebdbfd6501c816ec78a60d1659fe-poster-large.jpg",
       "detailUrl": "https://www.nostalgia.sk/film/9023",
       "englishTitle": "The Devil Wears Prada 2",
       "directors": [
@@ -402,7 +413,8 @@
       "overviewLanguage": "sk",
       "imdbId": "tt33612209",
       "imdbRating": 6.4,
-      "imdbVotes": 87496
+      "imdbVotes": 87496,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-dievca-v-oblakoch",
@@ -418,7 +430,7 @@
         "Pre deti",
         "Animovaný"
       ],
-      "posterUrl": "https://attendio-library.attendio.online/6f5b9710f1fc03727c2c62da07fd546c26d9266a-photo-large.jpg",
+      "posterUrl": "https://attendio-library.attendio.online/b0a8438cf51e67252f202f0dd253e3a406e94ffb-poster-large.jpg",
       "detailUrl": "https://www.nostalgia.sk/film/11463",
       "englishTitle": "DIEVČA V OBLAKOCH",
       "directors": [
@@ -427,7 +439,8 @@
       "tmdbId": 1151265,
       "overview": "Providence je desetiletá dívka, která žije v Paříži se svým strýcem Jasonem a morčetem Airbagem. Miluje knižní ságu Strážci Země. Její autor Octavius bydlí shodou okolností hned vedle – a Providence brzy zjistí, že jeho příběhy nejsou jen fikcí. Octavius totiž píše kouzelným perem, které dokáže proměnit fantazii ve skutečnost. Když se z knih nešťastnou náhodou osvobodí temná bytost Necato, původní tvůrce kouzelného pera, ocitá se v ohrožení svět fantazie i ten reálný. Spisovatle Octavius proto svěří pero Providence a vyšle ji na nebezpečnou cestu za tajemným bratrstvem, které ho může ochránit. Providence se svým mluvícím morčetem Aribagem prochází fantastickými světy a musí se rozhodnout, zda dá přednost vlastním snům, nebo zachrání skutečný svět.",
       "overviewLanguage": "sk",
-      "imdbId": "tt20259240"
+      "imdbId": "tt20259240",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-divoch",
@@ -453,7 +466,8 @@
       "overviewLanguage": "sk",
       "imdbId": "tt11328762",
       "imdbRating": 6.4,
-      "imdbVotes": 2997
+      "imdbVotes": 2997,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-dokonaly-den",
@@ -476,7 +490,8 @@
       "tmdbId": 1733409,
       "overview": "Anna spěchá na pracovní pohovor. Má to promyšlené, naplánované a pod kontrolou…až do chvíle, než se jí cestou pokazí auto. Anna místo kariérního vítězství končí ve vlaku, kde potká Edu. Eda vystoupí v místě, které pro něj má velký význam, a přesvědčí nic netušící Annu, aby ho následovala. Zažívají nečekaná dobrodružství, poznávají okolí i jeden druhého. Po noci plné vášně přichází ráno a s ním i vystřízlivění. Eda je krátce po rozchodu a Anna brzy odcestuje do Kanady. Je na čase se rozloučit. Jenže život má pro Annu jiné plány. V práci o ni totiž projeví velký zájem Ellis. Anna se tak poprvé v životě ocitá mezi dvěma úplně odlišnými světy…a dvěma úplně odlišnými možnostmi, kam její život může směřovat.",
       "overviewLanguage": "cs",
-      "imdbId": "tt39730838"
+      "imdbId": "tt39730838",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-domaca-uroda-kavej-2-2026",
@@ -497,7 +512,8 @@
       "tmdbId": 1723532,
       "overview": "Keď Veronika zažije sklamanie v láske, Klára sa ju rozhodne zachrániť a vezme ju na Šíravu, kde spolu s nevestami z jednotky rozbiehajú babskú jazdu s jasným cieľom – nájsť jej nového chlapa! Zatiaľ čo dievčatá hľadajú lásku, muži sa aj s deťmi vydávajú za dobrodružstvom do lesa. Svoj vzťah sa pokúša oživiť aj Klára staršia s Bertym, no plán sa im čoskoro začne vymykať spod kontroly.",
       "overviewLanguage": "sk",
-      "imdbId": "tt41974665"
+      "imdbId": "tt41974665",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-domaca-uroda-kuko-drobcek-a-ratafak-znovu-zasahuju-2026",
@@ -510,7 +526,8 @@
       "ageRating": "12",
       "genres": [],
       "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_08/kino/1783336579-8-400-300-kuku_still.jpg",
-      "detailUrl": "https://www.kzp.sk/podujatie/domaca-uroda-kuko-drobcek-a-ratafak-znovu-zasahuju-fk-1?place=80"
+      "detailUrl": "https://www.kzp.sk/podujatie/domaca-uroda-kuko-drobcek-a-ratafak-znovu-zasahuju-fk-1?place=80",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-domaca-uroda-laska-2026",
@@ -523,7 +540,22 @@
       "ageRating": "15",
       "genres": [],
       "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787145677-8-400-300-laskaWEB.jpg",
-      "detailUrl": "https://www.kzp.sk/podujatie/domaca-uroda-laska-fk?place=80"
+      "detailUrl": "https://www.kzp.sk/podujatie/domaca-uroda-laska-fk?place=80",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
+    },
+    {
+      "id": "movie-domaca-uroda-milovnik-nie-bojovnik-2026",
+      "source": "kino-luky",
+      "externalId": "domaca-uroda-milovnik-nie-bojovnik-fk-1",
+      "title": "Domáca úroda: MILOVNÍK, NIE BOJOVNÍK",
+      "originalTitle": null,
+      "releaseYear": "2026",
+      "durationMinutes": 108,
+      "ageRating": "15",
+      "genres": [],
+      "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787136058-8-400-300-milovnikbojovnikUVODWEB.jpg",
+      "detailUrl": "https://www.kzp.sk/podujatie/domaca-uroda-milovnik-nie-bojovnik-fk-1?place=80",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-draha-neznama-1980",
@@ -546,7 +578,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt0082182",
       "imdbRating": 7.2,
-      "imdbVotes": 431
+      "imdbVotes": 431,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-dunaj-1982",
@@ -568,7 +601,8 @@
         "Pásmo krátkych filmov"
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/5/9/59c94d80-a555-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838986"
+      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838986",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-francuzova-milenka-vyrocia-100-karel-reisz-1981",
@@ -593,7 +627,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt0082416",
       "imdbRating": 6.9,
-      "imdbVotes": 16224
+      "imdbVotes": 16224,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-frida-kahlo-pribehy-umenia-2020",
@@ -617,7 +652,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt13011980",
       "imdbRating": 7.8,
-      "imdbVotes": 179
+      "imdbVotes": 179,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-gauguin-pribehy-umenia-2017",
@@ -642,7 +678,8 @@
       "overviewLanguage": "sk",
       "imdbId": "tt6330052",
       "imdbRating": 6,
-      "imdbVotes": 2545
+      "imdbVotes": 2545,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-guru",
@@ -656,12 +693,13 @@
       "genres": [
         "Thriller"
       ],
-      "posterUrl": "https://attendio-library.attendio.online/feb684d9aae671f98a766d19c6b0d4e56cbeb1bb-photo-large.webp",
+      "posterUrl": "https://attendio-library.attendio.online/8a8beb43b0f8b10ffbba2670a247554d39a75445-poster-large.jpg",
       "detailUrl": "https://www.kfe.sk/film/9550",
       "englishTitle": "GOUROU",
       "directors": [
         "Yann Gozlan"
-      ]
+      ],
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-hamnet-2025",
@@ -684,7 +722,8 @@
       "overviewLanguage": "sk",
       "imdbId": "tt14905854",
       "imdbRating": 7.8,
-      "imdbVotes": 109507
+      "imdbVotes": 109507,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-hlavicka-2026",
@@ -709,7 +748,8 @@
       "tmdbId": 1552684,
       "overview": "When her parents mysteriously vanish, a determined 10-year-old girl joins forces with a young detective club and her autistic brother, whose unique perspective becomes the unexpected key to unraveling a criminal conspiracy.",
       "overviewLanguage": "en",
-      "imdbId": "tt33049085"
+      "imdbId": "tt33049085",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-chungking-express-narodeninovy-special-1994",
@@ -734,7 +774,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt0109424",
       "imdbRating": 7.9,
-      "imdbVotes": 108698
+      "imdbVotes": 108698,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-kojoti-vs-smejdi-2026",
@@ -747,7 +788,8 @@
       "ageRating": "12",
       "genres": [],
       "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787232125-8-400-300-kojoti.jpg",
-      "detailUrl": "https://www.kzp.sk/podujatie/kino-pre-deti-kojoti-vs-smejdi?place=80"
+      "detailUrl": "https://www.kzp.sk/podujatie/kino-pre-deti-kojoti-vs-smejdi?place=80",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-koncert-pre-pozostalych-restaurovana-klasika-sk-1976",
@@ -767,7 +809,8 @@
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/d/7/d7eb6a54-a841-11f1-9bbd-9e966f951e90.jpg",
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-487109",
-      "imdbId": "tt0175821"
+      "imdbId": "tt0175821",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-kronika-vopred-ohlasenej-smrti-vyrocia-100-irena-papas-1987",
@@ -792,7 +835,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt0092800",
       "imdbRating": 6.6,
-      "imdbVotes": 1324
+      "imdbVotes": 1324,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-kuko-drobcek-ratafak-znovu-zasahuju-2026",
@@ -812,7 +856,8 @@
         "Komédia"
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/0/8/0850f163-8b42-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837039"
+      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837039",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-kuko-drobcek-a-ratafak-znovu-zasahuju",
@@ -826,12 +871,13 @@
       "genres": [
         "Komédia"
       ],
-      "posterUrl": "https://attendio-library.attendio.online/696e97177c543fbdc440146ade92bad5542a8a33-photo-large.jpg",
+      "posterUrl": "https://attendio-library.attendio.online/249ba081326526f5eb9b94e73d6511ee0bca3c6a-poster-large.jpg",
       "detailUrl": "https://www.nostalgia.sk/film/12062",
       "englishTitle": "STILL STANDING, STILL STUFFED",
       "directors": [
         "Andrej Kolenčík, Juro Šlauka"
-      ]
+      ],
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-laska-diskusia-s-tvorcami-filmu-2026",
@@ -850,7 +896,8 @@
         "Dráma"
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/5/8/58f3b041-aaaf-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839500"
+      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839500",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-laska-to-nebola",
@@ -874,7 +921,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt13032926",
       "imdbRating": 7.6,
-      "imdbVotes": 180
+      "imdbVotes": 180,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-leto-ked-som-vsetkych-stratil-2026",
@@ -891,7 +939,8 @@
       "ageRating": null,
       "genres": [],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/3/c/3cc97bc3-5902-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-833527"
+      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-833527",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-liecive-ucinky-sebaklamu-2026",
@@ -914,7 +963,8 @@
       "tmdbId": 1735501,
       "overview": "Láska je příčinou i důvodem, proč slavný spisovatel Abel Znorko, nositel mnoha cen za literaturu, žije daleko od lidí a civilizace. Aby lásce unikl, aby se před ní schoval, aby popřel všechnu její sílu. Na samotě, ve svém luxusním srubu uprostřed lesů, luk a hájů, si požitkářky užívá života, ale také se topí ve své vlastní osamělosti.",
       "overviewLanguage": "cs",
-      "imdbId": "tt32862852"
+      "imdbId": "tt32862852",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-magicka-posadnutost-2",
@@ -930,7 +980,7 @@
         "Fantasy",
         "Dráma"
       ],
-      "posterUrl": "https://attendio-library.attendio.online/c5dc9a4e5a3434e3293585e8fa183eb0b6e38b4c-photo-large.jpg",
+      "posterUrl": "https://attendio-library.attendio.online/c11fb396b5563872fea4d0f8c95fea6ac88b8df1-poster-large.jpg",
       "detailUrl": "https://www.kfe.sk/film/11892",
       "englishTitle": "PRACTICAL MAGIC 2",
       "directors": [
@@ -939,59 +989,8 @@
       "tmdbId": 1302904,
       "overview": "Sandra Bullock a Nicole Kidman v pokračovaní kultovej rodinnej klasiky. Ako sestry Owensové sa vracajú, aby čelili dosiaľ najväčšej výzve. Temná rodinná kliatba ohrozuje nielen ich partnerov, ale hrozí, že definitívne pretrhne ich pokrvné puto a zničí všetko, čo milujú.",
       "overviewLanguage": "sk",
-      "imdbId": "tt32588798"
-    },
-    {
-      "id": "movie-mala-sestra",
-      "source": "edison-filmhub",
-      "externalId": "mala-sestra",
-      "title": "MALÁ SESTRA",
-      "englishTitle": "THE LITTLE SISTER",
-      "originalTitle": "La petite dernière",
-      "releaseYear": "2025",
-      "directors": [
-        "Hafsia Herzi"
-      ],
-      "durationMinutes": 106,
-      "ageRating": "15",
-      "genres": [
-        "Dráma"
-      ],
-      "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_52fcde6d505ca1818b2485aba738143f834e4f2b.jpg",
-      "detailUrl": "https://edisonfilmhub.sk/filmy/mala-sestra",
-      "tmdbId": 961077,
-      "overview": "Sedmnáctiletá Fatima, nejmladší ze tří sester, našlapuje velmi opatrně při hledání vlastní životní cesty, pohybujíc se mezi tužbami, které se postupně začínají vynořovat, náklonností k ženám a loajalitou vůči její starostlivé a milující francouzsko-alžírské rodině. Začíná studia na pařížské univerzitě, chodí randit, získává přátele, objevuje zcela nový svět – a při tom všem je neustále konfrontována s odvěkým a srdcervoucím dilematem: jak může člověk zůstat věrný sám sobě, když smíření odlišných částí jeho osobnosti se zdá nemožné?",
-      "overviewLanguage": "cs",
-      "imdbId": "tt28326501",
-      "imdbRating": 6.5,
-      "imdbVotes": 296
-    },
-    {
-      "id": "movie-margrete-kralovna-severu",
-      "source": "edison-filmhub",
-      "externalId": "margrete-kralovna-severu",
-      "title": "MARGRETE - KRÁĽOVNÁ SEVERU",
-      "englishTitle": "MARGRETE - QUEEN OF THE NORTH",
-      "originalTitle": "Margrete den første",
-      "releaseYear": "2021",
-      "directors": [
-        "Charlotte Sieling"
-      ],
-      "durationMinutes": 120,
-      "ageRating": "15",
-      "genres": [
-        "Dráma",
-        "Historický",
-        "Životopisný"
-      ],
-      "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_50005f8204414facae27e4232fbffc31ebb424ac.jpg",
-      "detailUrl": "https://edisonfilmhub.sk/filmy/margrete-kralovna-severu",
-      "tmdbId": 659370,
-      "overview": "Píše se rok 1402. Margrete dosáhla toho, co se ještě žádnému muži nepodařilo. Spojila Dánsko, Norsko a Švédsko do mírově orientované unie, kterou sama řídí prostřednictvím svého mladého adoptovaného syna Erika. Svazek je však sužován nepřáteli, a Margrete proto plánuje sňatek Erika a anglické princezny. Spojenectví s Anglií by mělo unii zajistit status nové evropské velmoci, avšak právě vznikající spiknutí má zničit Margrete a vše, v co věří.",
-      "overviewLanguage": "cs",
-      "imdbId": "tt9308390",
-      "imdbRating": 6.6,
-      "imdbVotes": 3431
+      "imdbId": "tt32588798",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-max-a-lea",
@@ -1009,7 +1008,8 @@
         "Rodinný"
       ],
       "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_f91bc217cfd5b41dd8b617cad19b1dd0bc34449a.jpg",
-      "detailUrl": "https://edisonfilmhub.sk/filmy/max-a-lea"
+      "detailUrl": "https://edisonfilmhub.sk/filmy/max-a-lea",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-michael",
@@ -1021,7 +1021,7 @@
       "durationMinutes": 127,
       "ageRating": "12",
       "genres": [],
-      "posterUrl": "https://attendio-library.attendio.online/384205b220bb4cd1245d38c978192febfeb1ba44-photo-large.jpg",
+      "posterUrl": "https://attendio-library.attendio.online/7b443efee1d1d7ee9b1e5e48e0eb5e56d5d54be8-poster-large.jpg",
       "detailUrl": "https://www.nostalgia.sk/film/9022",
       "englishTitle": "Michael",
       "directors": [
@@ -1031,7 +1031,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt11378946",
       "imdbRating": 7.5,
-      "imdbVotes": 144205
+      "imdbVotes": 144205,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-milovnik-nie-bojovnik",
@@ -1047,7 +1048,7 @@
         "Komédia",
         "Dráma"
       ],
-      "posterUrl": "https://attendio-library.attendio.online/4ae39d91f0fb3cff5043d23f8bda762c31d51529-photo-large.jpg",
+      "posterUrl": "https://attendio-library.attendio.online/1c1986a7a8c779708e108771d6ea3cf17125b328-poster-large.png",
       "detailUrl": "https://www.nostalgia.sk/film/11464",
       "englishTitle": "LOVER, NOT A FIGHTER",
       "directors": [
@@ -1056,32 +1057,8 @@
       "tmdbId": 1687998,
       "overview": "Andrej has a secret plan – to see no one, meet no one, only talk to his grandma and not climb high trees while being drunk. Then he unexpectedly encounters Miša, at whom he previously tried to smile 17 times while being drunk at parties. He never remembered the outcome as he was always too drunk, but not today. Today he is sober. Andrej and Miša start to talk and over the glass of Fanta find an interest in each other. The fight for their young and tender love begins.",
       "overviewLanguage": "en",
-      "imdbId": "tt43329650"
-    },
-    {
-      "id": "movie-mlady-picasso-pribehy-umenia-2019",
-      "source": "kino-lumiere",
-      "externalId": "744334",
-      "title": "Mladý Picasso | Príbehy umenia",
-      "englishTitle": "Young Picasso",
-      "originalTitle": "Young Picasso",
-      "releaseYear": "2019",
-      "directors": [
-        "Phil Grabsky"
-      ],
-      "durationMinutes": 91,
-      "ageRating": null,
-      "genres": [
-        "Dokumentárny"
-      ],
-      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/8/4/841b342a-7a68-11ef-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-744334",
-      "tmdbId": 527089,
-      "overview": "Pablo Picasso je jedním z největších umělců všech dob. Mnoho filmů se zaměřuje na jeho pozdější roky – jeho umění, milostný život i široký okruh jeho přátel. Jak to ale celé začalo? Jaké důvody vedly k Picassově vzestupu? Klíčovou roli hrála tři města – Málaga, Barcelona a Paříž. Film všechny postupně navštíví a prozkoumá jejich vliv na Picassa a jeho raná umělecká díla. Podrobně se zaměřuje na dvě období umělcovy tvorby – modré a růžové. Film vás tak zavede až do roku 1907 k vytvoření obrazu Avignonské slečny, který představuje klíčový milník historie výtvarného umění.",
-      "overviewLanguage": "cs",
-      "imdbId": "tt9298612",
-      "imdbRating": 7.3,
-      "imdbVotes": 92
+      "imdbId": "tt43329650",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-muchy-2026",
@@ -1107,7 +1084,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt35854741",
       "imdbRating": 6.2,
-      "imdbVotes": 50
+      "imdbVotes": 50,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-na-jednu-noc-2026",
@@ -1133,7 +1111,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt37853455",
       "imdbRating": 6.4,
-      "imdbVotes": 1318
+      "imdbVotes": 1318,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-najhorsi-clovek-na-svete-2021",
@@ -1158,7 +1137,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt10370710",
       "imdbRating": 7.7,
-      "imdbVotes": 126525
+      "imdbVotes": 126525,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-narusitel-systemu",
@@ -1183,7 +1163,8 @@
       "overviewLanguage": "sk",
       "imdbId": "tt8535968",
       "imdbRating": 7.8,
-      "imdbVotes": 16068
+      "imdbVotes": 16068,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-nedosiahnutelna-laska",
@@ -1211,7 +1192,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt8260226",
       "imdbRating": 7,
-      "imdbVotes": 2822
+      "imdbVotes": 2822,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-nenavist",
@@ -1223,7 +1205,7 @@
       "durationMinutes": 98,
       "ageRating": "15",
       "genres": [],
-      "posterUrl": "https://attendio-library.attendio.online/facff519eb1788d953f450f1fde5452b00823984-photo-large.webp",
+      "posterUrl": "https://attendio-library.attendio.online/2ba2d8ed20646463ca0a77b8c02c8232f0f7a08a-poster-large.jpg",
       "detailUrl": "https://www.nostalgia.sk/film/11420",
       "englishTitle": "La haine",
       "directors": [
@@ -1234,7 +1216,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt0113247",
       "imdbRating": 8.1,
-      "imdbVotes": 223323
+      "imdbVotes": 223323,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-nesmierny",
@@ -1254,7 +1237,8 @@
         "Thriller"
       ],
       "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_6f74051472b2e098d444e2f147f04dfe3310fccc.jpg",
-      "detailUrl": "https://edisonfilmhub.sk/filmy/nesmierny"
+      "detailUrl": "https://edisonfilmhub.sk/filmy/nesmierny",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-neuveritelne-ale-pravdive",
@@ -1275,7 +1259,8 @@
         "Fantasy"
       ],
       "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_ddb22edc3d2ded20bafd6b593f140ff7b0b6234f.jpg",
-      "detailUrl": "https://edisonfilmhub.sk/filmy/neuveritelne-ale-pravdive"
+      "detailUrl": "https://edisonfilmhub.sk/filmy/neuveritelne-ale-pravdive",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-neviditelny-jan-gogola-projekcia-spojena-s-diskusiou-2026",
@@ -1294,7 +1279,8 @@
         "Dokumentárny"
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/0/b/0bcfd788-9b11-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837852"
+      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837852",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-noz-vo-vode-1962",
@@ -1320,7 +1306,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt0056291",
       "imdbRating": 7.4,
-      "imdbVotes": 24943
+      "imdbVotes": 24943,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-oasis-don-t-look-back-in-anger",
@@ -1336,7 +1323,7 @@
         "Dokumentárny",
         "Hudobný"
       ],
-      "posterUrl": "https://attendio-library.attendio.online/7137bffae065512222c149424ebc13ce8ff79ea8-photo-large.jpg",
+      "posterUrl": "https://attendio-library.attendio.online/1d1020b817ee5a90ada58409a3699c731baf261a-poster-large.webp",
       "detailUrl": "https://www.nostalgia.sk/film/11720",
       "englishTitle": "OASIS: DON'T LOOK BACK IN ANGER",
       "directors": [
@@ -1346,7 +1333,8 @@
       "tmdbId": 1447853,
       "overview": "Legendární Oasis se vrací na velké plátno. Dokument Don’t Look Back In Anger zachycuje triumfální comeback Liama a Noela Gallagherových během turné Live ’25, které znamenalo jejich první společné živé vystoupení po 16 letech. Film nabídne dosud nezveřejněné záběry ze zákulisí, zkoušek i koncertních pódií a také první společné rozhovory bratrů Gallagherových po více než dvou dekádách.",
       "overviewLanguage": "cs",
-      "imdbId": "tt36152310"
+      "imdbId": "tt36152310",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-odrazy",
@@ -1372,7 +1360,8 @@
       "overviewLanguage": "sk",
       "imdbId": "tt5186236",
       "imdbRating": 7,
-      "imdbVotes": 3438
+      "imdbVotes": 3438,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-odysea",
@@ -1386,10 +1375,9 @@
       "genres": [
         "Historický",
         "Dráma",
-        "Fantasy",
-        "Dobrodružný"
+        "Fantasy"
       ],
-      "posterUrl": "https://attendio-library.attendio.online/c6861fa2d13c8015fd62cdd2975997be44b2353a-photo-large.jpg",
+      "posterUrl": "https://attendio-library.attendio.online/9ae454bc988b508ceabdb7fb82cd0f87968b1fe6-poster-large.jpg",
       "detailUrl": "https://www.nostalgia.sk/film/10806",
       "englishTitle": "ODYSEA",
       "directors": [
@@ -1400,7 +1388,8 @@
       "overviewLanguage": "sk",
       "imdbId": "tt33764258",
       "imdbRating": 8.5,
-      "imdbVotes": 377702
+      "imdbVotes": 377702,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-opusteny-2026",
@@ -1419,7 +1408,8 @@
         "Dráma"
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/e/5/e5a58c31-aaa8-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839494"
+      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839494",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-osem-noh-a-milion-followerov-2026",
@@ -1432,7 +1422,8 @@
       "ageRating": "15",
       "genres": [],
       "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787227398-8-400-300-foloweryUVODWEB.jpg",
-      "detailUrl": "https://www.kzp.sk/podujatie/klenoty-zanroveho-filmu-osem-noh-a-milion-followerov?place=80"
+      "detailUrl": "https://www.kzp.sk/podujatie/klenoty-zanroveho-filmu-osem-noh-a-milion-followerov?place=80",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-outsider-freud-2025",
@@ -1452,7 +1443,8 @@
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-837366",
       "overview": "A journey into the life and work of Sigmund Freud in four acts, combining animation, dreams, and insights from leading psychoanalysts. It explores Freud's experiences of marginalization as a Jew in Vienna during Hitler's rise and ...",
       "overviewLanguage": "en",
-      "imdbId": "tt35170345"
+      "imdbId": "tt35170345",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-persepolis-narodeninovy-special-2007",
@@ -1478,7 +1470,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt0808417",
       "imdbRating": 8,
-      "imdbVotes": 102920
+      "imdbVotes": 102920,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-pet-svestek-2026",
@@ -1501,7 +1494,8 @@
       "tmdbId": 1678214,
       "overview": "Věra žije sama a už ji v životě zdánlivě nic nečeká. Zasteskne se jí po době, kdy bývala  opravdu šťastná – když jezdila s přáteli na moře. Ze staré party však zbyly jen trosky a není  jisté, zda takové dobrodružství vůbec zvládnou. Přesto zatouží ještě jednou společně vyplout  na otevřené moře vstříc idylickým zátokám a západům slunce. Netuší, že největším  ohrožením jejich výpravy nebude moře, ani staré křivdy, které během cesty vyplují napovrch,  ale vlastní děti, které nemají pro bláznivý výlet starých rodičů pochopení.  Pět švestek režiséra Jana Svěráka s Lenkou Termerovou, Oldřichem Kaiserem, Petrem  Kostkou, Danou Syslovou a Janem Vlasákem v hlavních rolích, je dojemná i hravá komedie o  přátelství, lásce, odpuštění a o tom, že chuť žít a hledat svobodu může člověka provázet v  každé životní etapě.",
       "overviewLanguage": "cs",
-      "imdbId": "tt41126967"
+      "imdbId": "tt41126967",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-posledna-sezona-2026",
@@ -1521,27 +1515,8 @@
         "Dráma"
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/d/8/d8e37378-aaac-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839498"
-    },
-    {
-      "id": "movie-pozdravy-z-rodosu-zakoreneni-vo-vode-2026",
-      "source": "kino-lumiere",
-      "externalId": "838993",
-      "title": "Pozdravy z Rodosu + Zakorenení vo vode",
-      "englishTitle": "Pozdravy z Rodosu + Zakorenení vo vode",
-      "originalTitle": "Kým hory horia, voda stúpa (krátke filmy o klíme)",
-      "releaseYear": "2026",
-      "directors": [
-        "Viera Čákanyová",
-        "Tomáš Krupa"
-      ],
-      "durationMinutes": 63,
-      "ageRating": null,
-      "genres": [
-        "Pásmo krátkych filmov"
-      ],
-      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/e/4/e40a9c6e-a55b-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838993"
+      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839498",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-pozvanie",
@@ -1556,7 +1531,7 @@
         "Komédia",
         "Dráma"
       ],
-      "posterUrl": "https://attendio-library.attendio.online/eadb8ab2b3077a4e7c709af7921f702e524ca7c7-photo-large.webp",
+      "posterUrl": "https://attendio-library.attendio.online/cff35449b59fbc0cc2f146ebc36d120360610a11-poster-large.jpg",
       "detailUrl": "https://www.nostalgia.sk/film/10421",
       "englishTitle": "THE INVITE",
       "directors": [
@@ -1567,7 +1542,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt14173636",
       "imdbRating": 7.8,
-      "imdbVotes": 27141
+      "imdbVotes": 27141,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-pramen-2026",
@@ -1586,7 +1562,8 @@
         "Dráma"
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/4/9/49bf091b-746f-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-835586"
+      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-835586",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-preco-by-sme-sa-nezabili-2026",
@@ -1599,7 +1576,8 @@
       "ageRating": "12",
       "genres": [],
       "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787518275-8-400-300-precobyUVOD.jpg",
-      "detailUrl": "https://www.kzp.sk/podujatie/klenoty-zanroveho-filmu-preco-by-sme-sa-nezabili?place=80"
+      "detailUrl": "https://www.kzp.sk/podujatie/klenoty-zanroveho-filmu-preco-by-sme-sa-nezabili?place=80",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-princezna-kozmolesba-2025",
@@ -1629,7 +1607,8 @@
       "overviewLanguage": "sk",
       "imdbId": "tt29781139",
       "imdbRating": 7.1,
-      "imdbVotes": 424
+      "imdbVotes": 424,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-pripad-bojarski-ozveny-art-filmu-2026-2025",
@@ -1653,7 +1632,8 @@
       "tmdbId": 1376415,
       "overview": "A Polish engineer relocates to France and becomes a legendary counterfeiter. Working solo, he crafts flawless fake francs worth millions over 14 years, earning the nickname \"Cézanne of counterfeit money\" for his artistic skill and...",
       "overviewLanguage": "en",
-      "imdbId": "tt35495035"
+      "imdbId": "tt35495035",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-prisaham-ze-za-to-nemozem-2025",
@@ -1679,7 +1659,8 @@
       "overviewLanguage": "sk",
       "imdbId": "tt31514146",
       "imdbRating": 8.4,
-      "imdbVotes": 37223
+      "imdbVotes": 37223,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-prisaham-ze-za-to-nemozem",
@@ -1698,7 +1679,8 @@
         "Dráma"
       ],
       "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_b0ca14171e9b65d423a2736f2d4b639895e4b58e.jpg",
-      "detailUrl": "https://edisonfilmhub.sk/filmy/prisaham-ze-za-to-nemozem"
+      "detailUrl": "https://edisonfilmhub.sk/filmy/prisaham-ze-za-to-nemozem",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-psie-hviezdy-2026",
@@ -1721,7 +1703,8 @@
       "overviewLanguage": "sk",
       "imdbId": "tt21285562",
       "imdbRating": 6.5,
-      "imdbVotes": 10215
+      "imdbVotes": 10215,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-queen-budapest-music-film-2026",
@@ -1740,7 +1723,8 @@
         "Hudobný"
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/0/6/06066471-a12b-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838686"
+      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-838686",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-resident-evil-2026",
@@ -1761,7 +1745,8 @@
       "tmdbId": 1423191,
       "overview": "Film sleduje jedinou noc, kdy se obyčejný kurýr Bryan vydává doručit zásilku do Raccoon City – města, které se mezitím propadá do naprostého chaosu po úniku smrtícího viru. Jak se ulice zaplňují nakaženými a realita se mění v noční můru, Bryan je nucen bojovat o přežití, improvizovat s omezenými prostředky a čelit nejen hordám nemrtvých, ale i rozpadu společnosti kolem sebe. Izolovaný, bez pomoci a bez jasného vysvětlení toho, co se vlastně stalo, se postupně dostává hlouběji do centra katastrofy – a zjišťuje, že za nákazou stojí něco mnohem děsivějšího, než si dokázal představit.",
       "overviewLanguage": "cs",
-      "imdbId": "tt35538033"
+      "imdbId": "tt35538033",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-riefenstahl",
@@ -1780,7 +1765,8 @@
         "Dokumentárny"
       ],
       "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_37fdde60c8389f9f6a741e87fdcd6b17603ca66a.jpg",
-      "detailUrl": "https://edisonfilmhub.sk/filmy/riefenstahl"
+      "detailUrl": "https://edisonfilmhub.sk/filmy/riefenstahl",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-rodina",
@@ -1792,7 +1778,7 @@
       "durationMinutes": 110,
       "ageRating": "12",
       "genres": [],
-      "posterUrl": "https://attendio-library.attendio.online/0fe9e8ccd17b4381a31fd7883289530b2cf800c4-photo-large.png",
+      "posterUrl": "https://attendio-library.attendio.online/38a88be764668a76690795b7507efdacd0e5a670-poster-large.jpg",
       "detailUrl": "https://www.nostalgia.sk/film/11827",
       "englishTitle": "Rodina",
       "directors": [
@@ -1802,7 +1788,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt3626076",
       "imdbRating": 5.4,
-      "imdbVotes": 412
+      "imdbVotes": 412,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-rose-2026",
@@ -1826,7 +1813,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt25399154",
       "imdbRating": 7.6,
-      "imdbVotes": 1104
+      "imdbVotes": 1104,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-rufus-morsky-dracik-ktory-nevedel-plavat-inkluzivne-kino-pre-deti-2025",
@@ -1851,7 +1839,8 @@
       "tmdbId": 1512207,
       "overview": "Na malom ostrove, ktorý sa nedá nájsť nikde na mape, si morské príšerky užívajú šťastný a bezstarostný život. Boja sa len jednej veci – aby ich neobjavili ľudia. Našťastie majú strýka Ludvika s čínskou dračou krvou v žilách, ktorý dokáže vypustiť paru a zahaliť ostrov hmlou vždy, keď sa na obzore  objaví nejaká loď. Jedným z obyvateľov ostrova je aj morský dráčik Rufus, ktorý má veľkú smolu – nevie totiž plávať, a preto väčšinu času trávi sám. Všetko sa zmení vo chvíli, kedy strýko stratí svoju magickú silu a ostrov sa ocitne v nebezpečenstve. Jediný, kto im môže pomôcť, je teta Bessie z lochnesského jazera v ďalekom Škótsku. Rufus pochopí, že toto je jeho príležitosť a prihlási sa, že za ňou pôjde. Bude musieť prekonať sám seba a čeliť svojmu strachu, ale konečne dostane šancu dokázať, že aj keď je iný, patrí do rodiny.",
       "overviewLanguage": "sk",
-      "imdbId": "tt32267711"
+      "imdbId": "tt32267711",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-ryska-1973",
@@ -1873,7 +1862,8 @@
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839254",
       "imdbId": "tt0124100",
       "imdbRating": 5.7,
-      "imdbVotes": 22
+      "imdbVotes": 22,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-samuraj-a-vazen-2026",
@@ -1886,7 +1876,8 @@
       "ageRating": "15",
       "genres": [],
       "posterUrl": "https://www.kzp.sk/thumbs/uploads/2026_09/kino/1787142873-8-400-300-2samurajavazanUVODWEB.jpg",
-      "detailUrl": "https://www.kzp.sk/podujatie/ozveny-svetovych-festivalov-samuraj-a-vaezen-1?place=80"
+      "detailUrl": "https://www.kzp.sk/podujatie/ozveny-svetovych-festivalov-samuraj-a-vaezen-1?place=80",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-sex-a-smrt-v-kempe-miasma",
@@ -1913,7 +1904,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt35298123",
       "imdbRating": 7.1,
-      "imdbVotes": 912
+      "imdbVotes": 912,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-sip-paint-caravaggiov-tien",
@@ -1934,7 +1926,8 @@
         "Životopisný"
       ],
       "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_ef9103d7f1f6834cd858ede1d0ec78d666e3d3d6.jpg",
-      "detailUrl": "https://edisonfilmhub.sk/filmy/sip-paint-film"
+      "detailUrl": "https://edisonfilmhub.sk/filmy/sip-paint-film",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-soukroma-vichrice-vyrocia-80-daniela-kolarova-1967",
@@ -1957,7 +1950,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt0123276",
       "imdbRating": 7.6,
-      "imdbVotes": 48
+      "imdbVotes": 48,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-spider-man-novy-den",
@@ -1984,7 +1978,8 @@
       "overviewLanguage": "sk",
       "imdbId": "tt22084616",
       "imdbRating": 8.1,
-      "imdbVotes": 183571
+      "imdbVotes": 183571,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-spomienky-z-bazena",
@@ -2011,29 +2006,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt0405461",
       "imdbRating": 7.2,
-      "imdbVotes": 252
-    },
-    {
-      "id": "movie-stvoreni-pre-lasku-narodeninovy-special-2000",
-      "source": "kino-lumiere",
-      "externalId": "174253",
-      "title": "Stvorení pre lásku | Narodeninový špeciál",
-      "englishTitle": "In the Mood for Love",
-      "originalTitle": "Hua yang nian hua",
-      "releaseYear": "2000",
-      "directors": [
-        "Kar-wai Wong"
-      ],
-      "durationMinutes": 94,
-      "ageRating": null,
-      "genres": [],
-      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/c/e/cec7f708-a137-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-174253",
-      "overview": "Two neighbors form a strong bond after both suspect extramarital activities of their spouses. However, they agree to keep their bond platonic so as not to commit similar wrongs.",
-      "overviewLanguage": "en",
-      "imdbId": "tt0118694",
-      "imdbRating": 8,
-      "imdbVotes": 184505
+      "imdbVotes": 252,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-serif-za-mrezami-vyrocia-80-petr-svojtka-1965",
@@ -2055,7 +2029,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt0243544",
       "imdbRating": 6.5,
-      "imdbVotes": 49
+      "imdbVotes": 49,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-stastie-pre-troch-1985",
@@ -2078,7 +2053,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt0090360",
       "imdbRating": 6.7,
-      "imdbVotes": 212
+      "imdbVotes": 212,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-tajomstvo-dzungle",
@@ -2100,7 +2076,8 @@
         "Pre deti"
       ],
       "posterUrl": "https://edisonfilmhub.sk/CONTENT/FILMY/POSTER_1X/PosterSK_d4602fd05cc2c36067cae2d9816ce9a6633f5afc.jpg",
-      "detailUrl": "https://edisonfilmhub.sk/filmy/tajomstvo-dzungle"
+      "detailUrl": "https://edisonfilmhub.sk/filmy/tajomstvo-dzungle",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-tony",
@@ -2110,7 +2087,7 @@
       "originalTitle": "Tony",
       "releaseYear": "2026",
       "durationMinutes": 106,
-      "ageRating": "15",
+      "ageRating": "12",
       "genres": [
         "Životopisný",
         "Dráma",
@@ -2118,7 +2095,7 @@
         "Komédia",
         "Čierna komédia"
       ],
-      "posterUrl": "https://attendio-library.attendio.online/cc079e29c18c04558649bdfc5fc34f62d4b7bef2-photo-large.jpg",
+      "posterUrl": "https://attendio-library.attendio.online/4723079c3484e7515c27d29708b99b51fb087bf7-poster-large.jpg",
       "detailUrl": "https://www.kfe.sk/film/11891",
       "englishTitle": "TONY",
       "directors": [
@@ -2129,7 +2106,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt33095251",
       "imdbRating": 7.7,
-      "imdbVotes": 156
+      "imdbVotes": 156,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-trpke-sviatky",
@@ -2141,8 +2119,9 @@
       "durationMinutes": null,
       "ageRating": "12",
       "genres": [],
-      "posterUrl": "https://attendio-library.attendio.online/9ca2b1a05fe597e6e7c59c879be5fb08532471b9-photo-large.jpeg",
-      "detailUrl": "https://www.nostalgia.sk/film/12088"
+      "posterUrl": "https://attendio-library.attendio.online/74cefd31d152893fe29e109efd2098dc8c86995e-poster-large.jpg",
+      "detailUrl": "https://www.nostalgia.sk/film/12088",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-trpke-vianoce",
@@ -2159,7 +2138,8 @@
       "ageRating": "15",
       "genres": [],
       "posterUrl": "https://a4.sk/wp-content/uploads/2026/08/kino-inak_facebook-event-e1788624574693.png",
-      "detailUrl": "https://a4.sk/events/2026/09/27/trpke-vianoce"
+      "detailUrl": "https://a4.sk/events/2026/09/27/trpke-vianoce",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-turner-constable-pribehy-umenia-2025",
@@ -2181,7 +2161,8 @@
       "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-829999",
       "overview": "Celebrating the 250th anniversary of their births, this unmissable new documentary explores Turner and Constable's intertwined lives and legacies alongside the groundbreaking Tate exhibition. Two of Britain's greatest painters, J....",
       "overviewLanguage": "en",
-      "imdbId": "tt38351582"
+      "imdbId": "tt38351582",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-ulica-malaga-ozveny-art-filmu-2026-2025",
@@ -2203,7 +2184,8 @@
       "overview": "An aging Spanish woman in Tangier resists her daughter's decision to sell her home. Determined to stay, she does everything she can to keep her home and reclaim the belongings of a lifetime. Along the way, she rediscovers love and...",
       "overviewLanguage": "en",
       "imdbId": "tt32429174",
-      "imdbVotes": 19
+      "imdbVotes": 19,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-utajene-poklady-dj-ahmet-2025",
@@ -2226,7 +2208,8 @@
       "overviewLanguage": "cs",
       "imdbId": "tt34964187",
       "imdbRating": 7.3,
-      "imdbVotes": 1368
+      "imdbVotes": 1368,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-v-srdci-divociny-2026",
@@ -2247,7 +2230,8 @@
       "tmdbId": 1263337,
       "overview": "James Belmont, penzionovaný vojenský expert, se se svým psem Odinem, taktéž válečným veteránem, vydává na výlet do aljašské divočiny. Jejich výprava se povážlivě zkomplikuje, když James vinou zdravotní indispozice nezvládne pilotování malého letadla a havaruje. Ti dva už v minulosti ve válečné zóně dokázali, že se jeden na druhého můžou stoprocentně spolehnout. Zvládnou ale spolu zdolat nástrahy aljašské divočiny, kde číhá smrtelné nebezpečí na každém kroku? A poté, co oba letecká havárie nepěkně pocuchala? A protože jedinou nadějí na přežití je pro oba návrat do civilizace, musí se vydat na cestu, která se promění v boj s přírodou v její nejdrsnější podobě. Když ale máte po boku dobrého parťáka, lze zvládnout cokoliv.",
       "overviewLanguage": "cs",
-      "imdbId": "tt7526136"
+      "imdbId": "tt7526136",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-v-ziare-tienov",
@@ -2259,8 +2243,9 @@
       "durationMinutes": null,
       "ageRating": null,
       "genres": [],
-      "posterUrl": "https://attendio-library.attendio.online/1ce1f8afe5eebcfeb0bd463873dff9d136e9a4fe-photo-large.jpg",
-      "detailUrl": "https://www.kfe.sk/film/12048"
+      "posterUrl": "https://attendio-library.attendio.online/9b1a945c7b731a1b40e64bd0edba5388b37a2c12-poster-large.jpg",
+      "detailUrl": "https://www.kfe.sk/film/12048",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-wellness-vikend-2026",
@@ -2284,7 +2269,8 @@
       "tmdbId": 1341138,
       "overview": "Jane, Coco a Sophie si naplánovaly jediné – vypnout, nechat všechny starosti doma a užít si víkend plný wellness, prosecca a ničím nerušené pohody. Jenže pak dorazí Mel. Kamarádka, která dokáže proměnit každou zdánlivě nevinnou situaci v naprostou katastrofu. Co mělo být luxusním únikem od reality, se během chvíle mění v divokou jízdu plnou alkoholu, nečekaných známostí, praštěných nápadů a trapasů, které nabírají stále větší obrátky. Jediné, co je jisté? Domů se rozhodně nevrátí s čistou hlavou ani odpočatým tělem. A hlavně – co se stane ve wellness, zůstane ve wellness.",
       "overviewLanguage": "cs",
-      "imdbId": "tt33305867"
+      "imdbId": "tt33305867",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-zabudnuty-ostrov-2026",
@@ -2306,7 +2292,8 @@
       "tmdbId": 1465063,
       "overview": "Two best friends become stranded on the mystical world of Nakali, where their only escape might cost them their shared lifetime of memories.",
       "overviewLanguage": "en",
-      "imdbId": "tt36583977"
+      "imdbId": "tt36583977",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-zapas-storocia",
@@ -2321,7 +2308,7 @@
         "Športový",
         "Dokumentárny"
       ],
-      "posterUrl": "https://attendio-library.attendio.online/a93b9a4db5feae67a9e3cdd56345873acb1cec3c-photo-large.jpg",
+      "posterUrl": "https://attendio-library.attendio.online/f1806970697042590c65c785cd288f6197783944-poster-large.jpg",
       "detailUrl": "https://www.kfe.sk/film/11568",
       "englishTitle": "THE MATCH",
       "directors": [
@@ -2331,7 +2318,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt41593328",
       "imdbRating": 7,
-      "imdbVotes": 13
+      "imdbVotes": 13,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-zapas-storocia-2026",
@@ -2352,7 +2340,8 @@
         "Športový"
       ],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/a/1/a1a625fb-aaa5-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839488"
+      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839488",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-zmluva-s-diablom-restaurovana-klasika-sk-1967",
@@ -2378,7 +2367,8 @@
       "overviewLanguage": "sk",
       "imdbId": "tt0062525",
       "imdbRating": 7,
-      "imdbVotes": 89
+      "imdbVotes": 89,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-zygfryd-1987",
@@ -2401,7 +2391,8 @@
       "overviewLanguage": "en",
       "imdbId": "tt0094394",
       "imdbRating": 6.3,
-      "imdbVotes": 55
+      "imdbVotes": 55,
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     },
     {
       "id": "movie-zivot-je-dlhy-metraz-kratka",
@@ -2421,233 +2412,11 @@
       "ageRating": null,
       "genres": [],
       "posterUrl": "https://storage.cinemaware.eu/katalogy/images/a/1/a14aa20a-a6da-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839176"
+      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839176",
+      "firstSeenAt": "2026-09-08T12:05:24.126Z"
     }
   ],
   "screenings": [
-    {
-      "id": "kino-lumiere-5569297",
-      "source": "kino-lumiere",
-      "externalId": "5569297",
-      "movieId": "movie-bardotky",
-      "cinemaId": "lumiere",
-      "startsAt": "2026-09-07T17:30:00+02:00",
-      "auditorium": null,
-      "format": [],
-      "languages": {
-        "original": [],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": "7,- €",
-      "soldOut": false,
-      "availabilityRatio": null,
-      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=716d97eee588917902718a3ef514c3b407806ad5804f8eeb6dcccc96"
-    },
-    {
-      "id": "kino-lumiere-5569375",
-      "source": "kino-lumiere",
-      "externalId": "5569375",
-      "movieId": "movie-muchy-2026",
-      "cinemaId": "lumiere",
-      "startsAt": "2026-09-07T17:50:00+02:00",
-      "auditorium": null,
-      "format": [],
-      "languages": {
-        "original": [
-          "spa"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": "7,- €",
-      "soldOut": false,
-      "availabilityRatio": null,
-      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=b2acc0bbda73a5373263614576a09d1e88c8ff0529fc848619cf0b67"
-    },
-    {
-      "id": "kino-lumiere-5563516",
-      "source": "kino-lumiere",
-      "externalId": "5563516",
-      "movieId": "movie-mlady-picasso-pribehy-umenia-2019",
-      "cinemaId": "lumiere",
-      "startsAt": "2026-09-07T18:10:00+02:00",
-      "auditorium": null,
-      "format": [],
-      "languages": {
-        "original": [
-          "eng"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": "8,- €",
-      "soldOut": false,
-      "availabilityRatio": null,
-      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=7382afab9fad6f63eea4466172f5a9be12c78b812a0de7c3d6577959"
-    },
-    {
-      "id": "kino-mladost-ac0a4be53ed8bc0b98d4714df28df90d24269ef106c1b36abcf0ee65",
-      "source": "kino-mladost",
-      "externalId": "ac0a4be53ed8bc0b98d4714df28df90d24269ef106c1b36abcf0ee65",
-      "movieId": "movie-odysea",
-      "cinemaId": "mladost",
-      "startsAt": "2026-09-07T18:15:00+02:00",
-      "auditorium": "Kinosála",
-      "format": [
-        "2D"
-      ],
-      "languages": {
-        "original": [],
-        "dubbed": [
-          "sk"
-        ],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": "7,00 €",
-      "soldOut": false,
-      "availabilityRatio": null,
-      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=ac0a4be53ed8bc0b98d4714df28df90d24269ef106c1b36abcf0ee65"
-    },
-    {
-      "id": "kino-lumiere-5569456",
-      "source": "kino-lumiere",
-      "externalId": "5569456",
-      "movieId": "movie-dunaj-1982",
-      "cinemaId": "lumiere",
-      "startsAt": "2026-09-07T18:20:00+02:00",
-      "auditorium": null,
-      "format": [],
-      "languages": {
-        "original": [
-          "slk"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": "4,- €",
-      "soldOut": false,
-      "availabilityRatio": null,
-      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=de2e58af6b70bc12e5263039909b1358be4d5a1aed7710950df33664"
-    },
-    {
-      "id": "kino-lumiere-2026-09-07-19:30-movie-stvoreni-pre-lasku-narodeninovy-special-2000",
-      "source": "kino-lumiere",
-      "externalId": "2026-09-07-19:30-movie-stvoreni-pre-lasku-narodeninovy-special-2000",
-      "movieId": "movie-stvoreni-pre-lasku-narodeninovy-special-2000",
-      "cinemaId": "lumiere",
-      "startsAt": "2026-09-07T19:30:00+02:00",
-      "auditorium": null,
-      "format": [],
-      "languages": {
-        "original": [
-          "zho"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": null,
-      "soldOut": false,
-      "availabilityRatio": null,
-      "bookingUrl": null
-    },
-    {
-      "id": "edison-filmhub-92829",
-      "source": "edison-filmhub",
-      "externalId": "92829",
-      "movieId": "movie-mala-sestra",
-      "cinemaId": "edison-filmhub",
-      "startsAt": "2026-09-07T20:00:00+02:00",
-      "auditorium": "Malá sála",
-      "format": [],
-      "languages": {
-        "original": [
-          "fr"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": [
-          "cs"
-        ]
-      },
-      "price": "9 €",
-      "soldOut": false,
-      "availabilityRatio": null,
-      "bookingUrl": "https://edisonfilmhub.sk/kosik?ent_id=92829"
-    },
-    {
-      "id": "kino-lumiere-5569378",
-      "source": "kino-lumiere",
-      "externalId": "5569378",
-      "movieId": "movie-cudzinec",
-      "cinemaId": "lumiere",
-      "startsAt": "2026-09-07T20:00:00+02:00",
-      "auditorium": null,
-      "format": [],
-      "languages": {
-        "original": [
-          "fra"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": "7,- €",
-      "soldOut": false,
-      "availabilityRatio": null,
-      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=79c20c17a790e5288875cffa73bf7ecf6a3dba67ca379ec7b357c08c"
-    },
-    {
-      "id": "kino-lumiere-5569330",
-      "source": "kino-lumiere",
-      "externalId": "5569330",
-      "movieId": "movie-pozvanie",
-      "cinemaId": "lumiere",
-      "startsAt": "2026-09-07T20:10:00+02:00",
-      "auditorium": null,
-      "format": [],
-      "languages": {
-        "original": [
-          "eng"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": "7,- €",
-      "soldOut": false,
-      "availabilityRatio": null,
-      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=63baff317d64b6a9c48b838b0ca8639b9245140c60d867e844732e26"
-    },
-    {
-      "id": "kino-lumiere-5569468",
-      "source": "kino-lumiere",
-      "externalId": "5569468",
-      "movieId": "movie-pozdravy-z-rodosu-zakoreneni-vo-vode-2026",
-      "cinemaId": "lumiere",
-      "startsAt": "2026-09-07T20:45:00+02:00",
-      "auditorium": null,
-      "format": [],
-      "languages": {
-        "original": [
-          "eng",
-          "slk"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": []
-      },
-      "price": "7,- €",
-      "soldOut": false,
-      "availabilityRatio": null,
-      "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=bf4e51904e0ff956241915daded0ca8623ea3d6a604eb59ddeafd543"
-    },
     {
       "id": "kino-lumiere-5563537",
       "source": "kino-lumiere",
@@ -2687,31 +2456,6 @@
       "soldOut": false,
       "availabilityRatio": null,
       "bookingUrl": "https://system.cinemaware.eu/wstep1.php?id=f09d5e131ff84e791336cd7a23e862a2d808d9be013e8967904d45a8"
-    },
-    {
-      "id": "edison-filmhub-90547",
-      "source": "edison-filmhub",
-      "externalId": "90547",
-      "movieId": "movie-margrete-kralovna-severu",
-      "cinemaId": "edison-filmhub",
-      "startsAt": "2026-09-08T13:30:00+02:00",
-      "auditorium": "Veľká sála",
-      "format": [],
-      "languages": {
-        "original": [
-          "da"
-        ],
-        "dubbed": [],
-        "voiceover": [],
-        "subtitles": [
-          "cs",
-          "en"
-        ]
-      },
-      "price": "4 €",
-      "soldOut": false,
-      "availabilityRatio": null,
-      "bookingUrl": "https://edisonfilmhub.sk/kosik?ent_id=90547"
     },
     {
       "id": "edison-filmhub-90615",
@@ -5137,6 +4881,30 @@
       "bookingUrl": "https://edisonfilmhub.sk/kosik?ent_id=92749"
     },
     {
+      "id": "edison-filmhub-93545",
+      "source": "edison-filmhub",
+      "externalId": "93545",
+      "movieId": "movie-odysea",
+      "cinemaId": "edison-filmhub",
+      "startsAt": "2026-09-13T10:30:00+02:00",
+      "auditorium": "Malá sála",
+      "format": [],
+      "languages": {
+        "original": [
+          "en"
+        ],
+        "dubbed": [],
+        "voiceover": [],
+        "subtitles": [
+          "sk"
+        ]
+      },
+      "price": "9 €",
+      "soldOut": false,
+      "availabilityRatio": null,
+      "bookingUrl": "https://edisonfilmhub.sk/kosik?ent_id=93545"
+    },
+    {
       "id": "edison-filmhub-92750",
       "source": "edison-filmhub",
       "externalId": "92750",
@@ -6922,7 +6690,7 @@
       "id": "kino-luky-6a856204777a8904d1b14a67",
       "source": "kino-luky",
       "externalId": "6a856204777a8904d1b14a67",
-      "movieId": "movie-milovnik-nie-bojovnik",
+      "movieId": "movie-domaca-uroda-milovnik-nie-bojovnik-2026",
       "cinemaId": "luky",
       "startsAt": "2026-09-17T19:00:00+02:00",
       "auditorium": "Dom kultúry Lúky",
@@ -7997,7 +7765,9 @@
         "2D"
       ],
       "languages": {
-        "original": [],
+        "original": [
+          "sk"
+        ],
         "dubbed": [],
         "voiceover": [],
         "subtitles": []

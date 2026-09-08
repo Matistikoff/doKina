@@ -23,6 +23,7 @@ export function validateProgram(program) {
     if (movie.imdbId != null && !/^tt\d+$/.test(movie.imdbId)) errors.push(`invalid imdbId: ${movie.imdbId}`);
     if (movie.imdbRating != null && (!Number.isFinite(movie.imdbRating) || movie.imdbRating < 1 || movie.imdbRating > 10)) errors.push(`invalid imdbRating: ${movie.imdbRating}`);
     if (movie.imdbVotes != null && (!Number.isInteger(movie.imdbVotes) || movie.imdbVotes < 0)) errors.push(`invalid imdbVotes: ${movie.imdbVotes}`);
+    if (movie.firstSeenAt != null && (!isString(movie.firstSeenAt) || Number.isNaN(Date.parse(movie.firstSeenAt)))) errors.push(`invalid firstSeenAt for ${movie.id}`);
   }
 
   for (const screening of program?.screenings || []) {

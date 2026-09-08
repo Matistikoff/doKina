@@ -1,0 +1,69 @@
+{
+  "data": {
+    "paginatedEventsOnEcommerce": {
+      "items": [
+        {
+          "id": 89460,
+          "startsAt": "2026-09-09T15:00:00.000Z",
+          "names": {
+            "sk": "Bojovník",
+            "en": null
+          },
+          "ecommerceEventURL": "https://shop.entradio.sk/event/89460",
+          "availableSeatsCount": 235,
+          "auditorium": {
+            "name": "Sála"
+          },
+          "formatCode": "digital_2d",
+          "versionCode": "original",
+          "ageClassificationCode": "sk_unsuitable_under15",
+          "show": {
+            "id": 10899,
+            "primaryImage": {
+              "url": "https://images.example/poster.jpg",
+              "thumbnails": [
+                {
+                  "size": "large",
+                  "url": "https://images.example/poster-large.jpg"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 92766,
+          "startsAt": "2026-09-09T17:30:00.000Z",
+          "names": {
+            "sk": "Tony",
+            "en": null
+          },
+          "ecommerceEventURL": "https://shop.entradio.sk/event/92766",
+          "availableSeatsCount": 273,
+          "auditorium": {
+            "name": "Sála"
+          },
+          "formatCode": "digital_2d",
+          "versionCode": "subtitles_ces",
+          "ageClassificationCode": "sk_unsuitable_under15",
+          "show": {
+            "id": 11825,
+            "primaryImage": {
+              "url": "https://images.example/poster.jpg",
+              "thumbnails": [
+                {
+                  "size": "large",
+                  "url": "https://images.example/poster-large.jpg"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "pagination": {
+        "hasMore": false,
+        "offset": 2,
+        "limit": 100
+      }
+    }
+  }
+}

@@ -120,6 +120,18 @@ test("parses Nová Cvernovka film events and pairs localized English titles", as
   assert.equal(result.screenings[0].startsAt, "2026-09-06T20:30:00+02:00");
 });
 
+test("accepts a valid Nová Cvernovka programme without film screenings", () => {
+  const result = parseNovaCvernovka(`
+    <main>
+      <article class="infinite-scroll-item tag-workshop" data-start="20260910" id="post-24277">
+        <div class="FilterItem__date-container"><div>10/09</div><div>17:30</div></div>
+        <h3 class="entry-title">Tvorivý komunitný večer</h3>
+      </article>
+    </main>
+  `);
+  assert.deepEqual(result, { movies: [], screenings: [] });
+});
+
 test("parses Nová Cvernovka detail metadata", () => {
   const details = parseNovaCvernovkaDetails(`
     <article>
@@ -169,6 +181,6 @@ test("new cinema parsers reject pages without schedules", () => {
   assert.throws(() => parseLuky("<html></html>"), /no recognizable screenings/i);
   assert.throws(() => parseNostalgia("<html></html>"), /no recognizable screenings/i);
   assert.throws(() => parseEdison("<html></html>"), /no recognizable screenings/i);
-  assert.throws(() => parseNovaCvernovka("<html></html>"), /no recognizable film screenings/i);
+  assert.throws(() => parseNovaCvernovka("<html></html>"), /no recognizable programme items/i);
   assert.throws(() => parseA4KinoInak("<html></html>"), /no recognizable screenings/i);
 });

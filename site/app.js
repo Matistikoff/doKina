@@ -1,5 +1,8 @@
 import { formatDuration } from "./formatters.js";
 
+const CULT_MOVIE_LATEST_YEAR = 2024;
+const RECENTLY_ADDED_DAYS = 7;
+
 const state = {
   program: null,
   selectedPeriod: "all",
@@ -429,8 +432,7 @@ function configureDateFilters() {
 }
 
 function renderGenres() {
-  const genres = [...new Set(state.program.movies.flatMap((movie) => movie.genres || []))]
-    .sort((a, b) => a.localeCompare(b, "sk"));
+  const genres = availableGenres();
   state.selectedGenres = new Set([...state.selectedGenres].filter((genre) => genres.includes(genre)));
   elements.genreFilter.replaceChildren(...["all", ...genres].map((genre) => {
     const label = document.createElement("label");
@@ -446,12 +448,20 @@ function renderGenres() {
   updateGenreSelection();
 }
 
+function availableGenres() {
+  return [...new Set(state.program.movies.flatMap((movie) => movie.genres || []))]
+    .sort((a, b) => a.localeCompare(b, "sk"));
+}
+
 function updateGenreSelection() {
+  const genres = availableGenres();
+  const allSelected = state.selectedGenres.size === genres.length;
   for (const checkbox of elements.genreFilter.querySelectorAll("input")) {
-    checkbox.checked = checkbox.value === "all" ? state.selectedGenres.size === 0 : state.selectedGenres.has(checkbox.value);
+    checkbox.checked = checkbox.value === "all" ? allSelected : state.selectedGenres.has(checkbox.value);
   }
   const selected = [...state.selectedGenres];
-  elements.genreSummary.textContent = selected.length === 0 ? "Všetky žánre"
+  elements.genreSummary.textContent = allSelected ? "Všetky žánre"
+    : selected.length === 0 ? "Žiadny žáner"
     : selected.length === 1 ? selected[0] : `Žánre (${selected.length})`;
   elements.genreSummary.title = selected.join(", ");
 }
@@ -637,15 +647,21 @@ function renderProgram() {
   const cinemaMap = new Map(state.program.cinemas.map((cinema) => [cinema.id, cinema]));
   const { start, end } = periodBounds();
   const moviesInGenre = new Set(state.program.movies
-    .filter((movie) => state.selectedGenres.size === 0 || movie.genres?.some((genre) => state.selectedGenres.has(genre)))
+    .filter((movie) => state.selectedGenres.size === availableGenres().length || movie.genres?.some((genre) => state.selectedGenres.has(genre)))
     .map((movie) => movie.id));
   const now = Date.now();
+  const recentlyAddedSince = Date.parse(state.program.generatedAt) - RECENTLY_ADDED_DAYS * 86_400_000;
   const visible = state.program.screenings.filter((screening) => {
     const date = dateKey(screening.startsAt);
+    const movie = movieMap.get(screening.movieId);
+    const releaseYear = Number.parseInt(movie?.releaseYear, 10);
+    const firstSeenAt = Date.parse(movie?.firstSeenAt);
     return new Date(screening.startsAt).getTime() > now
       && date >= start && date <= end
       && state.selectedCinemas.has(screening.cinemaId)
-      && moviesInGenre.has(screening.movieId);
+      && moviesInGenre.has(screening.movieId)
+      && (state.sortBy !== "cult" || (Number.isFinite(releaseYear) && releaseYear <= CULT_MOVIE_LATEST_YEAR))
+      && (state.sortBy !== "added" || (Number.isFinite(firstSeenAt) && firstSeenAt >= recentlyAddedSince));
   });
   const grouped = groupScreenings(visible);
   elements.selectedPeriodLabel.textContent = periodLabel();
@@ -663,22 +679,15 @@ function renderProgram() {
     .map(([movieId, screenings]) => ({ movie: movieMap.get(movieId), screenings }))
     .filter(({ movie }) => movie)
     .sort((a, b) => {
-      if (state.sortBy === "rating") {
+      if (state.sortBy === "rating" || state.sortBy === "cult") {
         const ratingA = Number.isFinite(a.movie.imdbRating) ? a.movie.imdbRating : -1;
         const ratingB = Number.isFinite(b.movie.imdbRating) ? b.movie.imdbRating : -1;
         return ratingB - ratingA || a.movie.title.localeCompare(b.movie.title, "sk");
       }
-      if (state.sortBy === "year") {
-        const yearA = Number.parseInt(a.movie.releaseYear, 10) || 0;
-        const yearB = Number.parseInt(b.movie.releaseYear, 10) || 0;
-        return yearB - yearA || a.movie.title.localeCompare(b.movie.title, "sk");
+      if (state.sortBy === "added") {
+        return Date.parse(b.movie.firstSeenAt) - Date.parse(a.movie.firstSeenAt)
+          || a.movie.title.localeCompare(b.movie.title, "sk");
       }
-      if (state.sortBy === "year-oldest") {
-        const yearA = Number.parseInt(a.movie.releaseYear, 10) || Number.MAX_SAFE_INTEGER;
-        const yearB = Number.parseInt(b.movie.releaseYear, 10) || Number.MAX_SAFE_INTEGER;
-        return yearA - yearB || a.movie.title.localeCompare(b.movie.title, "sk");
-      }
-      if (state.sortBy === "title") return a.movie.title.localeCompare(b.movie.title, "sk");
       const firstA = a.screenings.map((item) => item.startsAt).sort()[0];
       const firstB = b.screenings.map((item) => item.startsAt).sort()[0];
       return firstA.localeCompare(firstB) || a.movie.title.localeCompare(b.movie.title, "sk");
@@ -697,8 +706,15 @@ function renderFreshness() {
   const failedSources = state.program.sources?.filter((source) => source.status !== "ok") || [];
 
   if (failedSources.length) {
+    const failedSourceNames = failedSources.map((source) => {
+      const cinema = state.program.cinemas.find((item) => (
+        item.id === source.id || `kino-${item.id}` === source.id
+      ));
+      return cinema?.shortName || cinema?.name || source.id;
+    });
+    const failureLabel = failedSources.length === 1 ? "zlyhal zdroj" : "zlyhali zdroje";
     dot.classList.add("is-error");
-    label.textContent = `Aktualizované ${formatUpdated(state.program.generatedAt)} · niektoré zdroje zlyhali`;
+    label.textContent = `Aktualizované ${formatUpdated(state.program.generatedAt)} · ${failureLabel}: ${failedSourceNames.join(", ")}`;
   } else if (ageHours > 6) {
     dot.classList.add("is-stale");
     label.textContent = `Posledná aktualizácia ${formatUpdated(state.program.generatedAt)}`;
@@ -732,7 +748,7 @@ function registerProgramTool() {
           },
           genre: { type: "string", enum: ["all", ...availableGenres], description: "Vybraný žáner alebo all." },
           genres: { type: "array", items: { type: "string", enum: [...availableGenres] }, description: "Vybrané žánre (stačí zhoda s jedným); prázdny zoznam zobrazí všetky. Má prednosť pred genre." },
-          sortBy: { type: "string", enum: ["rating", "year", "year-oldest", "soonest", "title"], description: "Spôsob zoradenia filmov." }
+          sortBy: { type: "string", enum: ["rating", "cult", "added", "soonest"], description: "Spôsob výberu a zoradenia filmov; cult zobrazí filmy do roku 2024 a added filmy prvýkrát zachytené za posledných 7 dní." }
         },
         additionalProperties: false
       },
@@ -759,8 +775,8 @@ function registerProgramTool() {
           state.selectedDateEnd = input.endDate || "";
         }
         if (input.cinemaIds) state.selectedCinemas = new Set(input.cinemaIds);
-        if (input.genre) state.selectedGenres = new Set(input.genre === "all" ? [] : [input.genre]);
-        if (input.genres) state.selectedGenres = new Set(input.genres);
+        if (input.genre) state.selectedGenres = input.genre === "all" ? new Set(availableGenres()) : new Set([input.genre]);
+        if (input.genres) state.selectedGenres = input.genres.length === 0 ? new Set(availableGenres()) : new Set(input.genres);
         if (input.sortBy) state.sortBy = input.sortBy;
         updateGenreSelection();
         elements.sortFilter.value = state.sortBy;
@@ -788,6 +804,7 @@ async function init() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     state.program = await response.json();
     state.selectedCinemas = new Set(state.program.cinemas.map((cinema) => cinema.id));
+    state.selectedGenres = new Set(availableGenres());
     configureDateFilters();
     setupDatePickers();
     renderFreshness();
@@ -840,7 +857,10 @@ elements.dateEndFilter.addEventListener("change", () => {
 elements.genreFilter.addEventListener("change", (event) => {
   const checkbox = event.target;
   if (!(checkbox instanceof HTMLInputElement)) return;
-  if (checkbox.value === "all") state.selectedGenres.clear();
+  if (checkbox.value === "all") {
+    state.selectedGenres.clear();
+    if (checkbox.checked) availableGenres().forEach((genre) => state.selectedGenres.add(genre));
+  }
   else if (checkbox.checked) state.selectedGenres.add(checkbox.value);
   else state.selectedGenres.delete(checkbox.value);
   updateGenreSelection();
@@ -885,7 +905,7 @@ elements.resetFiltersButton.addEventListener("click", () => {
   state.selectedPeriod = "all";
   state.selectedDateStart = "";
   state.selectedDateEnd = "";
-  state.selectedGenres.clear();
+  state.selectedGenres = new Set(availableGenres());
   state.sortBy = "rating";
   state.selectedCinemas = new Set(state.program.cinemas.map((cinema) => cinema.id));
   updateGenreSelection();

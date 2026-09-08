@@ -1,6 +1,7 @@
 import * as cheerio from "cheerio";
 import { NOSTALGIA_PROGRAM_URL } from "../config.mjs";
-import { cleanTitle, fetchBrowserHtml, languageDetails, movieId } from "../utils.mjs";
+import { cleanTitle, languageDetails, movieId } from "../utils.mjs";
+import { fetchEntradioEvents } from "./entradio.mjs";
 
 function decodeFlightData(html) {
   const $ = cheerio.load(html);
@@ -58,19 +59,21 @@ function slovak(value) {
   return value?.sk || value?.en || Object.values(value || {}).find(Boolean) || null;
 }
 
-export function parseEntradioEvents(html, {
+export function parseEntradioEvents(html, options) {
+  return parseEntradioEventList(extractJsonArrays(decodeFlightData(html), "events").flat(), options);
+}
+
+export function parseEntradioEventList(events, {
   cinemaId,
   sourceId,
   programUrl,
   cinemaName,
 }) {
   const eventMap = new Map();
-  for (const events of extractJsonArrays(decodeFlightData(html), "events")) {
-    for (const event of events) {
-      if (!event?.id || !event?.startsAt || !event?.names) continue;
-      const current = eventMap.get(event.id) || {};
-      eventMap.set(event.id, { ...current, ...event });
-    }
+  for (const event of events) {
+    if (!event?.id || !event?.startsAt || !event?.names) continue;
+    const current = eventMap.get(event.id) || {};
+    eventMap.set(event.id, { ...current, ...event });
   }
 
   const moviesById = new Map();
@@ -94,7 +97,8 @@ export function parseEntradioEvents(html, {
         originalTitle: englishTitle && englishTitle !== title ? englishTitle : null,
         releaseYear: null,
         durationMinutes: null,
-        ageRating: ageText.match(/\b(\d{1,2})\b/u)?.[1] || null,
+        ageRating: ageText.match(/\b(\d{1,2})\b/u)?.[1]
+          || event.ageClassificationCode?.match(/(?:over|unsuitable_under)(\d+)$/u)?.[1] || null,
         genres: [],
         posterUrl,
         detailUrl: showId ? new URL(`/film/${showId}`, programUrl).href : null,
@@ -111,8 +115,9 @@ export function parseEntradioEvents(html, {
       cinemaId,
       startsAt: event.startsAt,
       auditorium: event.auditorium?.name || null,
-      format: formatText ? [formatText.replace(/\s+projekcia$/iu, "")] : [],
-      languages: languageDetails(slovak(event.versionTranslated) || ""),
+      format: formatText ? [formatText.replace(/\s+projekcia$/iu, "")]
+        : event.formatCode ? [event.formatCode.replace(/^(?:digital|analog)_/u, "").replaceAll("_", " ").toUpperCase()] : [],
+      languages: event.versionCode ? entradioLanguages(event.versionCode) : languageDetails(slovak(event.versionTranslated) || ""),
       price: null,
       soldOut: typeof available === "number" ? available === 0 : false,
       availabilityRatio: null,
@@ -133,6 +138,22 @@ export function parseNostalgia(html) {
   });
 }
 
-export async function fetchNostalgia() {
-  return parseNostalgia(await fetchBrowserHtml(NOSTALGIA_PROGRAM_URL));
+function entradioLanguages(code) {
+  const languages = languageDetails("");
+  const codes = { slk: "sk", ces: "cs", eng: "en", deu: "de", fra: "fr", ukr: "uk", hun: "hu", pol: "pl", rus: "ru", rue: "rue", vie: "vi" };
+  const match = code.match(/^(dubbing|subtitles|voiceover)_(.+)$/u);
+  if (match) {
+    const kind = { dubbing: "dubbed", subtitles: "subtitles", voiceover: "voiceover" }[match[1]];
+    languages[kind] = match[2].split("_").map((value) => codes[value]).filter(Boolean);
+  } else if (codes[code]) languages.original.push(codes[code]);
+  return languages;
+}
+
+export async function fetchNostalgia(options = {}) {
+  return parseEntradioEventList(await fetchEntradioEvents({ ...options, clientId: 133, venueId: 747 }), {
+    cinemaId: "nostalgia",
+    sourceId: "kino-nostalgia",
+    programUrl: NOSTALGIA_PROGRAM_URL,
+    cinemaName: "Kino Nostalgia",
+  });
 }

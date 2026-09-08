@@ -32,6 +32,12 @@ jobs:
           path: .cache/omdb.json
           key: omdb-${{ github.run_id }}
           restore-keys: omdb-
+      - name: Restore movie history
+        uses: actions/cache@v5
+        with:
+          path: .cache/movie-history.json
+          key: movie-history-${{ github.run_id }}
+          restore-keys: movie-history-
       - run: npm run scrape
         env:
           OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}

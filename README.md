@@ -7,7 +7,7 @@ Frontend je čisté HTML, CSS a JavaScript. Node.js sa používa iba na získani
 ## Zdroje dát
 
 - **Kino Lumière:** slovenský a anglický HTML program; zhodujú sa podľa stabilného ID filmu, aby sa anglický názov dal použiť na vyhľadanie IMDb.
-- **Kino Film Europe a Kino Nostalgia:** štruktúrované dáta programu vložené vo verejných stránkach kín.
+- **Kino Film Europe a Kino Nostalgia:** verejné GraphQL API predaja vstupeniek Entradio (`shop.entradio.sk/api/graphql`) s anonymnou návštevníckou reláciou; bez API kľúča. Program sa načítava po stránkach a filtruje podľa kina. Priame stránky kín môžu vracať Vercel Security Checkpoint (HTTP 429), ktorý bežné opakovanie požiadavky ani curl nevyrieši.
 - **Kino Mladosť:** HTML programová tabuľka systému Cinemaware.
 - **Kino Lúky:** verejný zoznam filmových podujatí Kultúrnych zariadení Petržalky.
 - **Edison Filmhub Bratislava:** slovenský HTML program a oficiálna anglická lokalizácia, z ktorej sa dopĺňajú anglické názvy; filmové metadáta sa čítajú zo schema.org dát na detailoch filmov.

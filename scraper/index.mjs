@@ -15,6 +15,7 @@ import { fetchA4KinoInak } from "./sources/a4-kino-inak.mjs";
 import { localDateKey } from "./utils.mjs";
 import { enrichMoviesWithOmdb } from "./omdb.mjs";
 import { deduplicateMovies } from "./deduplicate.mjs";
+import { applyMovieHistory, readMovieHistory, writeMovieHistory } from "./movie-history.mjs";
 
 function prefer(current, incoming) {
   if (!current) return incoming;
@@ -60,12 +61,15 @@ async function main() {
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
   }
-  let previousMovies = [];
+  let previousProgram = null;
   try {
-    previousMovies = validateProgram(JSON.parse(await readFile(OUTPUT_PATH, "utf8"))).movies;
+    previousProgram = validateProgram(JSON.parse(await readFile(OUTPUT_PATH, "utf8")));
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
   }
+  const previousMovies = previousProgram?.movies || [];
+  const movieHistoryPath = process.env.MOVIE_HISTORY_PATH || ".cache/movie-history.json";
+  const movieHistory = await readMovieHistory(movieHistoryPath);
   const today = localDateKey();
   console.log(`Fetching schedules from ${today}…`);
   const jobs = [
@@ -106,9 +110,18 @@ async function main() {
     previousMovies,
   });
   program = validateProgram(deduplicateMovies(program));
+  const tracked = applyMovieHistory(program.movies, {
+    generatedAt,
+    previousGeneratedAt: previousProgram?.generatedAt,
+    previousMovies,
+    history: movieHistory,
+  });
+  program.movies = tracked.movies;
+  program = validateProgram(program);
   const output = fileURLToPath(OUTPUT_PATH);
   const temporary = `${output}.tmp`;
   await mkdir(dirname(output), { recursive: true });
+  await writeMovieHistory(movieHistoryPath, tracked.history);
   await writeFile(temporary, `${JSON.stringify(program, null, 2)}\n`, "utf8");
   await rename(temporary, output);
   console.log(`Wrote ${program.screenings.length} screenings and ${program.movies.length} films to ${output}`);

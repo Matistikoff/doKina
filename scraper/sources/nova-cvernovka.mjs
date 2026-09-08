@@ -54,6 +54,7 @@ export function parseNovaCvernovka(html, options = {}) {
   const englishTitles = options.englishTitles || new Map();
   const moviesById = new Map();
   const screenings = [];
+  const programmeItems = $("article.infinite-scroll-item[data-start]");
 
   $("article.tag-film, article.tag-movie").each((_, element) => {
     const article = $(element);
@@ -109,7 +110,9 @@ export function parseNovaCvernovka(html, options = {}) {
     });
   });
 
-  if (screenings.length === 0) throw new Error("Nová Cvernovka page contained no recognizable film screenings");
+  if (screenings.length === 0 && programmeItems.length === 0) {
+    throw new Error("Nová Cvernovka page contained no recognizable programme items");
+  }
   return { movies: [...moviesById.values()], screenings };
 }
 
