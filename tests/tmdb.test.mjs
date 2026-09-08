@@ -100,6 +100,32 @@ test("selects a clean backdrop and an official trailer", () => {
   assert.equal(selectTrailer({ videos }), "https://www.youtube.com/watch?v=official123");
 });
 
+test("falls back to an English trailer when localized videos are unavailable", async () => {
+  const withoutVideos = { ...haine, videos: { results: [] } };
+  const calls = [];
+  const result = await resolveTmdbMovie({ title: "Nenávisť" }, "test", async (path, parameters) => {
+    calls.push({ path, parameters });
+    if (path === "search/movie") return { results: [withoutVideos], total_pages: 1 };
+    if (path === "movie/406/videos") return { results: [
+      { site: "YouTube", key: "english12345", type: "Trailer", official: true, iso_639_1: "en" },
+    ] };
+    return withoutVideos;
+  });
+  assert.equal(result.trailerUrl, "https://www.youtube.com/watch?v=english12345");
+  assert.deepEqual(calls.find((call) => call.path === "movie/406/videos")?.parameters, { language: "en-US" });
+});
+
+test("keeps film metadata when the English trailer fallback fails", async () => {
+  const withoutVideos = { ...haine, videos: { results: [] } };
+  const result = await resolveTmdbMovie({ title: "Nenávisť" }, "test", async (path) => {
+    if (path === "search/movie") return { results: [withoutVideos], total_pages: 1 };
+    if (path === "movie/406/videos") throw new Error("Service unavailable");
+    return withoutVideos;
+  });
+  assert.equal(result.tmdbId, 406);
+  assert.equal(result.trailerUrl, null);
+});
+
 test("prefers a clean language-neutral poster before localized posters", () => {
   const posters = [
     { file_path: "/en.jpg", iso_639_1: "en", vote_count: 100 },

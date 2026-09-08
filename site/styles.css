@@ -1638,6 +1638,8 @@ footer p {
 	.movie-dialog {
 		inset: auto 0 0;
 		width: 100%;
+		max-width: none;
+		max-inline-size: none;
 		height: 94vh;
 		height: 94dvh;
 		max-height: 94vh;
