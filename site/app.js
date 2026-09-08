@@ -33,7 +33,7 @@ const elements = {
   dialogOverviewHeading: document.querySelector("#movie-dialog-overview-heading"),
   dialogScrollbar: document.querySelector(".dialog-scrollbar"),
   dialogScrollbarThumb: document.querySelector(".dialog-scrollbar-thumb"),
-  dialogScreenings: document.querySelector(".dialog-screenings"),
+  dialogScroller: document.querySelector(".dialog-content"),
   dialogShowtimes: document.querySelector("#movie-dialog-showtimes"),
   dialogTitle: document.querySelector("#movie-dialog-title"),
   dialogTrailer: document.querySelector("#movie-dialog-trailer"),
@@ -130,7 +130,7 @@ function setupPageScrollbar() {
 }
 
 function setupDialogScrollbar() {
-  const scroller = elements.dialogScreenings;
+  const scroller = elements.dialogScroller;
   const track = elements.dialogScrollbar;
   const thumb = elements.dialogScrollbarThumb;
   const minimumThumbHeight = 36;
@@ -638,7 +638,7 @@ function openMovieDialog(movie, screenings, cinemaMap) {
   if (movie.trailerUrl) elements.dialogTrailer.href = movie.trailerUrl;
   else elements.dialogTrailer.removeAttribute("href");
   renderShowtimes(movie, screenings, cinemaMap, elements.dialogShowtimes);
-  elements.dialogScreenings.scrollTop = 0;
+  elements.dialogScroller.scrollTop = 0;
   if (typeof elements.dialog.showModal === "function") elements.dialog.showModal();
   else elements.dialog.setAttribute("open", "");
   document.body.classList.add("has-open-dialog");

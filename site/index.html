@@ -452,63 +452,65 @@
 			id="movie-dialog"
 			aria-labelledby="movie-dialog-title"
 		>
-			<div class="dialog-hero">
-				<img
-					class="dialog-backdrop"
-					id="movie-dialog-backdrop"
-					alt=""
-					width="1280"
-					height="720"
-					hidden
-				/>
-			<div class="dialog-header">
-				<div>
-					<p
-						class="movie-kicker"
-						id="movie-dialog-kicker"
-					></p>
-					<h2 id="movie-dialog-title"></h2>
-					<p
-						class="movie-meta"
-						id="movie-dialog-meta"
-					></p>
-					<p
-						class="dialog-cast"
-						id="movie-dialog-cast"
+			<div class="dialog-content">
+				<div class="dialog-hero">
+					<img
+						class="dialog-backdrop"
+						id="movie-dialog-backdrop"
+						alt=""
+						width="1280"
+						height="720"
 						hidden
-					></p>
-					<a
-						class="dialog-trailer"
-						id="movie-dialog-trailer"
-						target="_blank"
-						rel="noreferrer"
+					/>
+					<div class="dialog-header">
+						<div>
+							<p
+								class="movie-kicker"
+								id="movie-dialog-kicker"
+							></p>
+							<h2 id="movie-dialog-title"></h2>
+							<p
+								class="movie-meta"
+								id="movie-dialog-meta"
+							></p>
+							<p
+								class="dialog-cast"
+								id="movie-dialog-cast"
+								hidden
+							></p>
+							<a
+								class="dialog-trailer"
+								id="movie-dialog-trailer"
+								target="_blank"
+								rel="noreferrer"
+								hidden
+							>▶ Pozrieť trailer</a>
+						</div>
+						<button
+							class="dialog-close"
+							type="button"
+							aria-label="Zavrieť detail filmu"
+						>
+							×
+						</button>
+					</div>
+					<section
+						class="dialog-overview"
+						id="movie-dialog-overview"
 						hidden
-					>▶ Pozrieť trailer</a>
+						aria-labelledby="movie-dialog-overview-heading"
+					>
+						<h3 id="movie-dialog-overview-heading">O filme</h3>
+						<p id="movie-dialog-overview-text"></p>
+					</section>
 				</div>
-				<button
-					class="dialog-close"
-					type="button"
-					aria-label="Zavrieť detail filmu"
-				>
-					×
-				</button>
-			</div>
-			</div>
-			<div class="dialog-screenings">
-				<section
-					class="dialog-overview"
-					id="movie-dialog-overview"
-					hidden
-					aria-labelledby="movie-dialog-overview-heading"
-				>
-					<h3 id="movie-dialog-overview-heading">O filme</h3>
-					<p id="movie-dialog-overview-text"></p>
-				</section>
-				<h3>Termíny premietania</h3>
-				<div
-					class="showtime-groups"
-					id="movie-dialog-showtimes"
-				></div>
+				<div class="dialog-screenings">
+					<h3>Termíny premietania</h3>
+					<div
+						class="showtime-groups"
+						id="movie-dialog-showtimes"
+					></div>
+				</div>
 			</div>
 			<div
 				class="dialog-scrollbar"
