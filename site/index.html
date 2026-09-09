@@ -309,6 +309,7 @@
 								<select id="sort-filter">
 									<option value="rating">Najlepšie hodnotené</option>
 									<option value="mustWatch">Must watch</option>
+									<option value="oscars">Oscarové filmy</option>
 									<option value="czSk">CZ/SK filmy</option>
 									<option value="shortest">Najkratšie filmy</option>
 									<option value="longest">Najdlhšie filmy</option>
@@ -478,6 +479,7 @@
 								id="movie-dialog-cast"
 								hidden
 							></p>
+							<div class="dialog-actions" id="movie-dialog-actions" hidden>
 							<a
 								class="dialog-trailer"
 								id="movie-dialog-trailer"
@@ -485,6 +487,16 @@
 								rel="noreferrer"
 								hidden
 							>▶ Pozrieť trailer</a>
+							<span id="movie-dialog-metascore" class="critic-score metascore" role="img" tabindex="0" hidden></span>
+							<span id="movie-dialog-tomatoes" class="critic-score tomatoes" role="img" tabindex="0" hidden>
+								<svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+									<g class="tomato-fresh"><path fill="#fa3434" d="M16 9C4 3 0 16 5 24c4 7 18 7 22-1 4-8 0-19-11-14Z"/><path fill="#25843b" d="m16 11-8-5 6 1 2-6 2 6 7-2-5 6 3 4-7-3-6 3Z"/><path d="M8 15c-2 2-2 5-1 7" stroke="#ffad97" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+									<path class="tomato-rotten" fill="#a5cc33" d="m15 9 5-7 1 9 9-1-6 7 7 6-10-1-2 9-5-8-8 6 2-10-8-4 10-2-4-8Z"/>
+								</svg>
+								<span class="tomato-value"></span>
+							</span>
+							<dl id="movie-dialog-facts" class="dialog-facts" aria-label="Ocenenia a tržby" hidden></dl>
+							</div>
 						</div>
 						<button
 							class="dialog-close"
@@ -494,7 +506,6 @@
 							×
 						</button>
 					</div>
-					<dl id="movie-dialog-facts" class="dialog-facts" aria-label="Ocenenia, hodnotenia a tržby" hidden></dl>
 					<section
 						class="dialog-overview"
 						id="movie-dialog-overview"

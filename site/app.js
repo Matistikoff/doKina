@@ -1,5 +1,6 @@
 import { formatDuration } from "./formatters.js";
-import { compareMoviesByDuration, isMustWatch } from "./discovery.js";
+import { compareMoviesByDuration, isMustWatch, isOscarWinner } from "./discovery.js";
+import { metascoreTone, tomatoTone } from "./critic-ratings.js";
 import { isCzSkMovie } from "./filters.js";
 import { compareMoviesByRating } from "./ratings.js";
 
@@ -29,6 +30,9 @@ const elements = {
   dialogKicker: document.querySelector("#movie-dialog-kicker"),
   dialogMeta: document.querySelector("#movie-dialog-meta"),
   dialogFacts: document.querySelector("#movie-dialog-facts"),
+  dialogActions: document.querySelector("#movie-dialog-actions"),
+  dialogMetascore: document.querySelector("#movie-dialog-metascore"),
+  dialogTomatoes: document.querySelector("#movie-dialog-tomatoes"),
   dialogOverview: document.querySelector("#movie-dialog-overview"),
   dialogOverviewText: document.querySelector("#movie-dialog-overview-text"),
   dialogOverviewHeading: document.querySelector("#movie-dialog-overview-heading"),
@@ -594,15 +598,24 @@ function oscarLabel(wins) {
 }
 
 function renderMovieFacts(movie) {
+  const meta = elements.dialogMetascore;
+  meta.hidden = !Number.isFinite(movie.metascore);
+  meta.className = `critic-score metascore is-${metascoreTone(movie.metascore)}`;
+  meta.textContent = meta.hidden ? "" : movie.metascore;
+  meta.title = `Metascore: ${movie.metascore}/100 · Vážené hodnotenie filmových kritikov`;
+  meta.setAttribute("aria-label", meta.title);
+  const tomatoes = elements.dialogTomatoes;
+  tomatoes.hidden = !Number.isFinite(movie.rottenTomatoesRating);
+  const tone = tomatoTone(movie.rottenTomatoesRating);
+  tomatoes.className = `critic-score tomatoes is-${tone}`;
+  tomatoes.querySelector(".tomato-value").textContent = tomatoes.hidden ? "" : `${movie.rottenTomatoesRating} %`;
+  tomatoes.title = `Rotten Tomatoes: ${movie.rottenTomatoesRating} % pozitívnych recenzií kritikov · ${tone === "fresh" ? "Fresh" : "Rotten"}`;
+  tomatoes.setAttribute("aria-label", tomatoes.title);
   const facts = [
     { label: "Oscary", value: movie.oscarWins > 0 ? oscarLabel(movie.oscarWins) : null, style: "is-oscar" },
-    { label: "Metascore", value: Number.isFinite(movie.metascore) ? `${movie.metascore} / 100` : null,
-      title: "Hodnotenie filmových kritikov na Metacritic" },
-    { label: "Rotten Tomatoes", value: Number.isFinite(movie.rottenTomatoesRating) ? `${movie.rottenTomatoesRating} %` : null,
-      title: "Podiel pozitívnych recenzií filmových kritikov" },
     { label: "Tržby (USA a Kanada)", value: Number.isFinite(movie.boxOfficeUsd)
       ? new Intl.NumberFormat("sk-SK", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(movie.boxOfficeUsd) : null,
-      title: "Tržby podľa OMDb, v amerických dolároch" },
+      title: "Tržby v USA a Kanade podľa OMDb, v amerických dolároch" },
   ].filter((fact) => fact.value !== null);
   elements.dialogFacts.replaceChildren(...facts.map((fact) => {
     const item = document.createElement("div");
@@ -616,6 +629,7 @@ function renderMovieFacts(movie) {
     return item;
   }));
   elements.dialogFacts.hidden = facts.length === 0;
+  elements.dialogActions.hidden = !movie.trailerUrl && meta.hidden && tomatoes.hidden && facts.length === 0;
 }
 
 function clearDialogBackdrop() {
@@ -652,7 +666,12 @@ function loadDialogBackdrop(url) {
   }
 }
 
-function openMovieDialog(movie, screenings, cinemaMap) {
+function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true) {
+  if (updateRoute) {
+    const url = new URL(window.location.href);
+    url.hash = `film=${encodeURIComponent(movie.id)}`;
+    if (url.href !== window.location.href) window.history.pushState(null, "", url);
+  }
   loadDialogBackdrop(movie.backdropUrl);
   elements.dialogKicker.textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
   elements.dialogTitle.textContent = movie.title;
@@ -676,11 +695,38 @@ function openMovieDialog(movie, screenings, cinemaMap) {
   requestAnimationFrame(updateDialogScrollbar);
 }
 
+function clearMovieRoute() {
+  if (!window.location.hash.startsWith("#film=")) return;
+  const url = new URL(window.location.href);
+  url.hash = "";
+  window.history.replaceState(null, "", url);
+}
+
 function closeMovieDialog() {
+  clearMovieRoute();
   if (typeof elements.dialog.close === "function") elements.dialog.close();
   else elements.dialog.removeAttribute("open");
   clearDialogBackdrop();
   document.body.classList.remove("has-open-dialog");
+}
+
+function syncMovieRoute() {
+  if (!state.program) return;
+  const params = new URLSearchParams(window.location.hash.slice(1));
+  const movieId = params.get("film");
+  const movie = state.program.movies.find((item) => item.id === movieId);
+  if (!movie) {
+    closeMovieDialog();
+    return;
+  }
+  const screenings = state.program.screenings.filter((screening) => (
+    screening.movieId === movie.id && new Date(screening.startsAt).getTime() > Date.now()
+  ));
+  const cinemaMap = new Map(state.program.cinemas.map((cinema) => [cinema.id, cinema]));
+  openMovieDialog(movie, screenings, cinemaMap, false);
+  if (screenings.length === 0) {
+    elements.dialogShowtimes.textContent = "Tento film momentálne nemá naplánované premietania.";
+  }
 }
 
 function renderMovie(movie, screenings, cinemaMap) {
@@ -781,7 +827,8 @@ function renderProgram() {
       && (state.sortBy !== "czSk" || czSkMovieIds.has(screening.movieId))
       && (state.sortBy !== "cult" || (Number.isFinite(releaseYear) && releaseYear <= CULT_MOVIE_LATEST_YEAR))
       && (state.sortBy !== "added" || (Number.isFinite(firstSeenAt) && firstSeenAt >= recentlyAddedSince))
-      && (state.sortBy !== "mustWatch" || isMustWatch(movie));
+      && (state.sortBy !== "mustWatch" || isMustWatch(movie))
+      && (state.sortBy !== "oscars" || isOscarWinner(movie));
   });
   const grouped = groupScreenings(visible);
   elements.selectedPeriodLabel.textContent = periodLabel();
@@ -799,7 +846,7 @@ function renderProgram() {
     .map(([movieId, screenings]) => ({ movie: movieMap.get(movieId), screenings }))
     .filter(({ movie }) => movie)
     .sort((a, b) => {
-      if (["rating", "cult", "mustWatch", "czSk"].includes(state.sortBy)) {
+      if (["rating", "cult", "mustWatch", "czSk", "oscars"].includes(state.sortBy)) {
         return compareMoviesByRating(a.movie, b.movie);
       }
       if (state.sortBy === "added") {
@@ -869,7 +916,7 @@ function registerProgramTool() {
           },
           genre: { type: "string", enum: ["all", ...availableGenres], description: "Vybraný žáner alebo all." },
           genres: { type: "array", items: { type: "string", enum: [...availableGenres] }, description: "Vybrané žánre (stačí zhoda s jedným); prázdny zoznam zobrazí všetky. Má prednosť pred genre." },
-          sortBy: { type: "string", enum: ["rating", "mustWatch", "czSk", "shortest", "longest", "cult", "added", "soonest"], description: "rating zoradí podľa hodnotenia zo zdroja s väčším počtom hlasov; mustWatch zobrazí iba filmy s IMDb hodnotením aspoň 8; czSk zobrazí české, slovenské a československé filmy zoradené podľa hodnotenia; shortest a longest zoradia podľa dĺžky; cult zobrazí filmy do roku 2024 a added filmy prvýkrát zachytené za posledných 7 dní." }
+          sortBy: { type: "string", enum: ["rating", "mustWatch", "oscars", "czSk", "shortest", "longest", "cult", "added", "soonest"], description: "rating zoradí podľa hodnotenia zo zdroja s väčším počtom hlasov; mustWatch zobrazí iba filmy s IMDb hodnotením aspoň 8; oscars zobrazí iba víťazov Oscara zoradených podľa hodnotenia; czSk zobrazí české, slovenské a československé filmy zoradené podľa hodnotenia; shortest a longest zoradia podľa dĺžky; cult zobrazí filmy do roku 2024 a added filmy prvýkrát zachytené za posledných 7 dní." }
         },
         additionalProperties: false
       },
@@ -934,6 +981,7 @@ async function init() {
     renderGenres();
     renderCinemas();
     renderProgram();
+    syncMovieRoute();
     registerProgramTool();
   } catch (error) {
     console.error(error);
@@ -1047,7 +1095,18 @@ elements.dialogClose.addEventListener("click", closeMovieDialog);
 elements.dialog.addEventListener("click", (event) => {
   if (event.target === elements.dialog) closeMovieDialog();
 });
-elements.dialog.addEventListener("close", () => document.body.classList.remove("has-open-dialog"));
+elements.dialog.addEventListener("close", () => {
+  if (elements.dialog.hasAttribute("open")) return;
+  clearMovieRoute();
+  clearDialogBackdrop();
+  document.body.classList.remove("has-open-dialog");
+});
+window.addEventListener("popstate", syncMovieRoute);
+window.addEventListener("hashchange", syncMovieRoute);
+elements.dialog.addEventListener("cancel", (event) => {
+  event.preventDefault();
+  closeMovieDialog();
+});
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && elements.dialog.hasAttribute("open")) closeMovieDialog();
 });

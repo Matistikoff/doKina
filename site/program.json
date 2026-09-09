@@ -2890,35 +2890,14 @@
       "detailUrl": "https://www.kfe.sk/film/11568",
       "englishTitle": "THE MATCH",
       "directors": [
-        "Juan Cabral, Santiago Franco"
+        "Juan Cabral",
+        "Santiago Franco"
       ],
       "overview": "Follows the 1986 Argentina-England World Cup quarter final, exploring how the match became a culmination of tensions between the two nations following the 1982 Falklands War.",
       "overviewLanguage": "en",
       "imdbId": "tt41593328",
       "imdbRating": 7,
       "imdbVotes": 13,
-      "firstSeenAt": "2026-09-08T12:05:24.126Z"
-    },
-    {
-      "id": "movie-zapas-storocia-2026",
-      "source": "kino-lumiere",
-      "externalId": "839488",
-      "title": "Zápas storočia",
-      "englishTitle": "Zápas storočia",
-      "originalTitle": "The Match",
-      "releaseYear": "2026",
-      "directors": [
-        "Juan Cabral",
-        "Santiago Franco"
-      ],
-      "durationMinutes": 91,
-      "ageRating": "12",
-      "genres": [
-        "Dokumentárny",
-        "Športový"
-      ],
-      "posterUrl": "https://storage.cinemaware.eu/katalogy/images/a/1/a1a625fb-aaa5-11f1-9bbd-9e966f951e90.jpg",
-      "detailUrl": "https://www.kino-lumiere.sk/klient-863/kino-241/stranka-8409/film-839488",
       "firstSeenAt": "2026-09-08T12:05:24.126Z",
       "csfdId": 1848384,
       "csfdRating": 77,
@@ -6686,7 +6665,7 @@
       "id": "kino-lumiere-5572357",
       "source": "kino-lumiere",
       "externalId": "5572357",
-      "movieId": "movie-zapas-storocia-2026",
+      "movieId": "movie-zapas-storocia",
       "cinemaId": "lumiere",
       "startsAt": "2026-09-15T20:00:00+02:00",
       "auditorium": null,
@@ -7223,7 +7202,7 @@
       "id": "kino-lumiere-5572405",
       "source": "kino-lumiere",
       "externalId": "5572405",
-      "movieId": "movie-zapas-storocia-2026",
+      "movieId": "movie-zapas-storocia",
       "cinemaId": "lumiere",
       "startsAt": "2026-09-17T18:10:00+02:00",
       "auditorium": null,
@@ -8265,7 +8244,7 @@
       "id": "kino-luky-6a857e6de35902df84aab026",
       "source": "kino-luky",
       "externalId": "6a857e6de35902df84aab026",
-      "movieId": "movie-zapas-storocia-2026",
+      "movieId": "movie-zapas-storocia",
       "cinemaId": "luky",
       "startsAt": "2026-09-26T17:00:00+02:00",
       "auditorium": "Dom kultúry Lúky",

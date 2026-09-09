@@ -13,7 +13,7 @@ function titles(movie) {
 }
 
 function directors(movie) {
-  return (movie.directors || []).map(normalize).filter(Boolean);
+  return (movie.directors || []).flatMap((name) => name.split(/,\s*/u)).map(normalize).filter(Boolean);
 }
 
 // Only one inserted, removed or substituted letter; never blur sequel numbers.
@@ -75,7 +75,9 @@ function merge(current, incoming) {
   for (const [key, value] of Object.entries(incoming)) {
     if (Array.isArray(value)) result[key] = key === "genres"
       ? normalizeGenres([...(result[key] || []), ...value])
-      : [...new Set([...(result[key] || []), ...value])];
+      : [...new Set(key === "directors"
+        ? [...(result[key] || []), ...value].flatMap((name) => name.split(/,\s*/u)).map((name) => name.trim()).filter(Boolean)
+        : [...(result[key] || []), ...value])];
     else if (result[key] == null || result[key] === "") result[key] = value;
   }
   return result;

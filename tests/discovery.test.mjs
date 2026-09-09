@@ -1,6 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { compareMoviesByDuration, isMustWatch } from "../site/discovery.js";
+import { compareMoviesByDuration, isMustWatch, isOscarWinner } from "../site/discovery.js";
+
+test("Oscar filter includes winners only", () => {
+  assert.equal(isOscarWinner({ oscarWins: 1 }), true);
+  assert.equal(isOscarWinner({ oscarWins: 4 }), true);
+  for (const movie of [{}, { oscarWins: 0 }, { oscarWins: null }, { oscarWins: "1" }]) {
+    assert.equal(isOscarWinner(movie), false);
+  }
+});
 
 test("recognizes must-watch films from IMDb rating 8 and above", () => {
   assert.equal(isMustWatch({ imdbRating: 8 }), true);

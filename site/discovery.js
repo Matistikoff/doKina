@@ -1,5 +1,9 @@
 export const MUST_WATCH_IMDB_RATING = 8;
 
+export function isOscarWinner(movie) {
+  return Number.isInteger(movie.oscarWins) && movie.oscarWins > 0;
+}
+
 export function isMustWatch(movie) {
   return Number.isFinite(movie.imdbRating) && movie.imdbRating >= MUST_WATCH_IMDB_RATING;
 }

@@ -47,6 +47,24 @@ test("matches translated titles and shared IMDb IDs", () => {
   ])).movies.length, 1);
 });
 
+test("merges comma-separated directors with individual names and preserves screenings", () => {
+  const input = program([
+    { id: "movie-zapas-storocia", title: "Zápas storočia", releaseYear: "2026", durationMinutes: 91,
+      directors: ["Juan Cabral, Santiago Franco"], imdbId: "tt41593328" },
+    { id: "movie-zapas-storocia-2026", title: "Zápas storočia", releaseYear: "2026", durationMinutes: 91,
+      directors: ["Juan Cabral", "Santiago Franco"], csfdId: 1848384 },
+  ]);
+  const result = deduplicateMovies(input);
+  assert.equal(result.movies.length, 1);
+  assert.equal(result.movies[0].imdbId, "tt41593328");
+  assert.equal(result.movies[0].csfdId, 1848384);
+  assert.deepEqual(result.movies[0].directors, ["Juan Cabral", "Santiago Franco"]);
+  assert.deepEqual(result.screenings, input.screenings.map((screening) => ({ ...screening, movieId: result.movies[0].id })));
+  assert.deepEqual(deduplicateMovies(result), result);
+  assert.deepEqual(deduplicateMovies({ ...input, movies: [...input.movies].reverse() }), result);
+  assert.equal(compareMovies(input.movies[0], { ...input.movies[1], directors: ["Another Director"] }).matches, false);
+});
+
 test("normalizes and merges genre synonyms", () => {
   const result = deduplicateMovies(program([
     { id: "a", title: "Film", releaseYear: "2026", genres: ["Dokument", "sport"] },
