@@ -1,0 +1,15 @@
+{
+  "Response": "True",
+  "imdbID": "tt1234567",
+  "Title": "Example Film",
+  "imdbRating": "8.1",
+  "imdbVotes": "123,456",
+  "Awards": "Won 4 Oscars. 42 wins & 51 nominations total",
+  "Ratings": [
+    { "Source": "Internet Movie Database", "Value": "8.1/10" },
+    { "Source": "Rotten Tomatoes", "Value": "93%" },
+    { "Source": "Metacritic", "Value": "82/100" }
+  ],
+  "Metascore": "82",
+  "BoxOffice": "$123,456,789"
+}

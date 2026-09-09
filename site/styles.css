@@ -961,6 +961,73 @@ h2 {
 	margin-left: auto;
 }
 
+.oscar-badge {
+	position: absolute;
+	z-index: 1;
+	top: 10px;
+	right: 10px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 7px 10px;
+	border: 1px solid #d9b45c;
+	border-radius: 9px;
+	background: #201c16ed;
+	color: #f2cd78;
+	box-shadow: 0 2px 8px #0004;
+	font-size: 14px;
+	font-weight: 700;
+}
+
+.oscar-badge svg {
+	width: 16px;
+	height: 32px;
+}
+
+.dialog-facts {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 0;
+	padding: 0 30px 24px;
+}
+
+.dialog-fact {
+	padding: 12px 16px;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: var(--card);
+	color: var(--ink);
+}
+
+.dialog-fact dt {
+	font-size: 12px;
+	color: var(--ink-soft);
+}
+
+.dialog-fact dd {
+	margin: 5px 0 0;
+	font-size: 19px;
+	font-weight: 700;
+}
+
+.dialog-fact.is-oscar {
+	border-color: #d9b45c;
+	background: #201c16;
+	color: #f2cd78;
+}
+
+.dialog-fact.is-oscar dt {
+	color: #f2cd78;
+}
+
+.oscar-badge[hidden],
+.dialog-facts[hidden] {
+	display: none;
+}
+
 .movie-rating {
 	display: inline-flex;
 	flex: 0 0 auto;

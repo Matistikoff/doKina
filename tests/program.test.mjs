@@ -29,6 +29,15 @@ test("schema validation rejects dangling movie references", () => {
   }), /unknown movieId/);
 });
 
+test("schema validates optional OMDb awards, critics scores and box office", () => {
+  const base = assembleProgram([], "2026-09-09T10:00:00Z");
+  const movie = { id: "film", title: "Film", oscarWins: 4, metascore: 0, rottenTomatoesRating: 100, boxOfficeUsd: 123456789 };
+  assert.doesNotThrow(() => validateProgram({ ...base, movies: [movie] }));
+  for (const [key, value] of [["oscarWins", -1], ["metascore", 101], ["rottenTomatoesRating", 1.5], ["boxOfficeUsd", "N/A"]]) {
+    assert.throws(() => validateProgram({ ...base, movies: [{ ...movie, [key]: value }] }), new RegExp(`invalid ${key}`));
+  }
+});
+
 test("schema validation accepts ISO production countries and rejects invalid codes", () => {
   const base = {
     schemaVersion: 1,

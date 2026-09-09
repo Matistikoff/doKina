@@ -28,6 +28,7 @@ const elements = {
   dialogCast: document.querySelector("#movie-dialog-cast"),
   dialogKicker: document.querySelector("#movie-dialog-kicker"),
   dialogMeta: document.querySelector("#movie-dialog-meta"),
+  dialogFacts: document.querySelector("#movie-dialog-facts"),
   dialogOverview: document.querySelector("#movie-dialog-overview"),
   dialogOverviewText: document.querySelector("#movie-dialog-overview-text"),
   dialogOverviewHeading: document.querySelector("#movie-dialog-overview-heading"),
@@ -588,6 +589,35 @@ function renderShowtimes(movie, screenings, cinemaMap, root) {
   }
 }
 
+function oscarLabel(wins) {
+  return `${wins} ${wins === 1 ? "Oscar" : wins < 5 ? "Oscary" : "Oscarov"}`;
+}
+
+function renderMovieFacts(movie) {
+  const facts = [
+    { label: "Oscary", value: movie.oscarWins > 0 ? oscarLabel(movie.oscarWins) : null, style: "is-oscar" },
+    { label: "Metascore", value: Number.isFinite(movie.metascore) ? `${movie.metascore} / 100` : null,
+      title: "Hodnotenie filmových kritikov na Metacritic" },
+    { label: "Rotten Tomatoes", value: Number.isFinite(movie.rottenTomatoesRating) ? `${movie.rottenTomatoesRating} %` : null,
+      title: "Podiel pozitívnych recenzií filmových kritikov" },
+    { label: "Tržby (USA a Kanada)", value: Number.isFinite(movie.boxOfficeUsd)
+      ? new Intl.NumberFormat("sk-SK", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(movie.boxOfficeUsd) : null,
+      title: "Tržby podľa OMDb, v amerických dolároch" },
+  ].filter((fact) => fact.value !== null);
+  elements.dialogFacts.replaceChildren(...facts.map((fact) => {
+    const item = document.createElement("div");
+    item.className = `dialog-fact ${fact.style || ""}`.trim();
+    if (fact.title) item.title = fact.title;
+    const label = document.createElement("dt");
+    label.textContent = fact.label;
+    const value = document.createElement("dd");
+    value.textContent = fact.value;
+    item.append(label, value);
+    return item;
+  }));
+  elements.dialogFacts.hidden = facts.length === 0;
+}
+
 function clearDialogBackdrop() {
   dialogBackdropLoadId += 1;
   elements.dialog.classList.remove("has-backdrop");
@@ -632,6 +662,7 @@ function openMovieDialog(movie, screenings, cinemaMap) {
   elements.dialogOverview.hidden = !movie.overview;
   elements.dialogOverviewText.textContent = movie.overview || "";
   elements.dialogOverviewText.lang = movie.overviewLanguage || "sk";
+  renderMovieFacts(movie);
   elements.dialogOverviewHeading.textContent = movie.overviewLanguage === "en" ? "O filme · anglicky"
     : movie.overviewLanguage === "cs" ? "O filme · česky" : "O filme";
   elements.dialogTrailer.hidden = !movie.trailerUrl;
@@ -690,6 +721,14 @@ function renderMovie(movie, screenings, cinemaMap) {
     ratingElement.title = !hasRating
       ? `${rating.source}: hodnotenie nie je dostupné`
       : rating.votes
+  const oscarBadge = fragment.querySelector(".oscar-badge");
+  oscarBadge.hidden = !(movie.oscarWins > 0);
+  if (movie.oscarWins > 0) {
+    const label = `Získané ocenenia: ${oscarLabel(movie.oscarWins)}`;
+    oscarBadge.title = label;
+    oscarBadge.setAttribute("aria-label", label);
+    oscarBadge.querySelector("span").textContent = movie.oscarWins;
+  }
       ? `${rating.source} hodnotenie z ${rating.votes.toLocaleString("sk-SK")} hlasov`
       : `${rating.source} hodnotenie`;
     ratingElement.setAttribute("aria-label", hasRating

@@ -6,6 +6,20 @@ import { lookupTitles, normalizeTitle } from "./tmdb.mjs";
 const MATCHED_TTL_MS = 20 * 60 * 60 * 1000;
 const UNMATCHED_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
+export function parseOmdbDetails(payload) {
+  const score = (value) => /^\d{1,3}$/u.test(String(value)) && Number(value) <= 100 ? Number(value) : null;
+  const rotten = (Array.isArray(payload.Ratings) ? payload.Ratings : [])
+    .find((rating) => rating.Source === "Rotten Tomatoes")?.Value;
+  const boxOffice = /^\$((?:\d{1,3}(?:,\d{3})+|\d+))$/u.exec(String(payload.BoxOffice || ""));
+  const dollars = boxOffice ? Number(boxOffice[1].replaceAll(",", "")) : null;
+  return {
+    oscarWins: Number(/\bWon\s+(\d+)\s+Oscars?\b/iu.exec(String(payload.Awards || ""))?.[1] || 0),
+    metascore: score(payload.Metascore),
+    rottenTomatoesRating: /^\d{1,3}%$/u.test(String(rotten)) ? score(rotten.slice(0, -1)) : null,
+    boxOfficeUsd: Number.isSafeInteger(dollars) && dollars >= 0 ? dollars : null,
+  };
+}
+
 async function readCache(cachePath) {
   try {
     const cache = JSON.parse(await readFile(cachePath, "utf8"));
@@ -36,6 +50,8 @@ function applyEntry(movie, entry) {
     imdbId: entry.imdbId,
     ...(Number.isFinite(entry.imdbRating) ? { imdbRating: entry.imdbRating } : {}),
     ...(Number.isInteger(entry.imdbVotes) ? { imdbVotes: entry.imdbVotes } : {}),
+    ...Object.fromEntries(["oscarWins", "metascore", "rottenTomatoesRating", "boxOfficeUsd"]
+      .filter((key) => Object.hasOwn(entry, key)).map((key) => [key, entry[key]])),
   };
 }
 
@@ -47,6 +63,7 @@ function normalizedResult(payload, fetchedAt) {
     imdbId: payload.imdbID,
     imdbRating: Number.isFinite(rating) ? rating : null,
     imdbVotes: Number.isFinite(votes) ? votes : null,
+    ...parseOmdbDetails(payload),
     status: Number.isFinite(rating) ? "rated" : "rating-unavailable",
     fetchedAt,
   };
@@ -129,13 +146,14 @@ export async function enrichMoviesWithOmdb(movies, options = {}) {
       cursor += 1;
       const previous = cache.entries[movie.id];
       const currentLookupKey = lookupKey(movie);
-      if (previous?.lookupKey === currentLookupKey && isFresh(previous, now)) {
+      if (previous?.lookupKey === currentLookupKey && previous.detailsVersion === 1 && isFresh(previous, now)) {
         diagnostics?.push({ id: movie.id, title: movie.title, status: previous.status || "cached", fetchedAt: previous.fetchedAt });
         continue;
       }
       try {
         cache.entries[movie.id] = {
           ...await fetchEntry(movie, request, apiKey, now.toISOString()),
+          detailsVersion: 1,
           lookupKey: currentLookupKey,
         };
         diagnostics?.push({ id: movie.id, title: movie.title, status: cache.entries[movie.id].status, fetchedAt: now.toISOString() });
