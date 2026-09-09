@@ -434,8 +434,10 @@ h1 {
 	background: none;
 	color: inherit;
 	cursor: var(--cursor-pointer);
-	font-size: 0.69rem;
-	font-weight: 750;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: normal;
+	text-transform: none;
 	text-decoration: underline;
 	text-underline-offset: 3px;
 }
@@ -714,7 +716,7 @@ h1 {
 .select-filters {
 	display: grid;
 	align-self: end;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-template-columns: minmax(0, 0.9fr) minmax(0, 0.9fr) minmax(0, 1.4fr);
 	gap: 8px;
 }
 
@@ -749,6 +751,9 @@ h1 {
 
 .filter-dropdown summary {
 	position: relative;
+	display: flex;
+	align-items: center;
+	height: 39px;
 	list-style: none;
 }
 
@@ -759,7 +764,8 @@ h1 {
 	content: "⌄";
 	position: absolute;
 	right: 11px;
-	top: 8px;
+	top: 50%;
+	transform: translateY(-50%);
 }
 .filter-dropdown[open] summary::after {
 	content: "⌃";
