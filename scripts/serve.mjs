@@ -33,6 +33,11 @@ createServer(async (request, response) => {
     });
     createReadStream(file).pipe(response);
   } catch {
+    if (/^\/film\/[^/]+\/?$/u.test(pathname)) {
+      response.writeHead(200, { "Content-Type": types[".html"], "Cache-Control": "no-cache" });
+      createReadStream(join(root, "index.html")).pipe(response);
+      return;
+    }
     response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" }).end("Not found");
   }
 }).listen(port, "127.0.0.1", () => {

@@ -11,7 +11,7 @@
     "audit:duplicates": "node scripts/audit-duplicates.mjs",
     "build": "node scripts/build.mjs",
     "test": "node --test --test-isolation=none",
-    "check": "node --check site/app.js && node --check scraper/index.mjs",
+    "check": "node --check site/app.js && node --check scraper/index.mjs && node --check worker.mjs",
     "deploy": "wrangler deploy"
   },
   "dependencies": {

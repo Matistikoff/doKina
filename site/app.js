@@ -669,7 +669,8 @@ function loadDialogBackdrop(url) {
 function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true) {
   if (updateRoute) {
     const url = new URL(window.location.href);
-    url.hash = `film=${encodeURIComponent(movie.id)}`;
+    url.pathname = `/film/${encodeURIComponent(movie.id)}`;
+    url.hash = "";
     if (url.href !== window.location.href) window.history.pushState(null, "", url);
   }
   loadDialogBackdrop(movie.backdropUrl);
@@ -696,8 +697,11 @@ function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true) {
 }
 
 function clearMovieRoute() {
-  if (!window.location.hash.startsWith("#film=")) return;
   const url = new URL(window.location.href);
+  const hasMoviePath = /^\/film\/[^/]+\/?$/u.test(url.pathname);
+  const hasLegacyHash = url.hash.startsWith("#film=");
+  if (!hasMoviePath && !hasLegacyHash) return;
+  if (hasMoviePath) url.pathname = "/";
   url.hash = "";
   window.history.replaceState(null, "", url);
 }
@@ -712,8 +716,16 @@ function closeMovieDialog() {
 
 function syncMovieRoute() {
   if (!state.program) return;
-  const params = new URLSearchParams(window.location.hash.slice(1));
-  const movieId = params.get("film");
+  const pathMatch = window.location.pathname.match(/^\/film\/([^/]+)\/?$/u);
+  const legacyParams = new URLSearchParams(window.location.hash.slice(1));
+  let movieId = legacyParams.get("film");
+  if (pathMatch) {
+    try {
+      movieId = decodeURIComponent(pathMatch[1]);
+    } catch {
+      movieId = null;
+    }
+  }
   const movie = state.program.movies.find((item) => item.id === movieId);
   if (!movie) {
     closeMovieDialog();
