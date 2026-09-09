@@ -657,12 +657,12 @@ function openMovieDialog(movie, screenings, cinemaMap) {
   elements.dialogKicker.textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
   elements.dialogTitle.textContent = movie.title;
   elements.dialogMeta.textContent = movieMeta(movie);
+  renderMovieFacts(movie);
   elements.dialogCast.hidden = !movie.actors?.length;
   elements.dialogCast.textContent = movie.actors?.length ? `Hrajú: ${movie.actors.join(", ")}` : "";
   elements.dialogOverview.hidden = !movie.overview;
   elements.dialogOverviewText.textContent = movie.overview || "";
   elements.dialogOverviewText.lang = movie.overviewLanguage || "sk";
-  renderMovieFacts(movie);
   elements.dialogOverviewHeading.textContent = movie.overviewLanguage === "en" ? "O filme · anglicky"
     : movie.overviewLanguage === "cs" ? "O filme · česky" : "O filme";
   elements.dialogTrailer.hidden = !movie.trailerUrl;
@@ -689,6 +689,14 @@ function renderMovie(movie, screenings, cinemaMap) {
   const poster = fragment.querySelector(".poster");
   const ratingsElement = fragment.querySelector(".movie-ratings");
   const screeningCount = fragment.querySelector(".screening-count");
+  const oscarBadge = fragment.querySelector(".oscar-badge");
+  oscarBadge.hidden = !(movie.oscarWins > 0);
+  if (movie.oscarWins > 0) {
+    const label = `Získané ocenenia: ${oscarLabel(movie.oscarWins)}`;
+    oscarBadge.title = label;
+    oscarBadge.setAttribute("aria-label", label);
+    oscarBadge.querySelector("span").textContent = movie.oscarWins;
+  }
 
   fragment.querySelector("h3").textContent = movie.title;
   fragment.querySelector(".movie-kicker").textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
@@ -721,14 +729,6 @@ function renderMovie(movie, screenings, cinemaMap) {
     ratingElement.title = !hasRating
       ? `${rating.source}: hodnotenie nie je dostupné`
       : rating.votes
-  const oscarBadge = fragment.querySelector(".oscar-badge");
-  oscarBadge.hidden = !(movie.oscarWins > 0);
-  if (movie.oscarWins > 0) {
-    const label = `Získané ocenenia: ${oscarLabel(movie.oscarWins)}`;
-    oscarBadge.title = label;
-    oscarBadge.setAttribute("aria-label", label);
-    oscarBadge.querySelector("span").textContent = movie.oscarWins;
-  }
       ? `${rating.source} hodnotenie z ${rating.votes.toLocaleString("sk-SK")} hlasov`
       : `${rating.source} hodnotenie`;
     ratingElement.setAttribute("aria-label", hasRating
