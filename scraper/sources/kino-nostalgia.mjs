@@ -87,6 +87,7 @@ export function parseEntradioEventList(events, {
     const image = event.show?.primaryImage;
     const posterUrl = image?.thumbnails?.find((item) => item.size === "large")?.url || image?.url || null;
     const ageText = slovak(event.ageClassificationTranslated) || "";
+    const detailUrl = showId ? new URL(`/film/${showId}`, programUrl).href : programUrl;
 
     if (!moviesById.has(id)) {
       moviesById.set(id, {
@@ -101,7 +102,7 @@ export function parseEntradioEventList(events, {
           || event.ageClassificationCode?.match(/(?:over|unsuitable_under)(\d+)$/u)?.[1] || null,
         genres: [],
         posterUrl,
-        detailUrl: showId ? new URL(`/film/${showId}`, programUrl).href : null,
+        detailUrl,
       });
     }
 
@@ -121,6 +122,7 @@ export function parseEntradioEventList(events, {
       price: null,
       soldOut: typeof available === "number" ? available === 0 : false,
       availabilityRatio: null,
+      detailUrl,
       bookingUrl: event.ecommerceEventURL || event.thirdPartyPurchaseURL || null,
     });
   }

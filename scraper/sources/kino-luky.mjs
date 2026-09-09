@@ -72,6 +72,7 @@ export function parseLuky(html) {
       price: null,
       soldOut: false,
       availabilityRatio: null,
+      detailUrl,
       bookingUrl,
     });
   });

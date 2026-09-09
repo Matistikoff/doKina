@@ -135,6 +135,7 @@ export function parseA4KinoInak(html, options = {}) {
       price: item.price,
       soldOut: false,
       availabilityRatio: null,
+      detailUrl: item.detailUrl,
       bookingUrl: item.bookingUrl,
     });
   }

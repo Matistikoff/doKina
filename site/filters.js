@@ -6,3 +6,9 @@ export function isCzSkMovie(movie, screening = null) {
   }
   return screening?.languages?.original?.some((code) => code === "cs" || code === "sk") || false;
 }
+
+export function isNonEnglishMovie(movie, screening = null) {
+  if (/^[a-z]{2}$/u.test(movie?.originalLanguage || "")) return movie.originalLanguage !== "en";
+  const languages = screening?.languages?.original;
+  return Array.isArray(languages) && languages.length > 0 && !languages.includes("en");
+}

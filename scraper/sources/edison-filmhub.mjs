@@ -175,6 +175,7 @@ export function parseEdison(html, options = {}) {
       price: priceText && !disabled ? priceText : null,
       soldOut: disabled,
       availabilityRatio: null,
+      detailUrl,
       bookingUrl,
     });
     screeningIndex += 1;

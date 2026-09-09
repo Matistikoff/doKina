@@ -18,9 +18,12 @@ const haine = {
   id: 406,
   title: "Nenávisť",
   original_title: "La Haine",
+  original_language: "fr",
   release_date: "1995-05-31",
   imdb_id: "tt0113247",
   runtime: 98,
+  budget: 2500000,
+  revenue: 123456789,
   vote_average: 8.1,
   vote_count: 4100,
   credits: { crew: [{ job: "Director", name: "Mathieu Kassovitz" }] },
@@ -45,6 +48,7 @@ test("retries an empty year-filtered search and recognizes translated titles", a
     ] } };
   });
   assert.equal(result.imdbId, "tt0113247");
+  assert.equal(result.originalLanguage, "fr");
   assert.equal(result.englishTitle, "Hate");
   assert.equal(calls[0].year, "1996");
   assert.equal(calls[1].year, undefined);
@@ -76,10 +80,19 @@ test("resolves a unique localized title with IDs and poster", async () => {
   assert.equal(result.posterUrl, "https://image.tmdb.org/t/p/w500/haine-sk.jpg");
   assert.equal(result.backdropUrl, "https://image.tmdb.org/t/p/w1280/haine-backdrop.jpg");
   assert.equal(result.trailerUrl, "https://www.youtube.com/watch?v=abcdefghijk");
+  assert.equal(result.budgetUsd, 2500000);
+  assert.equal(result.worldwideGrossUsd, 123456789);
   assert.deepEqual(result.productionCountries, ["FR"]);
 
   const alternate = { ...haine, title: "La Haine", alternative_titles: { titles: [{ title: "Nenávisť" }] } };
   assert.equal((await resolveTmdbMovie({ title: "Nenávisť" }, "test", tmdbMock([alternate]))).tmdbId, 406);
+});
+
+test("omits missing TMDB budget and worldwide revenue", async () => {
+  const withoutFinancials = { ...haine, budget: 0, revenue: 0 };
+  const result = await resolveTmdbMovie({ title: "Nenávisť" }, "test", tmdbMock([withoutFinancials]));
+  assert.equal(result.budgetUsd, undefined);
+  assert.equal(result.worldwideGrossUsd, undefined);
 });
 
 test("selects a clean backdrop and an official trailer", () => {
@@ -123,6 +136,8 @@ test("keeps film metadata when the English trailer fallback fails", async () => 
     return withoutVideos;
   });
   assert.equal(result.tmdbId, 406);
+  assert.equal(result.budgetUsd, 2500000);
+  assert.equal(result.worldwideGrossUsd, 123456789);
   assert.equal(result.trailerUrl, null);
 });
 
@@ -181,6 +196,8 @@ test("enriches, caches and reuses a fresh TMDB result", async () => {
     request: async () => assert.fail("fresh cache should avoid requests"),
   });
   assert.equal(cached.posterUrl, result.posterUrl);
+  assert.equal(cached.budgetUsd, result.budgetUsd);
+  assert.equal(cached.worldwideGrossUsd, result.worldwideGrossUsd);
 });
 
 test("prefers the TMDB poster and keeps it during an outage", async () => {

@@ -307,6 +307,7 @@
 								<select id="sort-filter">
 									<option value="rating">Najlepšie hodnotené</option>
 									<option value="mustWatch">Must watch</option>
+									<option value="nonEnglish">Neanglické filmy</option>
 									<option value="oscars">Oscarové filmy</option>
 									<option value="cult">Kultofky</option>
 									<option value="czSk">CZ/SK filmy</option>
@@ -494,6 +495,11 @@
 								rel="noreferrer"
 								hidden
 							>▶ Pozrieť trailer</a>
+							<div
+								class="movie-ratings dialog-ratings"
+								id="movie-dialog-ratings"
+								aria-label="Hodnotenia filmu"
+							></div>
 							<span id="movie-dialog-metascore" class="critic-score metascore" role="img" tabindex="0" hidden></span>
 							<span id="movie-dialog-tomatoes" class="critic-score tomatoes" role="img" tabindex="0" hidden>
 								<svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
@@ -503,10 +509,16 @@
 								<span class="tomato-value"></span>
 							</span>
 							<dl id="movie-dialog-facts" class="dialog-facts" aria-label="Ocenenia" hidden></dl>
-							<p id="movie-dialog-box-office" class="dialog-box-office" title="Tržby v USA a Kanade podľa OMDb" hidden>
-								<span>Tržby v USA a Kanade</span>
-								<strong></strong>
-							</p>
+							<dl id="movie-dialog-financials" class="dialog-financials" aria-label="Finančné údaje filmu" hidden>
+								<div class="dialog-financial" data-financial="budget" title="Produkčný rozpočet podľa TMDb" hidden>
+									<dt>Rozpočet</dt>
+									<dd></dd>
+								</div>
+								<div class="dialog-financial" data-financial="gross" title="Celosvetové tržby podľa TMDb" hidden>
+									<dt>Tržby</dt>
+									<dd></dd>
+								</div>
+							</dl>
 							</div>
 						</div>
 						<button

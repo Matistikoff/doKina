@@ -17,6 +17,7 @@ export function validateProgram(program) {
   for (const movie of program?.movies || []) {
     if (!isString(movie.id) || !isString(movie.title)) errors.push("each movie needs an id and title");
     if (movie.englishTitle != null && !isString(movie.englishTitle)) errors.push(`invalid englishTitle: ${movie.englishTitle}`);
+    if (movie.originalLanguage != null && !/^[a-z]{2}$/u.test(movie.originalLanguage)) errors.push(`invalid originalLanguage for ${movie.id}`);
     if (movie.overview != null && !isString(movie.overview)) errors.push(`invalid overview for ${movie.id}`);
     if (movie.overviewLanguage != null && !["sk", "cs", "en"].includes(movie.overviewLanguage)) errors.push(`invalid overviewLanguage for ${movie.id}`);
     if (movie.actors != null && (!Array.isArray(movie.actors) || !movie.actors.every(isString))) errors.push(`invalid actors for ${movie.id}`);
@@ -37,7 +38,7 @@ export function validateProgram(program) {
     for (const key of ["metascore", "rottenTomatoesRating"]) {
       if (movie[key] != null && (!Number.isInteger(movie[key]) || movie[key] < 0 || movie[key] > 100)) errors.push(`invalid ${key} for ${movie.id}`);
     }
-    for (const key of ["oscarWins", "boxOfficeUsd"]) {
+    for (const key of ["oscarWins", "budgetUsd", "worldwideGrossUsd"]) {
       if (movie[key] != null && (!Number.isSafeInteger(movie[key]) || movie[key] < 0)) errors.push(`invalid ${key} for ${movie.id}`);
     }
     if (movie.csfdId != null && (!Number.isInteger(movie.csfdId) || movie.csfdId <= 0)) errors.push(`invalid csfdId for ${movie.id}`);
@@ -54,6 +55,7 @@ export function validateProgram(program) {
     if (!movieIds.has(screening.movieId)) errors.push(`unknown movieId: ${screening.movieId}`);
     if (!cinemaIds.has(screening.cinemaId)) errors.push(`unknown cinemaId: ${screening.cinemaId}`);
     if (!isString(screening.startsAt) || Number.isNaN(Date.parse(screening.startsAt))) errors.push(`invalid startsAt: ${screening.startsAt}`);
+    if (screening.detailUrl != null && !isString(screening.detailUrl)) errors.push(`invalid detailUrl for ${screening.id}`);
   }
 
   if (errors.length) throw new Error(`Invalid program.json:\n- ${errors.join("\n- ")}`);

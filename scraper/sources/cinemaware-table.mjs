@@ -84,6 +84,7 @@ export function parseCinemawareTable(html, cinema, options = {}) {
           price,
           soldOut: /vypredan/iu.test($(timeLink).attr("title") || ""),
           availabilityRatio: null,
+          detailUrl,
           bookingUrl,
         });
       });

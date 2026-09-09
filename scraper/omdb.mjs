@@ -10,13 +10,10 @@ export function parseOmdbDetails(payload) {
   const score = (value) => /^\d{1,3}$/u.test(String(value)) && Number(value) <= 100 ? Number(value) : null;
   const rotten = (Array.isArray(payload.Ratings) ? payload.Ratings : [])
     .find((rating) => rating.Source === "Rotten Tomatoes")?.Value;
-  const boxOffice = /^\$((?:\d{1,3}(?:,\d{3})+|\d+))$/u.exec(String(payload.BoxOffice || ""));
-  const dollars = boxOffice ? Number(boxOffice[1].replaceAll(",", "")) : null;
   return {
     oscarWins: Number(/\bWon\s+(\d+)\s+Oscars?\b/iu.exec(String(payload.Awards || ""))?.[1] || 0),
     metascore: score(payload.Metascore),
     rottenTomatoesRating: /^\d{1,3}%$/u.test(String(rotten)) ? score(rotten.slice(0, -1)) : null,
-    boxOfficeUsd: Number.isSafeInteger(dollars) && dollars >= 0 ? dollars : null,
   };
 }
 
@@ -50,7 +47,7 @@ function applyEntry(movie, entry) {
     imdbId: entry.imdbId,
     ...(Number.isFinite(entry.imdbRating) ? { imdbRating: entry.imdbRating } : {}),
     ...(Number.isInteger(entry.imdbVotes) ? { imdbVotes: entry.imdbVotes } : {}),
-    ...Object.fromEntries(["oscarWins", "metascore", "rottenTomatoesRating", "boxOfficeUsd"]
+    ...Object.fromEntries(["oscarWins", "metascore", "rottenTomatoesRating"]
       .filter((key) => Object.hasOwn(entry, key)).map((key) => [key, entry[key]])),
   };
 }

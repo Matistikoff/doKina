@@ -10,6 +10,7 @@ const detail = {
   id: 496243,
   title: "Parazit",
   original_title: "기생충",
+  original_language: "ko",
   release_date: "2019-05-30",
   runtime: 133,
   imdb_id: "tt6751668",
@@ -54,6 +55,7 @@ test("TMDB fills missing metadata and replaces the cinema poster", async () => {
   assert.equal(result.backdropUrl, "https://image.tmdb.org/t/p/w1280/parasite-backdrop.jpg");
   assert.equal(result.trailerUrl, "https://www.youtube.com/watch?v=parasite123");
   assert.equal(result.originalTitle, "기생충");
+  assert.equal(result.originalLanguage, "ko");
   assert.equal(result.tmdbId, 496243);
   assert.equal(result.durationMinutes, 132);
   assert.deepEqual(result.productionCountries, ["KR"]);

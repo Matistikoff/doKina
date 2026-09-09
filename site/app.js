@@ -1,8 +1,9 @@
-import { formatDuration, formatUsd } from "./formatters.js";
+import { countryFlag, countryName, formatDuration, formatUsd } from "./formatters.js";
 import { compareMoviesByDuration, isMustWatch, isOscarWinner } from "./discovery.js";
 import { metascoreTone, tomatoTone } from "./critic-ratings.js";
-import { isCzSkMovie } from "./filters.js";
-import { actorSearchUrl } from "./links.js";
+import { isCzSkMovie, isNonEnglishMovie } from "./filters.js";
+import { actorSearchUrl, directorSearchUrl } from "./links.js";
+import { limitedMovieCast } from "./movie-cast.js";
 import { compareMoviesByRating } from "./ratings.js";
 
 const CULT_MOVIE_LATEST_YEAR = 2024;
@@ -30,8 +31,9 @@ const elements = {
   dialogCast: document.querySelector("#movie-dialog-cast"),
   dialogKicker: document.querySelector("#movie-dialog-kicker"),
   dialogMeta: document.querySelector("#movie-dialog-meta"),
+  dialogRatings: document.querySelector("#movie-dialog-ratings"),
   dialogFacts: document.querySelector("#movie-dialog-facts"),
-  dialogBoxOffice: document.querySelector("#movie-dialog-box-office"),
+  dialogFinancials: document.querySelector("#movie-dialog-financials"),
   dialogActions: document.querySelector("#movie-dialog-actions"),
   dialogMetascore: document.querySelector("#movie-dialog-metascore"),
   dialogTomatoes: document.querySelector("#movie-dialog-tomatoes"),
@@ -542,30 +544,89 @@ function groupByDate(screenings) {
   return groups;
 }
 
-function showtimeElement(screening) {
-  const element = document.createElement(screening.bookingUrl && !screening.soldOut ? "a" : "span");
+function showtimeElement(screening, movie, cinema) {
+  const detailUrl = screening.detailUrl
+    || (movie.source === screening.source ? movie.detailUrl : null)
+    || cinema?.url;
+  const element = document.createElement(detailUrl ? "a" : "span");
   element.className = `showtime${screening.soldOut ? " is-sold-out" : ""}`;
   element.textContent = timeValue(screening.startsAt);
   element.title = screening.soldOut
     ? "Vypredané"
     : [screening.auditorium, screening.format?.join(" · ")].filter(Boolean).join(" · ")
-      || (screening.bookingUrl ? "Kúpiť lístok" : "Lístky nie sú dostupné online");
+      || (detailUrl ? "Detail filmu na stránke kina" : "Detail filmu nie je dostupný");
   if (element instanceof HTMLAnchorElement) {
-    element.href = screening.bookingUrl;
+    element.href = detailUrl;
     element.target = "_blank";
     element.rel = "noreferrer";
-    element.setAttribute("aria-label", `${timeValue(screening.startsAt)} — kúpiť lístok`);
+    element.setAttribute("aria-label", `${timeValue(screening.startsAt)} — detail filmu na stránke kina`);
   }
   return element;
 }
 
-function movieMeta(movie) {
-  return [
+function movieMeta(movie, { includeAlternativeTitle = true } = {}) {
+  const items = [
     movie.directors?.length ? `Réžia: ${movie.directors.join(", ")}` : null,
     movie.durationMinutes ? formatDuration(movie.durationMinutes) : null,
     movie.releaseYear || null,
-    (movie.originalTitle || movie.englishTitle) !== movie.title ? (movie.originalTitle || movie.englishTitle) : null,
-  ].filter(Boolean).join(" · ");
+  ];
+  if (includeAlternativeTitle) {
+    items.push((movie.originalTitle || movie.englishTitle) !== movie.title
+      ? (movie.originalTitle || movie.englishTitle)
+      : null);
+  }
+  return items.filter(Boolean).join(" · ");
+}
+
+function productionCountriesElement(movie) {
+  if (!movie.productionCountries?.length) return null;
+  const countries = document.createElement("span");
+  countries.className = "production-countries";
+  countries.setAttribute("aria-label", "Krajiny výroby");
+  for (const code of movie.productionCountries) {
+    const flag = countryFlag(code);
+    if (!flag) continue;
+    const country = document.createElement("span");
+    const name = countryName(code);
+    country.className = "production-country";
+    country.textContent = flag;
+    country.title = name;
+    country.setAttribute("role", "img");
+    country.setAttribute("aria-label", name);
+    countries.append(country);
+  }
+  return countries.childElementCount ? countries : null;
+}
+
+function renderDialogMovieMeta(movie) {
+  const items = [];
+  if (movie.directors?.length) {
+    const directors = document.createDocumentFragment();
+    directors.append("Réžia: ");
+    movie.directors.forEach((name, index) => {
+      const link = document.createElement("a");
+      link.className = "dialog-director-link";
+      link.href = directorSearchUrl(name);
+      link.target = "_blank";
+      link.rel = "noreferrer";
+      link.textContent = name;
+      link.setAttribute("aria-label", `${name} — vyhľadať cez Google`);
+      directors.append(index ? ", " : "", link);
+    });
+    items.push(directors);
+  }
+  if (movie.durationMinutes) items.push(formatDuration(movie.durationMinutes));
+  if (movie.releaseYear) items.push(String(movie.releaseYear));
+  const alternativeTitle = movie.originalTitle || movie.englishTitle;
+  if (alternativeTitle && alternativeTitle !== movie.title) items.push(alternativeTitle);
+  const countries = productionCountriesElement(movie);
+  if (countries) items.push(countries);
+
+  elements.dialogMeta.replaceChildren();
+  items.forEach((item, index) => {
+    if (index) elements.dialogMeta.append(" · ");
+    elements.dialogMeta.append(item);
+  });
 }
 
 function renderShowtimes(movie, screenings, cinemaMap, root) {
@@ -588,7 +649,8 @@ function renderShowtimes(movie, screenings, cinemaMap, root) {
       label.textContent = cinemaName(cinemaMap.get(cinemaId));
       const times = document.createElement("div");
       times.className = "showtimes";
-      times.replaceChildren(...cinemaScreenings.map((screening) => showtimeElement(screening)));
+      const cinema = cinemaMap.get(cinemaId);
+      times.replaceChildren(...cinemaScreenings.map((screening) => showtimeElement(screening, movie, cinema)));
       group.append(label, times);
       day.append(group);
     }
@@ -601,8 +663,7 @@ function oscarLabel(wins) {
 }
 
 function renderMovieCast(movie) {
-  const cast = Array.isArray(movie.cast) ? movie.cast.filter((person) => person?.name) : [];
-  const names = movie.actors || cast.map((person) => person.name);
+  const { cast, names } = limitedMovieCast(movie);
   elements.dialogCast.hidden = names.length === 0;
   if (names.length === 0) {
     elements.dialogCast.replaceChildren();
@@ -699,15 +760,65 @@ function renderMovieFacts(movie) {
     return item;
   }));
   elements.dialogFacts.hidden = facts.length === 0;
-  const hasBoxOffice = Number.isFinite(movie.boxOfficeUsd);
-  elements.dialogBoxOffice.hidden = !hasBoxOffice;
-  elements.dialogBoxOffice.querySelector("strong").textContent = hasBoxOffice ? formatUsd(movie.boxOfficeUsd) : "";
-  elements.dialogActions.hidden = !movie.trailerUrl && meta.hidden && tomatoes.hidden && facts.length === 0 && !hasBoxOffice;
+  const hasBudget = Number.isFinite(movie.budgetUsd) && movie.budgetUsd > 0;
+  const hasGross = Number.isFinite(movie.worldwideGrossUsd) && movie.worldwideGrossUsd > 0;
+  const budget = elements.dialogFinancials.querySelector("[data-financial='budget']");
+  const gross = elements.dialogFinancials.querySelector("[data-financial='gross']");
+  budget.hidden = !hasBudget;
+  budget.querySelector("dd").textContent = hasBudget ? formatUsd(movie.budgetUsd) : "";
+  gross.hidden = !hasGross;
+  gross.querySelector("dd").textContent = hasGross ? formatUsd(movie.worldwideGrossUsd) : "";
+  const grossBelowBudget = hasBudget && hasGross && movie.worldwideGrossUsd < movie.budgetUsd;
+  gross.classList.toggle("is-below-budget", grossBelowBudget);
+  gross.title = grossBelowBudget
+    ? "Celosvetové tržby neprekročili vykázaný produkčný rozpočet. Nejde o presný výpočet zisku."
+    : "Celosvetové tržby podľa TMDb";
+  elements.dialogFinancials.hidden = !hasBudget && !hasGross;
+  elements.dialogActions.hidden = !movie.trailerUrl
+    && elements.dialogRatings.childElementCount === 0
+    && meta.hidden
+    && tomatoes.hidden
+    && facts.length === 0
+    && !hasBudget
+    && !hasGross;
+}
+
+function renderMovieRatings(movie, ratingsElement) {
+  ratingsElement.replaceChildren();
+  const ratings = [
+    { source: "ČSFD", score: movie.csfdRating, max: 100, votes: movie.csfdVotes, url: movie.csfdId ? `https://www.csfd.cz/film/${movie.csfdId}/` : null },
+    { source: "IMDb", score: movie.imdbRating, max: 10, votes: movie.imdbVotes, url: movie.imdbId ? `https://www.imdb.com/title/${movie.imdbId}/` : null },
+  ];
+  for (const rating of ratings) {
+    if (!rating.url) continue;
+    const hasRating = Number.isFinite(rating.score);
+    const score = hasRating ? (rating.max === 10 ? rating.score.toFixed(1) : Math.round(rating.score).toLocaleString("sk-SK")) : null;
+    const ratingElement = document.createElement("a");
+    ratingElement.className = "movie-rating";
+    const sourceIcon = document.createElement("span");
+    sourceIcon.className = `rating-source ${rating.source === "IMDb" ? "is-imdb" : "is-csfd"}`;
+    sourceIcon.setAttribute("aria-hidden", "true");
+    sourceIcon.textContent = rating.source;
+    ratingElement.append(sourceIcon, hasRating ? `${score}${rating.max === 100 ? " %" : ""}` : "—");
+    ratingElement.title = !hasRating
+      ? `${rating.source}: hodnotenie nie je dostupné`
+      : rating.votes
+      ? `${rating.source} hodnotenie z ${rating.votes.toLocaleString("sk-SK")} hlasov`
+      : `${rating.source} hodnotenie`;
+    ratingElement.setAttribute("aria-label", hasRating
+      ? `${movie.title}: ${rating.source} hodnotenie ${score} z ${rating.max}`
+      : `${movie.title}: ${rating.source} hodnotenie nie je dostupné`);
+    ratingElement.href = rating.url;
+    ratingElement.target = "_blank";
+    ratingElement.rel = "noreferrer";
+    ratingsElement.append(ratingElement);
+  }
 }
 
 function clearDialogBackdrop() {
   dialogBackdropLoadId += 1;
   elements.dialog.classList.remove("has-backdrop");
+  elements.dialog.style.removeProperty("--dialog-backdrop-image");
   elements.dialogBackdrop.classList.remove("is-loaded");
   elements.dialogBackdrop.hidden = true;
   elements.dialogBackdrop.onload = null;
@@ -729,6 +840,7 @@ function loadDialogBackdrop(url) {
   };
 
   elements.dialog.classList.add("has-backdrop");
+  elements.dialog.style.setProperty("--dialog-backdrop-image", `url("${url}")`);
   elements.dialogBackdrop.hidden = false;
   elements.dialogBackdrop.onload = reveal;
   elements.dialogBackdrop.onerror = discard;
@@ -749,7 +861,8 @@ function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true) {
   loadDialogBackdrop(movie.backdropUrl);
   elements.dialogKicker.textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
   elements.dialogTitle.textContent = movie.title;
-  elements.dialogMeta.textContent = movieMeta(movie);
+  renderDialogMovieMeta(movie);
+  renderMovieRatings(movie, elements.dialogRatings);
   renderMovieFacts(movie);
   renderMovieCast(movie);
   elements.dialogOverview.hidden = !movie.overview;
@@ -830,7 +943,10 @@ function renderMovie(movie, screenings, cinemaMap) {
 
   fragment.querySelector("h3").textContent = movie.title;
   fragment.querySelector(".movie-kicker").textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
-  fragment.querySelector(".movie-meta").textContent = movieMeta(movie);
+  const meta = fragment.querySelector(".movie-meta");
+  meta.textContent = movieMeta(movie, { includeAlternativeTitle: false });
+  const countries = productionCountriesElement(movie);
+  if (countries) meta.append(meta.textContent ? " · " : "", countries);
   const nearestScreening = [...screenings].sort((a, b) => a.startsAt.localeCompare(b.startsAt))[0];
   const countLabel = `${screenings.length} ${screenings.length === 1 ? "predstavenie" : screenings.length < 5 ? "predstavenia" : "predstavení"}`;
   screeningCount.textContent = `${countLabel} · ${nearestScreeningLabel(nearestScreening, cinemaMap)}`;
@@ -841,36 +957,7 @@ function renderMovie(movie, screenings, cinemaMap) {
     poster.addEventListener("error", () => poster.classList.add("is-broken"));
   }
   card.dataset.movieId = movie.id;
-  const ratings = [
-    { source: "ČSFD", score: movie.csfdRating, max: 100, votes: movie.csfdVotes, url: movie.csfdId ? `https://www.csfd.cz/film/${movie.csfdId}/` : null },
-    { source: "IMDb", score: movie.imdbRating, max: 10, votes: movie.imdbVotes, url: movie.imdbId ? `https://www.imdb.com/title/${movie.imdbId}/` : null },
-  ];
-  for (const rating of ratings) {
-    if (!rating.url) continue;
-    const hasRating = Number.isFinite(rating.score);
-    const score = hasRating ? (rating.max === 10 ? rating.score.toFixed(1) : Math.round(rating.score).toLocaleString("sk-SK")) : null;
-    const ratingElement = document.createElement(rating.url ? "a" : "span");
-    ratingElement.className = "movie-rating";
-    const sourceIcon = document.createElement("span");
-    sourceIcon.className = `rating-source ${rating.source === "IMDb" ? "is-imdb" : "is-csfd"}`;
-    sourceIcon.setAttribute("aria-hidden", "true");
-    sourceIcon.textContent = rating.source;
-    ratingElement.append(sourceIcon, hasRating ? `${score}${rating.max === 100 ? " %" : ""}` : "—");
-    ratingElement.title = !hasRating
-      ? `${rating.source}: hodnotenie nie je dostupné`
-      : rating.votes
-      ? `${rating.source} hodnotenie z ${rating.votes.toLocaleString("sk-SK")} hlasov`
-      : `${rating.source} hodnotenie`;
-    ratingElement.setAttribute("aria-label", hasRating
-      ? `${movie.title}: ${rating.source} hodnotenie ${score} z ${rating.max}`
-      : `${movie.title}: ${rating.source} hodnotenie nie je dostupné`);
-    if (rating.url) {
-      ratingElement.href = rating.url;
-      ratingElement.target = "_blank";
-      ratingElement.rel = "noreferrer";
-    }
-    ratingsElement.append(ratingElement);
-  }
+  renderMovieRatings(movie, ratingsElement);
   card.tabIndex = 0;
   card.setAttribute("role", "button");
   card.setAttribute("aria-label", `${movie.title} — zobraziť termíny premietania`);
@@ -909,6 +996,7 @@ function renderProgram() {
       && state.selectedCinemas.has(screening.cinemaId)
       && moviesInGenre.has(screening.movieId)
       && (state.sortBy !== "czSk" || czSkMovieIds.has(screening.movieId))
+      && (state.sortBy !== "nonEnglish" || isNonEnglishMovie(movie, screening))
       && (state.sortBy !== "cult" || (Number.isFinite(releaseYear) && releaseYear <= CULT_MOVIE_LATEST_YEAR))
       && (state.sortBy !== "added" || (Number.isFinite(firstSeenAt) && firstSeenAt >= recentlyAddedSince))
       && (state.sortBy !== "mustWatch" || isMustWatch(movie))
@@ -930,7 +1018,7 @@ function renderProgram() {
     .map(([movieId, screenings]) => ({ movie: movieMap.get(movieId), screenings }))
     .filter(({ movie }) => movie)
     .sort((a, b) => {
-      if (["rating", "cult", "mustWatch", "czSk", "oscars"].includes(state.sortBy)) {
+      if (["rating", "cult", "mustWatch", "czSk", "nonEnglish", "oscars"].includes(state.sortBy)) {
         return compareMoviesByRating(a.movie, b.movie);
       }
       if (state.sortBy === "added") {
@@ -967,7 +1055,7 @@ function renderFreshness() {
     const failureLabel = failedSources.length === 1 ? "zlyhal zdroj" : "zlyhali zdroje";
     dot.classList.add("is-error");
     label.textContent = `Aktualizované ${formatUpdated(state.program.generatedAt)} · ${failureLabel}: ${failedSourceNames.join(", ")}`;
-  } else if (ageHours > 6) {
+  } else if (ageHours > 24) {
     dot.classList.add("is-stale");
     label.textContent = `Posledná aktualizácia ${formatUpdated(state.program.generatedAt)}`;
   } else {
@@ -1000,7 +1088,7 @@ function registerProgramTool() {
           },
           genre: { type: "string", enum: ["all", ...availableGenres], description: "Vybraný žáner alebo all." },
           genres: { type: "array", items: { type: "string", enum: [...availableGenres] }, description: "Vybrané žánre (stačí zhoda s jedným); prázdny zoznam zobrazí všetky. Má prednosť pred genre." },
-          sortBy: { type: "string", enum: ["rating", "mustWatch", "oscars", "czSk", "shortest", "longest", "cult", "added", "soonest"], description: "rating zoradí podľa hodnotenia zo zdroja s väčším počtom hlasov; mustWatch zobrazí iba filmy s IMDb hodnotením aspoň 8; oscars zobrazí iba víťazov Oscara zoradených podľa hodnotenia; czSk zobrazí české, slovenské a československé filmy zoradené podľa hodnotenia; shortest a longest zoradia podľa dĺžky; cult zobrazí filmy do roku 2024 a added filmy prvýkrát zachytené za posledných 7 dní." }
+          sortBy: { type: "string", enum: ["rating", "mustWatch", "oscars", "czSk", "nonEnglish", "shortest", "longest", "cult", "added", "soonest"], description: "rating zoradí podľa hodnotenia zo zdroja s väčším počtom hlasov; mustWatch zobrazí iba filmy s IMDb hodnotením aspoň 8; oscars zobrazí iba víťazov Oscara zoradených podľa hodnotenia; czSk zobrazí české, slovenské a československé filmy; nonEnglish zobrazí filmy, ktorých pôvodný jazyk nie je angličtina; shortest a longest zoradia podľa dĺžky; cult zobrazí filmy do roku 2024 a added filmy prvýkrát zachytené za posledných 7 dní." }
         },
         additionalProperties: false
       },

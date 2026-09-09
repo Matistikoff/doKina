@@ -106,6 +106,7 @@ export function parseNovaCvernovka(html, options = {}) {
       price: null,
       soldOut: false,
       availabilityRatio: null,
+      detailUrl,
       bookingUrl: null,
     });
   });

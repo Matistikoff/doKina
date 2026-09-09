@@ -8,9 +8,9 @@ import { ratingAudit } from "../scraper/rating-audit.mjs";
 
 const details = JSON.parse(await readFile(new URL("./fixtures/omdb-movie.json", import.meta.url), "utf8"));
 
-test("parses Oscar wins, critics scores and dollar box office from OMDb", () => {
+test("parses Oscar wins and critics scores from OMDb", () => {
   assert.deepEqual(parseOmdbDetails(details), {
-    oscarWins: 4, metascore: 82, rottenTomatoesRating: 93, boxOfficeUsd: 123456789,
+    oscarWins: 4, metascore: 82, rottenTomatoesRating: 93,
   });
   assert.equal(parseOmdbDetails({ Awards: "Won 1 Oscar. 5 wins total" }).oscarWins, 1);
   for (const Awards of ["Nominated for 4 Oscars. 12 wins total", "12 wins & 4 nominations.", "N/A", undefined]) {
@@ -20,14 +20,13 @@ test("parses Oscar wins, critics scores and dollar box office from OMDb", () => 
 
 test("rejects missing and malformed OMDb details while keeping zero scores", () => {
   assert.deepEqual(parseOmdbDetails({ Metascore: "N/A", BoxOffice: "N/A" }), {
-    oscarWins: 0, metascore: null, rottenTomatoesRating: null, boxOfficeUsd: null,
+    oscarWins: 0, metascore: null, rottenTomatoesRating: null,
   });
   assert.equal(parseOmdbDetails({ Metascore: "0" }).metascore, 0);
   for (const value of ["101", "-1", "82oops"]) {
     assert.equal(parseOmdbDetails({ Metascore: value }).metascore, null);
     assert.equal(parseOmdbDetails({ Ratings: [{ Source: "Rotten Tomatoes", Value: `${value}%` }] }).rottenTomatoesRating, null);
   }
-  assert.equal(parseOmdbDetails({ BoxOffice: "$12oops" }).boxOfficeUsd, null);
 });
 
 test("uses verified ČSFD aliases and distinguishes missing rating from missing movie", async () => {
@@ -125,10 +124,9 @@ test("refreshes legacy cache, preserves details offline and clears unavailable r
   assert.equal(enriched.oscarWins, 4);
   assert.equal(enriched.metascore, 82);
   assert.equal(enriched.rottenTomatoesRating, 93);
-  assert.equal(enriched.boxOfficeUsd, 123456789);
   assert.equal(preserveMovieRatings([movie], [enriched])[0].oscarWins, 4);
   const [offline] = await enrichMoviesWithOmdb([movie], { ...options, apiKey: undefined });
-  assert.equal(offline.boxOfficeUsd, enriched.boxOfficeUsd);
+  assert.equal(offline.oscarWins, enriched.oscarWins);
   const [stale] = await enrichMoviesWithOmdb([movie], {
     ...options, now: new Date("2026-09-11T10:00:00Z"), request: async () => { throw new Error("offline"); },
   });
@@ -140,7 +138,6 @@ test("refreshes legacy cache, preserves details offline and clears unavailable r
   assert.equal(refreshed.oscarWins, 0);
   assert.equal(refreshed.metascore, null);
   assert.equal(refreshed.rottenTomatoesRating, null);
-  assert.equal(refreshed.boxOfficeUsd, null);
 });
 
 test("keeps negative OMDb lookups cached after the details upgrade", async () => {

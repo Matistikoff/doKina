@@ -29,11 +29,11 @@ test("schema validation rejects dangling movie references", () => {
   }), /unknown movieId/);
 });
 
-test("schema validates optional OMDb awards, critics scores and box office", () => {
+test("schema validates optional OMDb scores and TMDb worldwide gross", () => {
   const base = assembleProgram([], "2026-09-09T10:00:00Z");
-  const movie = { id: "film", title: "Film", oscarWins: 4, metascore: 0, rottenTomatoesRating: 100, boxOfficeUsd: 123456789 };
+  const movie = { id: "film", title: "Film", oscarWins: 4, metascore: 0, rottenTomatoesRating: 100, budgetUsd: 50000000, worldwideGrossUsd: 123456789 };
   assert.doesNotThrow(() => validateProgram({ ...base, movies: [movie] }));
-  for (const [key, value] of [["oscarWins", -1], ["metascore", 101], ["rottenTomatoesRating", 1.5], ["boxOfficeUsd", "N/A"]]) {
+  for (const [key, value] of [["oscarWins", -1], ["metascore", 101], ["rottenTomatoesRating", 1.5], ["budgetUsd", "N/A"], ["worldwideGrossUsd", "N/A"]]) {
     assert.throws(() => validateProgram({ ...base, movies: [{ ...movie, [key]: value }] }), new RegExp(`invalid ${key}`));
   }
 });
@@ -49,6 +49,12 @@ test("schema validation accepts ISO production countries and rejects invalid cod
   };
   assert.doesNotThrow(() => validateProgram({ ...base, movies: [{ id: "film", title: "Film", productionCountries: ["SK", "CZ"] }] }));
   assert.throws(() => validateProgram({ ...base, movies: [{ id: "film", title: "Film", productionCountries: ["Slovakia"] }] }), /invalid productionCountries/);
+});
+
+test("schema validation accepts an ISO original language", () => {
+  const base = assembleProgram([], "2026-09-09T10:00:00Z");
+  assert.doesNotThrow(() => validateProgram({ ...base, movies: [{ id: "film", title: "Film", originalLanguage: "sk" }] }));
+  assert.throws(() => validateProgram({ ...base, movies: [{ id: "film", title: "Film", originalLanguage: "eng" }] }), /invalid originalLanguage/);
 });
 
 test("schema validation accepts trusted TMDB backdrop and YouTube trailer URLs", () => {

@@ -108,6 +108,7 @@ export function parseLumiere(html, options = {}) {
       price: priceText && !/vypredan/iu.test(priceText) ? priceText : null,
       soldOut: /vypredan/iu.test(priceText),
       availabilityRatio: null,
+      detailUrl,
       bookingUrl,
     });
   });
