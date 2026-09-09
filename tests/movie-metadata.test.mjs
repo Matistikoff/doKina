@@ -22,7 +22,7 @@ const detail = {
   credits: {
     crew: [{ job: "Director", name: "Bong Joon Ho" }],
     cast: ["Song Kang-ho", "Lee Sun-kyun", "Cho Yeo-jeong", "Choi Woo-shik", "Park So-dam", "Jang Hye-jin", "Lee Jung-eun"]
-      .map((name) => ({ name })),
+      .map((name, index) => ({ name, character: `Postava ${index + 1}`, profile_path: index ? null : "/song.jpg" })),
   },
   translations: { translations: [
     { iso_639_1: "sk", data: { overview: "Slovenský popis." } },
@@ -46,6 +46,10 @@ test("TMDB fills missing metadata and replaces the cinema poster", async () => {
   });
   assert.deepEqual(result.directors, ["Bong Joon Ho"]);
   assert.deepEqual(result.actors, ["Song Kang-ho", "Lee Sun-kyun", "Cho Yeo-jeong", "Choi Woo-shik", "Park So-dam", "Jang Hye-jin"]);
+  assert.deepEqual(result.cast[0], {
+    name: "Song Kang-ho", character: "Postava 1", profileUrl: "https://image.tmdb.org/t/p/w185/song.jpg",
+  });
+  assert.equal(result.cast.length, 6);
   assert.equal(result.posterUrl, "https://image.tmdb.org/t/p/w500/parasite.jpg");
   assert.equal(result.backdropUrl, "https://image.tmdb.org/t/p/w1280/parasite-backdrop.jpg");
   assert.equal(result.trailerUrl, "https://www.youtube.com/watch?v=parasite123");

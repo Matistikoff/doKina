@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import worker, { injectSocialPreview, movieIdFromPath, socialPreviewForMovie } from "../worker.mjs";
+import worker, { defaultSocialPreview, injectSocialPreview, movieIdFromPath, socialPreviewForMovie } from "../worker.mjs";
 
 test("reads a movie ID from a shareable path", () => {
   assert.equal(movieIdFromPath("/film/movie-hamnet-2025"), "movie-hamnet-2025");
@@ -35,6 +35,12 @@ test("falls back to the site preview for missing or untrusted backdrops", () => 
   assert.equal(socialPreviewForMovie({ movies: [] }, "missing", "https://dokina.sk"), null);
 });
 
+test("builds the default preview URL from the active site origin", () => {
+  const metadata = defaultSocialPreview("https://dokina-sk.example.workers.dev");
+  assert.equal(metadata.canonicalUrl, "https://dokina-sk.example.workers.dev/");
+  assert.equal(metadata.imageUrl, "https://dokina-sk.example.workers.dev/og.png");
+});
+
 test("serves an SPA page with movie-specific metadata", async () => {
   const index = "<html><head><!-- social-preview:start -->old<!-- social-preview:end --><title>Old</title></head></html>";
   const program = { movies: [{
@@ -53,4 +59,19 @@ test("serves an SPA page with movie-specific metadata", async () => {
   assert.equal(response.status, 200);
   assert.match(await response.text(), /<title>Film — doKina\.sk<\/title>/u);
   assert.equal(response.headers.get("cache-control"), "public, max-age=300");
+});
+
+test("serves the homepage with an absolute default image URL", async () => {
+  const index = "<html><head><!-- social-preview:start -->old<!-- social-preview:end --><title>Old</title></head></html>";
+  const env = { ASSETS: { fetch: async (request) => {
+    const pathname = new URL(request.url || request).pathname;
+    return pathname === "/index.html"
+      ? new Response(index, { headers: { "content-type": "text/html" } })
+      : new Response("missing", { status: 404 });
+  } } };
+
+  const response = await worker.fetch(new Request("https://kino.example/"), env);
+  const html = await response.text();
+  assert.match(html, /property="og:image" content="https:\/\/kino\.example\/og\.png"/u);
+  assert.match(html, /property="og:url" content="https:\/\/kino\.example\/"/u);
 });

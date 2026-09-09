@@ -36,6 +36,20 @@ export function socialPreviewForMovie(program, movieId, origin) {
   };
 }
 
+export function defaultSocialPreview(origin) {
+  return {
+    title: "doKina.sk — Vyber si najlepší film v kinách",
+    description: "Všetky filmy, ktoré práve hrajú v Bratislave. Zoraď ich podľa hodnotenia a filtruj podľa žánru či kina.",
+    type: "website",
+    canonicalUrl: `${origin}/`,
+    imageUrl: `${origin}/og.png`,
+    imageType: "image/png",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageAlt: "doKina.sk — filmy, ktoré práve hrajú v Bratislave",
+  };
+}
+
 export function renderSocialPreview(metadata) {
   const fields = Object.fromEntries(Object.entries(metadata).map(([key, value]) => [key, escapeAttribute(value)]));
   return `<!-- social-preview:start -->
@@ -63,17 +77,20 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const movieId = movieIdFromPath(url.pathname);
-    if (!movieId || !["GET", "HEAD"].includes(request.method)) return env.ASSETS.fetch(request);
+    const isHomepage = url.pathname === "/" || url.pathname === "/index.html";
+    if ((!movieId && !isHomepage) || !["GET", "HEAD"].includes(request.method)) return env.ASSETS.fetch(request);
 
-    const [pageResponse, programResponse] = await Promise.all([
-      env.ASSETS.fetch(new URL("/index.html", url)),
-      env.ASSETS.fetch(new URL("/program.json", url)),
-    ]);
-    if (!pageResponse.ok || !programResponse.ok) return env.ASSETS.fetch(request);
+    const pageResponse = await env.ASSETS.fetch(new URL("/index.html", url));
+    if (!pageResponse.ok) return env.ASSETS.fetch(request);
 
-    const [html, program] = await Promise.all([pageResponse.text(), programResponse.json()]);
-    const metadata = socialPreviewForMovie(program, movieId, url.origin);
-    if (!metadata) return env.ASSETS.fetch(request);
+    let metadata = defaultSocialPreview(url.origin);
+    if (movieId) {
+      const programResponse = await env.ASSETS.fetch(new URL("/program.json", url));
+      if (!programResponse.ok) return env.ASSETS.fetch(request);
+      metadata = socialPreviewForMovie(await programResponse.json(), movieId, url.origin);
+      if (!metadata) return env.ASSETS.fetch(request);
+    }
+    const html = await pageResponse.text();
 
     const headers = new Headers(pageResponse.headers);
     headers.delete("content-length");

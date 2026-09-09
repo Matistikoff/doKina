@@ -540,18 +540,19 @@ function groupByDate(screenings) {
   return groups;
 }
 
-function showtimeElement(screening, movie) {
-  const element = document.createElement(movie.detailUrl && !screening.soldOut ? "a" : "span");
+function showtimeElement(screening) {
+  const element = document.createElement(screening.bookingUrl && !screening.soldOut ? "a" : "span");
   element.className = `showtime${screening.soldOut ? " is-sold-out" : ""}`;
   element.textContent = timeValue(screening.startsAt);
   element.title = screening.soldOut
     ? "Vypredané"
-    : [screening.auditorium, screening.format?.join(" · ")].filter(Boolean).join(" · ") || "Zobraziť kartu filmu";
+    : [screening.auditorium, screening.format?.join(" · ")].filter(Boolean).join(" · ")
+      || (screening.bookingUrl ? "Kúpiť lístok" : "Lístky nie sú dostupné online");
   if (element instanceof HTMLAnchorElement) {
-    element.href = movie.detailUrl;
+    element.href = screening.bookingUrl;
     element.target = "_blank";
     element.rel = "noreferrer";
-    element.setAttribute("aria-label", `${timeValue(screening.startsAt)} — zobraziť kartu filmu`);
+    element.setAttribute("aria-label", `${timeValue(screening.startsAt)} — kúpiť lístok`);
   }
   return element;
 }
@@ -585,7 +586,7 @@ function renderShowtimes(movie, screenings, cinemaMap, root) {
       label.textContent = cinemaName(cinemaMap.get(cinemaId));
       const times = document.createElement("div");
       times.className = "showtimes";
-      times.replaceChildren(...cinemaScreenings.map((screening) => showtimeElement(screening, movie)));
+      times.replaceChildren(...cinemaScreenings.map((screening) => showtimeElement(screening)));
       group.append(label, times);
       day.append(group);
     }
@@ -595,6 +596,58 @@ function renderShowtimes(movie, screenings, cinemaMap, root) {
 
 function oscarLabel(wins) {
   return `${wins} ${wins === 1 ? "Oscar" : wins < 5 ? "Oscary" : "Oscarov"}`;
+}
+
+function renderMovieCast(movie) {
+  const cast = Array.isArray(movie.cast) ? movie.cast.filter((person) => person?.name) : [];
+  const names = movie.actors || cast.map((person) => person.name);
+  elements.dialogCast.hidden = names.length === 0;
+  if (names.length === 0) {
+    elements.dialogCast.replaceChildren();
+    return;
+  }
+  if (!cast.some((person) => person.profileUrl)) {
+    elements.dialogCast.textContent = `Hrajú: ${names.join(", ")}`;
+    return;
+  }
+  const heading = document.createElement("p");
+  heading.className = "dialog-cast-heading";
+  heading.textContent = "Hrajú";
+  const list = document.createElement("div");
+  list.className = "dialog-cast-list";
+  for (const person of cast) {
+    const item = document.createElement("div");
+    item.className = "dialog-cast-member";
+    if (person.profileUrl) {
+      const image = document.createElement("img");
+      image.src = person.profileUrl;
+      image.alt = "";
+      image.width = 64;
+      image.height = 64;
+      image.loading = "lazy";
+      image.decoding = "async";
+      item.append(image);
+    } else {
+      const placeholder = document.createElement("span");
+      placeholder.className = "dialog-cast-placeholder";
+      placeholder.setAttribute("aria-hidden", "true");
+      placeholder.textContent = person.name.slice(0, 1).toLocaleUpperCase("sk");
+      item.append(placeholder);
+    }
+    const label = document.createElement("span");
+    label.className = "dialog-cast-label";
+    const actor = document.createElement("strong");
+    actor.textContent = person.name;
+    label.append(actor);
+    if (person.character) {
+      const character = document.createElement("small");
+      character.textContent = person.character;
+      label.append(character);
+    }
+    item.append(label);
+    list.append(item);
+  }
+  elements.dialogCast.replaceChildren(heading, list);
 }
 
 function renderMovieFacts(movie) {
@@ -678,8 +731,7 @@ function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true) {
   elements.dialogTitle.textContent = movie.title;
   elements.dialogMeta.textContent = movieMeta(movie);
   renderMovieFacts(movie);
-  elements.dialogCast.hidden = !movie.actors?.length;
-  elements.dialogCast.textContent = movie.actors?.length ? `Hrajú: ${movie.actors.join(", ")}` : "";
+  renderMovieCast(movie);
   elements.dialogOverview.hidden = !movie.overview;
   elements.dialogOverviewText.textContent = movie.overview || "";
   elements.dialogOverviewText.lang = movie.overviewLanguage || "sk";

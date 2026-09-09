@@ -67,6 +67,17 @@ test("schema validation accepts trusted TMDB backdrop and YouTube trailer URLs",
     trailerUrl: "javascript:alert(1)" }] }), /invalid trailerUrl/);
 });
 
+test("schema validation accepts only trusted TMDB cast portraits", () => {
+  const base = assembleProgram([], "2026-09-09T10:00:00Z");
+  const movie = { id: "film", title: "Film", cast: [{
+    name: "Herečka", character: "Postava", profileUrl: "https://image.tmdb.org/t/p/w185/profile.jpg",
+  }] };
+  assert.doesNotThrow(() => validateProgram({ ...base, movies: [movie] }));
+  assert.throws(() => validateProgram({ ...base, movies: [{ ...movie, cast: [{
+    name: "Herec", profileUrl: "https://example.com/profile.jpg",
+  }] }] }), /invalid cast/);
+});
+
 test("assembly remaps different movie IDs to a single film", () => {
   const program = assembleProgram([
     { movies: [{ id: "movie-odysea-2026", title: "Odysea", releaseYear: "2026", durationMinutes: 172 }], screenings: [{ id: "one", movieId: "movie-odysea-2026", cinemaId: "lumiere", startsAt: "2026-09-06T18:00:00+02:00" }] },

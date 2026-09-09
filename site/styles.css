@@ -1454,6 +1454,59 @@ body.has-open-dialog {
 	line-height: 1.5;
 }
 
+.dialog-cast-heading {
+	margin: 0 0 8px;
+	font-weight: 800;
+}
+
+.dialog-cast-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 18px;
+}
+
+.dialog-cast-member {
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	min-width: 150px;
+	max-width: 210px;
+}
+
+.dialog-cast-member img,
+.dialog-cast-placeholder {
+	width: 48px;
+	height: 48px;
+	flex: 0 0 48px;
+	border: 1px solid rgba(255, 255, 255, 0.24);
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.dialog-cast-placeholder {
+	display: grid;
+	place-items: center;
+	background: var(--paper-deep);
+	color: var(--ink-soft);
+	font-weight: 800;
+}
+
+.dialog-cast-label {
+	display: grid;
+	line-height: 1.25;
+}
+
+.dialog-cast-label strong {
+	color: inherit;
+	font-size: 0.78rem;
+}
+
+.dialog-cast-label small {
+	margin-top: 2px;
+	opacity: 0.76;
+	font-size: 0.7rem;
+}
+
 :root[data-theme="dark"] {
 	color-scheme: dark;
 	--ink: #f3ead7;

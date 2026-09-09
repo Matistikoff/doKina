@@ -7,6 +7,6 @@
     "directory": "./dist",
     "not_found_handling": "single-page-application",
     "binding": "ASSETS",
-    "run_worker_first": ["/film/*"]
+    "run_worker_first": ["/", "/index.html", "/film/*"]
   }
 }

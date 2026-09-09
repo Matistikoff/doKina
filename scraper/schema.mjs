@@ -20,6 +20,12 @@ export function validateProgram(program) {
     if (movie.overview != null && !isString(movie.overview)) errors.push(`invalid overview for ${movie.id}`);
     if (movie.overviewLanguage != null && !["sk", "cs", "en"].includes(movie.overviewLanguage)) errors.push(`invalid overviewLanguage for ${movie.id}`);
     if (movie.actors != null && (!Array.isArray(movie.actors) || !movie.actors.every(isString))) errors.push(`invalid actors for ${movie.id}`);
+    if (movie.cast != null && (!Array.isArray(movie.cast) || !movie.cast.every((person) => person
+      && isString(person.name)
+      && (person.character == null || isString(person.character))
+      && (person.profileUrl == null || /^https:\/\/image\.tmdb\.org\/t\/p\/w185\/[\w.-]+$/u.test(person.profileUrl))))) {
+      errors.push(`invalid cast for ${movie.id}`);
+    }
     if (movie.productionCountries != null && (!Array.isArray(movie.productionCountries)
       || !movie.productionCountries.every((code) => /^[A-Z]{2}$/.test(code)))) errors.push(`invalid productionCountries for ${movie.id}`);
     if (movie.backdropUrl != null && !/^https:\/\/image\.tmdb\.org\/t\/p\/w1280\/[\w.-]+$/u.test(movie.backdropUrl)) errors.push(`invalid backdropUrl for ${movie.id}`);
