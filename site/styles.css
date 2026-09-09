@@ -1084,6 +1084,27 @@ h2 {
 	color: #f2cd78;
 }
 
+.dialog-box-office {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 7px;
+	margin: 0;
+	color: #19733f;
+	font-size: 0.72rem;
+	font-weight: 650;
+}
+
+.dialog-box-office strong {
+	color: #148044;
+	font-size: 0.98rem;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.01em;
+}
+
+.dialog-box-office[hidden] {
+	display: none;
+}
+
 .oscar-badge[hidden],
 .dialog-facts[hidden] {
 	display: none;
@@ -1439,6 +1460,11 @@ body.has-open-dialog {
 	padding: 0 30px 32px;
 }
 
+.dialog-header .dialog-overview {
+	margin-top: 18px;
+	padding: 0;
+}
+
 .movie-dialog.has-backdrop .dialog-overview {
 	color: white;
 }
@@ -1448,7 +1474,7 @@ body.has-open-dialog {
 }
 
 .dialog-cast {
-	margin: 10px 0 0;
+	margin: 20px 0 0;
 	color: var(--ink-soft);
 	font-size: 0.82rem;
 	line-height: 1.5;
@@ -1456,6 +1482,7 @@ body.has-open-dialog {
 
 .dialog-cast-heading {
 	margin: 0 0 8px;
+	font-size: 1rem;
 	font-weight: 800;
 }
 
@@ -1468,16 +1495,43 @@ body.has-open-dialog {
 .dialog-cast-member {
 	display: flex;
 	align-items: center;
-	gap: 9px;
-	min-width: 150px;
-	max-width: 210px;
+	gap: 12px;
+	min-width: 202px;
+	max-width: 262px;
+	padding: 6px;
+	border-radius: 12px;
+	color: inherit;
+	text-decoration: none;
+	transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.dialog-cast-member:hover,
+.dialog-cast-member:focus-visible {
+	background: rgba(20, 128, 68, 0.11);
+	color: var(--ink);
+	transform: translateY(-2px);
+}
+
+.dialog-cast-member:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+
+.dialog-cast-member img {
+	transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.dialog-cast-member:hover img,
+.dialog-cast-member:focus-visible img {
+	box-shadow: 0 6px 18px rgba(5, 34, 20, 0.25);
+	transform: scale(1.05);
 }
 
 .dialog-cast-member img,
 .dialog-cast-placeholder {
-	width: 48px;
-	height: 48px;
-	flex: 0 0 48px;
+	width: 72px;
+	height: 72px;
+	flex: 0 0 72px;
 	border: 1px solid rgba(255, 255, 255, 0.24);
 	border-radius: 50%;
 	object-fit: cover;
@@ -1507,6 +1561,24 @@ body.has-open-dialog {
 	font-size: 0.7rem;
 }
 
+.dialog-cast-links {
+	margin: 0;
+}
+
+.dialog-cast-links a {
+	color: inherit;
+	font-weight: 700;
+	text-decoration-color: transparent;
+	text-underline-offset: 3px;
+	transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.dialog-cast-links a:hover,
+.dialog-cast-links a:focus-visible {
+	color: #148044;
+	text-decoration-color: currentColor;
+}
+
 :root[data-theme="dark"] {
 	color-scheme: dark;
 	--ink: #f3ead7;
@@ -1524,6 +1596,28 @@ body.has-open-dialog {
 	--grid-line: rgba(232, 223, 200, 0.035);
 	--poster-background: #203b40;
 	--sold-out: #8d887d;
+}
+
+:root[data-theme="dark"] .dialog-box-office,
+:root[data-theme="dark"] .dialog-box-office strong,
+.movie-dialog.has-backdrop .dialog-box-office,
+.movie-dialog.has-backdrop .dialog-box-office strong {
+	color: #83dfa5;
+}
+
+:root[data-theme="dark"] .dialog-cast-member:hover,
+:root[data-theme="dark"] .dialog-cast-member:focus-visible,
+.movie-dialog.has-backdrop .dialog-cast-member:hover,
+.movie-dialog.has-backdrop .dialog-cast-member:focus-visible {
+	background: rgba(131, 223, 165, 0.14);
+	color: white;
+}
+
+:root[data-theme="dark"] .dialog-cast-links a:hover,
+:root[data-theme="dark"] .dialog-cast-links a:focus-visible,
+.movie-dialog.has-backdrop .dialog-cast-links a:hover,
+.movie-dialog.has-backdrop .dialog-cast-links a:focus-visible {
+	color: #83dfa5;
 }
 
 .dialog-overview p {
@@ -1860,6 +1954,10 @@ footer p {
 		padding-inline: 20px;
 	}
 
+	.dialog-header .dialog-overview {
+		padding-inline: 0;
+	}
+
 	.movie-dialog.has-backdrop .dialog-header {
 		min-height: clamp(220px, 34dvh, 290px);
 	}
@@ -1889,11 +1987,29 @@ footer p {
 	}
 
 	.dialog-cast {
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
-		overflow: hidden;
+		display: block;
 		font-size: 0.875rem;
+	}
+
+	.dialog-cast-list {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 10px;
+	}
+
+	.dialog-cast-member {
+		min-width: 0;
+	}
+
+	.dialog-cast-member img,
+	.dialog-cast-placeholder {
+		width: 60px;
+		height: 60px;
+		flex-basis: 60px;
+	}
+
+	.dialog-box-office {
+		flex-basis: 100%;
 	}
 
 	.dialog-trailer {

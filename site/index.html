@@ -472,6 +472,15 @@
 								class="movie-meta"
 								id="movie-dialog-meta"
 							></p>
+							<section
+								class="dialog-overview"
+								id="movie-dialog-overview"
+								hidden
+								aria-labelledby="movie-dialog-overview-heading"
+							>
+								<h3 id="movie-dialog-overview-heading">O filme</h3>
+								<p id="movie-dialog-overview-text"></p>
+							</section>
 							<div
 								class="dialog-cast"
 								id="movie-dialog-cast"
@@ -493,7 +502,11 @@
 								</svg>
 								<span class="tomato-value"></span>
 							</span>
-							<dl id="movie-dialog-facts" class="dialog-facts" aria-label="Ocenenia a tržby" hidden></dl>
+							<dl id="movie-dialog-facts" class="dialog-facts" aria-label="Ocenenia" hidden></dl>
+							<p id="movie-dialog-box-office" class="dialog-box-office" title="Tržby v USA a Kanade podľa OMDb" hidden>
+								<span>Tržby v USA a Kanade</span>
+								<strong></strong>
+							</p>
 							</div>
 						</div>
 						<button
@@ -504,15 +517,6 @@
 							×
 						</button>
 					</div>
-					<section
-						class="dialog-overview"
-						id="movie-dialog-overview"
-						hidden
-						aria-labelledby="movie-dialog-overview-heading"
-					>
-						<h3 id="movie-dialog-overview-heading">O filme</h3>
-						<p id="movie-dialog-overview-text"></p>
-					</section>
 				</div>
 				<div class="dialog-screenings">
 					<h3>Termíny premietania</h3>

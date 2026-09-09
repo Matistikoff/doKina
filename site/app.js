@@ -1,7 +1,8 @@
-import { formatDuration } from "./formatters.js";
+import { formatDuration, formatUsd } from "./formatters.js";
 import { compareMoviesByDuration, isMustWatch, isOscarWinner } from "./discovery.js";
 import { metascoreTone, tomatoTone } from "./critic-ratings.js";
 import { isCzSkMovie } from "./filters.js";
+import { actorSearchUrl } from "./links.js";
 import { compareMoviesByRating } from "./ratings.js";
 
 const CULT_MOVIE_LATEST_YEAR = 2024;
@@ -30,6 +31,7 @@ const elements = {
   dialogKicker: document.querySelector("#movie-dialog-kicker"),
   dialogMeta: document.querySelector("#movie-dialog-meta"),
   dialogFacts: document.querySelector("#movie-dialog-facts"),
+  dialogBoxOffice: document.querySelector("#movie-dialog-box-office"),
   dialogActions: document.querySelector("#movie-dialog-actions"),
   dialogMetascore: document.querySelector("#movie-dialog-metascore"),
   dialogTomatoes: document.querySelector("#movie-dialog-tomatoes"),
@@ -607,23 +609,41 @@ function renderMovieCast(movie) {
     return;
   }
   if (!cast.some((person) => person.profileUrl)) {
-    elements.dialogCast.textContent = `Hrajú: ${names.join(", ")}`;
+    const heading = document.createElement("p");
+    heading.className = "dialog-cast-heading";
+    heading.textContent = "Herci";
+    const list = document.createElement("p");
+    list.className = "dialog-cast-links";
+    names.forEach((name, index) => {
+      const link = document.createElement("a");
+      link.href = actorSearchUrl(name);
+      link.target = "_blank";
+      link.rel = "noreferrer";
+      link.textContent = name;
+      link.setAttribute("aria-label", `${name} — vyhľadať cez Google`);
+      list.append(index ? document.createTextNode(", ") : "", link);
+    });
+    elements.dialogCast.replaceChildren(heading, list);
     return;
   }
   const heading = document.createElement("p");
   heading.className = "dialog-cast-heading";
-  heading.textContent = "Hrajú";
+  heading.textContent = "Herci";
   const list = document.createElement("div");
   list.className = "dialog-cast-list";
   for (const person of cast) {
-    const item = document.createElement("div");
+    const item = document.createElement("a");
     item.className = "dialog-cast-member";
+    item.href = actorSearchUrl(person.name);
+    item.target = "_blank";
+    item.rel = "noreferrer";
+    item.setAttribute("aria-label", `${person.name} — vyhľadať cez Google`);
     if (person.profileUrl) {
       const image = document.createElement("img");
       image.src = person.profileUrl;
       image.alt = "";
-      image.width = 64;
-      image.height = 64;
+      image.width = 80;
+      image.height = 80;
       image.loading = "lazy";
       image.decoding = "async";
       item.append(image);
@@ -666,9 +686,6 @@ function renderMovieFacts(movie) {
   tomatoes.setAttribute("aria-label", tomatoes.title);
   const facts = [
     { label: "Oscary", value: movie.oscarWins > 0 ? oscarLabel(movie.oscarWins) : null, style: "is-oscar" },
-    { label: "Tržby (USA a Kanada)", value: Number.isFinite(movie.boxOfficeUsd)
-      ? new Intl.NumberFormat("sk-SK", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(movie.boxOfficeUsd) : null,
-      title: "Tržby v USA a Kanade podľa OMDb, v amerických dolároch" },
   ].filter((fact) => fact.value !== null);
   elements.dialogFacts.replaceChildren(...facts.map((fact) => {
     const item = document.createElement("div");
@@ -682,7 +699,10 @@ function renderMovieFacts(movie) {
     return item;
   }));
   elements.dialogFacts.hidden = facts.length === 0;
-  elements.dialogActions.hidden = !movie.trailerUrl && meta.hidden && tomatoes.hidden && facts.length === 0;
+  const hasBoxOffice = Number.isFinite(movie.boxOfficeUsd);
+  elements.dialogBoxOffice.hidden = !hasBoxOffice;
+  elements.dialogBoxOffice.querySelector("strong").textContent = hasBoxOffice ? formatUsd(movie.boxOfficeUsd) : "";
+  elements.dialogActions.hidden = !movie.trailerUrl && meta.hidden && tomatoes.hidden && facts.length === 0 && !hasBoxOffice;
 }
 
 function clearDialogBackdrop() {
