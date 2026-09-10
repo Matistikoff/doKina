@@ -2465,7 +2465,25 @@ footer p {
 	}
 
 	.dialog-financials {
-		flex-basis: 100%;
+		display: grid;
+		width: 100%;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.dialog-financial {
+		min-width: 0;
+		min-height: 52px;
+		align-items: flex-start;
+		justify-content: center;
+		flex-direction: column;
+		gap: 2px;
+		padding: 7px 10px;
+	}
+
+	.dialog-financial dd {
+		max-width: 100%;
+		font-size: clamp(0.74rem, 3.35vw, 0.82rem);
+		white-space: nowrap;
 	}
 
 	.dialog-trailer {

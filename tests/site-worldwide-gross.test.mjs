@@ -16,6 +16,8 @@ test("movie detail formats TMDB budget and worldwide gross", async () => {
   assert.match(source, /movie\.worldwideGrossUsd < movie\.budgetUsd/u);
   assert.match(source, /classList\.toggle\("is-below-budget", grossBelowBudget\)/u);
   assert.match(styles, /\.dialog-financial \{[\s\S]*?align-items: center;/u);
+  assert.match(styles, /@media \(max-width: 620px\) \{[\s\S]*?\.dialog-financials \{[\s\S]*?grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);/u);
+  assert.match(styles, /@media \(max-width: 620px\) \{[\s\S]*?\.dialog-financial dd \{[\s\S]*?white-space: nowrap;/u);
   assert.match(styles, /\.movie-dialog\.has-backdrop \.dialog-financial dt \{\s*color: white;/u);
   assert.match(styles, /\.movie-dialog\.has-backdrop \.dialog-financial dd \{[\s\S]*?color: white;/u);
   assert.match(styles, /\.movie-dialog\.has-backdrop \.dialog-financial\.is-below-budget dd \{\s*color: white;/u);
