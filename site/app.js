@@ -9,6 +9,16 @@ import { compareMoviesByRating } from "./ratings.js";
 
 const CULT_MOVIE_LATEST_YEAR = 2024;
 const RECENTLY_ADDED_DAYS = 7;
+const FAVORITES_STORAGE_KEY = "dokina-favorite-movies";
+
+function loadFavoriteMovieIds() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || "[]");
+    return new Set(Array.isArray(saved) ? saved.filter((id) => typeof id === "string") : []);
+  } catch {
+    return new Set();
+  }
+}
 
 const state = {
   program: null,
@@ -18,6 +28,8 @@ const state = {
   selectedCinemas: new Set(),
   selectedGenres: new Set(),
   genreMatchMode: "any",
+  favoriteMovieIds: loadFavoriteMovieIds(),
+  showFavoritesOnly: false,
   sortBy: "rating",
 };
 
@@ -49,6 +61,7 @@ const elements = {
   dialogTitle: document.querySelector("#movie-dialog-title"),
   dialogTrailer: document.querySelector("#movie-dialog-trailer"),
   freshness: document.querySelector("#freshness"),
+  favoritesFilterButton: document.querySelector("#favorites-filter-button"),
   genreFilter: document.querySelector("#genre-filter"),
   genreDropdown: document.querySelector("#genre-dropdown"),
   genreMatchAll: document.querySelector("#genre-match-all"),
@@ -74,6 +87,45 @@ let datePicker = null;
 const dialogBackdropPreloads = new Map();
 let updateDialogScrollbar = () => {};
 let dialogBackdropLoadId = 0;
+
+function saveFavoriteMovieIds() {
+  try {
+    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify([...state.favoriteMovieIds]));
+  } catch (error) {
+    console.warn("Obľúbené filmy sa nepodarilo uložiť", error);
+  }
+}
+
+function updateFavoritesFilter() {
+  const count = state.favoriteMovieIds.size;
+  elements.favoritesFilterButton.classList.toggle("is-active", state.showFavoritesOnly);
+  elements.favoritesFilterButton.setAttribute("aria-pressed", String(state.showFavoritesOnly));
+  elements.favoritesFilterButton.setAttribute(
+    "aria-label",
+    `${state.showFavoritesOnly ? "Zobrazené" : "Zobraziť"} obľúbené filmy (${count})`,
+  );
+  elements.favoritesFilterButton.querySelector(".favorites-filter-count").textContent = count;
+}
+
+function updateFavoriteButton(button, movie) {
+  const isFavorite = state.favoriteMovieIds.has(movie.id);
+  button.classList.toggle("is-favorite", isFavorite);
+  button.setAttribute("aria-pressed", String(isFavorite));
+  button.setAttribute(
+    "aria-label",
+    `${isFavorite ? "Odobrať" : "Pridať"} film ${movie.title} ${isFavorite ? "z obľúbených" : "do obľúbených"}`,
+  );
+  button.title = isFavorite ? "Odobrať z obľúbených" : "Pridať do obľúbených";
+}
+
+function toggleFavorite(movie, button) {
+  if (state.favoriteMovieIds.has(movie.id)) state.favoriteMovieIds.delete(movie.id);
+  else state.favoriteMovieIds.add(movie.id);
+  saveFavoriteMovieIds();
+  updateFavoriteButton(button, movie);
+  updateFavoritesFilter();
+  if (state.showFavoritesOnly) renderProgram();
+}
 
 function preloadDialogBackdrop(url) {
   if (!url || dialogBackdropPreloads.has(url)) return;
@@ -1155,6 +1207,7 @@ function renderMovie(movie, screenings, cinemaMap) {
   const ratingsElement = fragment.querySelector(".movie-ratings");
   const screeningCount = fragment.querySelector(".screening-count");
   const oscarBadge = fragment.querySelector(".oscar-badge");
+  const favoriteButton = fragment.querySelector(".favorite-button");
   oscarBadge.hidden = !(movie.oscarWins > 0);
   if (movie.oscarWins > 0) {
     const label = `Získané ocenenia: ${oscarLabel(movie.oscarWins)}`;
@@ -1192,6 +1245,8 @@ function renderMovie(movie, screenings, cinemaMap) {
     poster.addEventListener("error", () => poster.classList.add("is-broken"));
   }
   card.dataset.movieId = movie.id;
+  updateFavoriteButton(favoriteButton, movie);
+  favoriteButton.addEventListener("click", () => toggleFavorite(movie, favoriteButton));
   renderMovieRatings(movie, ratingsElement);
   card.tabIndex = 0;
   card.setAttribute("role", "button");
@@ -1233,6 +1288,7 @@ function renderProgram() {
       && date >= start && date <= end
       && state.selectedCinemas.has(screening.cinemaId)
       && moviesInGenre.has(screening.movieId)
+      && (!state.showFavoritesOnly || state.favoriteMovieIds.has(screening.movieId))
       && (state.sortBy !== "czSk" || czSkMovieIds.has(screening.movieId))
       && (state.sortBy !== "nonEnglish" || isNonEnglishMovie(movie, screening))
       && (state.sortBy !== "cult" || (Number.isFinite(releaseYear) && releaseYear <= CULT_MOVIE_LATEST_YEAR))
@@ -1245,9 +1301,15 @@ function renderProgram() {
   elements.resultCount.textContent = `${grouped.size} ${grouped.size === 1 ? "film" : grouped.size < 5 ? "filmy" : "filmov"} · ${visible.length} predstavení`;
 
   if (visible.length === 0) {
+    const emptyTitle = state.showFavoritesOnly && state.favoriteMovieIds.size === 0
+      ? "Zatiaľ tu nemáš žiadny obľúbený film"
+      : "Tomuto výberu nič nezodpovedá";
+    const emptyCopy = state.showFavoritesOnly && state.favoriteMovieIds.size === 0
+      ? "Klikni na srdiečko pri filme a nájdeš ho potom práve tu."
+      : "Skús dlhšie obdobie, iný žáner alebo zapni ďalšie kino.";
     elements.movieGrid.innerHTML = `
       <div class="empty-state">
-        <div><h3>Tomuto výberu nič nezodpovedá</h3><p>Skús dlhšie obdobie, iný žáner alebo zapni ďalšie kino.</p></div>
+        <div><h3>${emptyTitle}</h3><p>${emptyCopy}</p></div>
       </div>`;
     return;
   }
@@ -1398,6 +1460,7 @@ async function init() {
     renderGenres();
     renderCinemas();
     renderSortOptions();
+    updateFavoritesFilter();
     renderProgram();
     syncMovieRoute();
     registerProgramTool();
@@ -1497,16 +1560,24 @@ elements.genreMatchAll.addEventListener("change", () => {
   renderProgram();
 });
 
+elements.favoritesFilterButton.addEventListener("click", () => {
+  state.showFavoritesOnly = !state.showFavoritesOnly;
+  updateFavoritesFilter();
+  renderProgram();
+});
+
 elements.resetFiltersButton.addEventListener("click", () => {
   state.selectedPeriod = "all";
   state.selectedDateStart = "";
   state.selectedDateEnd = "";
   state.selectedGenres = new Set(availableGenres());
   state.genreMatchMode = "any";
+  state.showFavoritesOnly = false;
   state.sortBy = "rating";
   state.selectedCinemas = new Set(state.program.cinemas.map((cinema) => cinema.id));
   updateGenreSelection();
   updateSortSelection();
+  updateFavoritesFilter();
   renderPeriods();
   renderCinemas();
   renderProgram();
