@@ -9,8 +9,10 @@ test("movie detail and cards render production countries as accessible flags", a
   assert.ok(renderer, "dialog metadata renderer should exist");
   assert.match(renderer, /movie\.releaseYear[\s\S]*items\.push\(alternativeTitle\)[\s\S]*productionCountriesElement\(movie\)/u);
   assert.match(source, /function productionCountriesElement\(movie\)/u);
-  assert.match(source, /countryFlag\(code\)/u);
+  assert.match(source, /countryFlagPath\(code\)/u);
   assert.match(source, /countryName\(code\)/u);
+  assert.match(source, /image\.src = flagPath/u);
+  assert.match(source, /image\.addEventListener\("error"[\s\S]*countryFlag\(code\)/u);
   assert.match(source, /country\.setAttribute\("aria-label", name\)/u);
   assert.match(source, /const meta = fragment\.querySelector\("\.movie-meta"\)[\s\S]*meta\.append\(meta\.textContent \? " · " : "", countries\)/u);
   assert.doesNotMatch(source, /movie-secondary-title|secondaryMovieTitle/u);

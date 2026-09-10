@@ -188,42 +188,20 @@
 							>
 								Celý program
 							</button>
+							<button
+								class="period-chip"
+								type="button"
+								data-period="todayTomorrow"
+							>
+								Dnes a zajtra
+							</button>
 							<div class="date-range-filter">
-								<div class="date-field">
-									<span>Od</span>
-									<span class="date-picker">
+								<div class="date-field date-range-field">
+									<span class="date-picker date-range-picker">
 										<input
 											id="date-start-filter"
 											type="hidden"
 										/>
-										<button
-											class="date-picker-trigger"
-											type="button"
-											aria-label="Dátum alebo začiatok obdobia"
-											aria-haspopup="dialog"
-											aria-expanded="false"
-										>
-											<span class="date-picker-value">Vyber dátum</span>
-											<svg
-												aria-hidden="true"
-												viewBox="0 0 24 24"
-											>
-												<path
-													d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
-												></path>
-											</svg>
-										</button>
-										<span
-											class="date-picker-popover"
-											role="dialog"
-											aria-label="Vyber dátum"
-											hidden
-										></span>
-									</span>
-								</div>
-								<div class="date-field">
-									<span>Do</span>
-									<span class="date-picker">
 										<input
 											id="date-end-filter"
 											type="hidden"
@@ -231,11 +209,11 @@
 										<button
 											class="date-picker-trigger"
 											type="button"
-											aria-label="Koniec obdobia"
+											aria-label="Vyber deň alebo obdobie"
 											aria-haspopup="dialog"
 											aria-expanded="false"
 										>
-											<span class="date-picker-value">Vyber dátum</span>
+											<span class="date-picker-value">Vyber deň alebo obdobie</span>
 											<svg
 												aria-hidden="true"
 												viewBox="0 0 24 24"
@@ -248,7 +226,7 @@
 										<span
 											class="date-picker-popover"
 											role="dialog"
-											aria-label="Vyber dátum"
+											aria-label="Vyber deň alebo obdobie"
 											hidden
 										></span>
 									</span>
@@ -258,15 +236,6 @@
 					</div>
 
 					<div class="filter-group discovery-filter-wrap">
-						<div class="filter-heading">
-							<button
-								class="text-button"
-								id="reset-filters-button"
-								type="button"
-							>
-								Obnoviť filtre
-							</button>
-						</div>
 						<div class="select-filters">
 							<div class="select-field">
 								<span id="cinema-label">Kiná</span>
@@ -302,21 +271,49 @@
 									></div>
 								</details>
 							</div>
-							<label class="select-field">
-								<span>Zoradiť</span>
-								<select id="sort-filter">
+							<div class="select-field">
+								<span id="sort-label">Zoradiť</span>
+								<select id="sort-filter" hidden>
 									<option value="rating">Najlepšie hodnotené</option>
-									<option value="mustWatch">Must watch</option>
-									<option value="nonEnglish">Neanglické filmy</option>
-									<option value="oscars">Oscarové filmy</option>
+									<option value="mustWatch">Musíš vidieť</option>
+									<option value="oscars">Oscarové</option>
 									<option value="cult">Kultofky</option>
-									<option value="czSk">CZ/SK filmy</option>
-									<option value="shortest">Najkratšie filmy</option>
-									<option value="longest">Najdlhšie filmy</option>
+									<option value="czSk">CZ/SK</option>
+									<option value="nonEnglish">Neanglické</option>
+									<option value="shortest">Najkratšie</option>
+									<option value="longest">Najdlhšie</option>
 									<option value="added">Najnovšie pridané</option>
 									<option value="soonest">Najbližšie predstavenie</option>
 								</select>
-							</label>
+								<details
+									class="filter-dropdown"
+									id="sort-dropdown"
+								>
+									<summary aria-labelledby="sort-label sort-summary">
+										<span id="sort-summary">Najlepšie hodnotené</span>
+									</summary>
+									<div
+										class="filter-options sort-options"
+										id="sort-options"
+										role="menu"
+										aria-label="Zoradiť program"
+									></div>
+								</details>
+							</div>
+							<button
+								class="reset-filters-button"
+								id="reset-filters-button"
+								type="button"
+								aria-label="Zrušiť filtre"
+								title="Zrušiť filtre"
+							>
+								<svg
+									aria-hidden="true"
+									viewBox="0 0 24 24"
+								>
+									<path d="M19.79 5.61C20.3 4.95 19.83 4 19 4H6.83l8.96 8.96 4-7.35ZM2.81 2.81 1.39 4.22 10 13v5c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-1.17l5.78 5.78 1.41-1.41L2.81 2.81Z"></path>
+								</svg>
+							</button>
 						</div>
 					</div>
 				</section>
@@ -460,6 +457,7 @@
 						alt=""
 						width="1280"
 						height="720"
+						decoding="async"
 						hidden
 					/>
 					<div class="dialog-header">
@@ -488,37 +486,37 @@
 								hidden
 							></div>
 							<div class="dialog-actions" id="movie-dialog-actions" hidden>
-							<a
-								class="dialog-trailer"
-								id="movie-dialog-trailer"
-								target="_blank"
-								rel="noreferrer"
-								hidden
-							>▶ Pozrieť trailer</a>
-							<div
-								class="movie-ratings dialog-ratings"
-								id="movie-dialog-ratings"
-								aria-label="Hodnotenia filmu"
-							></div>
-							<span id="movie-dialog-metascore" class="critic-score metascore" role="img" tabindex="0" hidden></span>
-							<span id="movie-dialog-tomatoes" class="critic-score tomatoes" role="img" tabindex="0" hidden>
-								<svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-									<g class="tomato-fresh"><path fill="#fa3434" d="M16 9C4 3 0 16 5 24c4 7 18 7 22-1 4-8 0-19-11-14Z"/><path fill="#25843b" d="m16 11-8-5 6 1 2-6 2 6 7-2-5 6 3 4-7-3-6 3Z"/><path d="M8 15c-2 2-2 5-1 7" stroke="#ffad97" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-									<path class="tomato-rotten" fill="#a5cc33" d="m15 9 5-7 1 9 9-1-6 7 7 6-10-1-2 9-5-8-8 6 2-10-8-4 10-2-4-8Z"/>
-								</svg>
-								<span class="tomato-value"></span>
-							</span>
-							<dl id="movie-dialog-facts" class="dialog-facts" aria-label="Ocenenia" hidden></dl>
-							<dl id="movie-dialog-financials" class="dialog-financials" aria-label="Finančné údaje filmu" hidden>
-								<div class="dialog-financial" data-financial="budget" title="Produkčný rozpočet podľa TMDb" hidden>
-									<dt>Rozpočet</dt>
-									<dd></dd>
-								</div>
-								<div class="dialog-financial" data-financial="gross" title="Celosvetové tržby podľa TMDb" hidden>
-									<dt>Tržby</dt>
-									<dd></dd>
-								</div>
-							</dl>
+								<a
+									class="dialog-trailer"
+									id="movie-dialog-trailer"
+									target="_blank"
+									rel="noreferrer"
+									hidden
+								><span class="dialog-trailer-icon" aria-hidden="true">▶</span>Pozrieť trailer</a>
+								<div
+									class="movie-ratings dialog-ratings"
+									id="movie-dialog-ratings"
+									aria-label="Hodnotenia filmu"
+								></div>
+								<span id="movie-dialog-metascore" class="critic-score metascore" role="img" tabindex="0" hidden></span>
+								<span id="movie-dialog-tomatoes" class="critic-score tomatoes" role="img" tabindex="0" hidden>
+									<svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+										<g class="tomato-fresh"><path fill="#fa3434" d="M16 9C4 3 0 16 5 24c4 7 18 7 22-1 4-8 0-19-11-14Z"/><path fill="#25843b" d="m16 11-8-5 6 1 2-6 2 6 7-2-5 6 3 4-7-3-6 3Z"/><path d="M8 15c-2 2-2 5-1 7" stroke="#ffad97" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+										<path class="tomato-rotten" fill="#a5cc33" d="m15 9 5-7 1 9 9-1-6 7 7 6-10-1-2 9-5-8-8 6 2-10-8-4 10-2-4-8Z"/>
+									</svg>
+									<span class="tomato-value"></span>
+								</span>
+								<dl id="movie-dialog-facts" class="dialog-facts" aria-label="Ocenenia" hidden></dl>
+								<dl id="movie-dialog-financials" class="dialog-financials" aria-label="Finančné údaje filmu" hidden>
+									<div class="dialog-financial" data-financial="budget" title="Produkčný rozpočet podľa TMDb" hidden>
+										<dt>Rozpočet</dt>
+										<dd></dd>
+									</div>
+									<div class="dialog-financial" data-financial="gross" title="Celosvetové tržby podľa TMDb" hidden>
+										<dt>Tržby</dt>
+										<dd></dd>
+									</div>
+								</dl>
 							</div>
 						</div>
 						<button

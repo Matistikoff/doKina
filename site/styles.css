@@ -28,11 +28,14 @@
 
 html {
 	scroll-behavior: smooth;
+	scroll-padding-top: 20px;
 	scrollbar-color: var(--accent-deep) var(--paper-deep);
 	scrollbar-width: none;
 }
 
-html.is-dragging-scrollbar {
+html.is-dragging-scrollbar,
+html.is-smooth-wheel-scrolling,
+.dialog-content.is-smooth-wheel-scrolling {
 	scroll-behavior: auto;
 }
 
@@ -410,36 +413,8 @@ h1 {
 	-webkit-backdrop-filter: blur(20px) saturate(120%);
 }
 
-.filter-heading {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 16px;
-	margin-bottom: 12px;
-	color: rgba(255, 255, 255, 0.58);
-	font-size: 0.69rem;
-	font-weight: 850;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-}
-
 .filter-group {
 	display: grid;
-	grid-template-rows: auto 1fr;
-}
-
-.text-button {
-	padding: 0;
-	border: 0;
-	background: none;
-	color: inherit;
-	cursor: var(--cursor-pointer);
-	font-size: 0.75rem;
-	font-weight: 700;
-	letter-spacing: normal;
-	text-transform: none;
-	text-decoration: underline;
-	text-underline-offset: 3px;
 }
 
 .period-filter {
@@ -451,14 +426,14 @@ h1 {
 
 .date-range-filter {
 	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
+	grid-template-columns: minmax(0, 1fr);
 	flex: 1 1 auto;
 	gap: 8px;
 }
 
 @media (min-width: 961px) {
 	.date-range-filter {
-		grid-template-columns: repeat(2, 170px);
+		grid-template-columns: 280px;
 		flex: 0 0 auto;
 	}
 }
@@ -559,7 +534,7 @@ h1 {
 	display: none;
 }
 
-.date-field:last-child .date-picker-popover {
+.date-range-field .date-picker-popover {
 	right: 0;
 	left: auto;
 }
@@ -651,11 +626,28 @@ h1 {
 	border-color: var(--lime);
 }
 
-.date-picker-day.is-selected {
+.date-picker-day.is-in-range {
+	border-color: rgba(255, 185, 83, 0.24);
+	background: rgba(255, 185, 83, 0.16);
+	color: white;
+}
+
+.date-picker-day.is-range-start,
+.date-picker-day.is-range-end {
 	border-color: var(--accent);
 	background: var(--accent);
 	color: #20383a;
 	font-weight: 850;
+}
+
+.date-picker-help {
+	display: block;
+	margin-top: 10px;
+	color: rgba(255, 255, 255, 0.58);
+	font-family: inherit;
+	font-size: 0.65rem;
+	line-height: 1.4;
+	text-align: center;
 }
 
 .date-picker-day:disabled {
@@ -692,7 +684,7 @@ h1 {
 .movie-card:focus-visible,
 .dialog-close:focus-visible,
 .showtime:focus-visible,
-.text-button:focus-visible {
+.reset-filters-button:focus-visible {
 	outline: 3px solid var(--lime);
 	outline-offset: 3px;
 }
@@ -716,8 +708,37 @@ h1 {
 .select-filters {
 	display: grid;
 	align-self: end;
-	grid-template-columns: minmax(0, 0.9fr) minmax(0, 0.9fr) minmax(0, 1.4fr);
+	grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.05fr) minmax(0, 1.25fr) 39px;
 	gap: 8px;
+}
+
+.reset-filters-button {
+	display: grid;
+	place-items: center;
+	width: 39px;
+	height: 39px;
+	padding: 0;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 3px;
+	background: rgba(255, 255, 255, 0.08);
+	color: white;
+	cursor: var(--cursor-pointer);
+	transition:
+		border-color 160ms ease,
+		background 160ms ease,
+		transform 160ms ease;
+}
+
+.reset-filters-button:hover {
+	border-color: rgba(255, 255, 255, 0.45);
+	background: rgba(255, 255, 255, 0.14);
+	transform: translateY(-1px);
+}
+
+.reset-filters-button svg {
+	width: 20px;
+	height: 20px;
+	fill: currentColor;
 }
 
 .select-field {
@@ -734,19 +755,21 @@ h1 {
 	white-space: nowrap;
 }
 
-.select-field select,
 .filter-dropdown summary {
 	width: 100%;
 	min-height: 39px;
-	padding: 8px 32px 8px 11px;
-	border: 1px solid rgba(255, 255, 255, 0.15);
+	padding: 8px 24px 8px 9px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
 	border-radius: 3px;
-	background: #223b47;
+	background: rgba(255, 255, 255, 0.08);
 	color: white;
 	cursor: var(--cursor-pointer);
 	font: inherit;
 	font-size: 0.76rem;
 	font-weight: 750;
+	transition:
+		border-color 160ms ease,
+		background 160ms ease;
 }
 
 .filter-dropdown summary {
@@ -760,15 +783,24 @@ h1 {
 .filter-dropdown summary::-webkit-details-marker {
 	display: none;
 }
+
+.filter-dropdown summary:hover,
+.filter-dropdown[open] summary {
+	border-color: rgba(255, 255, 255, 0.45);
+	background: rgba(255, 255, 255, 0.13);
+}
+
 .filter-dropdown summary::after {
-	content: "⌄";
+	content: "";
 	position: absolute;
-	right: 11px;
+	right: 9px;
 	top: 50%;
 	transform: translateY(-50%);
-}
-.filter-dropdown[open] summary::after {
-	content: "⌃";
+	width: 0;
+	height: 0;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 5px solid currentColor;
 }
 .filter-dropdown summary span {
 	display: block;
@@ -789,9 +821,9 @@ h1 {
 	width: max-content;
 	min-width: 100%;
 	max-width: min(280px, calc(100vw - 48px));
-	max-height: 300px;
+	max-height: 360px;
 	overflow-y: auto;
-	padding: 6px;
+	padding: 4px;
 	border: 1px solid rgba(255, 255, 255, 0.2);
 	border-radius: 5px;
 	background: #223b47;
@@ -801,24 +833,41 @@ h1 {
 .filter-option {
 	display: flex;
 	align-items: center;
-	gap: 9px;
-	min-height: 40px;
-	padding: 8px;
+	gap: 7px;
+	min-height: 34px;
+	padding: 5px 7px;
 	font-size: 0.76rem;
+	font-weight: 400;
 	cursor: var(--cursor-pointer);
 }
-.filter-option:hover {
+.filter-option:hover,
+.sort-option.is-selected {
 	background: rgba(255, 255, 255, 0.08);
 }
 .filter-option input {
-	width: 16px;
-	height: 16px;
+	width: 14px;
+	height: 14px;
 	margin: 0;
 	flex-shrink: 0;
 	accent-color: var(--lime);
 }
-.filter-option:first-child {
+.filter-options:not(.sort-options) .filter-option:first-child {
 	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sort-option {
+	width: 100%;
+	border: 0;
+	border-radius: 3px;
+	background: transparent;
+	color: inherit;
+	font-family: inherit;
+	text-align: left;
+}
+
+.sort-option:focus-visible {
+	outline: 2px solid var(--lime);
+	outline-offset: -2px;
 }
 
 .program {
@@ -994,8 +1043,8 @@ h2 {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
-	gap: 12px;
-	margin-top: 16px;
+	gap: 8px;
+	margin-top: 18px;
 }
 
 .dialog-actions .dialog-trailer {
@@ -1004,8 +1053,21 @@ h2 {
 
 .dialog-ratings {
 	justify-content: flex-start;
-	gap: 10px;
+	gap: 8px;
 	margin-left: 0;
+}
+
+.dialog-actions .dialog-trailer,
+.dialog-ratings .movie-rating,
+.dialog-actions .tomatoes,
+.dialog-actions .dialog-fact,
+.dialog-actions .dialog-financial {
+	min-height: 38px;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	background: var(--card);
+	background: color-mix(in srgb, var(--card) 88%, transparent);
+	box-sizing: border-box;
 }
 
 .production-countries {
@@ -1016,10 +1078,20 @@ h2 {
 }
 
 .production-country {
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
 	font-size: 1.15rem;
 	line-height: 1;
 	filter: saturate(0.9);
+}
+
+.production-country img {
+	display: block;
+	width: 1.4em;
+	height: auto;
+	aspect-ratio: 4 / 3;
+	border-radius: 1px;
+	box-shadow: 0 0 0 1px rgb(127 127 127 / 25%);
 }
 
 .critic-score {
@@ -1027,18 +1099,20 @@ h2 {
 	flex: 0 0 auto;
 	align-items: center;
 	justify-content: center;
-	font-size: 16px;
+	font-size: 0.82rem;
 	font-weight: 800;
 	line-height: 1;
 	font-variant-numeric: tabular-nums;
 }
 
 .metascore {
-	width: 34px;
-	height: 34px;
-	border-radius: 4px;
+	width: 38px;
+	height: 38px;
+	border: 0;
+	border-radius: 5px;
 	color: #171717;
 	background: #6c3;
+	font-size: 0.9rem;
 }
 
 .metascore.is-mixed { background: #fc3; }
@@ -1046,12 +1120,12 @@ h2 {
 
 .tomatoes {
 	gap: 6px;
-	min-height: 34px;
+	padding: 0 10px 0 8px;
 }
 
 .tomatoes svg {
-	width: 26px;
-	height: 26px;
+	width: 23px;
+	height: 23px;
 }
 
 .tomatoes.is-fresh .tomato-rotten,
@@ -1075,11 +1149,7 @@ h2 {
 .dialog-fact {
 	display: inline-flex;
 	align-items: center;
-	min-height: 34px;
-	padding: 6px 10px;
-	border: 1px solid var(--line);
-	border-radius: 6px;
-	background: var(--card);
+	padding: 0 10px;
 	color: var(--ink);
 }
 
@@ -1095,7 +1165,7 @@ h2 {
 
 .dialog-fact dd {
 	margin: 0;
-	font-size: 12px;
+	font-size: 0.78rem;
 	font-weight: 700;
 	white-space: nowrap;
 }
@@ -1116,20 +1186,18 @@ h2 {
 	gap: 8px;
 	margin: 0;
 	padding: 0;
-	color: #19733f;
-	font-size: 0.72rem;
-	font-weight: 700;
+	color: var(--ink-soft);
+	font-size: 0.75rem;
+	font-weight: 800;
 	text-transform: uppercase;
 	letter-spacing: 0.04em;
 }
 
 .dialog-financial {
-	display: grid;
-	gap: 1px;
-	padding: 7px 10px;
-	border: 1px solid rgba(20, 128, 68, 0.3);
-	border-radius: 9px;
-	background: rgba(20, 128, 68, 0.08);
+	display: inline-flex;
+	align-items: baseline;
+	gap: 6px;
+	padding: 0 10px;
 }
 
 .dialog-financial dt,
@@ -1138,9 +1206,9 @@ h2 {
 }
 
 .dialog-financial dd {
-	color: #148044;
-	font-size: 0.98rem;
-	font-weight: 750;
+	color: var(--ink);
+	font-size: 0.82rem;
+	font-weight: 800;
 	text-transform: none;
 	font-variant-numeric: tabular-nums;
 	letter-spacing: 0;
@@ -1266,6 +1334,16 @@ h2 {
 	overflow-wrap: anywhere;
 }
 
+.dialog-ratings .movie-rating {
+	padding: 0 10px;
+	font-size: 0.82rem;
+	font-weight: 800;
+}
+
+.movie-card .movie-meta {
+	-webkit-line-clamp: 3;
+}
+
 .movie-card .movie-kicker {
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -1352,7 +1430,7 @@ body.has-open-dialog {
 	object-fit: cover;
 	object-position: center 22%;
 	opacity: 0;
-	transition: opacity 180ms ease;
+	transition: opacity 120ms ease-out;
 }
 
 .dialog-backdrop.is-loaded {
@@ -1371,7 +1449,9 @@ body.has-open-dialog {
 }
 
 .movie-dialog.has-backdrop .dialog-hero {
-	background: #0f2429;
+	background:
+		radial-gradient(circle at 78% 18%, rgba(55, 101, 105, 0.82), transparent 48%),
+		linear-gradient(135deg, #17343a, #0f2429 62%, #10272c);
 }
 
 .dialog-header {
@@ -1436,16 +1516,21 @@ body.has-open-dialog {
 .dialog-trailer {
 	display: inline-flex;
 	align-items: center;
+	gap: 7px;
 	margin-top: 16px;
-	padding: 7px 10px;
-	border: 0;
-	border-radius: 999px;
+	padding: 0 11px;
 	background: rgba(32, 56, 58, 0.09);
 	color: var(--ink);
-	font-size: 0.78rem;
+	font-size: 0.82rem;
 	font-weight: 800;
-	line-height: 1.1;
+	line-height: 1;
 	text-decoration: none;
+}
+
+.dialog-trailer-icon {
+	color: var(--accent-deep);
+	font-size: 0.66rem;
+	line-height: 1;
 }
 
 .dialog-trailer[hidden] {
@@ -1457,6 +1542,24 @@ body.has-open-dialog {
 	color: white;
 }
 
+.movie-dialog.has-backdrop .dialog-ratings .movie-rating,
+.movie-dialog.has-backdrop .dialog-actions .tomatoes,
+.movie-dialog.has-backdrop .dialog-actions .dialog-fact,
+.movie-dialog.has-backdrop .dialog-actions .dialog-financial {
+	border-color: rgba(255, 255, 255, 0.24);
+	background: rgba(8, 15, 17, 0.52);
+	color: white;
+	backdrop-filter: blur(8px);
+}
+
+.movie-dialog.has-backdrop .dialog-financial dt {
+	color: rgba(255, 255, 255, 0.64);
+}
+
+.movie-dialog.has-backdrop .dialog-financial dd {
+	color: white;
+}
+
 .dialog-trailer:hover,
 .dialog-trailer:focus-visible {
 	background: var(--accent);
@@ -1464,6 +1567,7 @@ body.has-open-dialog {
 }
 
 .dialog-content {
+	scroll-behavior: smooth;
 	max-height: min(84vh, 820px);
 	overflow-y: auto;
 	scrollbar-width: none;
@@ -1481,7 +1585,9 @@ body.has-open-dialog {
 }
 
 .movie-dialog.has-backdrop .dialog-screenings {
-	background: #0f2429;
+	background:
+		radial-gradient(circle at 18% 8%, rgba(48, 91, 94, 0.72), transparent 46%),
+		linear-gradient(135deg, #17343a, #0f2429 68%);
 	color: white;
 }
 
@@ -1493,14 +1599,14 @@ body.has-open-dialog {
 }
 
 .movie-dialog.has-backdrop .dialog-screenings::before {
-	inset: -36px;
+	inset: -24px;
 	z-index: -2;
 	background-image: var(--dialog-backdrop-image);
 	background-position: center 72%;
 	background-size: cover;
-	filter: blur(28px) saturate(115%);
+	filter: blur(18px) saturate(112%);
 	opacity: 0.62;
-	transform: scale(1.12);
+	transform: scale(1.08);
 }
 
 .movie-dialog.has-backdrop .dialog-screenings::after {
@@ -1527,8 +1633,6 @@ body.has-open-dialog {
 	background: rgba(8, 15, 17, 0.42);
 	color: white;
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter: blur(10px);
 }
 
 .movie-dialog.has-backdrop .showtime:hover,
@@ -2008,10 +2112,6 @@ footer p {
 		grid-template-columns: 1fr;
 	}
 
-	.filter-heading {
-		margin-bottom: 8px;
-	}
-
 	.period-filter {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -2029,8 +2129,13 @@ footer p {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
-	.select-filters .select-field:last-child {
+	.select-filters .select-field:last-of-type {
 		grid-column: 1 / -1;
+	}
+
+	.reset-filters-button {
+		justify-self: end;
+		grid-column: 2;
 	}
 
 	.program {

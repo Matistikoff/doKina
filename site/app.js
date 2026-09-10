@@ -1,9 +1,10 @@
-import { countryFlag, countryName, formatDuration, formatUsd } from "./formatters.js";
+import { countryFlag, countryFlagPath, countryName, formatDuration, formatUsd } from "./formatters.js";
 import { compareMoviesByDuration, isMustWatch, isOscarWinner } from "./discovery.js";
 import { metascoreTone, tomatoTone } from "./critic-ratings.js";
 import { isCzSkMovie, isNonEnglishMovie } from "./filters.js";
 import { actorSearchUrl, directorSearchUrl } from "./links.js";
 import { limitedMovieCast } from "./movie-cast.js";
+import { alternativeMovieTitle } from "./movie-title.js";
 import { compareMoviesByRating } from "./ratings.js";
 
 const CULT_MOVIE_LATEST_YEAR = 2024;
@@ -58,15 +59,29 @@ const elements = {
   resetFiltersButton: document.querySelector("#reset-filters-button"),
   resultCount: document.querySelector("#result-count"),
   selectedPeriodLabel: document.querySelector("#selected-period-label"),
+  sortDropdown: document.querySelector("#sort-dropdown"),
   sortFilter: document.querySelector("#sort-filter"),
+  sortOptions: document.querySelector("#sort-options"),
+  sortSummary: document.querySelector("#sort-summary"),
   template: document.querySelector("#movie-card-template"),
   themeColor: document.querySelector('meta[name="theme-color"]'),
   themeToggle: document.querySelector("#theme-toggle"),
 };
 
-const datePickers = new Map();
+let datePicker = null;
+const dialogBackdropPreloads = new Map();
 let updateDialogScrollbar = () => {};
 let dialogBackdropLoadId = 0;
+
+function preloadDialogBackdrop(url) {
+  if (!url || dialogBackdropPreloads.has(url)) return;
+  const image = new Image();
+  image.decoding = "async";
+  image.fetchPriority = "high";
+  image.addEventListener("error", () => dialogBackdropPreloads.delete(url), { once: true });
+  image.src = url;
+  dialogBackdropPreloads.set(url, image);
+}
 
 function setupPageScrollbar() {
   const track = elements.pageScrollbar;
@@ -207,6 +222,99 @@ function setupDialogScrollbar() {
   new ResizeObserver(updateDialogScrollbar).observe(scroller);
 }
 
+function setupSmoothWheelScrolling() {
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function enhance(scroller) {
+    const isPage = scroller === window;
+    const motionElement = isPage ? document.documentElement : scroller;
+    let frame = 0;
+    let target = 0;
+
+    const hasNestedScroller = (eventTarget) => {
+      if (!(eventTarget instanceof Element)) return false;
+      let element = eventTarget;
+      while (element && element !== document.body && element !== scroller) {
+        const overflowY = getComputedStyle(element).overflowY;
+        if ((overflowY === "auto" || overflowY === "scroll") && element.scrollHeight > element.clientHeight) {
+          return true;
+        }
+        element = element.parentElement;
+      }
+      return false;
+    };
+
+    const currentPosition = () => isPage ? window.scrollY : scroller.scrollTop;
+    const maximumPosition = () => isPage
+      ? Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
+      : Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+    const setPosition = (position) => {
+      if (isPage) window.scrollTo(0, position);
+      else scroller.scrollTop = position;
+    };
+    const stop = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      target = currentPosition();
+      motionElement.classList.remove("is-smooth-wheel-scrolling");
+    };
+    const animate = () => {
+      const current = currentPosition();
+      const distance = target - current;
+      if (Math.abs(distance) < 0.5) {
+        setPosition(target);
+        frame = 0;
+        motionElement.classList.remove("is-smooth-wheel-scrolling");
+        return;
+      }
+      setPosition(current + distance * 0.16);
+      frame = requestAnimationFrame(animate);
+    };
+
+    scroller.addEventListener("wheel", (event) => {
+      if (
+        reducedMotion.matches
+        || event.ctrlKey
+        || Math.abs(event.deltaX) > Math.abs(event.deltaY)
+        || hasNestedScroller(event.target)
+      ) return;
+
+      // Leave precise trackpads native; add inertia only to stepped mouse wheels.
+      const isSteppedWheel = event.deltaMode !== WheelEvent.DOM_DELTA_PIXEL || Math.abs(event.deltaY) >= 40;
+      if (!isSteppedWheel) {
+        stop();
+        return;
+      }
+
+      const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE
+        ? 18
+        : event.deltaMode === WheelEvent.DOM_DELTA_PAGE
+          ? (isPage ? window.innerHeight : scroller.clientHeight)
+          : 1;
+      const current = currentPosition();
+      if (!frame) target = current;
+      const nextTarget = Math.max(0, Math.min(maximumPosition(), target + event.deltaY * unit));
+      if (nextTarget === current && nextTarget === target) return;
+
+      event.preventDefault();
+      target = nextTarget;
+      if (!frame) {
+        motionElement.classList.add("is-smooth-wheel-scrolling");
+        frame = requestAnimationFrame(animate);
+      }
+    }, { passive: false });
+
+    scroller.addEventListener("pointerdown", stop, { passive: true });
+    window.addEventListener("keydown", (event) => {
+      if (["ArrowDown", "ArrowUp", "End", "Home", "PageDown", "PageUp", " "].includes(event.key)) stop();
+    });
+    reducedMotion.addEventListener("change", stop);
+  }
+
+  enhance(window);
+  enhance(elements.dialogScroller);
+}
+
 function applyTheme(theme, persist = false) {
   const isDark = theme === "dark";
   document.documentElement.dataset.theme = isDark ? "dark" : "light";
@@ -219,6 +327,7 @@ function applyTheme(theme, persist = false) {
 applyTheme(document.documentElement.dataset.theme || "dark");
 setupPageScrollbar();
 setupDialogScrollbar();
+setupSmoothWheelScrolling();
 
 const dateKey = (value) => value.slice(0, 10);
 const timeValue = (value) => value.slice(11, 16);
@@ -267,6 +376,12 @@ function availableDateBounds() {
 
 function periodBounds() {
   const { start, end } = availableDateBounds();
+  if (state.selectedPeriod === "todayTomorrow") {
+    return {
+      start: localToday(),
+      end: tomorrowKey(),
+    };
+  }
   if (state.selectedPeriod === "custom") {
     return {
       start: state.selectedDateStart || start,
@@ -304,25 +419,51 @@ function isoDate(year, month, day) {
   return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 }
 
-function closeDatePickers(exceptInput = null) {
-  for (const [input, picker] of datePickers) {
-    if (input === exceptInput) continue;
-    picker.popover.hidden = true;
-    picker.trigger.setAttribute("aria-expanded", "false");
-  }
+function closeDatePickers() {
+  if (!datePicker) return;
+  datePicker.popover.hidden = true;
+  datePicker.trigger.setAttribute("aria-expanded", "false");
+  datePicker.selectionAnchor = null;
+  datePicker.hoverDate = null;
 }
 
-function setupDatePicker(input) {
-  const root = input.closest(".date-picker");
+function setupDatePickers() {
+  const startInput = elements.dateStartFilter;
+  const endInput = elements.dateEndFilter;
+  const root = startInput.closest(".date-picker");
   const trigger = root.querySelector(".date-picker-trigger");
   const value = root.querySelector(".date-picker-value");
   const popover = root.querySelector(".date-picker-popover");
-  const picker = { popover, root, trigger, value, viewDate: null };
-  datePickers.set(input, picker);
+  const picker = {
+    hoverDate: null,
+    popover,
+    root,
+    selectionAnchor: null,
+    trigger,
+    value,
+    viewDate: null,
+  };
+  datePicker = picker;
 
   const sync = () => {
-    value.textContent = input.value ? formatPickerValue(input.value) : "Vyber dátum";
-    trigger.classList.toggle("is-filled", Boolean(input.value));
+    if (!startInput.value) value.textContent = "Vyber deň alebo obdobie";
+    else if (!endInput.value || startInput.value === endInput.value) value.textContent = formatPickerValue(startInput.value);
+    else value.textContent = `${formatPickerValue(startInput.value)} – ${formatPickerValue(endInput.value)}`;
+    trigger.classList.toggle("is-filled", Boolean(startInput.value));
+    trigger.setAttribute("aria-label", startInput.value
+      ? `Vybrané obdobie: ${value.textContent}. Zmeniť výber`
+      : "Vyber deň alebo obdobie");
+  };
+
+  const dateIsDisabled = (date) => Boolean(
+    (startInput.min && date < startInput.min) || (startInput.max && date > startInput.max)
+  );
+
+  const previewBounds = () => {
+    const anchor = picker.selectionAnchor;
+    const edge = picker.hoverDate || anchor;
+    if (!anchor) return { start: startInput.value, end: endInput.value || startInput.value };
+    return anchor <= edge ? { start: anchor, end: edge } : { start: edge, end: anchor };
   };
 
   const render = () => {
@@ -344,13 +485,17 @@ function setupDatePicker(input) {
         <button class="date-picker-nav" type="button" data-month-step="1" aria-label="Nasledujúci mesiac">→</button>
       </span>
       <span class="date-picker-weekdays" aria-hidden="true">${weekdays.map((day) => `<span>${day}</span>`).join("")}</span>
-      <span class="date-picker-days"></span>`;
+      <span class="date-picker-days"></span>
+      <span class="date-picker-help">${picker.selectionAnchor
+        ? "Vyber posledný deň obdobia."
+        : "Klikni na prvý deň obdobia."}</span>`;
 
     const previous = popover.querySelector('[data-month-step="-1"]');
     const next = popover.querySelector('[data-month-step="1"]');
-    previous.disabled = Boolean(input.min && monthStart <= input.min);
-    next.disabled = Boolean(input.max && monthEnd >= input.max);
+    previous.disabled = Boolean(startInput.min && monthStart <= startInput.min);
+    next.disabled = Boolean(startInput.max && monthEnd >= startInput.max);
     const days = popover.querySelector(".date-picker-days");
+    const selected = previewBounds();
 
     for (let index = 0; index < 42; index += 1) {
       const cellDate = new Date(firstCell);
@@ -361,21 +506,47 @@ function setupDatePicker(input) {
       button.type = "button";
       button.textContent = String(cellDate.getDate());
       button.dataset.date = date;
-      button.disabled = Boolean((input.min && date < input.min) || (input.max && date > input.max));
+      button.disabled = dateIsDisabled(date);
       button.classList.toggle("is-outside", cellDate.getMonth() !== month);
       button.classList.toggle("is-today", date === localToday());
-      button.classList.toggle("is-selected", date === input.value);
+      button.classList.toggle("is-in-range", Boolean(selected.start && date >= selected.start && date <= selected.end));
+      button.classList.toggle("is-range-start", date === selected.start);
+      button.classList.toggle("is-range-end", date === selected.end);
       button.setAttribute("aria-label", formatDay(date, "long"));
-      button.setAttribute("aria-pressed", String(date === input.value));
+      button.setAttribute("aria-pressed", String(Boolean(selected.start && date >= selected.start && date <= selected.end)));
       days.append(button);
     }
   };
 
+  const commitRange = (first, second = first) => {
+    const [start, end] = first <= second ? [first, second] : [second, first];
+    state.selectedDateStart = start;
+    state.selectedDateEnd = end;
+    state.selectedPeriod = "custom";
+    renderPeriods();
+    renderProgram();
+  };
+
+  const chooseDate = (date) => {
+    if (!picker.selectionAnchor) {
+      picker.selectionAnchor = date;
+      picker.hoverDate = date;
+      commitRange(date);
+      render();
+      popover.querySelector(`[data-date="${date}"]`)?.focus();
+      return;
+    }
+    commitRange(picker.selectionAnchor, date);
+    closeDatePickers();
+    trigger.focus();
+  };
+
   const open = () => {
-    closeDatePickers(input);
+    closeDatePickers();
     elements.genreDropdown.open = false;
     elements.cinemaDropdown.open = false;
-    const initial = input.value || input.min || localToday();
+    elements.sortDropdown.open = false;
+    const initial = startInput.value || startInput.min || localToday();
     const [year, month] = initial.split("-").map(Number);
     picker.viewDate = new Date(year, month - 1, 1);
     render();
@@ -391,10 +562,7 @@ function setupDatePicker(input) {
   popover.addEventListener("click", (event) => {
     const day = event.target.closest("[data-date]");
     if (day && !day.disabled) {
-      input.value = input.value === day.dataset.date ? "" : day.dataset.date;
-      input.dispatchEvent(new Event("change", { bubbles: true }));
-      closeDatePickers();
-      trigger.focus();
+      chooseDate(day.dataset.date);
       return;
     }
     const navigation = event.target.closest("[data-month-step]");
@@ -403,6 +571,14 @@ function setupDatePicker(input) {
     picker.viewDate = new Date(picker.viewDate.getFullYear(), picker.viewDate.getMonth() + step, 1);
     render();
     popover.querySelector(`[data-month-step="${step}"]`).focus();
+  });
+
+  popover.addEventListener("mouseover", (event) => {
+    if (!picker.selectionAnchor) return;
+    const day = event.target.closest("[data-date]");
+    if (!day || day.disabled || picker.hoverDate === day.dataset.date) return;
+    picker.hoverDate = day.dataset.date;
+    render();
   });
 
   root.addEventListener("keydown", (event) => {
@@ -417,13 +593,9 @@ function setupDatePicker(input) {
   sync();
 }
 
-function setupDatePickers() {
-  setupDatePicker(elements.dateStartFilter);
-  setupDatePicker(elements.dateEndFilter);
-}
-
 function periodLabel() {
   const { start, end } = periodBounds();
+  if (state.selectedPeriod === "todayTomorrow") return "Dnes a zajtra";
   if (state.selectedPeriod === "custom") {
     if (!state.selectedDateStart) return `Do ${formatDay(end, "long")}`;
     if (!state.selectedDateEnd) return `Od ${formatDay(start, "long")}`;
@@ -441,8 +613,8 @@ function renderPeriods() {
   }
   elements.dateStartFilter.value = state.selectedDateStart;
   elements.dateEndFilter.value = state.selectedDateEnd;
-  elements.dateEndFilter.min = state.selectedDateStart || elements.dateStartFilter.min;
-  for (const picker of datePickers.values()) picker.sync();
+  elements.dateEndFilter.min = elements.dateStartFilter.min;
+  datePicker?.sync();
 }
 
 function configureDateFilters() {
@@ -515,6 +687,31 @@ function updateCinemaSelection() {
   elements.cinemaSummary.title = selected.map(cinemaName).join(", ");
 }
 
+function updateSortSelection() {
+  const selectedOption = [...elements.sortFilter.options]
+    .find((option) => option.value === state.sortBy);
+  elements.sortFilter.value = state.sortBy;
+  elements.sortSummary.textContent = selectedOption?.textContent || "Zoradiť";
+  for (const button of elements.sortOptions.querySelectorAll("[data-sort]")) {
+    const isSelected = button.dataset.sort === state.sortBy;
+    button.classList.toggle("is-selected", isSelected);
+    button.setAttribute("aria-checked", String(isSelected));
+  }
+}
+
+function renderSortOptions() {
+  elements.sortOptions.replaceChildren(...[...elements.sortFilter.options].map((option) => {
+    const button = document.createElement("button");
+    button.className = "filter-option sort-option";
+    button.type = "button";
+    button.dataset.sort = option.value;
+    button.setAttribute("role", "menuitemradio");
+    button.textContent = option.textContent;
+    return button;
+  }));
+  updateSortSelection();
+}
+
 function groupScreenings(screenings) {
   const groups = new Map();
   for (const screening of screenings) {
@@ -565,16 +762,13 @@ function showtimeElement(screening, movie, cinema) {
 }
 
 function movieMeta(movie, { includeAlternativeTitle = true } = {}) {
+  const alternativeTitle = alternativeMovieTitle(movie);
   const items = [
+    includeAlternativeTitle ? alternativeTitle : null,
     movie.directors?.length ? `Réžia: ${movie.directors.join(", ")}` : null,
     movie.durationMinutes ? formatDuration(movie.durationMinutes) : null,
     movie.releaseYear || null,
   ];
-  if (includeAlternativeTitle) {
-    items.push((movie.originalTitle || movie.englishTitle) !== movie.title
-      ? (movie.originalTitle || movie.englishTitle)
-      : null);
-  }
   return items.filter(Boolean).join(" · ");
 }
 
@@ -584,15 +778,24 @@ function productionCountriesElement(movie) {
   countries.className = "production-countries";
   countries.setAttribute("aria-label", "Krajiny výroby");
   for (const code of movie.productionCountries) {
-    const flag = countryFlag(code);
-    if (!flag) continue;
+    const flagPath = countryFlagPath(code);
+    if (!flagPath) continue;
     const country = document.createElement("span");
     const name = countryName(code);
+    const image = document.createElement("img");
     country.className = "production-country";
-    country.textContent = flag;
     country.title = name;
     country.setAttribute("role", "img");
     country.setAttribute("aria-label", name);
+    image.src = flagPath;
+    image.alt = "";
+    image.width = 28;
+    image.height = 21;
+    image.decoding = "async";
+    image.addEventListener("error", () => {
+      country.textContent = countryFlag(code) || String(code).toUpperCase();
+    }, { once: true });
+    country.append(image);
     countries.append(country);
   }
   return countries.childElementCount ? countries : null;
@@ -617,8 +820,8 @@ function renderDialogMovieMeta(movie) {
   }
   if (movie.durationMinutes) items.push(formatDuration(movie.durationMinutes));
   if (movie.releaseYear) items.push(String(movie.releaseYear));
-  const alternativeTitle = movie.originalTitle || movie.englishTitle;
-  if (alternativeTitle && alternativeTitle !== movie.title) items.push(alternativeTitle);
+  const alternativeTitle = alternativeMovieTitle(movie);
+  if (alternativeTitle) items.push(alternativeTitle);
   const countries = productionCountriesElement(movie);
   if (countries) items.push(countries);
 
@@ -833,6 +1036,7 @@ function loadDialogBackdrop(url) {
   const loadId = dialogBackdropLoadId;
   const reveal = () => {
     if (loadId !== dialogBackdropLoadId || elements.dialogBackdrop.getAttribute("src") !== url) return;
+    elements.dialog.style.setProperty("--dialog-backdrop-image", `url("${url}")`);
     elements.dialogBackdrop.classList.add("is-loaded");
   };
   const discard = () => {
@@ -840,8 +1044,8 @@ function loadDialogBackdrop(url) {
   };
 
   elements.dialog.classList.add("has-backdrop");
-  elements.dialog.style.setProperty("--dialog-backdrop-image", `url("${url}")`);
   elements.dialogBackdrop.hidden = false;
+  elements.dialogBackdrop.fetchPriority = "high";
   elements.dialogBackdrop.onload = reveal;
   elements.dialogBackdrop.onerror = discard;
   elements.dialogBackdrop.src = url;
@@ -944,7 +1148,7 @@ function renderMovie(movie, screenings, cinemaMap) {
   fragment.querySelector("h3").textContent = movie.title;
   fragment.querySelector(".movie-kicker").textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
   const meta = fragment.querySelector(".movie-meta");
-  meta.textContent = movieMeta(movie, { includeAlternativeTitle: false });
+  meta.textContent = movieMeta(movie);
   const countries = productionCountriesElement(movie);
   if (countries) meta.append(meta.textContent ? " · " : "", countries);
   const nearestScreening = [...screenings].sort((a, b) => a.startsAt.localeCompare(b.startsAt))[0];
@@ -961,6 +1165,8 @@ function renderMovie(movie, screenings, cinemaMap) {
   card.tabIndex = 0;
   card.setAttribute("role", "button");
   card.setAttribute("aria-label", `${movie.title} — zobraziť termíny premietania`);
+  card.addEventListener("pointerenter", () => preloadDialogBackdrop(movie.backdropUrl), { once: true });
+  card.addEventListener("focus", () => preloadDialogBackdrop(movie.backdropUrl), { once: true });
   card.addEventListener("click", (event) => {
     if (event.target.closest("a, button")) return;
     openMovieDialog(movie, screenings, cinemaMap);
@@ -1078,7 +1284,7 @@ function registerProgramTool() {
       inputSchema: {
         type: "object",
         properties: {
-          period: { type: "string", enum: ["all", "custom"], description: "Celý program alebo vlastné obdobie." },
+          period: { type: "string", enum: ["all", "todayTomorrow", "custom"], description: "Celý program, dnešok so zajtrajškom alebo vlastné obdobie." },
           startDate: { type: "string", description: "Začiatok rozsahu vo formáte RRRR-MM-DD." },
           endDate: { type: "string", description: "Koniec rozsahu vo formáte RRRR-MM-DD." },
           cinemaIds: {
@@ -1110,6 +1316,10 @@ function registerProgramTool() {
           state.selectedPeriod = "all";
           state.selectedDateStart = "";
           state.selectedDateEnd = "";
+        } else if (input.period === "todayTomorrow") {
+          state.selectedPeriod = "todayTomorrow";
+          state.selectedDateStart = "";
+          state.selectedDateEnd = "";
         } else if (input.period === "custom" || input.startDate || input.endDate) {
           state.selectedPeriod = "custom";
           if (input.startDate !== undefined) state.selectedDateStart = input.startDate;
@@ -1120,7 +1330,7 @@ function registerProgramTool() {
         if (input.genres) state.selectedGenres = input.genres.length === 0 ? new Set(availableGenres) : new Set(input.genres);
         if (input.sortBy) state.sortBy = input.sortBy;
         updateGenreSelection();
-        elements.sortFilter.value = state.sortBy;
+        updateSortSelection();
         renderPeriods();
         renderCinemas();
         renderProgram();
@@ -1152,6 +1362,7 @@ async function init() {
     renderPeriods();
     renderGenres();
     renderCinemas();
+    renderSortOptions();
     renderProgram();
     syncMovieRoute();
     registerProgramTool();
@@ -1224,10 +1435,12 @@ elements.cinemaFilter.addEventListener("change", (event) => {
 document.addEventListener("click", (event) => {
   if (!elements.genreDropdown.contains(event.target)) elements.genreDropdown.open = false;
   if (!elements.cinemaDropdown.contains(event.target)) elements.cinemaDropdown.open = false;
-  if (!event.target.closest(".date-picker")) closeDatePickers();
+  if (!elements.sortDropdown.contains(event.target)) elements.sortDropdown.open = false;
+  const clickedDatePicker = datePicker && event.composedPath().includes(datePicker.root);
+  if (!clickedDatePicker) closeDatePickers();
 });
 
-for (const dropdown of [elements.cinemaDropdown, elements.genreDropdown]) {
+for (const dropdown of [elements.cinemaDropdown, elements.genreDropdown, elements.sortDropdown]) {
   dropdown.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
     dropdown.open = false;
@@ -1235,8 +1448,12 @@ for (const dropdown of [elements.cinemaDropdown, elements.genreDropdown]) {
   });
 }
 
-elements.sortFilter.addEventListener("change", () => {
-  state.sortBy = elements.sortFilter.value;
+elements.sortOptions.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-sort]");
+  if (!button) return;
+  state.sortBy = button.dataset.sort;
+  updateSortSelection();
+  elements.sortDropdown.open = false;
   renderProgram();
 });
 
@@ -1248,7 +1465,7 @@ elements.resetFiltersButton.addEventListener("click", () => {
   state.sortBy = "rating";
   state.selectedCinemas = new Set(state.program.cinemas.map((cinema) => cinema.id));
   updateGenreSelection();
-  elements.sortFilter.value = "rating";
+  updateSortSelection();
   renderPeriods();
   renderCinemas();
   renderProgram();
