@@ -11,5 +11,5 @@ test("movie detail links underlined director names to Google search", async () =
   assert.match(renderer, /link\.href = directorSearchUrl\(name\)/);
   assert.match(renderer, /link\.target = "_blank"/);
   assert.match(renderer, /link\.className = "dialog-director-link"/);
-  assert.match(styles, /\.dialog-director-link \{[\s\S]*?text-decoration: underline;/);
+  assert.match(styles, /\.dialog-director-link \{[\s\S]*?color: var\(--accent-deep\);[\s\S]*?text-decoration: underline;/);
 });

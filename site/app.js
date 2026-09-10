@@ -267,7 +267,8 @@ function setupSmoothWheelScrolling() {
         motionElement.classList.remove("is-smooth-wheel-scrolling");
         return;
       }
-      setPosition(current + distance * 0.16);
+      const easing = isPage ? 0.16 : 0.3;
+      setPosition(current + distance * easing);
       frame = requestAnimationFrame(animate);
     };
 
@@ -763,13 +764,15 @@ function showtimeElement(screening, movie, cinema) {
 
 function movieMeta(movie, { includeAlternativeTitle = true } = {}) {
   const alternativeTitle = alternativeMovieTitle(movie);
-  const items = [
-    includeAlternativeTitle ? alternativeTitle : null,
+  const details = [
     movie.directors?.length ? `Réžia: ${movie.directors.join(", ")}` : null,
     movie.durationMinutes ? formatDuration(movie.durationMinutes) : null,
     movie.releaseYear || null,
   ];
-  return items.filter(Boolean).join(" · ");
+  return [
+    includeAlternativeTitle ? alternativeTitle : null,
+    details.filter(Boolean).join(" · "),
+  ].filter(Boolean).join("\n");
 }
 
 function productionCountriesElement(movie) {
@@ -802,7 +805,8 @@ function productionCountriesElement(movie) {
 }
 
 function renderDialogMovieMeta(movie) {
-  const items = [];
+  const alternativeTitle = alternativeMovieTitle(movie);
+  const details = [];
   if (movie.directors?.length) {
     const directors = document.createDocumentFragment();
     directors.append("Réžia: ");
@@ -816,20 +820,29 @@ function renderDialogMovieMeta(movie) {
       link.setAttribute("aria-label", `${name} — vyhľadať cez Google`);
       directors.append(index ? ", " : "", link);
     });
-    items.push(directors);
+    details.push(directors);
   }
-  if (movie.durationMinutes) items.push(formatDuration(movie.durationMinutes));
-  if (movie.releaseYear) items.push(String(movie.releaseYear));
-  const alternativeTitle = alternativeMovieTitle(movie);
-  if (alternativeTitle) items.push(alternativeTitle);
+  if (movie.durationMinutes) details.push(formatDuration(movie.durationMinutes));
+  if (movie.releaseYear) details.push(String(movie.releaseYear));
   const countries = productionCountriesElement(movie);
-  if (countries) items.push(countries);
+  if (countries) details.push(countries);
 
   elements.dialogMeta.replaceChildren();
-  items.forEach((item, index) => {
-    if (index) elements.dialogMeta.append(" · ");
-    elements.dialogMeta.append(item);
-  });
+  if (alternativeTitle) {
+    const titleRow = document.createElement("span");
+    titleRow.className = "dialog-original-title";
+    titleRow.textContent = alternativeTitle;
+    elements.dialogMeta.append(titleRow);
+  }
+  if (details.length) {
+    const detailsRow = document.createElement("span");
+    detailsRow.className = "dialog-movie-details";
+    details.forEach((item, index) => {
+      if (index) detailsRow.append(" · ");
+      detailsRow.append(item);
+    });
+    elements.dialogMeta.append(detailsRow);
+  }
 }
 
 function renderShowtimes(movie, screenings, cinemaMap, root) {
@@ -1148,9 +1161,22 @@ function renderMovie(movie, screenings, cinemaMap) {
   fragment.querySelector("h3").textContent = movie.title;
   fragment.querySelector(".movie-kicker").textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
   const meta = fragment.querySelector(".movie-meta");
-  meta.textContent = movieMeta(movie);
+  const alternativeTitle = alternativeMovieTitle(movie);
+  if (alternativeTitle) {
+    const titleRow = document.createElement("span");
+    titleRow.className = "movie-original-title";
+    titleRow.textContent = alternativeTitle;
+    meta.append(titleRow);
+  }
+  const details = movieMeta(movie, { includeAlternativeTitle: false });
   const countries = productionCountriesElement(movie);
-  if (countries) meta.append(meta.textContent ? " · " : "", countries);
+  if (details || countries) {
+    const detailsRow = document.createElement("span");
+    detailsRow.className = "movie-details";
+    if (details) detailsRow.append(details);
+    if (countries) detailsRow.append(details ? " · " : "", countries);
+    meta.append(detailsRow);
+  }
   const nearestScreening = [...screenings].sort((a, b) => a.startsAt.localeCompare(b.startsAt))[0];
   const countLabel = `${screenings.length} ${screenings.length === 1 ? "predstavenie" : screenings.length < 5 ? "predstavenia" : "predstavení"}`;
   screeningCount.textContent = `${countLabel} · ${nearestScreeningLabel(nearestScreening, cinemaMap)}`;

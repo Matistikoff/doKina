@@ -1087,7 +1087,7 @@ h2 {
 
 .production-country img {
 	display: block;
-	width: 1.4em;
+	width: 1em;
 	height: auto;
 	aspect-ratio: 4 / 3;
 	border-radius: 1px;
@@ -1195,7 +1195,7 @@ h2 {
 
 .dialog-financial {
 	display: inline-flex;
-	align-items: baseline;
+	align-items: center;
 	gap: 6px;
 	padding: 0 10px;
 }
@@ -1553,7 +1553,7 @@ body.has-open-dialog {
 }
 
 .movie-dialog.has-backdrop .dialog-financial dt {
-	color: rgba(255, 255, 255, 0.64);
+	color: white;
 }
 
 .movie-dialog.has-backdrop .dialog-financial dd {
@@ -1823,14 +1823,14 @@ body.has-open-dialog {
 :root[data-theme="dark"] .dialog-financial dd,
 .movie-dialog.has-backdrop .dialog-financials,
 .movie-dialog.has-backdrop .dialog-financial dd {
-	color: #83dfa5;
+	color: white;
 }
 
 :root[data-theme="dark"] .dialog-financial.is-below-budget,
 :root[data-theme="dark"] .dialog-financial.is-below-budget dd,
 .movie-dialog.has-backdrop .dialog-financial.is-below-budget,
 .movie-dialog.has-backdrop .dialog-financial.is-below-budget dd {
-	color: #ff8d87;
+	color: white;
 }
 
 :root[data-theme="dark"] .dialog-cast-member:hover,
@@ -1864,13 +1864,30 @@ body.has-open-dialog {
 }
 
 .movie-meta {
-	margin-top: 8px;
+	margin-top: 0;
 	font-size: 0.78rem;
 	line-height: 1.45;
 }
 
+.movie-original-title,
+.movie-details,
+.dialog-original-title,
+.dialog-movie-details {
+	display: block;
+}
+
+.movie-original-title,
+.dialog-original-title {
+	font-style: italic;
+}
+
+.movie-details,
+.dialog-movie-details {
+	margin-top: 8px;
+}
+
 .dialog-director-link {
-	color: inherit;
+	color: var(--accent-deep);
 	font-weight: 700;
 	text-decoration: underline;
 	text-decoration-thickness: 1px;
