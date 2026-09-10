@@ -267,16 +267,30 @@ main {
 .install-toggle {
 	width: auto;
 	padding: 0 16px;
+	border-color: white;
 	border-radius: 999px;
+	color: white;
 	font-size: 0.78rem;
 	font-weight: 700;
 	line-height: 1.2;
 	white-space: nowrap;
+	animation: install-toggle-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes install-toggle-pulse {
+	0%,
+	100% {
+		box-shadow: 0 0 0 0 rgba(212, 165, 20, 0);
+	}
+	50% {
+		box-shadow: 0 0 0 5px rgba(212, 165, 20, 0.16);
+	}
 }
 
 .install-toggle:hover {
-	border-color: var(--accent);
+	border-color: white;
 	background: rgba(15, 36, 41, 0.62);
+	color: white;
 	transform: translateY(-2px);
 }
 
@@ -1949,7 +1963,7 @@ body.has-open-dialog {
 	align-items: center;
 	justify-content: space-between;
 	gap: 24px;
-	padding: 0 42px 38px;
+	padding: 10px 42px 38px;
 }
 
 .install-dialog-footer p {
@@ -2666,7 +2680,7 @@ footer p {
 		align-items: flex-start;
 		flex-direction: column;
 		gap: 14px;
-		padding: 4px 20px max(28px, env(safe-area-inset-bottom));
+		padding: 12px 20px max(28px, env(safe-area-inset-bottom));
 	}
 
 	.dialog-screenings {
@@ -2809,6 +2823,10 @@ footer p {
 }
 
 @media (prefers-reduced-motion: reduce) {
+	.install-toggle {
+		animation: none;
+	}
+
 	*,
 	*::before,
 	*::after {

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-test("iPhone and Android home-screen guides open from the header in a movie-sized dialog", async () => {
+test("iOS and Android home-screen guides open from the header in a movie-sized dialog", async () => {
   const html = await readFile(new URL("../site/index.html", import.meta.url), "utf8");
   const app = await readFile(new URL("../site/app.js", import.meta.url), "utf8");
   const styles = await readFile(new URL("../site/styles.css", import.meta.url), "utf8");
@@ -14,6 +14,8 @@ test("iPhone and Android home-screen guides open from the header in a movie-size
   assert.match(html, /Otvor doKina\.sk v Safari[\s\S]*?Klepni na Zdieľať[\s\S]*?Vyber Pridať na plochu/u);
   assert.match(html, /class="install-mockup"[\s\S]*?src="\/iphone-home-screen-guide\.png"[\s\S]*?šípkou smerujúcou na ikonu doKina\.sk/u);
   assert.match(html, /Otvor doKina\.sk v Chrome[\s\S]*?Otvor menu ⋮[\s\S]*?Vytvor odkaz/u);
+  assert.match(html, /id="install-panel-ios"[\s\S]*?<rect x="5" y="5" width="22" height="22"[\s\S]*?Vyber Pridať na plochu/u);
+  assert.match(html, /id="install-panel-android"[\s\S]*?<rect x="5" y="5" width="22" height="17"[\s\S]*?M16 9v8[\s\S]*?Vytvor odkaz/u);
   assert.match(html, /src="\/android-home-screen-guide\.png"[\s\S]*?Android telefónu so šípkou/u);
   assert.match(app, /elements\.installToggle\.addEventListener\("click", openInstallDialog\)/u);
   assert.match(app, /\/Android\/u\.test\(navigator\.userAgent\)[\s\S]*?selectInstallPlatform\(platform\)/u);
@@ -21,4 +23,6 @@ test("iPhone and Android home-screen guides open from the header in a movie-size
   assert.match(app, /elements\.installDialog\.addEventListener\("cancel"[\s\S]*?closeInstallDialog\(\)/u);
   assert.match(styles, /\.install-steps \{[\s\S]*?grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/u);
   assert.match(styles, /\.install-step-number \{[\s\S]*?font-size: 1\.05rem;[\s\S]*?font-weight: 600;/u);
+  assert.match(styles, /\.install-toggle \{[\s\S]*?border-color: white;[\s\S]*?color: white;[\s\S]*?animation: install-toggle-pulse/u);
+  assert.match(styles, /\.install-dialog-footer \{[\s\S]*?padding: 10px 42px 38px;/u);
 });
