@@ -1628,6 +1628,16 @@ body.has-open-dialog {
 	padding: 28px 30px 24px;
 }
 
+.dialog-header > div {
+	width: 100%;
+	min-width: 0;
+}
+
+.dialog-header .movie-kicker,
+.dialog-header h2 {
+	padding-right: 66px;
+}
+
 .movie-dialog.has-backdrop .dialog-header {
 	min-height: 300px;
 	align-items: flex-end;
@@ -1648,8 +1658,10 @@ body.has-open-dialog {
 }
 
 .dialog-close {
+	position: absolute;
+	top: 28px;
+	right: 30px;
 	display: grid;
-	flex: 0 0 auto;
 	place-items: center;
 	width: 42px;
 	height: 42px;
@@ -1730,19 +1742,6 @@ body.has-open-dialog {
 .movie-dialog.has-backdrop .dialog-actions a:focus-visible {
 	border-color: var(--accent);
 	color: var(--accent-deep);
-}
-
-.dialog-trailer:hover,
-.dialog-trailer:focus-visible,
-.movie-dialog.has-backdrop .dialog-trailer:hover,
-.movie-dialog.has-backdrop .dialog-trailer:focus-visible {
-	background: var(--accent);
-	color: #181817;
-}
-
-.dialog-trailer:hover .dialog-trailer-icon,
-.dialog-trailer:focus-visible .dialog-trailer-icon {
-	color: #181817;
 }
 
 .dialog-content {
@@ -1907,7 +1906,7 @@ body.has-open-dialog {
 
 .dialog-cast-member:hover,
 .dialog-cast-member:focus-visible {
-	background: rgba(20, 128, 68, 0.11);
+	background: rgba(212, 165, 20, 0.11);
 	color: var(--ink);
 	transform: translateY(-2px);
 }
@@ -1975,7 +1974,7 @@ body.has-open-dialog {
 
 .dialog-cast-links a:hover,
 .dialog-cast-links a:focus-visible {
-	color: #148044;
+	color: var(--accent);
 	text-decoration-color: currentColor;
 }
 
@@ -2036,7 +2035,7 @@ body.has-open-dialog {
 :root[data-theme="dark"] .dialog-cast-member:focus-visible,
 .movie-dialog.has-backdrop .dialog-cast-member:hover,
 .movie-dialog.has-backdrop .dialog-cast-member:focus-visible {
-	background: rgba(131, 223, 165, 0.14);
+	background: rgba(217, 170, 25, 0.14);
 	color: white;
 }
 
@@ -2044,7 +2043,7 @@ body.has-open-dialog {
 :root[data-theme="dark"] .dialog-cast-links a:focus-visible,
 .movie-dialog.has-backdrop .dialog-cast-links a:hover,
 .movie-dialog.has-backdrop .dialog-cast-links a:focus-visible {
-	color: #83dfa5;
+	color: var(--accent);
 }
 
 .dialog-overview p {
@@ -2426,8 +2425,7 @@ footer p {
 	}
 
 	.dialog-header > div {
-		min-width: 0;
-		padding-right: 48px;
+		width: 100%;
 	}
 
 	.dialog-header h2 {
