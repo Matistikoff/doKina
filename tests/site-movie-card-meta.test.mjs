@@ -9,16 +9,17 @@ test("movie cards show the alternative title before the director", async () => {
   assert.ok(formatter, "movieMeta should exist");
   assert.ok(formatter.indexOf("alternativeMovieTitle") < formatter.indexOf("movie.directors"));
   assert.doesNotMatch(formatter, /Réžia:/u);
-  assert.match(formatter, /movie\.directors\.join\(", "\)/u);
+  assert.match(formatter, /movie\.directors\.slice\(0, 2\)\.join\(", "\)/u);
   assert.match(formatter, /filter\(Boolean\)\.join\("\\n"\)/u);
   assert.match(source, /titleRow\.className = "movie-original-title"[\s\S]*movieMeta\(movie, \{ includeAlternativeTitle: false \}\)[\s\S]*detailsRow\.className = "movie-details"/u);
   assert.match(source, /directors\.append\("Réžia: "\)/u);
 });
 
-test("movie card metadata separates its title and details while allowing three lines", async () => {
+test("movie card metadata can wrap without hiding production flags", async () => {
   const styles = await readFile(new URL("../site/styles.css", import.meta.url), "utf8");
 
-  assert.match(styles, /\.movie-card \.movie-meta \{[\s\S]*?-webkit-line-clamp: 3;[\s\S]*?\}/u);
+  assert.doesNotMatch(styles, /\.movie-card \.movie-meta \{[\s\S]*?-webkit-line-clamp/u);
+  assert.match(styles, /\.movie-card \{[\s\S]*?height: auto;[\s\S]*?min-height: 18\.75rem;/u);
   assert.match(styles, /\.movie-meta \{[\s\S]*?margin-top: 0;[\s\S]*?\}/u);
   assert.match(styles, /\.movie-details,[\s\S]*?\.dialog-movie-details \{[\s\S]*?margin-top: 8px;[\s\S]*?\}/u);
 });

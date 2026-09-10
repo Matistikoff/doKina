@@ -38,6 +38,15 @@ test("schema validates optional OMDb scores and TMDb worldwide gross", () => {
   }
 });
 
+test("schema validates optional critic site identifiers", () => {
+  const base = assembleProgram([], "2026-09-09T10:00:00Z");
+  const movie = { id: "film", title: "Film", rottenTomatoesId: "m/example_film", metacriticId: "movie/example-film" };
+  assert.doesNotThrow(() => validateProgram({ ...base, movies: [movie] }));
+  for (const [key, value] of [["rottenTomatoesId", "tv/example"], ["metacriticId", "game/example"]]) {
+    assert.throws(() => validateProgram({ ...base, movies: [{ ...movie, [key]: value }] }), new RegExp(`invalid ${key}`));
+  }
+});
+
 test("schema validation accepts ISO production countries and rejects invalid codes", () => {
   const base = {
     schemaVersion: 1,

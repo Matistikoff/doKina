@@ -2,7 +2,13 @@ import { countryFlag, countryFlagPath, countryName, formatDuration, formatUsd } 
 import { compareMoviesByDuration, isMustWatch, isOscarWinner } from "./discovery.js";
 import { metascoreTone, tomatoTone } from "./critic-ratings.js";
 import { isCzSkMovie, isNonEnglishMovie, matchesSelectedGenres } from "./filters.js";
-import { actorSearchUrl, directorSearchUrl } from "./links.js";
+import {
+  actorSearchUrl,
+  directorSearchUrl,
+  metacriticMovieUrl,
+  movieDetailUrl,
+  rottenTomatoesMovieUrl,
+} from "./links.js";
 import { limitedMovieCast } from "./movie-cast.js";
 import { alternativeMovieTitle } from "./movie-title.js";
 import { compareMoviesByRating } from "./ratings.js";
@@ -66,6 +72,11 @@ const elements = {
   genreDropdown: document.querySelector("#genre-dropdown"),
   genreMatchAll: document.querySelector("#genre-match-all"),
   genreSummary: document.querySelector("#genre-summary"),
+  installDialog: document.querySelector("#install-dialog"),
+  installDialogClose: document.querySelector("#install-dialog-close"),
+  installPlatformPanels: [...document.querySelectorAll("[data-install-panel]")],
+  installPlatformTabs: [...document.querySelectorAll("[data-install-platform]")],
+  installToggle: document.querySelector("#install-toggle"),
   movieGrid: document.querySelector("#movie-grid"),
   letterboxdToggle: document.querySelector("#letterboxd-toggle"),
   pageScrollbar: document.querySelector(".page-scrollbar"),
@@ -820,7 +831,7 @@ function showtimeElement(screening, movie, cinema) {
 function movieMeta(movie, { includeAlternativeTitle = true } = {}) {
   const alternativeTitle = alternativeMovieTitle(movie);
   const details = [
-    movie.directors?.length ? movie.directors.join(", ") : null,
+    movie.directors?.length ? movie.directors.slice(0, 2).join(", ") : null,
     movie.durationMinutes ? formatDuration(movie.durationMinutes) : null,
     movie.releaseYear || null,
   ];
@@ -1007,6 +1018,7 @@ function renderMovieFacts(movie) {
   meta.hidden = !Number.isFinite(movie.metascore);
   meta.className = `critic-score metascore is-${metascoreTone(movie.metascore)}`;
   meta.textContent = meta.hidden ? "" : movie.metascore;
+  meta.href = metacriticMovieUrl(movie);
   meta.title = `Metascore: ${movie.metascore}/100 · Vážené hodnotenie filmových kritikov`;
   meta.setAttribute("aria-label", meta.title);
   const tomatoes = elements.dialogTomatoes;
@@ -1014,6 +1026,7 @@ function renderMovieFacts(movie) {
   const tone = tomatoTone(movie.rottenTomatoesRating);
   tomatoes.className = `critic-score tomatoes is-${tone}`;
   tomatoes.querySelector(".tomato-value").textContent = tomatoes.hidden ? "" : `${movie.rottenTomatoesRating} %`;
+  tomatoes.href = rottenTomatoesMovieUrl(movie);
   tomatoes.title = `Rotten Tomatoes: ${movie.rottenTomatoesRating} % pozitívnych recenzií kritikov · ${tone === "fresh" ? "Fresh" : "Rotten"}`;
   tomatoes.setAttribute("aria-label", tomatoes.title);
   const facts = [
@@ -1127,10 +1140,8 @@ function loadDialogBackdrop(url) {
 
 function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true) {
   if (updateRoute) {
-    const url = new URL(window.location.href);
-    url.pathname = `/film/${encodeURIComponent(movie.id)}`;
-    url.hash = "";
-    if (url.href !== window.location.href) window.history.pushState(null, "", url);
+    const url = movieDetailUrl(movie.id, window.location.href);
+    if (url !== window.location.href) window.history.pushState(null, "", url);
   }
   loadDialogBackdrop(movie.backdropUrl);
   elements.dialogKicker.textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
@@ -1256,6 +1267,11 @@ function renderMovie(movie, screenings, cinemaMap) {
   card.addEventListener("click", (event) => {
     if (event.target.closest("a, button")) return;
     openMovieDialog(movie, screenings, cinemaMap);
+  });
+  card.addEventListener("auxclick", (event) => {
+    if (event.button !== 1 || event.target.closest("a, button")) return;
+    event.preventDefault();
+    window.open(movieDetailUrl(movie.id, window.location.href), "_blank", "noopener");
   });
   card.addEventListener("keydown", (event) => {
     if (event.target.closest("a, button")) return;
@@ -1585,6 +1601,58 @@ elements.resetFiltersButton.addEventListener("click", () => {
 
 elements.themeToggle.addEventListener("click", () => {
   applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark", true);
+});
+
+function openInstallDialog() {
+  const platform = /Android/u.test(navigator.userAgent) ? "android" : "ios";
+  selectInstallPlatform(platform);
+  if (typeof elements.installDialog.showModal === "function") elements.installDialog.showModal();
+  else elements.installDialog.setAttribute("open", "");
+  document.body.classList.add("has-open-dialog");
+}
+
+function selectInstallPlatform(platform, focus = false) {
+  for (const tab of elements.installPlatformTabs) {
+    const selected = tab.dataset.installPlatform === platform;
+    tab.setAttribute("aria-selected", String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    if (selected && focus) tab.focus();
+  }
+  for (const panel of elements.installPlatformPanels) {
+    panel.hidden = panel.dataset.installPanel !== platform;
+  }
+}
+
+function closeInstallDialog() {
+  if (typeof elements.installDialog.close === "function") elements.installDialog.close();
+  else elements.installDialog.removeAttribute("open");
+  document.body.classList.remove("has-open-dialog");
+}
+
+elements.installToggle.addEventListener("click", openInstallDialog);
+elements.installPlatformTabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => selectInstallPlatform(tab.dataset.installPlatform));
+  tab.addEventListener("keydown", (event) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    const lastIndex = elements.installPlatformTabs.length - 1;
+    const nextIndex = event.key === "Home" ? 0
+      : event.key === "End" ? lastIndex
+        : event.key === "ArrowRight" ? (index + 1) % elements.installPlatformTabs.length
+          : (index - 1 + elements.installPlatformTabs.length) % elements.installPlatformTabs.length;
+    selectInstallPlatform(elements.installPlatformTabs[nextIndex].dataset.installPlatform, true);
+  });
+});
+elements.installDialogClose.addEventListener("click", closeInstallDialog);
+elements.installDialog.addEventListener("click", (event) => {
+  if (event.target === elements.installDialog) closeInstallDialog();
+});
+elements.installDialog.addEventListener("close", () => {
+  if (!elements.installDialog.hasAttribute("open")) document.body.classList.remove("has-open-dialog");
+});
+elements.installDialog.addEventListener("cancel", (event) => {
+  event.preventDefault();
+  closeInstallDialog();
 });
 
 elements.letterboxdToggle.addEventListener("click", () => {

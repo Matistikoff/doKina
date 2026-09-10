@@ -38,6 +38,8 @@ export function validateProgram(program) {
     for (const key of ["metascore", "rottenTomatoesRating"]) {
       if (movie[key] != null && (!Number.isInteger(movie[key]) || movie[key] < 0 || movie[key] > 100)) errors.push(`invalid ${key} for ${movie.id}`);
     }
+    if (movie.rottenTomatoesId != null && !/^m\/[0-9A-Za-z_][-0-9A-Za-z_'.]*$/u.test(movie.rottenTomatoesId)) errors.push(`invalid rottenTomatoesId for ${movie.id}`);
+    if (movie.metacriticId != null && !/^movie\/[-a-z0-9!+_()]+$/u.test(movie.metacriticId)) errors.push(`invalid metacriticId for ${movie.id}`);
     for (const key of ["oscarWins", "budgetUsd", "worldwideGrossUsd"]) {
       if (movie[key] != null && (!Number.isSafeInteger(movie[key]) || movie[key] < 0)) errors.push(`invalid ${key} for ${movie.id}`);
     }

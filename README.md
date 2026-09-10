@@ -48,7 +48,9 @@ uvedená priamo vo workflow.
 
 Voliteľné plagáty a filmové metadáta sa získavajú cez TMDB; IMDb hodnotenia
 pochádzajú z OMDb. Obe služby používajú samostatnú cache. Do lokálneho `.env`
-a GitHub Actions secrets pridaj `TMDB_API_KEY` a `OMDB_API_KEY`. TMDB používa
+a GitHub Actions secrets pridaj `TMDB_API_KEY` a `OMDB_API_KEY`. Priame odkazy
+na Rotten Tomatoes a Metacritic sa bez API kľúča dopĺňajú z Wikidata podľa IMDb
+ID; ak presné ID chýba, web odkazuje na vyhľadávanie služby. TMDB používa
 API kľúč (v3) z
 [nastavení TMDB](https://www.themoviedb.org/settings/api), nie prihlasovacie heslo.
 Kľúče zostávajú iba v scrapere; do statického webu sa nezapisujú.
@@ -59,6 +61,9 @@ s prednosťou slovenčiny, potom češtiny a angličtiny. Pri potvrdenej zhode T
 plagát nahradí obrázok kina; vyberá sa v poradí slovenčina, čeština, bez textu
 a angličtina. OMDb následne podľa IMDb ID doplní IMDb hodnotenie a počet hlasov.
 Cache úspešných zhôd sa obnovuje denne a neúspešné zhody raz za sedem dní.
+ID odkazov kritikov sa cachujú v `.cache/critic-links.json`; automatické
+dopĺňanie sa dá vypnúť cez `CRITIC_LINKS_ENABLED=false` alebo presmerovať cez
+`CRITIC_LINKS_CACHE_PATH`.
 
 ČSFD hodnotenia sa získavajú cez neoficiálny `node-csfd-api` bez API kľúča.
 ČSFD sa spracuje pred TMDB a OMDb: potvrdené alternatívne názvy pomáhajú

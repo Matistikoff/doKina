@@ -16,6 +16,7 @@ import { localDateKey } from "./utils.mjs";
 import { enrichMoviesWithTmdb } from "./tmdb.mjs";
 import { enrichMoviesWithOmdb } from "./omdb.mjs";
 import { enrichMoviesWithCsfd } from "./csfd.mjs";
+import { enrichMoviesWithCriticLinks } from "./critic-links.mjs";
 import { ratingAudit } from "./rating-audit.mjs";
 import { deduplicateMovies } from "./deduplicate.mjs";
 import { applyMovieHistory, readMovieHistory, writeMovieHistory } from "./movie-history.mjs";
@@ -121,6 +122,11 @@ async function main() {
     diagnostics: ratingDiagnostics,
     apiKey: process.env.OMDB_API_KEY,
     cachePath: process.env.OMDB_CACHE_PATH,
+    previousMovies,
+  });
+  program.movies = await enrichMoviesWithCriticLinks(program.movies, {
+    cachePath: process.env.CRITIC_LINKS_CACHE_PATH,
+    enabled: process.env.CRITIC_LINKS_ENABLED !== "false",
     previousMovies,
   });
   program = validateProgram(deduplicateMovies(program));

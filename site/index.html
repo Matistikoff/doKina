@@ -107,6 +107,17 @@
 				</a>
 				<div class="header-actions">
 				<button
+					class="install-toggle"
+					id="install-toggle"
+					type="button"
+					aria-label="Ako pridať doKina.sk na plochu telefónu"
+					aria-haspopup="dialog"
+					aria-controls="install-dialog"
+					title="Pridať na plochu telefónu"
+				>
+					Pridaj si nás na plochu smartfónu
+				</button>
+				<button
 					class="theme-toggle"
 					id="theme-toggle"
 					type="button"
@@ -524,14 +535,14 @@
 									id="movie-dialog-ratings"
 									aria-label="Hodnotenia filmu"
 								></div>
-								<span id="movie-dialog-tomatoes" class="critic-score tomatoes" role="img" tabindex="0" hidden>
+								<a id="movie-dialog-tomatoes" class="critic-score tomatoes" target="_blank" rel="noreferrer" hidden>
 									<svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
 										<g class="tomato-fresh"><path fill="#fa3434" d="M16 9C4 3 0 16 5 24c4 7 18 7 22-1 4-8 0-19-11-14Z"/><path fill="#25843b" d="m16 11-8-5 6 1 2-6 2 6 7-2-5 6 3 4-7-3-6 3Z"/><path d="M8 15c-2 2-2 5-1 7" stroke="#ffad97" stroke-width="2" fill="none" stroke-linecap="round"/></g>
 										<path class="tomato-rotten" fill="#a5cc33" d="m15 9 5-7 1 9 9-1-6 7 7 6-10-1-2 9-5-8-8 6 2-10-8-4 10-2-4-8Z"/>
 									</svg>
 									<span class="tomato-value"></span>
-								</span>
-								<span id="movie-dialog-metascore" class="critic-score metascore" role="img" tabindex="0" hidden></span>
+								</a>
+								<a id="movie-dialog-metascore" class="critic-score metascore" target="_blank" rel="noreferrer" hidden></a>
 								<dl id="movie-dialog-facts" class="dialog-facts" aria-label="Ocenenia" hidden></dl>
 								<dl id="movie-dialog-financials" class="dialog-financials" aria-label="Finančné údaje filmu" hidden>
 									<div class="dialog-financial" data-financial="budget" title="Produkčný rozpočet podľa TMDb" hidden>
@@ -567,6 +578,100 @@
 				aria-hidden="true"
 			>
 				<div class="dialog-scrollbar-thumb"></div>
+			</div>
+		</dialog>
+
+		<dialog
+			class="movie-dialog install-dialog"
+			id="install-dialog"
+			aria-labelledby="install-dialog-title"
+		>
+			<div class="dialog-content install-dialog-content">
+				<header class="install-dialog-header">
+					<div>
+						<p class="movie-kicker">doKina.sk vždy poruke</p>
+						<h2 id="install-dialog-title">Pridaj si nás na plochu telefónu</h2>
+						<p>Ikona sa bude správať ako skratka a otvorí ti program kín priamo zo základnej obrazovky.</p>
+					</div>
+					<button
+						class="dialog-close"
+						id="install-dialog-close"
+						type="button"
+						aria-label="Zavrieť návod"
+					>
+						×
+					</button>
+				</header>
+				<div class="install-platform-tabs" role="tablist" aria-label="Typ telefónu">
+					<button id="install-tab-ios" type="button" role="tab" aria-selected="true" aria-controls="install-panel-ios" data-install-platform="ios">iOS</button>
+					<button id="install-tab-android" type="button" role="tab" aria-selected="false" aria-controls="install-panel-android" data-install-platform="android" tabindex="-1">Android</button>
+				</div>
+				<section id="install-panel-ios" class="install-platform-panel" role="tabpanel" aria-labelledby="install-tab-ios" data-install-panel="ios">
+					<ol class="install-steps">
+						<li>
+							<span class="install-step-number">1</span>
+							<span class="install-step-icon" aria-hidden="true">
+								<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"></circle><path d="m19.5 12.5-2.1 4.9-4.9 2.1 2.1-4.9 4.9-2.1Z"></path></svg>
+							</span>
+							<div><h3>Otvor doKina.sk v Safari</h3><p>Návod funguje v prehliadači Safari na iOS.</p></div>
+						</li>
+						<li>
+							<span class="install-step-number">2</span>
+							<span class="install-step-icon" aria-hidden="true">
+								<svg viewBox="0 0 32 32"><path d="M16 20V5m0 0-5 5m5-5 5 5"></path><path d="M10 14H7.5v12h17V14H22"></path></svg>
+							</span>
+							<div><h3>Klepni na Zdieľať</h3><p>V spodnej lište Safari nájdi ikonu štvorca so šípkou nahor.</p></div>
+						</li>
+						<li>
+							<span class="install-step-number">3</span>
+							<span class="install-step-icon" aria-hidden="true">
+								<svg viewBox="0 0 32 32"><rect x="5" y="5" width="22" height="22" rx="5"></rect><path d="M16 10v12M10 16h12"></path></svg>
+							</span>
+							<div><h3>Vyber Pridať na plochu</h3><p>Ak chceš, zapni „Otvoriť ako webovú apku“ a potom potvrď tlačidlom Pridať.</p></div>
+						</li>
+					</ol>
+					<figure class="install-mockup">
+						<img src="/iphone-home-screen-guide.png" alt="Mockup plochy iPhonu so šípkou smerujúcou na ikonu doKina.sk" width="1536" height="1024" loading="lazy" decoding="async" />
+						<figcaption>Po pridaní nájdeš doKina.sk medzi ostatnými apkami na ploche.</figcaption>
+					</figure>
+					<footer class="install-dialog-footer">
+						<p>Možnosť nevidíš? Zroluj zoznam nadol, klepni na Upraviť akcie a pridaj „Pridať na plochu“.</p>
+						<a href="https://support.apple.com/sk-sk/guide/iphone/iph42ab2f3a7/ios" target="_blank" rel="noreferrer">Pozrieť návod Apple ↗</a>
+					</footer>
+				</section>
+				<section id="install-panel-android" class="install-platform-panel" role="tabpanel" aria-labelledby="install-tab-android" data-install-panel="android" hidden>
+					<ol class="install-steps">
+						<li>
+							<span class="install-step-number">1</span>
+							<span class="install-step-icon" aria-hidden="true">
+								<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"></circle><circle cx="16" cy="16" r="4"></circle><path d="M16 4a12 12 0 0 1 10.4 6H16"></path><path d="m5.6 10 5.2 9L16 10"></path><path d="m10.8 19 5.2 9 5.2-9"></path></svg>
+							</span>
+							<div><h3>Otvor doKina.sk v Chrome</h3><p>Na Android telefóne otvor stránku v prehliadači Chrome.</p></div>
+						</li>
+						<li>
+							<span class="install-step-number">2</span>
+							<span class="install-step-icon" aria-hidden="true">
+								<svg viewBox="0 0 32 32"><circle cx="16" cy="11" r="2" fill="currentColor" stroke="none"></circle><circle cx="16" cy="16" r="2" fill="currentColor" stroke="none"></circle><circle cx="16" cy="21" r="2" fill="currentColor" stroke="none"></circle></svg>
+							</span>
+							<div><h3>Otvor menu ⋮</h3><p>Klepni na tri bodky napravo od adresného riadka.</p></div>
+						</li>
+						<li>
+							<span class="install-step-number">3</span>
+							<span class="install-step-icon" aria-hidden="true">
+								<svg viewBox="0 0 32 32"><rect x="5" y="5" width="22" height="22" rx="5"></rect><path d="M16 10v12M10 16h12"></path></svg>
+							</span>
+							<div><h3>Vytvor odkaz</h3><p>Vyber „Inštalovať a vytvoriť odkaz“, potom „Vytvoriť odkaz“ a potvrď Pridať.</p></div>
+						</li>
+					</ol>
+					<figure class="install-mockup">
+						<img src="/android-home-screen-guide.png" alt="Mockup plochy Android telefónu so šípkou smerujúcou na ikonu doKina.sk" width="1536" height="1024" loading="lazy" decoding="async" />
+						<figcaption>Skratka doKina.sk sa zobrazí medzi ostatnými aplikáciami na ploche.</figcaption>
+					</figure>
+					<footer class="install-dialog-footer">
+						<p>V staršej verzii Chrome môže mať položka jednoduchší názov „Pridať na plochu“.</p>
+						<a href="https://support.google.com/chrome/answer/15085120?co=GENIE.Platform%3DAndroid&amp;hl=sk" target="_blank" rel="noreferrer">Pozrieť návod Google ↗</a>
+					</footer>
+				</section>
 			</div>
 		</dialog>
 

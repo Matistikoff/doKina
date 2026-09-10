@@ -3,6 +3,7 @@ import { loadEnvFile } from "node:process";
 import { enrichMoviesWithCsfd } from "../scraper/csfd.mjs";
 import { enrichMoviesWithTmdb } from "../scraper/tmdb.mjs";
 import { enrichMoviesWithOmdb } from "../scraper/omdb.mjs";
+import { enrichMoviesWithCriticLinks } from "../scraper/critic-links.mjs";
 import { validateProgram } from "../scraper/schema.mjs";
 import { ratingAudit } from "../scraper/rating-audit.mjs";
 
@@ -17,6 +18,8 @@ program.movies = await enrichMoviesWithTmdb(program.movies, { previousMovies,
   apiKey: process.env.TMDB_API_KEY, cachePath: process.env.TMDB_CACHE_PATH });
 program.movies = await enrichMoviesWithOmdb(program.movies, { previousMovies, diagnostics,
   apiKey: process.env.OMDB_API_KEY, cachePath: process.env.OMDB_CACHE_PATH });
+program.movies = await enrichMoviesWithCriticLinks(program.movies, { previousMovies,
+  enabled: process.env.CRITIC_LINKS_ENABLED !== "false", cachePath: process.env.CRITIC_LINKS_CACHE_PATH });
 validateProgram(program);
 const report = ratingAudit(program.movies, diagnostics);
 await mkdir(".cache", { recursive: true });
