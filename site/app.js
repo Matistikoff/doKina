@@ -985,7 +985,9 @@ function renderMovieFacts(movie) {
   gross.hidden = !hasGross;
   gross.querySelector("dd").textContent = hasGross ? formatUsd(movie.worldwideGrossUsd) : "";
   const grossBelowBudget = hasBudget && hasGross && movie.worldwideGrossUsd < movie.budgetUsd;
+  const grossAboveBudget = hasBudget && hasGross && movie.worldwideGrossUsd > movie.budgetUsd;
   gross.classList.toggle("is-below-budget", grossBelowBudget);
+  gross.classList.toggle("is-above-budget", grossAboveBudget);
   gross.title = grossBelowBudget
     ? "Celosvetové tržby neprekročili vykázaný produkčný rozpočet. Nejde o presný výpočet zisku."
     : "Celosvetové tržby podľa TMDb";

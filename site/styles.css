@@ -849,7 +849,7 @@ h1 {
 	height: 14px;
 	margin: 0;
 	flex-shrink: 0;
-	accent-color: var(--lime);
+	accent-color: var(--accent);
 }
 .filter-options:not(.sort-options) .filter-option:first-child {
 	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
@@ -1224,6 +1224,16 @@ h2 {
 	color: #b32626;
 }
 
+.dialog-financial.is-above-budget {
+	border-color: rgba(31, 157, 85, 0.62);
+	background: rgba(31, 157, 85, 0.1);
+}
+
+.dialog-financial.is-above-budget,
+.dialog-financial.is-above-budget dd {
+	color: #188247;
+}
+
 .dialog-financials[hidden],
 .dialog-financial[hidden] {
 	display: none;
@@ -1500,9 +1510,9 @@ body.has-open-dialog {
 }
 
 .dialog-close:hover {
-	border-color: var(--ink);
-	background: var(--ink);
-	color: white;
+	border-color: var(--accent);
+	background: var(--accent);
+	color: #181817;
 }
 
 .movie-dialog.has-backdrop .dialog-close {
@@ -1560,9 +1570,24 @@ body.has-open-dialog {
 	color: white;
 }
 
+.dialog-actions a:hover,
+.dialog-actions a:focus-visible,
+.movie-dialog.has-backdrop .dialog-actions a:hover,
+.movie-dialog.has-backdrop .dialog-actions a:focus-visible {
+	border-color: var(--accent);
+	color: var(--accent-deep);
+}
+
 .dialog-trailer:hover,
-.dialog-trailer:focus-visible {
+.dialog-trailer:focus-visible,
+.movie-dialog.has-backdrop .dialog-trailer:hover,
+.movie-dialog.has-backdrop .dialog-trailer:focus-visible {
 	background: var(--accent);
+	color: #181817;
+}
+
+.dialog-trailer:hover .dialog-trailer-icon,
+.dialog-trailer:focus-visible .dialog-trailer-icon {
 	color: #181817;
 }
 
@@ -1831,6 +1856,26 @@ body.has-open-dialog {
 .movie-dialog.has-backdrop .dialog-financial.is-below-budget,
 .movie-dialog.has-backdrop .dialog-financial.is-below-budget dd {
 	color: white;
+}
+
+:root[data-theme="dark"] .dialog-financial.is-above-budget,
+:root[data-theme="dark"] .dialog-financial.is-above-budget dd,
+.movie-dialog.has-backdrop .dialog-financial.is-above-budget,
+.movie-dialog.has-backdrop .dialog-financial.is-above-budget dd {
+	color: #83dfa5;
+}
+
+:root[data-theme="dark"] .dialog-financial.is-above-budget,
+.movie-dialog.has-backdrop .dialog-actions .dialog-financial.is-above-budget {
+	border-color: rgba(131, 223, 165, 0.72);
+	background: rgba(41, 151, 91, 0.18);
+}
+
+.movie-dialog.has-backdrop .dialog-close:hover,
+.movie-dialog.has-backdrop .dialog-close:focus-visible {
+	border-color: var(--accent);
+	background: var(--accent);
+	color: #181817;
 }
 
 :root[data-theme="dark"] .dialog-cast-member:hover,
