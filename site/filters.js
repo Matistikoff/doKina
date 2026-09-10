@@ -12,3 +12,12 @@ export function isNonEnglishMovie(movie, screening = null) {
   const languages = screening?.languages?.original;
   return Array.isArray(languages) && languages.length > 0 && !languages.includes("en");
 }
+
+export function matchesSelectedGenres(movieGenres, selectedGenres, matchMode = "any") {
+  const genres = Array.isArray(movieGenres) ? movieGenres : [];
+  const selected = selectedGenres instanceof Set ? [...selectedGenres] : selectedGenres;
+  if (!Array.isArray(selected) || selected.length === 0) return false;
+  return matchMode === "all"
+    ? selected.every((genre) => genres.includes(genre))
+    : selected.some((genre) => genres.includes(genre));
+}

@@ -1,7 +1,7 @@
 import { countryFlag, countryFlagPath, countryName, formatDuration, formatUsd } from "./formatters.js";
 import { compareMoviesByDuration, isMustWatch, isOscarWinner } from "./discovery.js";
 import { metascoreTone, tomatoTone } from "./critic-ratings.js";
-import { isCzSkMovie, isNonEnglishMovie } from "./filters.js";
+import { isCzSkMovie, isNonEnglishMovie, matchesSelectedGenres } from "./filters.js";
 import { actorSearchUrl, directorSearchUrl } from "./links.js";
 import { limitedMovieCast } from "./movie-cast.js";
 import { alternativeMovieTitle } from "./movie-title.js";
@@ -17,6 +17,7 @@ const state = {
   selectedDateEnd: "",
   selectedCinemas: new Set(),
   selectedGenres: new Set(),
+  genreMatchMode: "any",
   sortBy: "rating",
 };
 
@@ -50,6 +51,7 @@ const elements = {
   freshness: document.querySelector("#freshness"),
   genreFilter: document.querySelector("#genre-filter"),
   genreDropdown: document.querySelector("#genre-dropdown"),
+  genreMatchAll: document.querySelector("#genre-match-all"),
   genreSummary: document.querySelector("#genre-summary"),
   movieGrid: document.querySelector("#movie-grid"),
   letterboxdToggle: document.querySelector("#letterboxd-toggle"),
@@ -655,6 +657,7 @@ function updateGenreSelection() {
     checkbox.checked = checkbox.value === "all" ? allSelected : state.selectedGenres.has(checkbox.value);
   }
   const selected = [...state.selectedGenres];
+  elements.genreMatchAll.checked = state.genreMatchMode === "all";
   elements.genreSummary.textContent = allSelected ? "Všetky žánre"
     : selected.length === 0 ? "Žiadny žáner"
     : selected.length === 1 ? selected[0] : `Žánre (${selected.length})`;
@@ -765,7 +768,7 @@ function showtimeElement(screening, movie, cinema) {
 function movieMeta(movie, { includeAlternativeTitle = true } = {}) {
   const alternativeTitle = alternativeMovieTitle(movie);
   const details = [
-    movie.directors?.length ? `Réžia: ${movie.directors.join(", ")}` : null,
+    movie.directors?.length ? movie.directors.join(", ") : null,
     movie.durationMinutes ? formatDuration(movie.durationMinutes) : null,
     movie.releaseYear || null,
   ];
@@ -1213,7 +1216,8 @@ function renderProgram() {
   const cinemaMap = new Map(state.program.cinemas.map((cinema) => [cinema.id, cinema]));
   const { start, end } = periodBounds();
   const moviesInGenre = new Set(state.program.movies
-    .filter((movie) => state.selectedGenres.size === availableGenres().length || movie.genres?.some((genre) => state.selectedGenres.has(genre)))
+    .filter((movie) => state.selectedGenres.size === availableGenres().length
+      || matchesSelectedGenres(movie.genres, state.selectedGenres, state.genreMatchMode))
     .map((movie) => movie.id));
   const czSkMovieIds = new Set(state.program.screenings
     .filter((screening) => isCzSkMovie(movieMap.get(screening.movieId), screening))
@@ -1321,7 +1325,8 @@ function registerProgramTool() {
             description: "ID kín, ktoré majú zostať viditeľné."
           },
           genre: { type: "string", enum: ["all", ...availableGenres], description: "Vybraný žáner alebo all." },
-          genres: { type: "array", items: { type: "string", enum: [...availableGenres] }, description: "Vybrané žánre (stačí zhoda s jedným); prázdny zoznam zobrazí všetky. Má prednosť pred genre." },
+          genres: { type: "array", items: { type: "string", enum: [...availableGenres] }, description: "Vybrané žánre; prázdny zoznam zobrazí všetky. Má prednosť pred genre." },
+          genreMatch: { type: "string", enum: ["any", "all"], description: "any vyžaduje aspoň jeden vybraný žáner, all všetky vybrané žánre." },
           sortBy: { type: "string", enum: ["rating", "mustWatch", "oscars", "czSk", "nonEnglish", "shortest", "longest", "cult", "added", "soonest"], description: "rating zoradí podľa hodnotenia zo zdroja s väčším počtom hlasov; mustWatch zobrazí iba filmy s IMDb hodnotením aspoň 8; oscars zobrazí iba víťazov Oscara zoradených podľa hodnotenia; czSk zobrazí české, slovenské a československé filmy; nonEnglish zobrazí filmy, ktorých pôvodný jazyk nie je angličtina; shortest a longest zoradia podľa dĺžky; cult zobrazí filmy do roku 2024 a added filmy prvýkrát zachytené za posledných 7 dní." }
         },
         additionalProperties: false
@@ -1356,6 +1361,7 @@ function registerProgramTool() {
         if (input.cinemaIds) state.selectedCinemas = new Set(input.cinemaIds);
         if (input.genre) state.selectedGenres = input.genre === "all" ? new Set(availableGenres) : new Set([input.genre]);
         if (input.genres) state.selectedGenres = input.genres.length === 0 ? new Set(availableGenres) : new Set(input.genres);
+        if (input.genreMatch) state.genreMatchMode = input.genreMatch;
         if (input.sortBy) state.sortBy = input.sortBy;
         updateGenreSelection();
         updateSortSelection();
@@ -1368,6 +1374,7 @@ function registerProgramTool() {
           endDate: state.selectedDateEnd || null,
           cinemaIds: [...state.selectedCinemas],
           genres: [...state.selectedGenres],
+          genreMatch: state.genreMatchMode,
           sortBy: state.sortBy
         };
       }
@@ -1485,11 +1492,17 @@ elements.sortOptions.addEventListener("click", (event) => {
   renderProgram();
 });
 
+elements.genreMatchAll.addEventListener("change", () => {
+  state.genreMatchMode = elements.genreMatchAll.checked ? "all" : "any";
+  renderProgram();
+});
+
 elements.resetFiltersButton.addEventListener("click", () => {
   state.selectedPeriod = "all";
   state.selectedDateStart = "";
   state.selectedDateEnd = "";
   state.selectedGenres = new Set(availableGenres());
+  state.genreMatchMode = "any";
   state.sortBy = "rating";
   state.selectedCinemas = new Set(state.program.cinemas.map((cinema) => cinema.id));
   updateGenreSelection();

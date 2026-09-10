@@ -19,8 +19,8 @@ test("movie detail and cards render production countries as accessible flags", a
   assert.doesNotMatch(source, /movie-secondary-title|secondaryMovieTitle/u);
 });
 
-test("production-country flags use compact one-em width", async () => {
+test("production-country flags use compact 0.8-em width", async () => {
   const styles = await readFile(new URL("../site/styles.css", import.meta.url), "utf8");
 
-  assert.match(styles, /\.production-country img \{[\s\S]*?width: 1em;/u);
+  assert.match(styles, /\.production-country img \{[\s\S]*?width: 0\.8em;/u);
 });

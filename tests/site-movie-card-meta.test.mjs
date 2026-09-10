@@ -8,8 +8,11 @@ test("movie cards show the alternative title before the director", async () => {
 
   assert.ok(formatter, "movieMeta should exist");
   assert.ok(formatter.indexOf("alternativeMovieTitle") < formatter.indexOf("movie.directors"));
+  assert.doesNotMatch(formatter, /Réžia:/u);
+  assert.match(formatter, /movie\.directors\.join\(", "\)/u);
   assert.match(formatter, /filter\(Boolean\)\.join\("\\n"\)/u);
   assert.match(source, /titleRow\.className = "movie-original-title"[\s\S]*movieMeta\(movie, \{ includeAlternativeTitle: false \}\)[\s\S]*detailsRow\.className = "movie-details"/u);
+  assert.match(source, /directors\.append\("Réžia: "\)/u);
 });
 
 test("movie card metadata separates its title and details while allowing three lines", async () => {

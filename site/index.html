@@ -263,12 +263,26 @@
 									<summary aria-labelledby="genre-label genre-summary">
 										<span id="genre-summary">Všetky žánre</span>
 									</summary>
-									<div
-										class="filter-options"
-										id="genre-filter"
-										role="group"
-										aria-label="Vyber žánre"
-									></div>
+									<div class="filter-options genre-filter-popover">
+										<div
+											id="genre-filter"
+											role="group"
+											aria-label="Vyber žánre"
+										></div>
+										<label
+											class="genre-match-toggle"
+											title="Film musí obsahovať každý označený žáner"
+										>
+											<span>Všetky vybrané</span>
+											<input
+												type="checkbox"
+												id="genre-match-all"
+												role="switch"
+												aria-label="Vyžadovať zhodu so všetkými vybranými žánrami"
+											/>
+											<span class="genre-match-switch" aria-hidden="true"></span>
+										</label>
+									</div>
 								</details>
 							</div>
 							<div class="select-field">

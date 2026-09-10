@@ -401,7 +401,7 @@ h1 {
 	top: auto;
 	z-index: 20;
 	display: grid;
-	grid-template-columns: minmax(500px, 1.12fr) minmax(440px, 0.88fr);
+	grid-template-columns: repeat(2, minmax(470px, 1fr));
 	gap: 26px;
 	padding: 13px;
 	border: 1px solid rgba(255, 255, 255, 0.22);
@@ -433,7 +433,7 @@ h1 {
 
 @media (min-width: 961px) {
 	.date-range-filter {
-		grid-template-columns: 280px;
+		grid-template-columns: 250px;
 		flex: 0 0 auto;
 	}
 }
@@ -809,7 +809,8 @@ h1 {
 	white-space: nowrap;
 }
 .filter-dropdown summary:focus-visible,
-.filter-option:has(input:focus-visible) {
+.filter-option:has(input:focus-visible),
+.genre-match-toggle:has(input:focus-visible) {
 	outline: 2px solid var(--lime);
 	outline-offset: 2px;
 }
@@ -853,6 +854,60 @@ h1 {
 }
 .filter-options:not(.sort-options) .filter-option:first-child {
 	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.genre-match-toggle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	min-height: 32px;
+	margin-top: 3px;
+	padding: 7px;
+	border-top: 1px solid rgba(255, 255, 255, 0.15);
+	color: rgba(255, 255, 255, 0.72);
+	font-size: 0.7rem;
+	font-weight: 600;
+	cursor: var(--cursor-pointer);
+}
+
+.genre-match-toggle input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+}
+
+.genre-match-switch {
+	position: relative;
+	width: 26px;
+	height: 15px;
+	flex: 0 0 auto;
+	border: 1px solid rgba(255, 255, 255, 0.35);
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.12);
+	transition: background 160ms ease, border-color 160ms ease;
+}
+
+.genre-match-switch::after {
+	content: "";
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	background: white;
+	transition: transform 160ms ease;
+}
+
+.genre-match-toggle input:checked + .genre-match-switch {
+	border-color: var(--accent);
+	background: var(--accent);
+}
+
+.genre-match-toggle input:checked + .genre-match-switch::after {
+	transform: translateX(11px);
 }
 
 .sort-option {
@@ -1087,7 +1142,7 @@ h2 {
 
 .production-country img {
 	display: block;
-	width: 1em;
+	width: 0.8em;
 	height: auto;
 	aspect-ratio: 4 / 3;
 	border-radius: 1px;
