@@ -47,6 +47,8 @@ test("falls back to the site preview for missing or untrusted backdrops", () => 
 
 test("builds the default preview URL from the active site origin", () => {
   const metadata = defaultSocialPreview("https://dokina-sk.example.workers.dev");
+  assert.equal(metadata.title, "doKina.sk — Filmy, ktoré práve hrajú v Bratislave.");
+  assert.equal(metadata.description, "Vyber si najlepší film v kinách. Porovnaj ich podľa hodnotenia, roku a žánru.");
   assert.equal(metadata.canonicalUrl, "https://dokina-sk.example.workers.dev/");
   assert.equal(metadata.imageUrl, "https://dokina-sk.example.workers.dev/icon-512.png");
 });

@@ -42,8 +42,8 @@ export function socialPreviewForMovie(program, movieId, origin) {
 
 export function defaultSocialPreview(origin) {
   return {
-    title: "doKina.sk — Vyber si najlepší film v kinách",
-    description: "Všetky filmy, ktoré práve hrajú v Bratislave. Zoraď ich podľa hodnotenia a filtruj podľa žánru či kina.",
+    title: "doKina.sk — Filmy, ktoré práve hrajú v Bratislave.",
+    description: "Vyber si najlepší film v kinách. Porovnaj ich podľa hodnotenia, roku a žánru.",
     type: "website",
     canonicalUrl: `${origin}/`,
     imageUrl: `${origin}/icon-512.png`,
