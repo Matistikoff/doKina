@@ -1,8 +1,7 @@
 import { createReadStream } from "node:fs";
-import { readFile, stat } from "node:fs/promises";
+import { stat } from "node:fs/promises";
 import { createServer } from "node:http";
 import { extname, join, normalize } from "node:path";
-import { programPayloads } from "./program-payloads.mjs";
 
 const root = new URL("../site/", import.meta.url).pathname.replace(/^\/(\w:)/, "$1");
 const port = Number(process.env.PORT || 4173);
@@ -26,14 +25,6 @@ createServer(async (request, response) => {
   }
 
   try {
-    if (pathname === "/program-index.json" || /^\/movie-details\/[a-f0-9]{64}\.json$/u.test(pathname)) {
-      const program = JSON.parse(await readFile(join(root, "program.json"), "utf8"));
-      const { index, details } = programPayloads(program);
-      const body = pathname === "/program-index.json" ? JSON.stringify(index) : details.get(pathname);
-      if (!body) throw new Error("Unknown movie detail");
-      response.writeHead(200, { "Content-Type": types[".json"], "Cache-Control": "no-store" }).end(body);
-      return;
-    }
     const info = await stat(file);
     if (!info.isFile()) throw new Error("Not a file");
     response.writeHead(200, {

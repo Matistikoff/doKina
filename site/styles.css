@@ -34,8 +34,7 @@ html {
 }
 
 html.is-dragging-scrollbar,
-html.is-smooth-wheel-scrolling,
-.dialog-content.is-smooth-wheel-scrolling {
+html.is-smooth-wheel-scrolling {
 	scroll-behavior: auto;
 }
 
@@ -43,29 +42,29 @@ html::-webkit-scrollbar {
 	display: none;
 }
 
-::-webkit-scrollbar {
+:not(#movie-dialog, #movie-dialog *)::-webkit-scrollbar {
 	width: 10px;
 	height: 10px;
 	cursor: var(--cursor-default);
 }
 
-::-webkit-scrollbar-track {
+:not(#movie-dialog, #movie-dialog *)::-webkit-scrollbar-track {
 	background: var(--paper-deep);
 	cursor: var(--cursor-default);
 }
 
-::-webkit-scrollbar-thumb {
+:not(#movie-dialog, #movie-dialog *)::-webkit-scrollbar-thumb {
 	border: 2px solid var(--paper-deep);
 	border-radius: 999px;
 	background: var(--accent-deep);
 	cursor: var(--cursor-default);
 }
 
-::-webkit-scrollbar-thumb:hover {
+:not(#movie-dialog, #movie-dialog *)::-webkit-scrollbar-thumb:hover {
 	background: var(--accent);
 }
 
-::-webkit-scrollbar-corner {
+:not(#movie-dialog, #movie-dialog *)::-webkit-scrollbar-corner {
 	background: var(--paper-deep);
 	cursor: var(--cursor-default);
 }
@@ -1768,14 +1767,13 @@ body.has-open-dialog {
 }
 
 .dialog-content {
-	scroll-behavior: auto;
-	overscroll-behavior-y: contain;
+	scroll-behavior: smooth;
 	max-height: min(84vh, 820px);
 	overflow-y: auto;
 	scrollbar-width: none;
 }
 
-.dialog-content::-webkit-scrollbar {
+#install-dialog .dialog-content::-webkit-scrollbar {
 	display: none;
 }
 
@@ -2040,39 +2038,6 @@ body.has-open-dialog {
 	border-color: var(--accent);
 	background: var(--accent);
 	color: #181817;
-}
-
-.dialog-scrollbar {
-	position: absolute;
-	right: 0;
-	z-index: 1;
-	width: 10px;
-	background: var(--paper-deep);
-	cursor: var(--cursor-default);
-	touch-action: none;
-}
-
-.dialog-scrollbar[hidden],
-.movie-dialog:not([open]) .dialog-scrollbar {
-	display: none;
-}
-
-.dialog-scrollbar-thumb {
-	will-change: transform;
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 100%;
-	min-height: 36px;
-	border: 2px solid var(--paper-deep);
-	border-radius: 999px;
-	background: var(--accent-deep);
-	cursor: var(--cursor-default);
-}
-
-.dialog-scrollbar-thumb:hover,
-.dialog-scrollbar-thumb:active {
-	background: var(--accent);
 }
 
 .dialog-overview {
@@ -2952,28 +2917,10 @@ footer p {
 	}
 }
 
-/* Opt-in A/B scroll test: ?dialogVisuals=plain. Keep all box dimensions. */
-#movie-dialog.is-scroll-test-plain,
-#movie-dialog.is-scroll-test-plain *,
-#movie-dialog.is-scroll-test-plain *::before,
-#movie-dialog.is-scroll-test-plain *::after,
-#movie-dialog.is-scroll-test-plain::backdrop {
-	background-image: none !important;
-	filter: none !important;
-	backdrop-filter: none !important;
-	-webkit-backdrop-filter: none !important;
-	box-shadow: none !important;
-	text-shadow: none !important;
-	animation: none !important;
-	transition: none !important;
-}
-
-#movie-dialog.is-scroll-test-plain img,
-#movie-dialog.is-scroll-test-plain svg {
-	visibility: hidden !important;
-}
-
-#movie-dialog.is-scroll-test-plain.has-backdrop .dialog-hero,
-#movie-dialog.is-scroll-test-plain.has-backdrop .dialog-screenings {
-	background-color: #0f2429;
+/* Use the browser's own scrolling and unstyled scrollbar in movie details. */
+#movie-dialog .dialog-content {
+	scroll-behavior: auto;
+	overscroll-behavior-y: contain;
+	scrollbar-width: auto;
+	scrollbar-color: auto;
 }
