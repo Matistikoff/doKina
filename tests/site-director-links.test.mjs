@@ -5,7 +5,7 @@ import { readFile } from "node:fs/promises";
 test("movie detail links underlined director names to Google search", async () => {
   const source = await readFile(new URL("../site/app.js", import.meta.url), "utf8");
   const styles = await readFile(new URL("../site/styles.css", import.meta.url), "utf8");
-  const renderer = source.match(/function renderDialogMovieMeta\(movie\) \{[\s\S]*?\n\}/)?.[0];
+  const renderer = source.match(/function renderDialogMovieMeta\(movie, screenings\) \{[\s\S]*?\n\}/)?.[0];
 
   assert.ok(renderer, "renderDialogMovieMeta should exist");
   assert.match(renderer, /link\.href = directorSearchUrl\(name\)/);

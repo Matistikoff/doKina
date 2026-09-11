@@ -20,6 +20,7 @@ const detail = {
   backdrop_path: "/parasite-backdrop.jpg",
   videos: { results: [{ site: "YouTube", key: "parasite123", type: "Trailer", official: true, iso_639_1: "en" }] },
   production_countries: [{ iso_3166_1: "KR", name: "South Korea" }],
+  spoken_languages: [{ iso_639_1: "ko", english_name: "Korean", name: "한국어/조선말" }],
   credits: {
     crew: [{ job: "Director", name: "Bong Joon Ho" }],
     cast: ["Song Kang-ho", "Lee Sun-kyun", "Cho Yeo-jeong", "Choi Woo-shik", "Park So-dam", "Jang Hye-jin", "Lee Jung-eun"]
@@ -59,6 +60,7 @@ test("TMDB fills missing metadata and replaces the cinema poster", async () => {
   assert.equal(result.tmdbId, 496243);
   assert.equal(result.durationMinutes, 132);
   assert.deepEqual(result.productionCountries, ["KR"]);
+  assert.deepEqual(result.spokenLanguages, ["ko"]);
 });
 
 test("TMDB chooses Slovak, Czech, then English overview", async () => {

@@ -1,0 +1,14 @@
+{
+  "name": "doKina.sk",
+  "short_name": "doKina",
+  "lang": "sk",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#e8dfc8",
+  "theme_color": "#e8dfc8",
+  "icons": [
+    { "src": "/icon-192.png?v=snp-cream", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png?v=snp-cream", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png?v=snp-cream", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

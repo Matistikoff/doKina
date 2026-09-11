@@ -18,6 +18,8 @@ export function validateProgram(program) {
     if (!isString(movie.id) || !isString(movie.title)) errors.push("each movie needs an id and title");
     if (movie.englishTitle != null && !isString(movie.englishTitle)) errors.push(`invalid englishTitle: ${movie.englishTitle}`);
     if (movie.originalLanguage != null && !/^[a-z]{2}$/u.test(movie.originalLanguage)) errors.push(`invalid originalLanguage for ${movie.id}`);
+    if (movie.spokenLanguages != null && (!Array.isArray(movie.spokenLanguages)
+      || !movie.spokenLanguages.every((code) => /^[a-z]{2}$/u.test(code)))) errors.push(`invalid spokenLanguages for ${movie.id}`);
     if (movie.overview != null && !isString(movie.overview)) errors.push(`invalid overview for ${movie.id}`);
     if (movie.overviewLanguage != null && !["sk", "cs", "en"].includes(movie.overviewLanguage)) errors.push(`invalid overviewLanguage for ${movie.id}`);
     if (movie.actors != null && (!Array.isArray(movie.actors) || !movie.actors.every(isString))) errors.push(`invalid actors for ${movie.id}`);

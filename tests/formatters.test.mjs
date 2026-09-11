@@ -1,6 +1,15 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { countryFlag, countryFlagPath, countryName, formatDuration, formatUsd } from "../site/formatters.js";
+import {
+  countryFlag,
+  countryFlagPath,
+  countryName,
+  formatDuration,
+  formatUsd,
+  languageFlagCountry,
+  languageName,
+  normalizeLanguageCode,
+} from "../site/formatters.js";
 
 test("formats film duration as hours and minutes", () => {
   assert.equal(formatDuration(45), "0\u00a0h\u00a045\u00a0min");
@@ -21,4 +30,12 @@ test("formats production country codes as accessible flags", () => {
   assert.ok(countryName("SK"));
   assert.equal(countryName("XC"), "Československo");
   assert.equal(countryName("invalid"), "");
+});
+
+test("formats spoken language codes as localized language flags", () => {
+  assert.equal(normalizeLanguageCode("spa"), "es");
+  assert.equal(normalizeLanguageCode("ara"), "ar");
+  assert.equal(languageName("es"), "španielčina");
+  assert.equal(languageFlagCountry("ar", ["MA", "FR"]), "MA");
+  assert.equal(languageFlagCountry("en", []), "GB");
 });

@@ -1,4 +1,12 @@
-import { countryFlag, countryFlagPath, countryName, formatDuration, formatUsd } from "./formatters.js";
+import {
+  countryFlag,
+  countryFlagPath,
+  formatDuration,
+  formatUsd,
+  languageFlagCountry,
+  languageName,
+  normalizeLanguageCode,
+} from "./formatters.js";
 import { compareMoviesByDuration, isMustWatch, isOscarWinner } from "./discovery.js";
 import { metascoreTone, tomatoTone } from "./critic-ratings.js";
 import { isCzSkMovie, isNonEnglishMovie, matchesSelectedGenres } from "./filters.js";
@@ -777,36 +785,43 @@ function movieMeta(movie, { includeAlternativeTitle = true } = {}) {
   ].filter(Boolean).join("\n");
 }
 
-function productionCountriesElement(movie) {
-  if (!movie.productionCountries?.length) return null;
-  const countries = document.createElement("span");
-  countries.className = "production-countries";
-  countries.setAttribute("aria-label", "Krajiny výroby");
-  for (const code of movie.productionCountries) {
-    const flagPath = countryFlagPath(code);
-    if (!flagPath) continue;
-    const country = document.createElement("span");
-    const name = countryName(code);
-    const image = document.createElement("img");
-    country.className = "production-country";
-    country.title = name;
-    country.setAttribute("role", "img");
-    country.setAttribute("aria-label", name);
-    image.src = flagPath;
-    image.alt = "";
-    image.width = 28;
-    image.height = 21;
-    image.decoding = "async";
-    image.addEventListener("error", () => {
-      country.textContent = countryFlag(code) || String(code).toUpperCase();
-    }, { once: true });
-    country.append(image);
-    countries.append(country);
+function spokenLanguagesElement(movie, screenings = []) {
+  const screeningLanguages = screenings.flatMap((screening) => screening.languages?.original || []);
+  const languageCodes = [...new Set((movie.spokenLanguages?.length ? movie.spokenLanguages : screeningLanguages)
+    .map(normalizeLanguageCode).filter(Boolean))];
+  if (!languageCodes.length) return null;
+  const languages = document.createElement("span");
+  languages.className = "spoken-languages";
+  languages.setAttribute("aria-label", "Jazyky filmu");
+  for (const code of languageCodes) {
+    const flagCountry = languageFlagCountry(code, movie.productionCountries);
+    const flagPath = countryFlagPath(flagCountry);
+    const language = document.createElement("span");
+    const name = languageName(code);
+    language.className = "spoken-language";
+    language.title = name;
+    language.setAttribute("role", "img");
+    language.setAttribute("aria-label", name);
+    if (flagPath) {
+      const image = document.createElement("img");
+      image.src = flagPath;
+      image.alt = "";
+      image.width = 28;
+      image.height = 21;
+      image.decoding = "async";
+      image.addEventListener("error", () => {
+        language.textContent = countryFlag(flagCountry) || code.toUpperCase();
+      }, { once: true });
+      language.append(image);
+    } else {
+      language.textContent = code.toUpperCase();
+    }
+    languages.append(language);
   }
-  return countries.childElementCount ? countries : null;
+  return languages.childElementCount ? languages : null;
 }
 
-function renderDialogMovieMeta(movie) {
+function renderDialogMovieMeta(movie, screenings) {
   const alternativeTitle = alternativeMovieTitle(movie);
   const details = [];
   if (movie.directors?.length) {
@@ -826,8 +841,8 @@ function renderDialogMovieMeta(movie) {
   }
   if (movie.durationMinutes) details.push(formatDuration(movie.durationMinutes));
   if (movie.releaseYear) details.push(String(movie.releaseYear));
-  const countries = productionCountriesElement(movie);
-  if (countries) details.push(countries);
+  const languages = spokenLanguagesElement(movie, screenings);
+  if (languages) details.push(languages);
 
   elements.dialogMeta.replaceChildren();
   if (alternativeTitle) {
@@ -1080,7 +1095,7 @@ function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true) {
   loadDialogBackdrop(movie.backdropUrl);
   elements.dialogKicker.textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
   elements.dialogTitle.textContent = movie.title;
-  renderDialogMovieMeta(movie);
+  renderDialogMovieMeta(movie, screenings);
   renderMovieRatings(movie, elements.dialogRatings);
   renderMovieFacts(movie);
   renderMovieCast(movie);
@@ -1173,12 +1188,12 @@ function renderMovie(movie, screenings, cinemaMap) {
     meta.append(titleRow);
   }
   const details = movieMeta(movie, { includeAlternativeTitle: false });
-  const countries = productionCountriesElement(movie);
-  if (details || countries) {
+  const languages = spokenLanguagesElement(movie, screenings);
+  if (details || languages) {
     const detailsRow = document.createElement("span");
     detailsRow.className = "movie-details";
     if (details) detailsRow.append(details);
-    if (countries) detailsRow.append(details ? " · " : "", countries);
+    if (languages) detailsRow.append(details ? " · " : "", languages);
     meta.append(detailsRow);
   }
   const nearestScreening = [...screenings].sort((a, b) => a.startsAt.localeCompare(b.startsAt))[0];

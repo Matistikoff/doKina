@@ -29,3 +29,42 @@ export function countryName(countryCode) {
     return code;
   }
 }
+
+const LANGUAGE_CODE_ALIASES = {
+  ara: "ar", ces: "cs", chi: "zh", cze: "cs", deu: "de", dut: "nl", eng: "en",
+  fin: "fi", fra: "fr", fre: "fr", ger: "de", gre: "el", hun: "hu", ita: "it",
+  jpn: "ja", kor: "ko", nld: "nl", nor: "no", pol: "pl", por: "pt", ron: "ro",
+  rum: "ro", rus: "ru", slk: "sk", slo: "sk", spa: "es", swe: "sv", ukr: "uk",
+  zho: "zh",
+};
+
+const LANGUAGE_REGION_CANDIDATES = {
+  ar: ["MA", "EG", "SA"], cs: ["CZ"], da: ["DK"], de: ["DE", "AT", "CH"],
+  el: ["GR"], en: ["GB", "US", "IE", "CA", "AU", "NZ"], es: ["ES", "MX", "AR"],
+  fi: ["FI"], fr: ["FR", "BE", "CA", "CH"], he: ["IL"], hi: ["IN"], hu: ["HU"],
+  it: ["IT"], ja: ["JP"], ko: ["KR"], nl: ["NL", "BE"], no: ["NO"], pl: ["PL"],
+  pt: ["PT", "BR"], ro: ["RO"], ru: ["RU"], sk: ["SK"], sv: ["SE"], tr: ["TR"],
+  uk: ["UA"], zh: ["CN", "TW", "HK"],
+};
+
+export function normalizeLanguageCode(languageCode) {
+  const code = String(languageCode || "").trim().toLowerCase();
+  if (/^[a-z]{2}$/u.test(code)) return code;
+  return LANGUAGE_CODE_ALIASES[code] || "";
+}
+
+export function languageName(languageCode) {
+  const code = normalizeLanguageCode(languageCode);
+  if (!code) return "";
+  try {
+    return new Intl.DisplayNames(["sk"], { type: "language" }).of(code) || code.toUpperCase();
+  } catch {
+    return code.toUpperCase();
+  }
+}
+
+export function languageFlagCountry(languageCode, productionCountries = []) {
+  const candidates = LANGUAGE_REGION_CANDIDATES[normalizeLanguageCode(languageCode)] || [];
+  const countries = new Set(productionCountries.map((code) => String(code).toUpperCase()));
+  return candidates.find((code) => countries.has(code)) || candidates[0] || "";
+}

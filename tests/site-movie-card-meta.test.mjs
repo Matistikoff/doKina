@@ -15,7 +15,7 @@ test("movie cards show the alternative title before the director", async () => {
   assert.match(source, /directors\.append\("Réžia: "\)/u);
 });
 
-test("movie card metadata can wrap without hiding production flags", async () => {
+test("movie card metadata can wrap without hiding language flags", async () => {
   const styles = await readFile(new URL("../site/styles.css", import.meta.url), "utf8");
 
   assert.doesNotMatch(styles, /\.movie-card \.movie-meta \{[\s\S]*?-webkit-line-clamp/u);

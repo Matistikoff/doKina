@@ -28,6 +28,10 @@ const haine = {
   vote_count: 4100,
   credits: { crew: [{ job: "Director", name: "Mathieu Kassovitz" }] },
   production_countries: [{ iso_3166_1: "FR", name: "France" }],
+  spoken_languages: [
+    { iso_639_1: "fr", english_name: "French", name: "Français" },
+    { iso_639_1: "ar", english_name: "Arabic", name: "العربية" },
+  ],
   images: {
     posters: [{ file_path: "/haine-sk.jpg", iso_639_1: "sk", vote_count: 2 }],
     backdrops: [{ file_path: "/haine-backdrop.jpg", iso_639_1: null, vote_count: 5 }],
@@ -83,6 +87,7 @@ test("resolves a unique localized title with IDs and poster", async () => {
   assert.equal(result.budgetUsd, 2500000);
   assert.equal(result.worldwideGrossUsd, 123456789);
   assert.deepEqual(result.productionCountries, ["FR"]);
+  assert.deepEqual(result.spokenLanguages, ["fr", "ar"]);
 
   const alternate = { ...haine, title: "La Haine", alternative_titles: { titles: [{ title: "Nenávisť" }] } };
   assert.equal((await resolveTmdbMovie({ title: "Nenávisť" }, "test", tmdbMock([alternate]))).tmdbId, 406);

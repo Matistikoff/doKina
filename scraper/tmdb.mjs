@@ -175,6 +175,9 @@ export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
   const actors = cast.map((person) => person.name);
   const productionCountries = [...new Set((detail.production_countries || [])
     .map((country) => metadataText(country.iso_3166_1)?.toUpperCase()).filter(Boolean))];
+  const spokenLanguages = [...new Set((detail.spoken_languages || [])
+    .map((language) => metadataText(language.iso_639_1)?.toLowerCase())
+    .filter((code) => /^[a-z]{2}$/u.test(code)))];
   return {
     tmdbId: detail.id,
     ...(/^tt\d+$/.test(detail.imdb_id || "") ? { imdbId: detail.imdb_id } : {}),
@@ -189,6 +192,7 @@ export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
     trailerUrl,
     originalTitle: metadataText(detail.original_title),
     originalLanguage: /^[a-z]{2}$/u.test(detail.original_language || "") ? detail.original_language : null,
+    ...(spokenLanguages.length ? { spokenLanguages } : {}),
     englishTitle: metadataText(translations.find((item) => item.iso_639_1 === "en")?.data?.title),
     releaseYear: /^\d{4}-/.test(detail.release_date || "") ? detail.release_date.slice(0, 4) : null,
     durationMinutes: Number.isInteger(detail.runtime) && detail.runtime > 0 ? detail.runtime : null,
@@ -256,7 +260,7 @@ export async function enrichMoviesWithTmdb(movies, options = {}) {
   const now = options.now || new Date();
   const cache = await readCache(cachePath);
   movies = preserveTmdbMetadata(movies.map(applyKnownMovieIdentity), options.previousMovies || []);
-  const lookupKey = (movie) => JSON.stringify(["tmdb-v12", lookupTitles(movie), movie.releaseYear,
+  const lookupKey = (movie) => JSON.stringify(["tmdb-v13", lookupTitles(movie), movie.releaseYear,
     movie.directors, movie.durationMinutes, movie.imdbId]);
   if (!apiKey) {
     console.warn("TMDB_API_KEY is not set; using saved TMDB metadata without refreshing it.");

@@ -64,6 +64,8 @@ test("schema validation accepts an ISO original language", () => {
   const base = assembleProgram([], "2026-09-09T10:00:00Z");
   assert.doesNotThrow(() => validateProgram({ ...base, movies: [{ id: "film", title: "Film", originalLanguage: "sk" }] }));
   assert.throws(() => validateProgram({ ...base, movies: [{ id: "film", title: "Film", originalLanguage: "eng" }] }), /invalid originalLanguage/);
+  assert.doesNotThrow(() => validateProgram({ ...base, movies: [{ id: "film", title: "Film", spokenLanguages: ["sk", "en"] }] }));
+  assert.throws(() => validateProgram({ ...base, movies: [{ id: "film", title: "Film", spokenLanguages: ["slk"] }] }), /invalid spokenLanguages/);
 });
 
 test("schema validation accepts trusted TMDB backdrop and YouTube trailer URLs", () => {
