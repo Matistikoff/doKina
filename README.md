@@ -54,7 +54,7 @@ ID; ak presné ID chýba, web odkazuje na vyhľadávanie služby. TMDB používa
 API kľúč (v3) z
 [nastavení TMDB](https://www.themoviedb.org/settings/api), nie prihlasovacie heslo.
 Kľúče zostávajú iba v scrapere; do statického webu sa nezapisujú.
-TMDB zároveň dodáva samostatnú sekciu „Očakávame“: najviac šesť populárnych
+TMDB zároveň dodáva voľbu „Očakávame“ v menu zoradenia: najviac šesť populárnych
 premiér na nasledujúcich 120 dní, štandardne štyri pre slovenské kiná a dve
 výrazné svetové premiéry bez potvrdeného slovenského dátumu. Tieto položky sú uložené
 v `upcomingMovies`, nemajú predstavenia a nevstupujú do filtrov ani počtov programu.

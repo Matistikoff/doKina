@@ -84,9 +84,7 @@ const elements = {
   installPlatformTabs: [...document.querySelectorAll("[data-install-platform]")],
   installToggle: document.querySelector("#install-toggle"),
   movieGrid: document.querySelector("#movie-grid"),
-  upcomingCount: document.querySelector("#upcoming-count"),
-  upcomingGrid: document.querySelector("#upcoming-grid"),
-  upcomingSection: document.querySelector("#upcoming"),
+  programHeading: document.querySelector("#program-heading"),
   letterboxdToggle: document.querySelector("#letterboxd-toggle"),
   pageScrollbar: document.querySelector(".page-scrollbar"),
   pageScrollbarThumb: document.querySelector(".page-scrollbar-thumb"),
@@ -1272,18 +1270,30 @@ function renderMovie(movie, screenings, cinemaMap, upcoming = false) {
   return fragment;
 }
 
-function renderUpcomingMovies() {
+function renderUpcomingMovies(cinemaMap) {
   const movies = state.program.upcomingMovies || [];
-  elements.upcomingSection.hidden = movies.length === 0;
-  if (movies.length === 0) return;
-  const cinemaMap = new Map(state.program.cinemas.map((cinema) => [cinema.id, cinema]));
-  elements.upcomingCount.textContent = `${movies.length} ${movies.length === 1 ? "film" : movies.length < 5 ? "filmy" : "filmov"}`;
-  elements.upcomingGrid.replaceChildren(...movies.map((movie) => renderMovie(movie, [], cinemaMap, true)));
+  elements.selectedPeriodLabel.textContent = "Čoskoro na Slovensku aj vo svete";
+  elements.programHeading.textContent = "Očakávame";
+  elements.resultCount.textContent = `${movies.length} ${movies.length === 1 ? "pripravovaný film" : movies.length < 5 ? "pripravované filmy" : "pripravovaných filmov"}`;
+  if (movies.length === 0) {
+    elements.movieGrid.innerHTML = `
+      <div class="empty-state">
+        <div><h3>Premiéry sa nepodarilo načítať</h3><p>Skús stránku obnoviť neskôr.</p></div>
+      </div>`;
+    return;
+  }
+  elements.movieGrid.replaceChildren(...movies.map((movie) => renderMovie(movie, [], cinemaMap, true)));
+  elements.movieGrid.setAttribute("aria-busy", "false");
 }
 
 function renderProgram() {
   const movieMap = new Map(state.program.movies.map((movie) => [movie.id, movie]));
   const cinemaMap = new Map(state.program.cinemas.map((cinema) => [cinema.id, cinema]));
+  if (state.sortBy === "upcoming") {
+    renderUpcomingMovies(cinemaMap);
+    return;
+  }
+  elements.programHeading.textContent = "Filmy, ktoré práve hrajú";
   const { start, end } = periodBounds();
   const moviesInGenre = new Set(state.program.movies
     .filter((movie) => state.selectedGenres.size === availableGenres().length
@@ -1404,7 +1414,7 @@ function registerProgramTool() {
           genre: { type: "string", enum: ["all", ...availableGenres], description: "Vybraný žáner alebo all." },
           genres: { type: "array", items: { type: "string", enum: [...availableGenres] }, description: "Vybrané žánre; prázdny zoznam zobrazí všetky. Má prednosť pred genre." },
           genreMatch: { type: "string", enum: ["any", "all"], description: "any vyžaduje aspoň jeden vybraný žáner, all všetky vybrané žánre." },
-          sortBy: { type: "string", enum: ["rating", "mustWatch", "oscars", "czSk", "nonEnglish", "shortest", "longest", "cult", "added", "soonest"], description: "rating zoradí podľa hodnotenia zo zdroja s väčším počtom hlasov; mustWatch zobrazí iba filmy s IMDb hodnotením aspoň 8; oscars zobrazí iba víťazov Oscara zoradených podľa hodnotenia; czSk zobrazí české, slovenské a československé filmy; nonEnglish zobrazí filmy, ktorých pôvodný jazyk nie je angličtina; shortest a longest zoradia podľa dĺžky; cult zobrazí filmy do roku 2024 a added filmy prvýkrát zachytené za posledných 7 dní." }
+          sortBy: { type: "string", enum: ["rating", "mustWatch", "oscars", "czSk", "nonEnglish", "shortest", "longest", "cult", "added", "soonest", "upcoming"], description: "rating zoradí podľa hodnotenia zo zdroja s väčším počtom hlasov; mustWatch zobrazí iba filmy s IMDb hodnotením aspoň 8; oscars zobrazí iba víťazov Oscara zoradených podľa hodnotenia; czSk zobrazí české, slovenské a československé filmy; nonEnglish zobrazí filmy, ktorých pôvodný jazyk nie je angličtina; shortest a longest zoradia podľa dĺžky; cult zobrazí filmy do roku 2024; added filmy prvýkrát zachytené za posledných 7 dní a upcoming pripravované premiéry." }
         },
         additionalProperties: false
       },
@@ -1477,7 +1487,6 @@ async function init() {
     renderSortOptions();
     updateFavoritesFilter();
     renderProgram();
-    renderUpcomingMovies();
     syncMovieRoute();
     registerProgramTool();
   } catch (error) {
