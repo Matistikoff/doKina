@@ -20,6 +20,7 @@ test("movie detail formats TMDB budget and worldwide gross", async () => {
   assert.match(styles, /@media \(max-width: 620px\) \{[\s\S]*?\.dialog-financial dd \{[\s\S]*?white-space: nowrap;/u);
   assert.match(styles, /\.movie-dialog\.has-backdrop \.dialog-financial dt \{\s*color: white;/u);
   assert.match(styles, /\.movie-dialog\.has-backdrop \.dialog-financial dd \{[\s\S]*?color: white;/u);
-  assert.match(styles, /\.movie-dialog\.has-backdrop \.dialog-financial\.is-below-budget dd \{\s*color: white;/u);
+  assert.match(styles, /\.movie-dialog\.has-backdrop \.dialog-financial\.is-below-budget dd \{\s*color: #ff9292;/u);
+  assert.match(styles, /\.movie-dialog\.has-backdrop \.dialog-actions \.dialog-financial\.is-below-budget \{\s*border-color: rgba\(255, 146, 146, 0\.72\);[\s\S]*?background: rgba\(190, 43, 43, 0\.2\);/u);
   assert.doesNotMatch(source, /movie\.boxOfficeUsd/u);
 });
