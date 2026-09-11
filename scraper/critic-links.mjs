@@ -41,7 +41,7 @@ export async function wikidataCriticLinksRequest(imdbIds) {
     headers: {
       Accept: "application/sparql-results+json",
       "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-      "User-Agent": "doKina.sk/1.0 (https://dokina.sk/)",
+      "User-Agent": "doKina.sk/1.0 (https://do-kina.sk/)",
     },
     body: new URLSearchParams({ query }),
     signal: AbortSignal.timeout(15_000),

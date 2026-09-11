@@ -22,7 +22,9 @@ test("uses a trusted TMDB backdrop in movie social metadata", () => {
   const html = injectSocialPreview("<head><!-- social-preview:start -->old<!-- social-preview:end --><title>Old</title></head>", metadata);
   assert.match(html, /property="og:image" content="https:\/\/image\.tmdb\.org\/t\/p\/w1280\/backdrop\.jpg"/u);
   assert.match(html, /Film &amp; &quot;priateľ&quot; — doKina\.sk/u);
+  assert.match(html, /<link rel="canonical" href="https:\/\/dokina\.sk\/film\/film-1" \/>/u);
   assert.match(html, /<title>Film &amp; &quot;priateľ&quot; — doKina\.sk<\/title>/u);
+  assert.doesNotMatch(html, /application\/ld\+json/u);
   assert.doesNotMatch(html, /twitter:/u);
 });
 
@@ -82,4 +84,6 @@ test("serves the homepage with an absolute default image URL", async () => {
   const html = await response.text();
   assert.match(html, /property="og:image" content="https:\/\/kino\.example\/og\.png"/u);
   assert.match(html, /property="og:url" content="https:\/\/kino\.example\/"/u);
+  assert.match(html, /<link rel="canonical" href="https:\/\/kino\.example\/" \/>/u);
+  assert.match(html, /"@type": "WebSite"/u);
 });

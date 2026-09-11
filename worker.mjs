@@ -56,7 +56,20 @@ export function defaultSocialPreview(origin) {
 
 export function renderSocialPreview(metadata) {
   const fields = Object.fromEntries(Object.entries(metadata).map(([key, value]) => [key, escapeAttribute(value)]));
+  const websiteStructuredData = metadata.type === "website"
+    ? `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "doKina.sk",
+      "alternateName": ["doKina", "do-kina.sk", "dokina"],
+      "url": "${fields.canonicalUrl}"
+    }
+    </script>`
+    : "";
   return `<!-- social-preview:start -->
+    <link rel="canonical" href="${fields.canonicalUrl}" />
     <meta property="og:title" content="${fields.title}" />
     <meta property="og:description" content="${fields.description}" />
     <meta property="og:type" content="${fields.type}" />
@@ -68,7 +81,7 @@ export function renderSocialPreview(metadata) {
     <meta property="og:image:type" content="${fields.imageType}" />
     <meta property="og:image:width" content="${fields.imageWidth}" />
     <meta property="og:image:height" content="${fields.imageHeight}" />
-    <meta property="og:image:alt" content="${fields.imageAlt}" />
+    <meta property="og:image:alt" content="${fields.imageAlt}" />${websiteStructuredData}
     <!-- social-preview:end -->`;
 }
 
