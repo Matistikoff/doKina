@@ -1586,7 +1586,8 @@ h3 {
 	display: none;
 }
 
-.movie-dialog[open] {
+/* Only the non-modal fallback needs a shadow to dim the page. */
+.movie-dialog[open]:not(:modal) {
 	box-shadow:
 		0 0 0 100vmax rgba(24, 24, 23, 0.62),
 		0 30px 90px rgba(24, 24, 23, 0.28);
@@ -1599,7 +1600,6 @@ body.has-open-dialog {
 .movie-dialog::backdrop {
 	background: rgba(24, 24, 23, 0.62);
 	cursor: var(--cursor-default);
-	backdrop-filter: blur(5px);
 }
 
 .dialog-hero {
@@ -1706,9 +1706,8 @@ body.has-open-dialog {
 .movie-dialog.has-backdrop .dialog-close {
 	align-self: flex-start;
 	border-color: rgba(255, 255, 255, 0.45);
-	background: rgba(8, 15, 17, 0.55);
+	background: rgba(8, 15, 17, 0.85);
 	color: white;
-	backdrop-filter: blur(8px);
 }
 
 .dialog-trailer {
@@ -1745,9 +1744,8 @@ body.has-open-dialog {
 .movie-dialog.has-backdrop .dialog-actions .dialog-fact,
 .movie-dialog.has-backdrop .dialog-actions .dialog-financial {
 	border-color: rgba(255, 255, 255, 0.24);
-	background: rgba(8, 15, 17, 0.52);
+	background: rgba(8, 15, 17, 0.85);
 	color: white;
-	backdrop-filter: blur(8px);
 }
 
 .movie-dialog.has-backdrop .dialog-financial dt {
@@ -1983,34 +1981,12 @@ body.has-open-dialog {
 }
 
 .movie-dialog.has-backdrop .dialog-screenings {
+	/* Keep long screening lists free of full-height filtered image layers. */
 	background:
+		linear-gradient(135deg, rgba(8, 15, 17, 0.7), rgba(15, 36, 41, 0.84)),
 		radial-gradient(circle at 18% 8%, rgba(48, 91, 94, 0.72), transparent 46%),
 		linear-gradient(135deg, #17343a, #0f2429 68%);
 	color: white;
-}
-
-.movie-dialog.has-backdrop .dialog-screenings::before,
-.movie-dialog.has-backdrop .dialog-screenings::after {
-	position: absolute;
-	content: "";
-	pointer-events: none;
-}
-
-.movie-dialog.has-backdrop .dialog-screenings::before {
-	inset: -24px;
-	z-index: -2;
-	background-image: var(--dialog-backdrop-image);
-	background-position: center 72%;
-	background-size: cover;
-	filter: blur(18px) saturate(112%);
-	opacity: 0.62;
-	transform: scale(1.08);
-}
-
-.movie-dialog.has-backdrop .dialog-screenings::after {
-	inset: 0;
-	z-index: -1;
-	background: linear-gradient(135deg, rgba(8, 15, 17, 0.7), rgba(15, 36, 41, 0.84));
 }
 
 .movie-dialog.has-backdrop .dialog-screenings > h3,

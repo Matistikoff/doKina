@@ -1040,7 +1040,6 @@ function renderMovieRatings(movie, ratingsElement) {
 function clearDialogBackdrop() {
   dialogBackdropLoadId += 1;
   elements.dialog.classList.remove("has-backdrop");
-  elements.dialog.style.removeProperty("--dialog-backdrop-image");
   elements.dialogBackdrop.classList.remove("is-loaded");
   elements.dialogBackdrop.hidden = true;
   elements.dialogBackdrop.onload = null;
@@ -1055,7 +1054,6 @@ function loadDialogBackdrop(url) {
   const loadId = dialogBackdropLoadId;
   const reveal = () => {
     if (loadId !== dialogBackdropLoadId || elements.dialogBackdrop.getAttribute("src") !== url) return;
-    elements.dialog.style.setProperty("--dialog-backdrop-image", `url("${url}")`);
     elements.dialogBackdrop.classList.add("is-loaded");
   };
   const discard = () => {
