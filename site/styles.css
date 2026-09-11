@@ -2002,7 +2002,7 @@ body.has-open-dialog {
 .install-mockup img {
 	position: absolute;
 	top: -2.02%;
-	left: -54.86%;
+	left: -40.14%;
 	width: 213.334%;
 	max-width: none;
 	height: auto;
@@ -2010,7 +2010,7 @@ body.has-open-dialog {
 }
 
 [data-install-panel="ios"] .install-mockup img {
-	left: -63.89%;
+	left: -50.28%;
 	mask-image: url("/iphone-phone-mask.svg");
 }
 
@@ -2577,18 +2577,19 @@ footer p {
 	}
 
 	.site-header {
-		flex-wrap: wrap;
+		flex-direction: column;
+		flex-wrap: nowrap;
 		gap: 8px;
-		align-items: flex-start;
-		min-height: 144px;
+		align-items: stretch;
+		min-height: 0;
 		padding-block: 10px;
 	}
 
 	.brand {
-		position: absolute;
-		top: 58px;
-		right: 0;
-		left: auto;
+		position: static;
+		align-self: flex-end;
+		justify-content: center;
+		width: min(210px, calc(100vw - 24px));
 		transform: none;
 	}
 
@@ -2597,16 +2598,33 @@ footer p {
 	}
 
 	.header-actions {
+		display: grid;
+		grid-template-columns: repeat(2, 44px);
+		justify-content: end;
 		width: 100%;
 		gap: 6px;
 	}
 
 	.install-toggle {
-		flex: 1 1 auto;
+		grid-column: 1 / -1;
+		grid-row: 1;
+		justify-self: end;
+		width: min(210px, calc(100vw - 24px));
+		max-width: none;
 		min-width: 0;
 		padding-inline: 10px;
 		font-size: 0.7rem;
 		white-space: normal;
+	}
+
+	.theme-toggle {
+		grid-column: 1;
+		grid-row: 2;
+	}
+
+	.letterboxd-toggle {
+		grid-column: 2;
+		grid-row: 2;
 	}
 
 	.intro {
@@ -2630,15 +2648,15 @@ footer p {
 
 	.filters {
 		margin-inline: -4px;
-		gap: 14px;
-		padding: 14px;
+		gap: 8px;
+		padding: 10px;
 		border-radius: 6px;
 		grid-template-columns: 1fr;
 	}
 
 	.period-filter {
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
 	.period-chip {
@@ -2646,20 +2664,39 @@ footer p {
 	}
 
 	.date-range-filter {
+		grid-column: 1 / -1;
 		width: 100%;
 	}
 
 	.select-filters {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: repeat(6, minmax(0, 1fr));
 	}
 
-	.select-filters .select-field:last-of-type {
-		grid-column: 1 / -1;
+	.select-filters .select-field:nth-child(1) {
+		grid-column: 1 / 4;
+	}
+
+	.select-filters .select-field:nth-child(2) {
+		grid-column: 4 / 7;
+	}
+
+	.select-filters .select-field:nth-child(3) {
+		grid-column: 1 / 5;
+	}
+
+	.favorites-filter-button {
+		grid-column: 5;
+		width: 100%;
+		padding-inline: 0;
+	}
+
+	.favorites-filter-count {
+		display: none;
 	}
 
 	.reset-filters-button {
-		justify-self: end;
-		grid-column: 2;
+		grid-column: 6;
+		width: 100%;
 	}
 
 	.program {
@@ -2722,21 +2759,26 @@ footer p {
 	}
 
 	.install-platform-panel {
-		grid-template-columns: minmax(0, 1fr) 30%;
-		gap: 14px 10px;
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: auto auto auto;
+		align-items: start;
+		gap: 14px;
 	}
 
 	.install-mockup {
+		width: min(240px, 70vw);
 		max-width: 100%;
 	}
 
 	.install-steps {
 		gap: 8px;
+		grid-auto-rows: 1fr;
 	}
 
 	.install-steps li {
 		grid-template-columns: 28px minmax(0, 1fr);
 		gap: 7px;
+		height: 100%;
 		padding: 10px 18px 10px 8px;
 	}
 

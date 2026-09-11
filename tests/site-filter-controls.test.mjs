@@ -28,3 +28,12 @@ test("one date picker previews a range between two clicks", async () => {
   assert.doesNotMatch(app, /startInput\.dispatchEvent\(new Event\("change"/u);
   assert.match(app, /event\.composedPath\(\)\.includes\(datePicker\.root\)/u);
 });
+
+test("mobile filters use three compact rows", async () => {
+  const styles = await readFile(new URL("../site/styles.css", import.meta.url), "utf8");
+
+  assert.match(styles, /@media \(max-width: 620px\) \{[\s\S]*?\.period-filter \{[\s\S]*?grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);/u);
+  assert.match(styles, /@media \(max-width: 620px\) \{[\s\S]*?\.date-range-filter \{[\s\S]*?grid-column: 1 \/ -1;/u);
+  assert.match(styles, /@media \(max-width: 620px\) \{[\s\S]*?\.select-filters \{[\s\S]*?grid-template-columns: repeat\(6, minmax\(0, 1fr\)\);/u);
+  assert.match(styles, /\.select-filters \.select-field:nth-child\(3\) \{[\s\S]*?grid-column: 1 \/ 5;[\s\S]*?\.favorites-filter-button \{[\s\S]*?grid-column: 5;[\s\S]*?\.reset-filters-button \{[\s\S]*?grid-column: 6;/u);
+});
