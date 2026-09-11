@@ -2448,8 +2448,7 @@ body.has-open-dialog {
 
 footer {
 	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
+	flex-direction: column;
 	gap: 24px;
 	padding: 28px 0 44px;
 	border-top: 1px solid var(--line);
@@ -2461,11 +2460,42 @@ footer p {
 	margin: 0;
 }
 
+.footer-note {
+	display: grid;
+	gap: 8px;
+}
+
+.footer-contact {
+	color: var(--accent);
+}
+
+.footer-sources {
+	display: grid;
+	gap: 8px;
+}
+
+.footer-note a,
+.data-credits a {
+	text-decoration: underline;
+	text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+	text-underline-offset: 3px;
+}
+
+.footer-note a:hover,
+.data-credits a:hover {
+	color: var(--accent-deep);
+}
+
 .source-links {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 8px;
 	white-space: nowrap;
+}
+
+.source-label {
+	color: var(--ink);
+	font-weight: 700;
 }
 
 .source-links a:hover {
@@ -2475,9 +2505,19 @@ footer p {
 .data-credits {
 	display: flex;
 	align-items: center;
+	flex-wrap: wrap;
 	gap: 16px;
-	flex-basis: 100%;
-	font-size: 0.875rem;
+}
+
+.movie-data-sources {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.movie-data-sources > p:first-child {
+	color: var(--ink);
+	font-weight: 700;
 }
 
 .data-credits img {

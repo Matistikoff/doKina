@@ -233,7 +233,7 @@ test("preserves unambiguous previous TMDB metadata without an API key", async ()
   assert.equal(result.tmdbId, 406);
 });
 
-test("loads popular upcoming Slovak theatrical releases separately from current films", async () => {
+test("combines popular Slovak and worldwide upcoming releases separately from current films", async () => {
   const calls = [];
   const movies = await fetchUpcomingMovies({
     apiKey: "test",
@@ -242,21 +242,27 @@ test("loads popular upcoming Slovak theatrical releases separately from current 
     request: async (path, parameters) => {
       calls.push({ path, parameters });
       if (path === "genre/movie/list") return { genres: [{ id: 18, name: "Dráma" }] };
-      return { results: [
+      if (parameters.region === "SK") return { results: [
         { id: 10, title: "Už hrá", release_date: "2026-09-20", poster_path: "/playing.jpg" },
         { id: 20, title: "Veľká premiéra", original_title: "Big Premiere", original_language: "en",
           release_date: "2026-10-02", poster_path: "/poster.jpg", backdrop_path: "/backdrop.jpg",
           overview: "Pripravovaný film.", genre_ids: [18] },
         { id: 30, title: "Bez plagátu", release_date: "2026-10-10", poster_path: null },
       ] };
+      return { results: [
+        { id: 20, title: "Veľká premiéra", release_date: "2026-10-02", poster_path: "/poster.jpg" },
+        { id: 40, title: "Svetový hit", original_language: "en", release_date: "2026-09-25",
+          poster_path: "/world.jpg", popularity: 100, genre_ids: [18] },
+      ] };
     },
   });
-  assert.equal(movies.length, 1);
-  assert.deepEqual(movies[0], {
+  assert.equal(movies.length, 2);
+  assert.deepEqual(movies.find((movie) => movie.tmdbId === 20), {
     id: "upcoming-tmdb-20",
     title: "Veľká premiéra",
     tmdbId: 20,
     releaseDate: "2026-10-02",
+    releaseRegion: "SK",
     releaseYear: "2026",
     posterUrl: "https://image.tmdb.org/t/p/w500/poster.jpg",
     backdropUrl: "https://image.tmdb.org/t/p/w1280/backdrop.jpg",
@@ -266,10 +272,14 @@ test("loads popular upcoming Slovak theatrical releases separately from current 
     overviewLanguage: "sk",
     genres: ["Dráma"],
   });
-  const discover = calls.find((call) => call.path === "discover/movie");
-  assert.equal(discover.parameters.region, "SK");
-  assert.equal(discover.parameters.sort_by, "popularity.desc");
-  assert.equal(discover.parameters.with_release_type, "2|3");
+  assert.equal(movies.find((movie) => movie.tmdbId === 40).releaseRegion, "worldwide");
+  const discoveries = calls.filter((call) => call.path === "discover/movie");
+  assert.equal(discoveries.length, 2);
+  assert.equal(discoveries[0].parameters.region, "SK");
+  assert.equal(discoveries[0].parameters.sort_by, "popularity.desc");
+  assert.equal(discoveries[0].parameters.with_release_type, "2|3");
+  assert.equal(discoveries[1].parameters.region, undefined);
+  assert.equal(discoveries[1].parameters["primary_release_date.gte"], "2026-09-11");
 });
 
 test("keeps future upcoming movies when TMDB is unavailable", async () => {
@@ -283,5 +293,5 @@ test("keeps future upcoming movies when TMDB is unavailable", async () => {
     previousMovies,
     request: async () => { throw new Error("Service unavailable"); },
   });
-  assert.deepEqual(movies, [previousMovies[1]]);
+  assert.deepEqual(movies, [{ ...previousMovies[1], releaseRegion: "SK" }]);
 });

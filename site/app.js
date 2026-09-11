@@ -374,6 +374,11 @@ function formatReleaseDate(date) {
   }).format(new Date(`${date}T12:00:00`));
 }
 
+function upcomingReleaseLabel(movie) {
+  const date = formatReleaseDate(movie.releaseDate);
+  return movie.releaseRegion === "worldwide" ? `Vo svete od ${date}` : `V slovenských kinách od ${date}`;
+}
+
 function formatUpdated(value) {
   return new Intl.DateTimeFormat("sk-SK", {
     timeZone: "Europe/Bratislava",
@@ -1122,7 +1127,9 @@ function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true, upcom
   else elements.dialogTrailer.removeAttribute("href");
   renderShowtimes(movie, screenings, cinemaMap, elements.dialogShowtimes);
   if (upcoming) {
-    elements.dialogShowtimes.textContent = `Predpokladaná kinopremiéra na Slovensku: ${formatReleaseDate(movie.releaseDate)}.`;
+    elements.dialogShowtimes.textContent = movie.releaseRegion === "worldwide"
+      ? `Predpokladané uvedenie vo svete: ${formatReleaseDate(movie.releaseDate)}.`
+      : `Predpokladaná kinopremiéra na Slovensku: ${formatReleaseDate(movie.releaseDate)}.`;
   }
   elements.dialogScroller.scrollTop = 0;
   if (typeof elements.dialog.showModal === "function") elements.dialog.showModal();
@@ -1176,7 +1183,9 @@ function syncMovieRoute() {
   openMovieDialog(movie, screenings, cinemaMap, false, upcoming);
   if (screenings.length === 0) {
     elements.dialogShowtimes.textContent = upcoming
-      ? `Predpokladaná kinopremiéra na Slovensku: ${formatReleaseDate(movie.releaseDate)}.`
+      ? movie.releaseRegion === "worldwide"
+        ? `Predpokladané uvedenie vo svete: ${formatReleaseDate(movie.releaseDate)}.`
+        : `Predpokladaná kinopremiéra na Slovensku: ${formatReleaseDate(movie.releaseDate)}.`
       : "Tento film momentálne nemá naplánované premietania.";
   }
 }
@@ -1218,7 +1227,7 @@ function renderMovie(movie, screenings, cinemaMap, upcoming = false) {
   }
   if (upcoming) {
     card.classList.add("is-upcoming");
-    screeningCount.textContent = `V kinách od ${formatReleaseDate(movie.releaseDate)}`;
+    screeningCount.textContent = upcomingReleaseLabel(movie);
   } else {
     const nearestScreening = [...screenings].sort((a, b) => a.startsAt.localeCompare(b.startsAt))[0];
     const countLabel = `${screenings.length} ${screenings.length === 1 ? "predstavenie" : screenings.length < 5 ? "predstavenia" : "predstavení"}`;

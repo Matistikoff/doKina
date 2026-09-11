@@ -12,6 +12,7 @@ const BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 const PROFILE_BASE_URL = "https://image.tmdb.org/t/p/w185";
 const MAX_CAST_MEMBERS = 6;
 const MAX_UPCOMING_MOVIES = 6;
+const MAX_SLOVAK_UPCOMING_MOVIES = 4;
 const UPCOMING_WINDOW_DAYS = 120;
 
 export function lookupTitles(movie) {
@@ -121,7 +122,10 @@ export async function fetchUpcomingMovies(options = {}) {
     /^\d{4}-\d{2}-\d{2}$/u.test(movie.releaseDate || "")
     && movie.releaseDate >= today
     && !currentTmdbIds.has(movie.tmdbId)
-  )).slice(0, MAX_UPCOMING_MOVIES);
+  )).slice(0, MAX_UPCOMING_MOVIES).map((movie) => ({
+    ...movie,
+    releaseRegion: movie.releaseRegion === "worldwide" ? "worldwide" : "SK",
+  }));
 
   if (!apiKey) {
     console.warn("TMDB_API_KEY is not set; using saved upcoming movies without refreshing them.");
@@ -129,39 +133,65 @@ export async function fetchUpcomingMovies(options = {}) {
   }
 
   try {
-    const parameters = {
+    const commonParameters = {
       include_adult: "false",
       include_video: "false",
       language: "sk-SK",
       page: "1",
-      region: "SK",
       sort_by: "popularity.desc",
       with_release_type: "2|3",
-      "release_date.gte": today,
-      "release_date.lte": isoDate(end),
     };
-    const [payload, genrePayload] = await Promise.all([
-      request("discover/movie", parameters, apiKey),
+    const [slovakPayload, worldwidePayload, genrePayload] = await Promise.all([
+      request("discover/movie", {
+        ...commonParameters,
+        region: "SK",
+        "release_date.gte": today,
+        "release_date.lte": isoDate(end),
+      }, apiKey),
+      request("discover/movie", {
+        ...commonParameters,
+        "primary_release_date.gte": today,
+        "primary_release_date.lte": isoDate(end),
+      }, apiKey),
       request("genre/movie/list", { language: "sk-SK" }, apiKey),
     ]);
-    if (!Array.isArray(payload.results) || !Array.isArray(genrePayload.genres)) {
+    if (!Array.isArray(slovakPayload.results) || !Array.isArray(worldwidePayload.results)
+      || !Array.isArray(genrePayload.genres)) {
       throw new Error("Invalid TMDb upcoming response");
     }
     const genres = new Map(genrePayload.genres
       .filter((genre) => Number.isInteger(genre.id) && metadataText(genre.name))
       .map((genre) => [genre.id, metadataText(genre.name)]));
-    const seen = new Set();
-    return payload.results.filter((movie) => {
-      if (!Number.isInteger(movie.id) || seen.has(movie.id) || currentTmdbIds.has(movie.id)) return false;
+    const validMovies = (movies) => movies.filter((movie) => {
+      if (!Number.isInteger(movie.id) || currentTmdbIds.has(movie.id)) return false;
       if (!metadataText(movie.title) || !posterUrl(movie.poster_path)) return false;
       if (!/^\d{4}-\d{2}-\d{2}$/u.test(movie.release_date || "") || movie.release_date < today) return false;
-      seen.add(movie.id);
       return true;
-    }).slice(0, MAX_UPCOMING_MOVIES).map((movie) => ({
+    });
+    const slovakMovies = validMovies(slovakPayload.results);
+    const slovakIds = new Set(slovakMovies.map((movie) => movie.id));
+    const worldwideMovies = validMovies(worldwidePayload.results).filter((movie) => !slovakIds.has(movie.id));
+    const selected = [
+      ...slovakMovies.slice(0, MAX_SLOVAK_UPCOMING_MOVIES)
+        .map((movie) => ({ movie, releaseRegion: "SK" })),
+      ...worldwideMovies.slice(0, MAX_UPCOMING_MOVIES - MAX_SLOVAK_UPCOMING_MOVIES)
+        .map((movie) => ({ movie, releaseRegion: "worldwide" })),
+    ];
+    const selectedIds = new Set(selected.map(({ movie }) => movie.id));
+    const remaining = [
+      ...slovakMovies.slice(MAX_SLOVAK_UPCOMING_MOVIES)
+        .map((movie) => ({ movie, releaseRegion: "SK" })),
+      ...worldwideMovies.slice(MAX_UPCOMING_MOVIES - MAX_SLOVAK_UPCOMING_MOVIES)
+        .map((movie) => ({ movie, releaseRegion: "worldwide" })),
+    ].filter(({ movie }) => !selectedIds.has(movie.id));
+    selected.push(...remaining.slice(0, MAX_UPCOMING_MOVIES - selected.length));
+    return selected.sort((a, b) => a.movie.release_date.localeCompare(b.movie.release_date)
+      || (b.movie.popularity || 0) - (a.movie.popularity || 0)).map(({ movie, releaseRegion }) => ({
       id: `upcoming-tmdb-${movie.id}`,
       title: metadataText(movie.title),
       tmdbId: movie.id,
       releaseDate: movie.release_date,
+      releaseRegion,
       releaseYear: movie.release_date.slice(0, 4),
       posterUrl: posterUrl(movie.poster_path),
       ...(backdropUrl(movie.backdrop_path) ? { backdropUrl: backdropUrl(movie.backdrop_path) } : {}),

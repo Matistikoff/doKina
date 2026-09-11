@@ -13,4 +13,5 @@ test("upcoming films render in a separate section and do not enter programme cou
   assert.ok(programmeRenderer);
   assert.doesNotMatch(programmeRenderer, /upcomingMovies/u);
   assert.match(source, /favoriteButton\.hidden = upcoming/u);
+  assert.match(source, /movie\.releaseRegion === "worldwide" \? `Vo svete od/u);
 });

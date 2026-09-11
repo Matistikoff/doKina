@@ -59,6 +59,7 @@ export function validateProgram(program) {
     if (!/^\d{4}-\d{2}-\d{2}$/u.test(movie.releaseDate || "") || Number.isNaN(Date.parse(movie.releaseDate))) {
       errors.push(`invalid releaseDate for ${movie.id}`);
     }
+    if (!["SK", "worldwide"].includes(movie.releaseRegion)) errors.push(`invalid releaseRegion for ${movie.id}`);
   }
 
   for (const screening of program?.screenings || []) {

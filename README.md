@@ -55,7 +55,8 @@ API kľúč (v3) z
 [nastavení TMDB](https://www.themoviedb.org/settings/api), nie prihlasovacie heslo.
 Kľúče zostávajú iba v scrapere; do statického webu sa nezapisujú.
 TMDB zároveň dodáva samostatnú sekciu „Očakávame“: najviac šesť populárnych
-slovenských kinopremiér na nasledujúcich 120 dní. Tieto položky sú uložené
+premiér na nasledujúcich 120 dní, štandardne štyri pre slovenské kiná a dve
+výrazné svetové premiéry bez potvrdeného slovenského dátumu. Tieto položky sú uložené
 v `upcomingMovies`, nemajú predstavenia a nevstupujú do filtrov ani počtov programu.
 TMDB sa páruje podľa pôvodných, slovenských a alternatívnych názvov; overuje sa
 dostupný rok (±1 rok), réžia a dĺžka. Viacero zhodných filmov sa automaticky
