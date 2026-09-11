@@ -20,7 +20,9 @@ test("identifies doKina.sk to search engines on the homepage", async () => {
   const html = await readFile(new URL("../site/index.html", import.meta.url), "utf8");
 
   assert.match(html, /<link rel="canonical" href="https:\/\/do-kina\.sk\/" \/>/u);
-  assert.match(html, /<h1 id="program-heading">doKina\.sk – filmy, ktoré práve hrajú<\/h1>/u);
+  assert.match(html, /<title>doKina\.sk – Program kín a filmy v Bratislave<\/title>/u);
+  assert.match(html, /<h1 id="program-heading">Filmy, ktoré práve hrajú v Bratislave<\/h1>/u);
+  assert.match(html, /<p class="program-description">Aktuálny program bratislavských kín na jednom mieste\.<\/p>/u);
 
   const match = html.match(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/u);
   assert.ok(match, "WebSite structured data is present");

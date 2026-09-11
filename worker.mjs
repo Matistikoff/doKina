@@ -24,7 +24,7 @@ export function socialPreviewForMovie(program, movieId, origin) {
   const canonicalUrl = `${origin}/film/${encodeURIComponent(movie.id)}`;
   const imageUrl = TRUSTED_BACKDROP_PATTERN.test(movie.backdropUrl || "")
     ? movie.backdropUrl
-    : `${origin}/og.png`;
+    : `${origin}/icon-512.png`;
   return {
     title: `${movie.title} — doKina.sk`,
     description: upcoming
@@ -34,8 +34,8 @@ export function socialPreviewForMovie(program, movieId, origin) {
     canonicalUrl,
     imageUrl,
     imageType: imageUrl.endsWith(".png") ? "image/png" : "image/jpeg",
-    imageWidth: imageUrl.endsWith(".png") ? 1200 : 1280,
-    imageHeight: imageUrl.endsWith(".png") ? 630 : 720,
+    imageWidth: imageUrl.endsWith(".png") ? 512 : 1280,
+    imageHeight: imageUrl.endsWith(".png") ? 512 : 720,
     imageAlt: movie.backdropUrl === imageUrl ? `Scéna z filmu ${movie.title}` : `doKina.sk — ${movie.title}`,
   };
 }
@@ -46,10 +46,10 @@ export function defaultSocialPreview(origin) {
     description: "Všetky filmy, ktoré práve hrajú v Bratislave. Zoraď ich podľa hodnotenia a filtruj podľa žánru či kina.",
     type: "website",
     canonicalUrl: `${origin}/`,
-    imageUrl: `${origin}/og.png`,
+    imageUrl: `${origin}/icon-512.png`,
     imageType: "image/png",
-    imageWidth: 1200,
-    imageHeight: 630,
+    imageWidth: 512,
+    imageHeight: 512,
     imageAlt: "doKina.sk — filmy, ktoré práve hrajú v Bratislave",
   };
 }

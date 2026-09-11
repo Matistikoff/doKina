@@ -40,7 +40,7 @@ test("falls back to the site preview for missing or untrusted backdrops", () => 
   for (const backdropUrl of [null, "https://example.com/image.jpg"]) {
     const metadata = socialPreviewForMovie({ movies: [{ id: "film-1", title: "Film", backdropUrl }] },
       "film-1", "https://dokina.sk");
-    assert.equal(metadata.imageUrl, "https://dokina.sk/og.png");
+    assert.equal(metadata.imageUrl, "https://dokina.sk/icon-512.png");
   }
   assert.equal(socialPreviewForMovie({ movies: [] }, "missing", "https://dokina.sk"), null);
 });
@@ -48,7 +48,7 @@ test("falls back to the site preview for missing or untrusted backdrops", () => 
 test("builds the default preview URL from the active site origin", () => {
   const metadata = defaultSocialPreview("https://dokina-sk.example.workers.dev");
   assert.equal(metadata.canonicalUrl, "https://dokina-sk.example.workers.dev/");
-  assert.equal(metadata.imageUrl, "https://dokina-sk.example.workers.dev/og.png");
+  assert.equal(metadata.imageUrl, "https://dokina-sk.example.workers.dev/icon-512.png");
 });
 
 test("serves an SPA page with movie-specific metadata", async () => {
@@ -71,7 +71,7 @@ test("serves an SPA page with movie-specific metadata", async () => {
   assert.equal(response.headers.get("cache-control"), "public, max-age=300");
 });
 
-test("serves the homepage with an absolute default image URL", async () => {
+test("serves the homepage with the square app icon as its absolute preview image", async () => {
   const index = "<html><head><!-- social-preview:start -->old<!-- social-preview:end --><title>Old</title></head></html>";
   const env = { ASSETS: { fetch: async (request) => {
     const pathname = new URL(request.url || request).pathname;
@@ -82,7 +82,9 @@ test("serves the homepage with an absolute default image URL", async () => {
 
   const response = await worker.fetch(new Request("https://kino.example/"), env);
   const html = await response.text();
-  assert.match(html, /property="og:image" content="https:\/\/kino\.example\/og\.png"/u);
+  assert.match(html, /property="og:image" content="https:\/\/kino\.example\/icon-512\.png"/u);
+  assert.match(html, /property="og:image:width" content="512"/u);
+  assert.match(html, /property="og:image:height" content="512"/u);
   assert.match(html, /property="og:url" content="https:\/\/kino\.example\/"/u);
   assert.match(html, /<link rel="canonical" href="https:\/\/kino\.example\/" \/>/u);
   assert.match(html, /"@type": "WebSite"/u);

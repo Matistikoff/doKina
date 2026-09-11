@@ -1076,6 +1076,13 @@ h2 {
 	line-height: 1;
 }
 
+.program-description {
+	margin: 10px 0 0;
+	color: var(--ink-soft);
+	font-size: 0.95rem;
+	line-height: 1.45;
+}
+
 .result-count {
 	margin: 0;
 	color: var(--ink-soft);
