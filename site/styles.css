@@ -1768,7 +1768,8 @@ body.has-open-dialog {
 }
 
 .dialog-content {
-	scroll-behavior: smooth;
+	scroll-behavior: auto;
+	overscroll-behavior-y: contain;
 	max-height: min(84vh, 820px);
 	overflow-y: auto;
 	scrollbar-width: none;
@@ -2057,6 +2058,7 @@ body.has-open-dialog {
 }
 
 .dialog-scrollbar-thumb {
+	will-change: transform;
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -2948,4 +2950,30 @@ footer p {
 		animation-iteration-count: 1 !important;
 		transition-duration: 0.01ms !important;
 	}
+}
+
+/* Opt-in A/B scroll test: ?dialogVisuals=plain. Keep all box dimensions. */
+#movie-dialog.is-scroll-test-plain,
+#movie-dialog.is-scroll-test-plain *,
+#movie-dialog.is-scroll-test-plain *::before,
+#movie-dialog.is-scroll-test-plain *::after,
+#movie-dialog.is-scroll-test-plain::backdrop {
+	background-image: none !important;
+	filter: none !important;
+	backdrop-filter: none !important;
+	-webkit-backdrop-filter: none !important;
+	box-shadow: none !important;
+	text-shadow: none !important;
+	animation: none !important;
+	transition: none !important;
+}
+
+#movie-dialog.is-scroll-test-plain img,
+#movie-dialog.is-scroll-test-plain svg {
+	visibility: hidden !important;
+}
+
+#movie-dialog.is-scroll-test-plain.has-backdrop .dialog-hero,
+#movie-dialog.is-scroll-test-plain.has-backdrop .dialog-screenings {
+	background-color: #0f2429;
 }

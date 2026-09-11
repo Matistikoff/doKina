@@ -1,7 +1,8 @@
-import { cp, mkdir, readFile, rm } from "node:fs/promises";
+import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateProgram } from "../scraper/schema.mjs";
+import { programPayloads } from "./program-payloads.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..");
@@ -12,4 +13,8 @@ validateProgram(program);
 await rm(destination, { recursive: true, force: true });
 await mkdir(destination, { recursive: true });
 await cp(source, destination, { recursive: true });
+const { index, details } = programPayloads(program);
+await writeFile(resolve(destination, "program-index.json"), JSON.stringify(index));
+await mkdir(resolve(destination, "movie-details"), { recursive: true });
+await Promise.all([...details].map(([url, body]) => writeFile(resolve(destination, url.slice(1)), body)));
 console.log(`Built ${destination} with ${program.screenings.length} screenings.`);

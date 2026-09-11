@@ -2,8 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-test("movie detail smooth wheel scrolling settles faster than page scrolling", async () => {
+test("movie detail keeps native wheel scrolling and contains overscroll", async () => {
   const source = await readFile(new URL("../site/app.js", import.meta.url), "utf8");
-
-  assert.match(source, /const easing = isPage \? 0\.16 : 0\.3;\s*setPosition\(current \+ distance \* easing\);/u);
+  const styles = await readFile(new URL("../site/styles.css", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /enhance\(elements\.dialogScroller\)/u);
+  assert.match(styles, /\.dialog-content \{\s*scroll-behavior: auto;\s*overscroll-behavior-y: contain;/u);
 });

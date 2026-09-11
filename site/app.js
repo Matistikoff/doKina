@@ -12,6 +12,7 @@ import {
 import { limitedMovieCast } from "./movie-cast.js";
 import { alternativeMovieTitle } from "./movie-title.js";
 import { compareMoviesByRating } from "./ratings.js";
+import { createMovieDetailLoader } from "./movie-details.js";
 
 const CULT_MOVIE_LATEST_YEAR = 2024;
 const RECENTLY_ADDED_DAYS = 7;
@@ -95,7 +96,12 @@ const elements = {
 };
 
 let datePicker = null;
-const dialogBackdropPreloads = new Map();
+const dialogTestParams = new URLSearchParams(window.location.search);
+const eagerDialogData = dialogTestParams.get("dialogData") === "eager";
+const plainDialogVisuals = dialogTestParams.get("dialogVisuals") === "plain";
+const loadMovieDetails = createMovieDetailLoader();
+let dialogOpenId = 0;
+elements.dialog.classList.toggle("is-scroll-test-plain", plainDialogVisuals);
 let updateDialogScrollbar = () => {};
 let dialogBackdropLoadId = 0;
 
@@ -136,16 +142,6 @@ function toggleFavorite(movie, button) {
   updateFavoriteButton(button, movie);
   updateFavoritesFilter();
   if (state.showFavoritesOnly) renderProgram();
-}
-
-function preloadDialogBackdrop(url) {
-  if (!url || dialogBackdropPreloads.has(url)) return;
-  const image = new Image();
-  image.decoding = "async";
-  image.fetchPriority = "high";
-  image.addEventListener("error", () => dialogBackdropPreloads.delete(url), { once: true });
-  image.src = url;
-  dialogBackdropPreloads.set(url, image);
 }
 
 function setupPageScrollbar() {
@@ -224,6 +220,8 @@ function setupDialogScrollbar() {
   const thumb = elements.dialogScrollbarThumb;
   const minimumThumbHeight = 36;
   let isDragging = false;
+  let geometry = null;
+  let scrollFrame = 0;
 
   function measurements() {
     const viewportHeight = scroller.clientHeight;
@@ -235,8 +233,9 @@ function setupDialogScrollbar() {
   }
 
   updateDialogScrollbar = () => {
-    if (isDragging) return;
+    if (!elements.dialog.open) return;
     const { maximumScroll, thumbHeight, thumbTravel, viewportHeight } = measurements();
+    geometry = { maximumScroll, thumbTravel };
     track.hidden = maximumScroll === 0;
     if (maximumScroll === 0) return;
     track.style.top = `${scroller.offsetTop}px`;
@@ -244,6 +243,12 @@ function setupDialogScrollbar() {
     thumb.style.height = `${thumbHeight}px`;
     thumb.style.transform = `translateY(${scroller.scrollTop / maximumScroll * thumbTravel}px)`;
   };
+
+  function updateScrollPosition() {
+    scrollFrame = 0;
+    if (isDragging || !elements.dialog.open || !geometry?.maximumScroll) return;
+    thumb.style.transform = `translateY(${scroller.scrollTop / geometry.maximumScroll * geometry.thumbTravel}px)`;
+  }
 
   thumb.addEventListener("pointerdown", (event) => {
     const startY = event.clientY;
@@ -282,9 +287,13 @@ function setupDialogScrollbar() {
     scroller.scrollBy({ top: direction * viewportHeight * 0.85, behavior: "smooth" });
   });
 
-  scroller.addEventListener("scroll", updateDialogScrollbar, { passive: true });
+  scroller.addEventListener("scroll", () => {
+    if (!scrollFrame) scrollFrame = requestAnimationFrame(updateScrollPosition);
+  }, { passive: true });
   window.addEventListener("resize", updateDialogScrollbar);
-  new ResizeObserver(updateDialogScrollbar).observe(scroller);
+  const observer = new ResizeObserver(updateDialogScrollbar);
+  observer.observe(scroller);
+  for (const section of scroller.children) observer.observe(section);
 }
 
 function setupSmoothWheelScrolling() {
@@ -324,6 +333,10 @@ function setupSmoothWheelScrolling() {
       motionElement.classList.remove("is-smooth-wheel-scrolling");
     };
     const animate = () => {
+      if (document.body.classList.contains("has-open-dialog")) {
+        stop();
+        return;
+      }
       const current = currentPosition();
       const distance = target - current;
       if (Math.abs(distance) < 0.5) {
@@ -337,9 +350,10 @@ function setupSmoothWheelScrolling() {
       frame = requestAnimationFrame(animate);
     };
 
-    scroller.addEventListener("wheel", (event) => {
+    const onWheel = (event) => {
       if (
-        reducedMotion.matches
+        document.body.classList.contains("has-open-dialog")
+        || reducedMotion.matches
         || event.ctrlKey
         || Math.abs(event.deltaX) > Math.abs(event.deltaY)
         || hasNestedScroller(event.target)
@@ -368,7 +382,20 @@ function setupSmoothWheelScrolling() {
         motionElement.classList.add("is-smooth-wheel-scrolling");
         frame = requestAnimationFrame(animate);
       }
-    }, { passive: false });
+    };
+
+    // A non-passive ancestor listener still blocks compositor scrolling, even
+    // when it returns early. Detach it for both movie and installation dialogs.
+    const updateWheelListener = () => {
+      if (document.body.classList.contains("has-open-dialog")) {
+        scroller.removeEventListener("wheel", onWheel);
+        stop();
+      } else {
+        scroller.addEventListener("wheel", onWheel, { passive: false });
+      }
+    };
+    new MutationObserver(updateWheelListener).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    updateWheelListener();
 
     scroller.addEventListener("pointerdown", stop, { passive: true });
     window.addEventListener("keydown", (event) => {
@@ -378,7 +405,6 @@ function setupSmoothWheelScrolling() {
   }
 
   enhance(window);
-  enhance(elements.dialogScroller);
 }
 
 function applyTheme(theme, persist = false) {
@@ -983,7 +1009,7 @@ function renderMovieCast(movie) {
     item.setAttribute("aria-label", `${person.name} — vyhľadať cez Google`);
     if (person.profileUrl) {
       const image = document.createElement("img");
-      image.src = person.profileUrl;
+      if (!plainDialogVisuals) image.src = person.profileUrl;
       image.alt = "";
       image.width = 80;
       image.height = 80;
@@ -1127,6 +1153,8 @@ function loadDialogBackdrop(url) {
   };
 
   elements.dialog.classList.add("has-backdrop");
+  // Keep the same layout, but skip downloading/decoding the image in the scroll test.
+  if (plainDialogVisuals) return;
   elements.dialogBackdrop.hidden = false;
   elements.dialogBackdrop.fetchPriority = "high";
   elements.dialogBackdrop.onload = reveal;
@@ -1138,16 +1166,8 @@ function loadDialogBackdrop(url) {
   }
 }
 
-function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true) {
-  if (updateRoute) {
-    const url = movieDetailUrl(movie.id, window.location.href);
-    if (url !== window.location.href) window.history.pushState(null, "", url);
-  }
+function renderMovieDialogDetails(movie) {
   loadDialogBackdrop(movie.backdropUrl);
-  elements.dialogKicker.textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
-  elements.dialogTitle.textContent = movie.title;
-  renderDialogMovieMeta(movie);
-  renderMovieRatings(movie, elements.dialogRatings);
   renderMovieFacts(movie);
   renderMovieCast(movie);
   elements.dialogOverview.hidden = !movie.overview;
@@ -1158,12 +1178,51 @@ function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true) {
   elements.dialogTrailer.hidden = !movie.trailerUrl;
   if (movie.trailerUrl) elements.dialogTrailer.href = movie.trailerUrl;
   else elements.dialogTrailer.removeAttribute("href");
+}
+
+async function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true) {
+  const openId = ++dialogOpenId;
+  if (updateRoute) {
+    const url = movieDetailUrl(movie.id, window.location.href);
+    if (url !== window.location.href) window.history.pushState(null, "", url);
+  }
+  elements.dialogKicker.textContent = movie.genres?.slice(0, 2).join(" · ") || "Film";
+  elements.dialogTitle.textContent = movie.title;
+  renderDialogMovieMeta(movie);
+  renderMovieRatings(movie, elements.dialogRatings);
+  renderMovieDialogDetails(movie);
+  const status = document.querySelector("#movie-dialog-status");
+  status.replaceChildren();
+  status.hidden = !movie.detailDataUrl;
+  if (movie.detailDataUrl) status.textContent = "Načítavam podrobnosti filmu…";
+  elements.dialog.setAttribute("aria-busy", String(Boolean(movie.detailDataUrl)));
   renderShowtimes(movie, screenings, cinemaMap, elements.dialogShowtimes);
   elements.dialogScroller.scrollTop = 0;
   if (typeof elements.dialog.showModal === "function") elements.dialog.showModal();
   else elements.dialog.setAttribute("open", "");
   document.body.classList.add("has-open-dialog");
   requestAnimationFrame(updateDialogScrollbar);
+  if (!movie.detailDataUrl) return;
+  try {
+    const detail = await loadMovieDetails(movie);
+    if (openId !== dialogOpenId || !elements.dialog.open) return;
+    renderMovieDialogDetails(detail);
+    status.hidden = true;
+  } catch (error) {
+    if (openId !== dialogOpenId || !elements.dialog.open) return;
+    console.warn("Podrobnosti filmu sa nepodarilo načítať", error);
+    status.textContent = "Podrobnosti filmu sa nepodarilo načítať. ";
+    const retry = document.createElement("button");
+    retry.type = "button";
+    retry.textContent = "Skúsiť znova";
+    retry.addEventListener("click", () => openMovieDialog(movie, screenings, cinemaMap, false));
+    status.append(retry);
+  } finally {
+    if (openId === dialogOpenId) {
+      elements.dialog.setAttribute("aria-busy", "false");
+      requestAnimationFrame(updateDialogScrollbar);
+    }
+  }
 }
 
 function clearMovieRoute() {
@@ -1177,6 +1236,8 @@ function clearMovieRoute() {
 }
 
 function closeMovieDialog() {
+  dialogOpenId += 1;
+  elements.dialog.setAttribute("aria-busy", "false");
   clearMovieRoute();
   if (typeof elements.dialog.close === "function") elements.dialog.close();
   else elements.dialog.removeAttribute("open");
@@ -1262,8 +1323,6 @@ function renderMovie(movie, screenings, cinemaMap) {
   card.tabIndex = 0;
   card.setAttribute("role", "button");
   card.setAttribute("aria-label", `${movie.title} — zobraziť termíny premietania`);
-  card.addEventListener("pointerenter", () => preloadDialogBackdrop(movie.backdropUrl), { once: true });
-  card.addEventListener("focus", () => preloadDialogBackdrop(movie.backdropUrl), { once: true });
   card.addEventListener("click", (event) => {
     if (event.target.closest("a, button")) return;
     openMovieDialog(movie, screenings, cinemaMap);
@@ -1464,7 +1523,7 @@ function registerProgramTool() {
 
 async function init() {
   try {
-    const response = await fetch("/program.json", { cache: "no-store" });
+    const response = await fetch(eagerDialogData ? "/program.json" : "/program-index.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     state.program = await response.json();
     state.selectedCinemas = new Set(state.program.cinemas.map((cinema) => cinema.id));
