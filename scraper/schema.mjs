@@ -2,19 +2,22 @@ const isString = (value) => typeof value === "string" && value.length > 0;
 
 export function validateProgram(program) {
   const errors = [];
+  const movies = Array.isArray(program?.movies) ? program.movies : [];
+  const upcomingMovies = Array.isArray(program?.upcomingMovies) ? program.upcomingMovies : [];
   if (program?.schemaVersion !== 1) errors.push("schemaVersion must be 1");
   if (!isString(program?.generatedAt) || Number.isNaN(Date.parse(program.generatedAt))) errors.push("generatedAt must be an ISO date");
   if (program?.timezone !== "Europe/Bratislava") errors.push("timezone must be Europe/Bratislava");
   if (!Array.isArray(program?.sources) || program.sources.length < 2) errors.push("sources must include the configured providers");
   if (!Array.isArray(program?.cinemas) || program.cinemas.length < 4) errors.push("cinemas must include the configured locations");
   if (!Array.isArray(program?.movies)) errors.push("movies must be an array");
+  if (program?.upcomingMovies != null && !Array.isArray(program.upcomingMovies)) errors.push("upcomingMovies must be an array");
   if (!Array.isArray(program?.screenings)) errors.push("screenings must be an array");
 
   const cinemaIds = new Set((program?.cinemas || []).map((item) => item.id));
-  const movieIds = new Set((program?.movies || []).map((item) => item.id));
+  const movieIds = new Set(movies.map((item) => item.id));
   const screeningIds = new Set();
 
-  for (const movie of program?.movies || []) {
+  for (const movie of [...movies, ...upcomingMovies]) {
     if (!isString(movie.id) || !isString(movie.title)) errors.push("each movie needs an id and title");
     if (movie.englishTitle != null && !isString(movie.englishTitle)) errors.push(`invalid englishTitle: ${movie.englishTitle}`);
     if (movie.originalLanguage != null && !/^[a-z]{2}$/u.test(movie.originalLanguage)) errors.push(`invalid originalLanguage for ${movie.id}`);
@@ -50,6 +53,12 @@ export function validateProgram(program) {
     if (movie.csfdVotes != null && (!Number.isInteger(movie.csfdVotes) || movie.csfdVotes < 0)) errors.push(`invalid csfdVotes for ${movie.id}`);
     if (movie.alternativeTitles != null && (!Array.isArray(movie.alternativeTitles) || !movie.alternativeTitles.every(isString))) errors.push(`invalid alternativeTitles for ${movie.id}`);
     if (movie.firstSeenAt != null && (!isString(movie.firstSeenAt) || Number.isNaN(Date.parse(movie.firstSeenAt)))) errors.push(`invalid firstSeenAt for ${movie.id}`);
+  }
+
+  for (const movie of upcomingMovies) {
+    if (!/^\d{4}-\d{2}-\d{2}$/u.test(movie.releaseDate || "") || Number.isNaN(Date.parse(movie.releaseDate))) {
+      errors.push(`invalid releaseDate for ${movie.id}`);
+    }
   }
 
   for (const screening of program?.screenings || []) {

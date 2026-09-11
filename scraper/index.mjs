@@ -13,7 +13,7 @@ import { fetchEdison } from "./sources/edison-filmhub.mjs";
 import { fetchNovaCvernovka } from "./sources/nova-cvernovka.mjs";
 import { fetchA4KinoInak } from "./sources/a4-kino-inak.mjs";
 import { localDateKey } from "./utils.mjs";
-import { enrichMoviesWithTmdb } from "./tmdb.mjs";
+import { enrichMoviesWithTmdb, fetchUpcomingMovies } from "./tmdb.mjs";
 import { enrichMoviesWithOmdb } from "./omdb.mjs";
 import { enrichMoviesWithCsfd } from "./csfd.mjs";
 import { enrichMoviesWithCriticLinks } from "./critic-links.mjs";
@@ -72,6 +72,7 @@ async function main() {
     if (error.code !== "ENOENT") throw error;
   }
   const previousMovies = previousProgram?.movies || [];
+  const previousUpcomingMovies = previousProgram?.upcomingMovies || [];
   const movieHistoryPath = process.env.MOVIE_HISTORY_PATH || ".cache/movie-history.json";
   const movieHistory = await readMovieHistory(movieHistoryPath);
   const today = localDateKey();
@@ -117,6 +118,11 @@ async function main() {
     cachePath: process.env.TMDB_CACHE_PATH,
     previousMovies,
   });
+  program.upcomingMovies = await fetchUpcomingMovies({
+    apiKey: process.env.TMDB_API_KEY,
+    currentMovies: program.movies,
+    previousMovies: previousUpcomingMovies,
+  });
   const ratingDiagnostics = [];
   program.movies = await enrichMoviesWithOmdb(program.movies, {
     diagnostics: ratingDiagnostics,
@@ -146,7 +152,7 @@ async function main() {
   await writeMovieHistory(movieHistoryPath, tracked.history);
   await writeFile(temporary, `${JSON.stringify(program, null, 2)}\n`, "utf8");
   await rename(temporary, output);
-  console.log(`Wrote ${program.screenings.length} screenings and ${program.movies.length} films to ${output}`);
+  console.log(`Wrote ${program.screenings.length} screenings, ${program.movies.length} films and ${program.upcomingMovies.length} upcoming films to ${output}`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

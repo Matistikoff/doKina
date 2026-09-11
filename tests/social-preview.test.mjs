@@ -26,6 +26,14 @@ test("uses a trusted TMDB backdrop in movie social metadata", () => {
   assert.doesNotMatch(html, /twitter:/u);
 });
 
+test("creates movie metadata for a separately stored upcoming film", () => {
+  const metadata = socialPreviewForMovie({ movies: [], upcomingMovies: [{
+    id: "upcoming-tmdb-20", title: "Premiéra", releaseDate: "2026-10-02",
+  }] }, "upcoming-tmdb-20", "https://dokina.sk");
+  assert.match(metadata.description, /očakávame/u);
+  assert.equal(metadata.canonicalUrl, "https://dokina.sk/film/upcoming-tmdb-20");
+});
+
 test("falls back to the site preview for missing or untrusted backdrops", () => {
   for (const backdropUrl of [null, "https://example.com/image.jpg"]) {
     const metadata = socialPreviewForMovie({ movies: [{ id: "film-1", title: "Film", backdropUrl }] },

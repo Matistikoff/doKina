@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import test from "node:test";
 import {
   enrichMoviesWithTmdb,
+  fetchUpcomingMovies,
   lookupTitles,
   preserveTmdbMetadata,
   resolveTmdbMovie,
@@ -230,4 +231,57 @@ test("preserves unambiguous previous TMDB metadata without an API key", async ()
     request: async () => assert.fail("no request without an API key"),
   });
   assert.equal(result.tmdbId, 406);
+});
+
+test("loads popular upcoming Slovak theatrical releases separately from current films", async () => {
+  const calls = [];
+  const movies = await fetchUpcomingMovies({
+    apiKey: "test",
+    now: new Date("2026-09-11T08:00:00Z"),
+    currentMovies: [{ id: "playing", title: "Už hrá", tmdbId: 10 }],
+    request: async (path, parameters) => {
+      calls.push({ path, parameters });
+      if (path === "genre/movie/list") return { genres: [{ id: 18, name: "Dráma" }] };
+      return { results: [
+        { id: 10, title: "Už hrá", release_date: "2026-09-20", poster_path: "/playing.jpg" },
+        { id: 20, title: "Veľká premiéra", original_title: "Big Premiere", original_language: "en",
+          release_date: "2026-10-02", poster_path: "/poster.jpg", backdrop_path: "/backdrop.jpg",
+          overview: "Pripravovaný film.", genre_ids: [18] },
+        { id: 30, title: "Bez plagátu", release_date: "2026-10-10", poster_path: null },
+      ] };
+    },
+  });
+  assert.equal(movies.length, 1);
+  assert.deepEqual(movies[0], {
+    id: "upcoming-tmdb-20",
+    title: "Veľká premiéra",
+    tmdbId: 20,
+    releaseDate: "2026-10-02",
+    releaseYear: "2026",
+    posterUrl: "https://image.tmdb.org/t/p/w500/poster.jpg",
+    backdropUrl: "https://image.tmdb.org/t/p/w1280/backdrop.jpg",
+    originalTitle: "Big Premiere",
+    originalLanguage: "en",
+    overview: "Pripravovaný film.",
+    overviewLanguage: "sk",
+    genres: ["Dráma"],
+  });
+  const discover = calls.find((call) => call.path === "discover/movie");
+  assert.equal(discover.parameters.region, "SK");
+  assert.equal(discover.parameters.sort_by, "popularity.desc");
+  assert.equal(discover.parameters.with_release_type, "2|3");
+});
+
+test("keeps future upcoming movies when TMDB is unavailable", async () => {
+  const previousMovies = [
+    { id: "old", title: "Minulosť", tmdbId: 1, releaseDate: "2026-09-01" },
+    { id: "future", title: "Budúcnosť", tmdbId: 2, releaseDate: "2026-10-01" },
+  ];
+  const movies = await fetchUpcomingMovies({
+    apiKey: "test",
+    now: new Date("2026-09-11T08:00:00Z"),
+    previousMovies,
+    request: async () => { throw new Error("Service unavailable"); },
+  });
+  assert.deepEqual(movies, [previousMovies[1]]);
 });

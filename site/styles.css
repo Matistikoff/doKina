@@ -1053,7 +1053,16 @@ h1 {
 }
 
 .program {
-	padding: 15px 0 96px;
+	padding: 15px 0 48px;
+}
+
+.upcoming {
+	padding: 32px 0 96px;
+	border-top: 1px solid var(--line);
+}
+
+.upcoming .screening-count {
+	color: var(--accent-deep);
 }
 
 .program-heading-row {

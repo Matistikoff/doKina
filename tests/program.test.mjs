@@ -95,6 +95,14 @@ test("schema validation accepts only trusted TMDB cast portraits", () => {
   }] }] }), /invalid cast/);
 });
 
+test("schema validates upcoming films as a separate collection with release dates", () => {
+  const base = assembleProgram([], "2026-09-09T10:00:00Z");
+  const upcoming = { id: "upcoming-tmdb-20", title: "Premiéra", tmdbId: 20, releaseDate: "2026-10-02" };
+  assert.doesNotThrow(() => validateProgram({ ...base, upcomingMovies: [upcoming] }));
+  assert.throws(() => validateProgram({ ...base, upcomingMovies: [{ ...upcoming, releaseDate: "čoskoro" }] }), /invalid releaseDate/u);
+  assert.throws(() => validateProgram({ ...base, upcomingMovies: upcoming }), /upcomingMovies must be an array/u);
+});
+
 test("assembly remaps different movie IDs to a single film", () => {
   const program = assembleProgram([
     { movies: [{ id: "movie-odysea-2026", title: "Odysea", releaseYear: "2026", durationMinutes: 172 }], screenings: [{ id: "one", movieId: "movie-odysea-2026", cinemaId: "lumiere", startsAt: "2026-09-06T18:00:00+02:00" }] },

@@ -84,6 +84,9 @@ const elements = {
   installPlatformTabs: [...document.querySelectorAll("[data-install-platform]")],
   installToggle: document.querySelector("#install-toggle"),
   movieGrid: document.querySelector("#movie-grid"),
+  upcomingCount: document.querySelector("#upcoming-count"),
+  upcomingGrid: document.querySelector("#upcoming-grid"),
+  upcomingSection: document.querySelector("#upcoming"),
   letterboxdToggle: document.querySelector("#letterboxd-toggle"),
   pageScrollbar: document.querySelector(".page-scrollbar"),
   pageScrollbarThumb: document.querySelector(".page-scrollbar-thumb"),
@@ -361,6 +364,14 @@ function formatDay(date, style = "short") {
     }).format(parsed);
   }
   return new Intl.DateTimeFormat("sk-SK", { weekday: "short" }).format(parsed).replace(".", "");
+}
+
+function formatReleaseDate(date) {
+  return new Intl.DateTimeFormat("sk-SK", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(`${date}T12:00:00`));
 }
 
 function formatUpdated(value) {
@@ -1089,7 +1100,7 @@ function loadDialogBackdrop(url) {
   }
 }
 
-function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true) {
+function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true, upcoming = false) {
   if (updateRoute) {
     const url = movieDetailUrl(movie.id, window.location.href);
     if (url !== window.location.href) window.history.pushState(null, "", url);
@@ -1110,6 +1121,9 @@ function openMovieDialog(movie, screenings, cinemaMap, updateRoute = true) {
   if (movie.trailerUrl) elements.dialogTrailer.href = movie.trailerUrl;
   else elements.dialogTrailer.removeAttribute("href");
   renderShowtimes(movie, screenings, cinemaMap, elements.dialogShowtimes);
+  if (upcoming) {
+    elements.dialogShowtimes.textContent = `Predpokladaná kinopremiéra na Slovensku: ${formatReleaseDate(movie.releaseDate)}.`;
+  }
   elements.dialogScroller.scrollTop = 0;
   if (typeof elements.dialog.showModal === "function") elements.dialog.showModal();
   else elements.dialog.setAttribute("open", "");
@@ -1148,7 +1162,8 @@ function syncMovieRoute() {
       movieId = null;
     }
   }
-  const movie = state.program.movies.find((item) => item.id === movieId);
+  const upcomingMovies = state.program.upcomingMovies || [];
+  const movie = [...state.program.movies, ...upcomingMovies].find((item) => item.id === movieId);
   if (!movie) {
     closeMovieDialog();
     return;
@@ -1157,13 +1172,16 @@ function syncMovieRoute() {
     screening.movieId === movie.id && new Date(screening.startsAt).getTime() > Date.now()
   ));
   const cinemaMap = new Map(state.program.cinemas.map((cinema) => [cinema.id, cinema]));
-  openMovieDialog(movie, screenings, cinemaMap, false);
+  const upcoming = upcomingMovies.includes(movie);
+  openMovieDialog(movie, screenings, cinemaMap, false, upcoming);
   if (screenings.length === 0) {
-    elements.dialogShowtimes.textContent = "Tento film momentálne nemá naplánované premietania.";
+    elements.dialogShowtimes.textContent = upcoming
+      ? `Predpokladaná kinopremiéra na Slovensku: ${formatReleaseDate(movie.releaseDate)}.`
+      : "Tento film momentálne nemá naplánované premietania.";
   }
 }
 
-function renderMovie(movie, screenings, cinemaMap) {
+function renderMovie(movie, screenings, cinemaMap, upcoming = false) {
   const fragment = elements.template.content.cloneNode(true);
   const card = fragment.querySelector(".movie-card");
   const poster = fragment.querySelector(".poster");
@@ -1198,9 +1216,14 @@ function renderMovie(movie, screenings, cinemaMap) {
     if (languages) detailsRow.append(details ? " · " : "", languages);
     meta.append(detailsRow);
   }
-  const nearestScreening = [...screenings].sort((a, b) => a.startsAt.localeCompare(b.startsAt))[0];
-  const countLabel = `${screenings.length} ${screenings.length === 1 ? "predstavenie" : screenings.length < 5 ? "predstavenia" : "predstavení"}`;
-  screeningCount.textContent = `${countLabel} · ${nearestScreeningLabel(nearestScreening, cinemaMap)}`;
+  if (upcoming) {
+    card.classList.add("is-upcoming");
+    screeningCount.textContent = `V kinách od ${formatReleaseDate(movie.releaseDate)}`;
+  } else {
+    const nearestScreening = [...screenings].sort((a, b) => a.startsAt.localeCompare(b.startsAt))[0];
+    const countLabel = `${screenings.length} ${screenings.length === 1 ? "predstavenie" : screenings.length < 5 ? "predstavenia" : "predstavení"}`;
+    screeningCount.textContent = `${countLabel} · ${nearestScreeningLabel(nearestScreening, cinemaMap)}`;
+  }
 
   if (movie.posterUrl) {
     poster.src = movie.posterUrl;
@@ -1208,17 +1231,23 @@ function renderMovie(movie, screenings, cinemaMap) {
     poster.addEventListener("error", () => poster.classList.add("is-broken"));
   }
   card.dataset.movieId = movie.id;
-  updateFavoriteButton(favoriteButton, movie);
-  favoriteButton.addEventListener("click", () => toggleFavorite(movie, favoriteButton));
+  favoriteButton.hidden = upcoming;
+  if (!upcoming) {
+    updateFavoriteButton(favoriteButton, movie);
+    favoriteButton.addEventListener("click", () => toggleFavorite(movie, favoriteButton));
+  }
   renderMovieRatings(movie, ratingsElement);
+  ratingsElement.hidden = upcoming || ratingsElement.childElementCount === 0;
   card.tabIndex = 0;
   card.setAttribute("role", "button");
-  card.setAttribute("aria-label", `${movie.title} — zobraziť termíny premietania`);
+  card.setAttribute("aria-label", upcoming
+    ? `${movie.title} — zobraziť detail pripravovaného filmu`
+    : `${movie.title} — zobraziť termíny premietania`);
   card.addEventListener("pointerenter", () => preloadDialogBackdrop(movie.backdropUrl), { once: true });
   card.addEventListener("focus", () => preloadDialogBackdrop(movie.backdropUrl), { once: true });
   card.addEventListener("click", (event) => {
     if (event.target.closest("a, button")) return;
-    openMovieDialog(movie, screenings, cinemaMap);
+    openMovieDialog(movie, screenings, cinemaMap, true, upcoming);
   });
   card.addEventListener("auxclick", (event) => {
     if (event.button !== 1 || event.target.closest("a, button")) return;
@@ -1229,9 +1258,18 @@ function renderMovie(movie, screenings, cinemaMap) {
     if (event.target.closest("a, button")) return;
     if (event.key !== "Enter" && event.key !== " ") return;
     event.preventDefault();
-    openMovieDialog(movie, screenings, cinemaMap);
+    openMovieDialog(movie, screenings, cinemaMap, true, upcoming);
   });
   return fragment;
+}
+
+function renderUpcomingMovies() {
+  const movies = state.program.upcomingMovies || [];
+  elements.upcomingSection.hidden = movies.length === 0;
+  if (movies.length === 0) return;
+  const cinemaMap = new Map(state.program.cinemas.map((cinema) => [cinema.id, cinema]));
+  elements.upcomingCount.textContent = `${movies.length} ${movies.length === 1 ? "film" : movies.length < 5 ? "filmy" : "filmov"}`;
+  elements.upcomingGrid.replaceChildren(...movies.map((movie) => renderMovie(movie, [], cinemaMap, true)));
 }
 
 function renderProgram() {
@@ -1430,6 +1468,7 @@ async function init() {
     renderSortOptions();
     updateFavoritesFilter();
     renderProgram();
+    renderUpcomingMovies();
     syncMovieRoute();
     registerProgramTool();
   } catch (error) {

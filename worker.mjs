@@ -17,15 +17,19 @@ export function movieIdFromPath(pathname) {
 }
 
 export function socialPreviewForMovie(program, movieId, origin) {
-  const movie = program?.movies?.find((item) => item.id === movieId);
+  const movie = [...(program?.movies || []), ...(program?.upcomingMovies || [])]
+    .find((item) => item.id === movieId);
   if (!movie) return null;
+  const upcoming = (program?.upcomingMovies || []).includes(movie);
   const canonicalUrl = `${origin}/film/${encodeURIComponent(movie.id)}`;
   const imageUrl = TRUSTED_BACKDROP_PATTERN.test(movie.backdropUrl || "")
     ? movie.backdropUrl
     : `${origin}/og.png`;
   return {
     title: `${movie.title} — doKina.sk`,
-    description: `${movie.title} práve hrá v Bratislave. Pozri si kiná a termíny premietaní na doKina.sk.`,
+    description: upcoming
+      ? `${movie.title} očakávame v slovenských kinách. Pozri si pripravované filmy na doKina.sk.`
+      : `${movie.title} práve hrá v Bratislave. Pozri si kiná a termíny premietaní na doKina.sk.`,
     type: "video.movie",
     canonicalUrl,
     imageUrl,

@@ -11,6 +11,8 @@ const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
 const BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 const PROFILE_BASE_URL = "https://image.tmdb.org/t/p/w185";
 const MAX_CAST_MEMBERS = 6;
+const MAX_UPCOMING_MOVIES = 6;
+const UPCOMING_WINDOW_DAYS = 120;
 
 export function lookupTitles(movie) {
   return [...new Set([movie.englishTitle, movie.originalTitle, movie.title, ...(movie.alternativeTitles || [])]
@@ -92,6 +94,90 @@ export function selectTrailer(detail) {
       || String(b.published_at || "").localeCompare(String(a.published_at || ""));
   })[0];
   return selected ? `https://www.youtube.com/watch?v=${selected.key}` : null;
+}
+
+function isoDate(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function bratislavaDate(date) {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Bratislava",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(date);
+}
+
+export async function fetchUpcomingMovies(options = {}) {
+  const apiKey = options.apiKey;
+  const request = options.request || tmdbRequest;
+  const now = options.now || new Date();
+  const today = bratislavaDate(now);
+  const end = new Date(`${today}T12:00:00Z`);
+  end.setUTCDate(end.getUTCDate() + UPCOMING_WINDOW_DAYS);
+  const currentTmdbIds = new Set((options.currentMovies || []).map((movie) => movie.tmdbId).filter(Boolean));
+  const saved = (options.previousMovies || []).filter((movie) => (
+    /^\d{4}-\d{2}-\d{2}$/u.test(movie.releaseDate || "")
+    && movie.releaseDate >= today
+    && !currentTmdbIds.has(movie.tmdbId)
+  )).slice(0, MAX_UPCOMING_MOVIES);
+
+  if (!apiKey) {
+    console.warn("TMDB_API_KEY is not set; using saved upcoming movies without refreshing them.");
+    return saved;
+  }
+
+  try {
+    const parameters = {
+      include_adult: "false",
+      include_video: "false",
+      language: "sk-SK",
+      page: "1",
+      region: "SK",
+      sort_by: "popularity.desc",
+      with_release_type: "2|3",
+      "release_date.gte": today,
+      "release_date.lte": isoDate(end),
+    };
+    const [payload, genrePayload] = await Promise.all([
+      request("discover/movie", parameters, apiKey),
+      request("genre/movie/list", { language: "sk-SK" }, apiKey),
+    ]);
+    if (!Array.isArray(payload.results) || !Array.isArray(genrePayload.genres)) {
+      throw new Error("Invalid TMDb upcoming response");
+    }
+    const genres = new Map(genrePayload.genres
+      .filter((genre) => Number.isInteger(genre.id) && metadataText(genre.name))
+      .map((genre) => [genre.id, metadataText(genre.name)]));
+    const seen = new Set();
+    return payload.results.filter((movie) => {
+      if (!Number.isInteger(movie.id) || seen.has(movie.id) || currentTmdbIds.has(movie.id)) return false;
+      if (!metadataText(movie.title) || !posterUrl(movie.poster_path)) return false;
+      if (!/^\d{4}-\d{2}-\d{2}$/u.test(movie.release_date || "") || movie.release_date < today) return false;
+      seen.add(movie.id);
+      return true;
+    }).slice(0, MAX_UPCOMING_MOVIES).map((movie) => ({
+      id: `upcoming-tmdb-${movie.id}`,
+      title: metadataText(movie.title),
+      tmdbId: movie.id,
+      releaseDate: movie.release_date,
+      releaseYear: movie.release_date.slice(0, 4),
+      posterUrl: posterUrl(movie.poster_path),
+      ...(backdropUrl(movie.backdrop_path) ? { backdropUrl: backdropUrl(movie.backdrop_path) } : {}),
+      ...(metadataText(movie.original_title) && movie.original_title !== movie.title
+        ? { originalTitle: metadataText(movie.original_title) }
+        : {}),
+      ...(/^[a-z]{2}$/u.test(movie.original_language || "")
+        ? { originalLanguage: movie.original_language }
+        : {}),
+      ...(metadataText(movie.overview) ? { overview: metadataText(movie.overview), overviewLanguage: "sk" } : {}),
+      genres: [...new Set((movie.genre_ids || []).map((id) => genres.get(id)).filter(Boolean))],
+    }));
+  } catch (error) {
+    console.warn(`TMDb upcoming lookup failed: ${error.message}`);
+    return saved;
+  }
 }
 
 export async function resolveTmdbMovie(movie, apiKey, request = tmdbRequest) {
