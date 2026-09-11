@@ -38,4 +38,12 @@ test("formats spoken language codes as localized language flags", () => {
   assert.equal(languageName("es"), "španielčina");
   assert.equal(languageFlagCountry("ar", ["MA", "FR"]), "MA");
   assert.equal(languageFlagCountry("en", []), "GB");
+  assert.equal(languageFlagCountry("yi", []), "IL");
+  assert.equal(languageFlagCountry("mk", []), "MK");
+  assert.equal(languageFlagCountry("hr", []), "HR");
+  assert.equal(languageFlagCountry("lv", []), "LV");
+  assert.equal(languageFlagCountry("la", []), "VA");
+  assert.equal(languageFlagCountry("ty", []), "PF");
+  assert.equal(languageFlagCountry("tl", []), "PH");
+  assert.equal(languageFlagCountry("xx", []), "");
 });

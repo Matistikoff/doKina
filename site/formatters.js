@@ -42,9 +42,10 @@ const LANGUAGE_REGION_CANDIDATES = {
   ar: ["MA", "EG", "SA"], cs: ["CZ"], da: ["DK"], de: ["DE", "AT", "CH"],
   el: ["GR"], en: ["GB", "US", "IE", "CA", "AU", "NZ"], es: ["ES", "MX", "AR"],
   fi: ["FI"], fr: ["FR", "BE", "CA", "CH"], he: ["IL"], hi: ["IN"], hu: ["HU"],
-  it: ["IT"], ja: ["JP"], ko: ["KR"], nl: ["NL", "BE"], no: ["NO"], pl: ["PL"],
-  pt: ["PT", "BR"], ro: ["RO"], ru: ["RU"], sk: ["SK"], sv: ["SE"], tr: ["TR"],
-  uk: ["UA"], zh: ["CN", "TW", "HK"],
+  hr: ["HR"], it: ["IT"], ja: ["JP"], ko: ["KR"], la: ["VA"], lv: ["LV"],
+  mk: ["MK"], nl: ["NL", "BE"], no: ["NO"], pl: ["PL"], pt: ["PT", "BR"],
+  ro: ["RO"], ru: ["RU"], sk: ["SK"], sv: ["SE"], tl: ["PH"], tr: ["TR"],
+  ty: ["PF"], uk: ["UA"], yi: ["IL"], zh: ["CN", "TW", "HK"],
 };
 
 export function normalizeLanguageCode(languageCode) {

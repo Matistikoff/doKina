@@ -785,7 +785,7 @@ function movieMeta(movie, { includeAlternativeTitle = true } = {}) {
   ].filter(Boolean).join("\n");
 }
 
-function spokenLanguagesElement(movie, screenings = []) {
+function spokenLanguagesElement(movie, screenings = [], { showCodeFallback = false } = {}) {
   const screeningLanguages = screenings.flatMap((screening) => screening.languages?.original || []);
   const languageCodes = [...new Set((movie.spokenLanguages?.length ? movie.spokenLanguages : screeningLanguages)
     .map(normalizeLanguageCode).filter(Boolean))];
@@ -796,6 +796,7 @@ function spokenLanguagesElement(movie, screenings = []) {
   for (const code of languageCodes) {
     const flagCountry = languageFlagCountry(code, movie.productionCountries);
     const flagPath = countryFlagPath(flagCountry);
+    if (!flagPath && !showCodeFallback) continue;
     const language = document.createElement("span");
     const name = languageName(code);
     language.className = "spoken-language";
@@ -810,7 +811,8 @@ function spokenLanguagesElement(movie, screenings = []) {
       image.height = 21;
       image.decoding = "async";
       image.addEventListener("error", () => {
-        language.textContent = countryFlag(flagCountry) || code.toUpperCase();
+        if (showCodeFallback) language.textContent = countryFlag(flagCountry) || code.toUpperCase();
+        else language.remove();
       }, { once: true });
       language.append(image);
     } else {
@@ -841,7 +843,7 @@ function renderDialogMovieMeta(movie, screenings) {
   }
   if (movie.durationMinutes) details.push(formatDuration(movie.durationMinutes));
   if (movie.releaseYear) details.push(String(movie.releaseYear));
-  const languages = spokenLanguagesElement(movie, screenings);
+  const languages = spokenLanguagesElement(movie, screenings, { showCodeFallback: true });
   if (languages) details.push(languages);
 
   elements.dialogMeta.replaceChildren();
